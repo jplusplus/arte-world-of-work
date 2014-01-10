@@ -3,10 +3,10 @@
 VIRTUALENV = venv/
 
 run:
-	. $(VIRTUALENV)bin/activate ; export PYTHONPATH=`pwd`/app/:$(PYTHONPATH) ; python -W ignore::DeprecationWarning manage.py runserver --nothreading
+	. $(VIRTUALENV)bin/activate ; export PYTHONPATH=`pwd`/app/:$(PYTHONPATH) ; python -W ignore::DeprecationWarning manage.py runserver
 
 install:
-	virtualenv venv --no-site-packages --distribute --prompt=Detective.io
+	virtualenv venv --no-site-packages --distribute --prompt=Arte-WoW
 	# Install pip packages
 	. $(VIRTUALENV)bin/activate; pip install -r requirements.txt
 	# Install npm packages
