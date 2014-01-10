@@ -18,5 +18,4 @@ npm_install:
 	# Install npm packages
 	if [ -s npm_requirements.txt ]; then xargs -a npm_requirements.txt npm install -g; else echo '\nNo NPM dependencies found in npm_requirements.txt'; fi
 
-
 # EOF
