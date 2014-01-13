@@ -1,46 +1,62 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
-# Create your models here.
-class Question(models.Model):
-    label = models.CharField(_('Question label'), max_length=120)
-    hint_text = models.CharField(_('Question hint text'), max_length=120)
+from polymorphic import PolymorphicModel
 
-
-
-# Choices 
-class ChoiceField(models.Model):
+# -----------------------------------------------------------------------------
+# 
+#     Choices field types
+# 
+# -----------------------------------------------------------------------------
+class BaseChoiceField(PolymorphicModel):
     title = models.CharField(_('Title of this choice'), max_length=120)
 
-class MediaChoiceField(ChoiceField):
-    class Meta:
-        abstract = True
+class TextChoiceField(BaseChoiceField):
+    pass
 
-    # what kind of field 
-
-class IconChoiceField(MediaChoiceField):
-    pass 
+class MediaChoiceField(BaseChoiceField, PolymorphicModel):
+    pass
 
 class ImageChoiceField(MediaChoiceField):
     pass
 
-class TextChoiceField(ChoiceField):
-    pass 
+class IconChoiceField(MediaChoiceField):
+    pass
 
-CHOICE_FIELD_TYPES = (
-    (TextChoiceField, _('Text choices')),
-    (ImageChoiceField, _('Icon choices')),
-    (IconChoiceField, _('Images choices')),
-)
+# -----------------------------------------------------------------------------
+# 
+#     Typologies
+# 
+# -----------------------------------------------------------------------------
+class Typology(PolymorphicModel):
+    pass
+
+class BaseMultipleChoicesTypology(Typology, PolymorphicModel):
+    choices = models.ManyToManyField('BaseChoiceField')
+
+class SelectionTypology(BaseMultipleChoicesTypology):
+    # multiple choices allowed
+    value = models.ManyToManyField('BaseChoiceField')
+
+class RadioTypology(BaseMultipleChoicesTypology, PolymorphicModel):
+    # single value 
+    value = models.ForeignKey(BaseChoiceField)
+
+class BooleanTypology(RadioTypology):
+    @classmethod
+    def create(klass):
+        choices  = (
+            # default yes choice,
+            BaseChoiceField(title=_('yes')),
+            BaseChoiceField(title=_('no')),
+            # default no choice
+        )
+        typology = klass()
+        typology.choices += choices
+        return typology
 
 
-class Typology(models.Model):
-    class Meta:
-        abstract = True
-
-
-class MultipleChoiceTypology(Typology):
-    class Meta(Typology.Meta):
-        pass
-    choices = models.ForeignKey(ChoiceField)
-    choice_field_type = models.CharField(_('Choices type'), max_length=50, choices=CHOICE_FIELD_TYPES) 
+class Question(models.Model):
+    label = models.CharField(_('Question label'), max_length=120)
+    hint_text = models.CharField(_('Question hint text'), max_length=120)
+    typology = models.ForeignKey(Typology)
