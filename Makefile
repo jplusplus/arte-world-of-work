@@ -11,6 +11,9 @@ create_virtualenv:
 	# if venv folder is not created yet we do it
 	if [ ! -d venv ]; then virtualenv venv --no-site-packages --distribute --prompt=Arte-WoW; fi
 
+createsuperuser:
+	. $(VIRTUALENV)bin/activate; python manage.py createsuperuser --email root@arte-wow.fr --username root
+
 setup_db:
 	# setup database
 	. $(VIRTUALENV)bin/activate; python manage.py syncdb
