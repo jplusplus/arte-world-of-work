@@ -69,6 +69,17 @@ class NumberTypology(Typology):
     help_text = "Number input field"
     unit = models.CharField(_('Number unit (e.g "%", "$", "kg")'), max_length=15)
 
+class RangeNumberTypology(Typology):
+    help_text = "Number inside a range typology"
+    unit = models.CharField(_('Number unit (e.g "%", "$", "kg")'), max_length=15)
+    min_number = models.PositiveIntegerField(default=0)
+    max_number = models.PositiveIntegerField(default=100)
+
+    def __unicode__(self):
+        return "Range: [{min}, {max}] {unit}".format(
+            min=self.min_number, max=self.max_number, unit=self.unit
+        )
+
 class BooleanTypology(RadioTypology):
     help_text = "Boolean choice question (1 answer only)"
     @classmethod
