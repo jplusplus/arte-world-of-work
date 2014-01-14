@@ -81,11 +81,6 @@ class BooleanTypology(RadioTypology):
         typology.choices += choices
         return typology
 
-# -----------------------------------------------------------------------------
-#
-#    Questions
-#
-# -----------------------------------------------------------------------------
 def list_typologies():
     """
     List all the class inherited from app.core.models.Typology
@@ -99,6 +94,11 @@ def list_typologies():
 
 TYPOLOGIES_TYPES = [(t.__name__, t.help_text) for t in list_typologies() if getattr(t, "help_text", None)]
 
+# -----------------------------------------------------------------------------
+#
+#    Questions
+#
+# -----------------------------------------------------------------------------
 class Question(models.Model):
     label         = models.CharField(_('Question label'), max_length=220)
     hint_text     = models.CharField(_('Question hint text'), max_length=120)
