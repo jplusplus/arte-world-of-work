@@ -12,8 +12,8 @@
 # -----------------------------------------------------------------------------
 from django.db import models
 from django.utils.translation import ugettext as _
-
-import re
+import inspect
+import sys
 
 # -----------------------------------------------------------------------------
 # 
@@ -42,57 +42,31 @@ class IconChoiceField(MediaChoiceField):
 # -----------------------------------------------------------------------------
 class TypologyManager(models.Manager):
 
-    def inject_types(self, types):
-        self.types = types
-
-    def type_from_klass(self, kls): 
-        return re.sub( '(?<!^)(?=[A-Z])', '_', kls.__name__).lower()
-
-    def klass_from_type(self, type):
-        assert self.is_typology_type(type)
-        return eval("".join(
-                map(
-                    lambda x: x.capitalize(),
-                    type.split('_')
-                )
-            )
-        )
-
-
-    def is_typology_type(self, type):
-        is_safe_name = len(re.findall('[\W]', type)) == 0
-        is_in_subtypes = filter(lambda x: x[0] == type, self.types) is not None 
-        return is_in_subtypes and is_safe_name
-
     def create_typology(self, typology_type):
-        typology_klass = self.klass_from_type(typology_type)
-        typology = typology_klass()
+        typology = getattr(sys.modules[__name__], typology_type)
+        typology = typology()
         typology.save()
         return typology
 
-
-
-
 class Typology(models.Model):
     sub_type = models.CharField(_('Typology subtype'), max_length=30)
-    objects = TypologyManager()
-
-    def get_subclass(self):
-        return self.objects.klass_from_type(self.sub_type)
-
+    objects  = TypologyManager()
 
 class BaseMultipleChoicesTypology(Typology):
     choices = models.ManyToManyField('BaseChoiceField')
 
 class SelectionTypology(BaseMultipleChoicesTypology):
+    help_text = "Multiple choices question (1 or more answer)"
     # multiple choices allowed
     value = models.ManyToManyField('BaseChoiceField')
 
 class RadioTypology(BaseMultipleChoicesTypology):
-    # single value 
+    help_text = "Radio choices question (1 answer only)"
+    # single value
     value = models.ForeignKey(BaseChoiceField)
 
 class BooleanTypology(RadioTypology):
+    help_text = "Boolean choice question (1 answer only)"
     @classmethod
     def create(klass):
         choices  = (
@@ -105,23 +79,33 @@ class BooleanTypology(RadioTypology):
         typology.choices += choices
         return typology
 
+# -----------------------------------------------------------------------------
+#
+#    Questions
+#
+# -----------------------------------------------------------------------------
+def list_typologies():
+    """
+    List all the class inherited from app.core.models.Typology
+    """
+    module     = __name__
+    typologies = []
+    for name, klass in inspect.getmembers(sys.modules[module], inspect.isclass):
+        if Typology in inspect.getmro(klass) and klass is not Typology:
+            typologies.append(klass)
+    return typologies
 
-TYPOLOGIES_TYPES = (
-    ( Typology.objects.type_from_klass(SelectionTypology), _('Multiple choices question (1 or more answer)')),
-    ( Typology.objects.type_from_klass(RadioTypology),     _('Radio choices question (1 answer only)'      )),
-    ( Typology.objects.type_from_klass(BooleanTypology),   _('Boolean choice question (1 answer only)'     ))
-)
-
-Typology.objects.inject_types(TYPOLOGIES_TYPES)
+TYPOLOGIES_TYPES = [(t.__name__, t.help_text) for t in list_typologies() if getattr(t, "help_text", None)]
 
 class Question(models.Model):
-    label = models.CharField(_('Question label'), max_length=220)
-    hint_text = models.CharField(_('Question hint text'), max_length=120)
+    label         = models.CharField(_('Question label'), max_length=220)
+    hint_text     = models.CharField(_('Question hint text'), max_length=120)
     typology_type = models.CharField(_('Question typology'), max_length=30, choices=TYPOLOGIES_TYPES)
-    typology = models.OneToOneField(Typology, primary_key=True)
+    typology      = models.OneToOneField(Typology, primary_key=True)
 
     def save(self, *args, **kwargs):
         if self.typology_type:
             self.typology = Typology.objects.create_typology(self.typology_type)
         super(Question, self).save()
 
+# EOF
