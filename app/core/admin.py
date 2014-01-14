@@ -16,10 +16,21 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin import TabularInline, StackedInline
 from django.contrib.contenttypes import generic
 
-from app.core.models import Question, Typology
+from app.core.models import Question, Typology, SelectionTypology
+
+
+class TypologyAdminForm(forms.ModelForm):
+    model = Typology
+
+class InlineTypologyAdmin(admin.TabularInline):
+    form = TypologyAdminForm
+    model = Typology
 
 class QuestionAdmin(admin.ModelAdmin):
     fields = ('label', 'hint_text', 'typology_type')
+    inlines = [
+        InlineTypologyAdmin,
+    ]
 
 # Register your models here.
 admin.site.register(Question, QuestionAdmin)
