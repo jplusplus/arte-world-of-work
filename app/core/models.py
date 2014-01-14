@@ -61,9 +61,6 @@ class TypologyManager(models.Manager):
         typology.save()
         return typology
 
-
-
-
 class Typology(models.Model):
     sub_type = models.CharField(_('Typology subtype'), max_length=30)
     objects = TypologyManager()
