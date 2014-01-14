@@ -41,8 +41,7 @@ class IconChoiceField(MediaChoiceField):
 # 
 # -----------------------------------------------------------------------------
 class TypologyManager(models.Manager):
-
-    def create_typology(self, typology_type):
+    def create_typology(self, typology_type, question_id):
         typology = getattr(sys.modules[__name__], typology_type)
         question = Question.objects.get(pk=question_id)
         typology = typology(sub_type=typology_type, question=question)
@@ -51,8 +50,8 @@ class TypologyManager(models.Manager):
 
 class Typology(models.Model):
     sub_type = models.CharField(_('Typology subtype'), max_length=30)
-	question = models.ForeignKey('Question')    
-	objects  = TypologyManager()
+    question = models.OneToOneField('Question')    
+    objects  = TypologyManager()
 
 class BaseMultipleChoicesTypology(Typology):
     choices = models.ManyToManyField('BaseChoiceField')
@@ -65,7 +64,10 @@ class SelectionTypology(BaseMultipleChoicesTypology):
 class RadioTypology(BaseMultipleChoicesTypology):
     help_text = "Radio choices question (1 answer only)"
     # single value
-    value = models.ForeignKey(BaseChoiceField)
+
+class NumberTypology(Typology): 
+    help_text = "Number input field"
+    unit = models.CharField(_('Number unit (e.g "%", "$", "kg")'), max_length=15)
 
 class BooleanTypology(RadioTypology):
     help_text = "Boolean choice question (1 answer only)"
@@ -107,8 +109,12 @@ class Question(models.Model):
     def save(self, *args, **kwargs):
         super(Question, self).save()
         if self.pk and self.typology_type:
+            old = Typology.objects.filter(question_id=self.pk)
+            for _t in old:
+                _t.delete()
+
             Typology.objects.create_typology(
-                type=self.typology_type,
+                typology_type=self.typology_type,
                 question_id=self.pk
             )
 
