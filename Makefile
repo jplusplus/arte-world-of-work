@@ -2,7 +2,7 @@
 
 VIRTUALENV = venv/
 
-run: npm_install pip_install
+run:
 	. $(VIRTUALENV)bin/activate ; export PYTHONPATH=`pwd`/app/:$(PYTHONPATH) ; python -W ignore::DeprecationWarning manage.py runserver
 
 install: npm_install create_virtualenv pip_install setup_db
