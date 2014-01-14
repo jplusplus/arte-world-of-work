@@ -58,20 +58,23 @@ class TypologyManager(models.Manager):
             )
         )
 
-
     def is_typology_type(self, type):
         is_safe_name = len(re.findall('[\W]', type)) == 0
         is_in_subtypes = filter(lambda x: x[0] == type, self.types) is not None 
         return is_in_subtypes and is_safe_name
 
-    def create_typology(self, typology_type):
-        typology_klass = self.klass_from_type(typology_type)
-        typology = typology_klass()
+    def create_typology(self, type=None, question_id=None):
+        print "question %s" % question_id
+        typology_klass = self.klass_from_type(type)
+        # import pdb; pdb.set_trace()
+        question = Question.objects.get(pk=question_id)
+        typology = typology_klass(sub_type=type, question=question)
         typology.save()
         return typology
 
 class Typology(models.Model):
     sub_type = models.CharField(_('Typology subtype'), max_length=30)
+    question = models.ForeignKey('Question')
     objects = TypologyManager()
 
     def get_subclass(self):
@@ -115,10 +118,12 @@ class Question(models.Model):
     label = models.CharField(_('Question label'), max_length=220)
     hint_text = models.CharField(_('Question hint text'), max_length=120)
     typology_type = models.CharField(_('Question typology'), max_length=30, choices=TYPOLOGIES_TYPES)
-    typology = models.OneToOneField(Typology, primary_key=True)
 
     def save(self, *args, **kwargs):
-        if self.typology_type:
-            self.typology = Typology.objects.create_typology(self.typology_type)
         super(Question, self).save()
+        if self.pk and self.typology_type:
+            Typology.objects.create_typology(
+                type=self.typology_type,
+                question_id=self.pk
+            )
 
