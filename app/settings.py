@@ -10,6 +10,10 @@
 # Creation : 14-Jan-2014
 # Last mod : 14-Jan-2014
 # -----------------------------------------------------------------------------
+import os 
+here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
+
+
 # Django settings for ArteWow project.
 
 DEBUG = True
@@ -124,6 +128,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    here('templates'),
 )
 
 INSTALLED_APPS = (

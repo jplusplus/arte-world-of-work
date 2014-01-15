@@ -13,63 +13,76 @@
 from django import forms
 from django.contrib import admin
 from django.contrib.admin import TabularInline, StackedInline
-from app.core.models import Question, Typology, SelectionTypology
-from app.core.models import NumberTypology, RangeNumberTypology
+from app.core.models import Question, Typology, BaseMultipleChoicesTypology
+from app.core.models import NumberTypology, RangeNumberTypology, BooleanTypology
+from app.core.models import RadioTypology, SelectionTypology
+
 
 class TypologyInlineFactory(object):
+    """
+    Instantiate typologies' inlines based on their base class (defined in 
+    `app.core.models`)
+    """
     types = {}
     @classmethod
     def get_instance(kls, type, related_model, site):
         try:
             inline = kls.types[type]
             inline['instance'] = inline['instance'] or inline['klass'](related_model, site)
-            print "instance: %s " % inline['instance']
             return inline['instance']
         except KeyError:
             msg = """
-                {typology} typology has not been registred, please register it 
+                "{typology}" class has not been registred, please register it 
                 using `{klass}.register_inline()` method
                 """.format(typology=type, klass=kls.__name__)
             raise Exception(msg)
 
-
     @classmethod
     def register_inline(klass, model, inline_klass):
+        # bind a django model to a subclass of InlineTypologyAdmin
         typology_type = model.__name__
-        klass.types[typology_type] = { 
+        klass.types[typology_type] = {
             'klass': inline_klass,
             'instance': None
         }
 
-class TypologyAdminForm(forms.ModelForm):
-    model = Typology
-
-class NumberTypologyAdminForm(TypologyAdminForm):
-    model = NumberTypology
-
-class RangeNumberTypologyAdminForm(TypologyAdminForm):
-    model = RangeNumberTypology
-
-class InlineTypologyAdmin(TabularInline):
+# -----------------------------------------------------------------------------
+# 
+#     Typologies InlineAdmin
+# 
+# -----------------------------------------------------------------------------
+class InlineTypologyAdmin(StackedInline):
     exclude = ('sub_type','question',)
-    form = TypologyAdminForm
     model = Typology
-
     def __unicode__(self):
         return self.__name__ 
 
+class InlineMultipleChoiceTypology(InlineTypologyAdmin):
+    # template = "admin/stacked_choices.dj.html"
+    model = BaseMultipleChoicesTypology
+
+
 class InlineNumberTypologyAdmin(InlineTypologyAdmin):
-    form = NumberTypologyAdminForm
     model = NumberTypology
 
 class InlineRangeNumberTypologyAdmin(InlineTypologyAdmin):
-    form = RangeNumberTypologyAdminForm
     model = RangeNumberTypology
+
+class InlineBooleanTypologyAdmin(InlineMultipleChoiceTypology):
+    model = BooleanTypology
 
 TypologyInlineFactory.register_inline(NumberTypology, InlineNumberTypologyAdmin)
 TypologyInlineFactory.register_inline(RangeNumberTypology, InlineRangeNumberTypologyAdmin)
+# mutliple choices typologies
+TypologyInlineFactory.register_inline(RadioTypology, InlineMultipleChoiceTypology)
+TypologyInlineFactory.register_inline(SelectionTypology, InlineMultipleChoiceTypology)
+TypologyInlineFactory.register_inline(BooleanTypology, InlineMultipleChoiceTypology)
 
-
+# -----------------------------------------------------------------------------
+# 
+#     Questions
+# 
+# -----------------------------------------------------------------------------
 class QuestionAdmin(admin.ModelAdmin):
     fields = ('label', 'hint_text', 'typology_type')
 
