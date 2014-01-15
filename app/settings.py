@@ -105,6 +105,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -138,6 +139,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     # ------------------------ external dependencies ------------------------ #
+    'debug_toolbar',
     # ------------------------ internal dependencies ------------------------ # 
     'app.core',
 )
@@ -170,3 +172,4 @@ LOGGING = {
         },
     }
 }
+
