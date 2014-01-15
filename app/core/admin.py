@@ -54,8 +54,6 @@ class InlineTypologyAdmin(TabularInline):
     exclude = ('sub_type','question',)
     form = TypologyAdminForm
     model = Typology
-    def __init__(self, *args, **kwargs): 
-        super(InlineTypologyAdmin, self).__init__(*args, **kwargs)
 
     def __unicode__(self):
         return self.__name__ 
@@ -64,16 +62,9 @@ class InlineNumberTypologyAdmin(InlineTypologyAdmin):
     form = NumberTypologyAdminForm
     model = NumberTypology
 
-    def __init__(self, *args, **kwargs):
-        super(InlineNumberTypologyAdmin, self).__init__(*args, **kwargs)
-
 class InlineRangeNumberTypologyAdmin(InlineTypologyAdmin):
     form = RangeNumberTypologyAdminForm
     model = RangeNumberTypology
-
-    def __init__(self, *args, **kwargs):
-        super(InlineRangeNumberTypologyAdmin, self).__init__(*args, **kwargs)
-
 
 TypologyInlineFactory.register_inline(NumberTypology, InlineNumberTypologyAdmin)
 TypologyInlineFactory.register_inline(RangeNumberTypology, InlineRangeNumberTypologyAdmin)
