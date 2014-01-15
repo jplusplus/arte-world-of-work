@@ -20,9 +20,9 @@ from django.contrib.contenttypes.models import ContentType
 #
 # -----------------------------------------------------------------------------
 class QuestionManager(models.Manager):
-    pass
     def all_questions(self):
         """ Rerturn all the question in the right and final type """
+        # FIXME: should return a QuerySet, not a list
         generic_questions = super(QuestionManager, self).all()
         questions = []
         for q in generic_questions:
