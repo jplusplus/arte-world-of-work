@@ -26,7 +26,10 @@ class QuestionManager(models.Manager):
         generic_questions = super(QuestionManager, self).all()
         questions = []
         for q in generic_questions:
-            q = q.content_type.model_class().objects.get(basequestion_ptr=q.id)
+            final_class = q.content_type.model_class()
+            # if it's a child of BaseQuestion
+            if "basequestion_ptr" in final_class.__dict__.keys():
+                q = final_class.objects.get(basequestion_ptr=q.id)
             questions.append(q)
         return questions
 
