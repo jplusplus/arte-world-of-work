@@ -129,4 +129,7 @@ class Question(models.Model):
                 question_id=self.pk
             )
 
+    def __unicode__(self):
+        return "{type}: {label}".format(type=self.typology_type, label=self.label[:25])
+
 # EOF
