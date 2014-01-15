@@ -87,7 +87,7 @@ class QuestionAdmin(admin.ModelAdmin):
         # this feature, they are here to verify that: 
         # - we are not adding one question
         # - we are not editing one existing question's typology_type 
-        inline_instances = []
+        inline_instances = super(QuestionAdmin, self).get_inline_instances(request, obj)
         typology_type = request.POST.get('typology_type', None)
         if not typology_type and obj != None and obj.typology_type and obj.pk:
             typology_type = obj.typology_type
