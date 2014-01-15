@@ -3,84 +3,54 @@
 # -----------------------------------------------------------------------------
 # Project : Arte - WoW
 # -----------------------------------------------------------------------------
-# Author : 
+# Author : Edouard Richard                                  <edou4rd@gmail.com>
 # -----------------------------------------------------------------------------
 # License : proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 14-Jan-2014
-# Last mod : 14-Jan-2014
+# Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
-from django import forms
 from django.contrib import admin
-from django.contrib.admin import TabularInline, StackedInline
-from app.core.models import Question, Typology, SelectionTypology
-from app.core.models import NumberTypology, RangeNumberTypology
+import app.core.models as models
+import sys
 
-class TypologyInlineFactory(object):
-    types = {}
-    @classmethod
-    def get_instance(kls, type, site):
-        inline = kls.types[type]
-        inline['instance'] = inline.get('instance', None) or inline['klass'](inline['model'], site)
-        print "instance: %s " % inline['instance']
-        return inline['instance']
-
-    @classmethod
-    def register_inline(klass, model, inline_klass):
-        typology_type = model.__name__
-        inline = {
-            'klass': inline_klass,
-            'model': model
-        }
-        # model "types: %s " % klass.types
-        # print "%s: %s " % (typology_type,  inline)
-        klass.types[typology_type] = inline
-
-class TypologyAdminForm(forms.ModelForm):
-    model = Typology
-
-class NumberTypologyAdminForm(TypologyAdminForm):
-    model = NumberTypology
-
-class RangeNumberTypologyAdminForm(TypologyAdminForm):
-    model = RangeNumberTypology
-
-class InlineTypologyAdmin(TabularInline):
-    exclude = ('sub_type','question',)
-    form = TypologyAdminForm
-    model = Typology
-
-class InlineNumberTypologyAdmin(InlineTypologyAdmin):
-    form = NumberTypologyAdminForm
-    model = NumberTypology
-
-class InlineRangeNumberTypologyAdmin(InlineTypologyAdmin):
-    form = RangeNumberTypologyAdminForm
-    model = RangeNumberTypology
-
-TypologyInlineFactory.register_inline(NumberTypology, InlineNumberTypologyAdmin)
-TypologyInlineFactory.register_inline(RangeNumberTypology, InlineRangeNumberTypologyAdmin)
-
+# -----------------------------------------------------------------------------
+#
+#    Question
+#
+# -----------------------------------------------------------------------------
 class QuestionAdmin(admin.ModelAdmin):
-    fields = ('label', 'hint_text', 'typology_type')
-    # inlines = (
-    #     # InlineNumberTypologyAdmin,
-    #     InlineRangeNumberTypologyAdmin,
-    # ) 
+    readonly_fields = ('content_type',)
+
     def get_inline_instances(self, request, obj=None):
+        """ Add a inline with the name Inline<QuestionClassName> if exists """
+        inline_model_admins = super(QuestionAdmin, self).get_inline_instances(request, obj)
+        if self.model:
+            # return the related Inline class for the given question_type.
+            # Inline class must have a name like Inline<QuestionClassName>
+            inline = getattr(sys.modules[__name__], "Inline%s" % (self.model.__name__), None)
+            if inline:
+                inline = inline(self.model, self.admin_site)
+                inline_model_admins.append(inline)
+        return inline_model_admins
 
-        typology_type = request.POST.get('typology_type') or None
-        if not typology_type and obj != None and obj.typology_type:
-            typology_type = obj.typology_type
-        print "typology: %s " % typology_type
-        if typology_type:
-            return (
-                TypologyInlineFactory.get_instance(typology_type, self.admin_site),
-            )
-        else:
-            return list()
+# -----------------------------------------------------------------------------
+#
+#    Inlines
+#
+# -----------------------------------------------------------------------------
+class InlineMultipleTextChoicesQuestion(admin.StackedInline):
+    model   = models.TextChoiceField
+    extra   = 0
+    max_num = 10
 
-# Register your models here.
-admin.site.register(Question, QuestionAdmin)
+# -----------------------------------------------------------------------------
+#
+#    Register your models here
+#
+# -----------------------------------------------------------------------------
+admin.site.register(models.BaseQuestion               , QuestionAdmin)
+admin.site.register(models.RangeNumberQuestion        , QuestionAdmin)
+admin.site.register(models.MultipleTextChoicesQuestion, QuestionAdmin)
 
 # EOF
