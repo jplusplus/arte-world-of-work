@@ -13,7 +13,6 @@
 from django import forms
 from django.contrib import admin
 from django.contrib.admin import TabularInline, StackedInline
-
 from app.core.models import Question, Typology, SelectionTypology
 from app.core.models import NumberTypology, RangeNumberTypology
 
@@ -26,7 +25,6 @@ class TypologyInlineFactory(object):
         print "instance: %s " % inline['instance']
         return inline['instance']
 
-
     @classmethod
     def register_inline(klass, model, inline_klass):
         typology_type = model.__name__
@@ -36,7 +34,6 @@ class TypologyInlineFactory(object):
         }
         # model "types: %s " % klass.types
         # print "%s: %s " % (typology_type,  inline)
-
         klass.types[typology_type] = inline
 
 class TypologyAdminForm(forms.ModelForm):
@@ -61,10 +58,8 @@ class InlineRangeNumberTypologyAdmin(InlineTypologyAdmin):
     form = RangeNumberTypologyAdminForm
     model = RangeNumberTypology
 
-
 TypologyInlineFactory.register_inline(NumberTypology, InlineNumberTypologyAdmin)
 TypologyInlineFactory.register_inline(RangeNumberTypology, InlineRangeNumberTypologyAdmin)
-
 
 class QuestionAdmin(admin.ModelAdmin):
     fields = ('label', 'hint_text', 'typology_type')
@@ -85,6 +80,7 @@ class QuestionAdmin(admin.ModelAdmin):
         else:
             return list()
 
-
 # Register your models here.
 admin.site.register(Question, QuestionAdmin)
+
+# EOF
