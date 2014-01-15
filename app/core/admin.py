@@ -13,7 +13,6 @@
 from django import forms
 from django.contrib import admin
 from django.contrib.admin import TabularInline, StackedInline
-
 from app.core.models import Question, Typology, SelectionTypology
 from app.core.models import NumberTypology, RangeNumberTypology
 
@@ -44,7 +43,6 @@ class TypologyInlineFactory(object):
 
 class TypologyAdminForm(forms.ModelForm):
     model = Typology
-
 
 class NumberTypologyAdminForm(TypologyAdminForm):
     model = NumberTypology
@@ -83,18 +81,6 @@ TypologyInlineFactory.register_inline(RangeNumberTypology, InlineRangeNumberTypo
 
 class QuestionAdmin(admin.ModelAdmin):
     fields = ('label', 'hint_text', 'typology_type')
-
-    # inlines = (
-    #     # InlineNumberTypologyAdmin,
-    #     InlineRangeNumberTypologyAdmin,
-    # )
-
-    # def __init__(self, *args, **kwargs): 
-    #     import pdb
-    #     # pdb.set_trace()
-    #     inlines = [
-    #         TypologyInlineFactory.get_class(typology_type)
-    #     ]
 
     def get_inline_instances(self, request, obj=None):
         # dynamic inline instanciation, the following conditions are set to enable 
