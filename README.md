@@ -31,7 +31,4 @@ make install
 ## Troubleshooting 
 - **I have a 'No module named defaults' error**
   
-  Try to run:
-  ```sh
-  pip install --upgrade -r requirements.txt
-  ```
+  Try to run: `pip install --upgrade -r requirements.txt`
