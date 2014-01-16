@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     # ------------------------ external dependencies ------------------------ #
     'debug_toolbar',
+    'django_countries',
     # ------------------------ internal dependencies ------------------------ # 
     'app.core',
 )
@@ -177,4 +178,3 @@ LOGGING = {
         },
     }
 }
-
