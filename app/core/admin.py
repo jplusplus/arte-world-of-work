@@ -39,18 +39,32 @@ class QuestionAdmin(admin.ModelAdmin):
 #    Inlines
 #
 # -----------------------------------------------------------------------------
-class InlineMultipleTextChoicesQuestion(admin.StackedInline):
+class InlineTextSelectionQuestion(admin.StackedInline):
     model   = models.TextChoiceField
     extra   = 0
     max_num = 10
+
+class InlineMediaSelectionQuestion(admin.StackedInline):
+    model   = models.MediaChoiceField
+    extra   = 0
+    max_num = 10 
+
+class InlineTextRadioQuestion(InlineTextSelectionQuestion):
+    pass 
+
+class InlineMediaRadioQuestion(InlineMediaSelectionQuestion):
+    pass
+
 
 # -----------------------------------------------------------------------------
 #
 #    Register your models here
 #
 # -----------------------------------------------------------------------------
-admin.site.register(models.BaseQuestion               , QuestionAdmin)
 admin.site.register(models.RangeNumberQuestion        , QuestionAdmin)
-admin.site.register(models.MultipleTextChoicesQuestion, QuestionAdmin)
+admin.site.register(models.TextSelectionQuestion      , QuestionAdmin)
+admin.site.register(models.MediaSelectionQuestion     , QuestionAdmin)
+admin.site.register(models.TextRadioQuestion          , QuestionAdmin)
+admin.site.register(models.MediaRadioQuestion         , QuestionAdmin)
 
 # EOF
