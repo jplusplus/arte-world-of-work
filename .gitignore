@@ -31,3 +31,6 @@ staticfiles
 lib
 node_modules
 catalog-v001.xml
+
+# Sublime files
+*.sublime-*
