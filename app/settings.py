@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     # ------------------------ external dependencies ------------------------ #
     'debug_toolbar',
     'django_countries',
+    'sorl.thumbnail',
     # ------------------------ internal dependencies ------------------------ # 
     'app.core',
 )

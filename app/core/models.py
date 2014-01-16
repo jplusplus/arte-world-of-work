@@ -16,6 +16,8 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django_countries.fields import CountryField
 
+from sorl.thumbnail import ImageField
+
 MEDIA_TYPES = (
     ('icon', _('Icon (small)')),
     ('image', _('Image (big)')),
@@ -65,6 +67,14 @@ class QuestionManager(models.Manager):
                 q = final_class.objects.get(basequestion_ptr=q.id)
             questions.append(q)
         return questions
+
+class BaseMedia(models.Model):
+    class Meta:
+        abstract = True 
+    picture = ImageField(upload_to='/uploaded')
+
+class QuestionMedia(BaseMedia):
+    question = models.OneToOneField('BaseQuestion')
 
 # -----------------------------------------------------------------------------
 #
@@ -160,7 +170,7 @@ class BaseChoiceField(models.Model):
 class TextChoiceField(BaseChoiceField):
     pass
 
-class MediaChoiceField(BaseChoiceField):
+class MediaChoiceField(BaseChoiceField, BaseMedia):
     pass
 
 # EOF

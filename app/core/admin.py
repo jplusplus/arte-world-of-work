@@ -11,6 +11,8 @@
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
 from django.contrib import admin
+from sorl.thumbnail.admin import AdminImageMixin
+
 import app.core.models as models
 import sys
 
@@ -44,7 +46,7 @@ class InlineTextSelectionQuestion(admin.StackedInline):
     extra   = 0
     max_num = 10
 
-class InlineMediaSelectionQuestion(admin.StackedInline):
+class InlineMediaSelectionQuestion(AdminImageMixin, admin.StackedInline):
     model   = models.MediaChoiceField
     extra   = 0
     max_num = 10 
