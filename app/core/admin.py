@@ -55,7 +55,6 @@ class InlineTextRadioQuestion(InlineTextSelectionQuestion):
 class InlineMediaRadioQuestion(InlineMediaSelectionQuestion):
     pass
 
-
 # -----------------------------------------------------------------------------
 #
 #    Register your models here
