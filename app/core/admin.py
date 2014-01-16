@@ -18,29 +18,14 @@ import sys
 
 # -----------------------------------------------------------------------------
 #
-#    Question
-#
-# -----------------------------------------------------------------------------
-class QuestionAdmin(admin.ModelAdmin):
-    readonly_fields = ('content_type',)
-
-    def get_inline_instances(self, request, obj=None):
-        """ Add a inline with the name Inline<QuestionClassName> if exists """
-        inline_model_admins = super(QuestionAdmin, self).get_inline_instances(request, obj)
-        if self.model:
-            # return the related Inline class for the given question_type.
-            # Inline class must have a name like Inline<QuestionClassName>
-            inline = getattr(sys.modules[__name__], "Inline%s" % (self.model.__name__), None)
-            if inline:
-                inline = inline(self.model, self.admin_site)
-                inline_model_admins.append(inline)
-        return inline_model_admins
-
-# -----------------------------------------------------------------------------
-#
 #    Inlines
 #
 # -----------------------------------------------------------------------------
+class InlineQuestionMedia(admin.StackedInline):
+    model = models.QuestionMedia
+    extra = 0
+    max_num = 1
+
 class InlineTextSelectionQuestion(admin.StackedInline):
     model   = models.TextChoiceField
     extra   = 0
@@ -57,6 +42,28 @@ class InlineTextRadioQuestion(InlineTextSelectionQuestion):
 class InlineMediaRadioQuestion(InlineMediaSelectionQuestion):
     pass
 
+# -----------------------------------------------------------------------------
+#
+#    Question
+#
+# -----------------------------------------------------------------------------
+class QuestionAdmin(admin.ModelAdmin):
+    readonly_fields = ('content_type',)
+    inlines = (
+        InlineQuestionMedia, # nesting question media edition
+    )
+
+    def get_inline_instances(self, request, obj=None):
+        """ Add a inline with the name Inline<QuestionClassName> if exists """
+        inline_model_admins = super(QuestionAdmin, self).get_inline_instances(request, obj)
+        if self.model:
+            # return the related Inline class for the given question_type.
+            # Inline class must have a name like Inline<QuestionClassName>
+            inline = getattr(sys.modules[__name__], "Inline%s" % (self.model.__name__), None)
+            if inline:
+                inline = inline(self.model, self.admin_site)
+                inline_model_admins.append(inline)
+        return inline_model_admins
 # -----------------------------------------------------------------------------
 #
 #    Register your models here

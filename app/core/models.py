@@ -131,7 +131,7 @@ class MediaTypeMixin(models.Model):
     # special model mixin for MediaChoices (radio and selection) 
     class Meta:
         abstract = True
-    media_type = models.CharField(_('Type of attached media'), max_length=15, \
+    media_type = models.CharField(_('Choice\'s media type'), max_length=15, \
                     choices=MEDIA_TYPES)
 
 class SelectionQuestionMixin(BaseQuestion):
