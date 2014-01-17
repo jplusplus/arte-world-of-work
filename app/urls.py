@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     # url(r'^ArteWow/', include('ArteWow.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
@@ -32,6 +32,7 @@ urlpatterns = patterns('',
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += patterns('',
+        (r'^public/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
         url(r'^__debug__/', include(debug_toolbar.urls)),
     )
 
