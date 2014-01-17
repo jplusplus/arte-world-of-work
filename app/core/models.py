@@ -10,15 +10,19 @@
 # Creation : 14-Jan-2014
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
-from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django_countries.fields import CountryField
-
 from sorl.thumbnail import ImageField
+from app.auth.models import UserProfile
 
+# -----------------------------------------------------------------------------
+#
+#     Constants
+# 
+# -----------------------------------------------------------------------------
 MEDIA_TYPES = (
     ('icon', _('Icon (small)')),
     ('image', _('Image (big)')),
@@ -29,11 +33,15 @@ MEDIA_TYPES = (
 #     Answer types
 # 
 # -----------------------------------------------------------------------------
+class AnswerManager(models.Manager):
+    def create_answer(self, question, user, value):
+        answer =  question.answer_type(question=question, user=user, value=value)
+        return answer
+
 class BaseAnswer(models.Model):
-    class Meta:
-        abstract = True
     user = models.ForeignKey(User)
-    question = models.ForeignKey('BaseQuestion')
+    question = models.ForeignKey('BaseQuestion', unique=True)
+    objects = AnswerManager()
 
 class CountryAnswer(BaseAnswer):
     value = CountryField()
@@ -50,9 +58,31 @@ class SelectionAnswer(BaseAnswer):
 class RadioAnswer(BaseAnswer):
     value = models.ForeignKey('BaseChoiceField')
 
+class UserProfileAnswer(BaseAnswer):
+    """
+    Base class for user answers. Its default behavior is to update
+    a related field in a user profile (for this answer's user).
+    """
+
+    def save(self, *args, **kwargs):
+        # retrieve user profile question (kind of downcasting of self.question)
+        question      = UserProfileQuestion.objects.get(id=self.question.id)
+        # get user profile
+        profile       = UserProfile.objects.get(user=self.user)
+        profile_field = question.profile_attribute
+        setattr(profile, profile_field, self.value)
+        profile.save()
+
+        super(UserProfileAnswer, self).save(*args, **kwargs)
+
+class UserCountryAnswer(UserProfileAnswer):
+    value = CountryField()
+
+class UserAgeAnswer(UserProfileAnswer):
+    value = models.PositiveIntegerField()
 # -----------------------------------------------------------------------------
 #
-#    Questions
+#    
 #
 # -----------------------------------------------------------------------------
 class QuestionManager(models.Manager):
@@ -87,6 +117,18 @@ class BaseQuestion(models.Model):
 
     def __unicode__(self):
         return "{type}: {label}".format(type=self.content_type, label=self.label[:25])
+
+class UserProfileQuestion(BaseQuestion):
+    profile_attribute = None
+    answer_type       = UserProfileAnswer
+
+class UserAgeQuestion(UserProfileQuestion):
+    profile_attribute = 'age'
+    answer_type       = UserAgeAnswer
+
+class UserCountryQuestion(UserProfileQuestion):
+    profile_attribute = 'country'
+    answer_type       = UserCountryAnswer
 
 class PictureMixin(models.Model):
     """
@@ -139,6 +181,7 @@ class QuestionPicture(PictureMixin):
 #   Single (radio) & multiple (selection) possible answer questions  
 #
 # -----------------------------------------------------------------------------
+
 class MediaTypeMixin(models.Model):
     """ 
     Special model mixin for MediaChoices (radio and selection)
