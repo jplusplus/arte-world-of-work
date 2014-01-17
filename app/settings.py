@@ -148,6 +148,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'django_countries',
     'sorl.thumbnail',
+    'south',
     # ------------------------ internal dependencies ------------------------ # 
     'app.core',
 )
