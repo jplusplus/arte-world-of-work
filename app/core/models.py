@@ -10,6 +10,7 @@
 # Creation : 14-Jan-2014
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
@@ -51,7 +52,7 @@ class RadioAnswer(BaseAnswer):
 
 # -----------------------------------------------------------------------------
 #
-#    Questions Manager
+#    Questions
 #
 # -----------------------------------------------------------------------------
 class QuestionManager(models.Manager):
@@ -68,20 +69,11 @@ class QuestionManager(models.Manager):
             questions.append(q)
         return questions
 
-class BaseMedia(models.Model):
-    class Meta:
-        abstract = True 
-    picture = ImageField(upload_to='/uploaded')
 
-class QuestionMedia(BaseMedia):
-    question = models.OneToOneField('BaseQuestion')
-
-# -----------------------------------------------------------------------------
-#
-#    Generic Question
-#
-# -----------------------------------------------------------------------------
 class BaseQuestion(models.Model):
+    """
+    Base class for question, will be inherited by concrete question typologies
+    """
     answer_type  = None
     label        = models.CharField(_('Question label')    , max_length=220)
     hint_text    = models.CharField(_('Question hint text'), max_length=120)
@@ -96,66 +88,107 @@ class BaseQuestion(models.Model):
     def __unicode__(self):
         return "{type}: {label}".format(type=self.content_type, label=self.label[:25])
 
-# -----------------------------------------------------------------------------
-#
-#    Question: Number
-#
-# -----------------------------------------------------------------------------
-class NumberQuestion(BaseQuestion):
-    answer_type = NumberAnswer
-    unit = models.CharField(_('Number unit (e.g "%", "$", "kg")'), max_length=15)
+class PictureMixin(models.Model):
+    """
+    Mixin for attached pictures (to question or choice)
+    """
+    class Meta:
+        abstract = True 
+    picture = ImageField(upload_to='uploaded')
 
-# -----------------------------------------------------------------------------
-#
-#    Question: Range Number
-#
-# -----------------------------------------------------------------------------
-class RangeNumberQuestion(BaseQuestion):
+    
+class NumberQuestion(BaseQuestion):
+    """
+    Number question are designed for age and other types of questions where 
+    we ask user to enter a 2 digit number
+    """
     answer_type = NumberAnswer
-    unit = models.CharField(_('Number unit (e.g "%", "$", "kg")'), max_length=15)
+
+class TypedNumberQuestion(BaseQuestion):
+    """
+    TypedNumber question are questions where we ask user to select a number
+    defined insided an interval.
+    """
+    answer_type = NumberAnswer
+    unit = models.CharField(_('Number type'), help_text=_('Unit that will be displayed after the min and max numbers.'), max_length=15)
     min_number = models.PositiveIntegerField(default=0)
     max_number = models.PositiveIntegerField(default=100)
 
 class DateQuestion(BaseQuestion):
+    """ Use it when you want to ask a date to user """ 
     answer_type = DateAnswer
 
 class CountryQuestion(BaseQuestion):
+    """ Question designed to let user select between a list of countries """ 
     answer_type = CountryAnswer
 
 # -----------------------------------------------------------------------------
+# 
+#   Question attachments
+# 
+# -----------------------------------------------------------------------------
+class QuestionPicture(PictureMixin):
+    """
+    Attached picture for a question
+    """
+    question = models.OneToOneField('BaseQuestion')
+
+
+# -----------------------------------------------------------------------------
 #
-#    Question: Multiple & single choice
+#   Single (radio) & multiple (selection) possible answer questions  
 #
 # -----------------------------------------------------------------------------
 class MediaTypeMixin(models.Model):
-    # special model mixin for MediaChoices (radio and selection) 
+    """ 
+    Special model mixin for MediaChoices (radio and selection)
+    Will include media_type field to inherited classes
+    """ 
     class Meta:
         abstract = True
     media_type = models.CharField(_('Choice\'s media type'), max_length=15, \
                     choices=MEDIA_TYPES)
 
-class SelectionQuestionMixin(BaseQuestion):
-    class Meta:
-        abstract = True
-    answer_type = SelectionAnswer
-    
 class RadioQuestionMixin(BaseQuestion):
+    """
+    Mixin for radio question (one single answer)
+    """ 
     class Meta:
         abstract = True
     answer_type = RadioAnswer
 
-# multiple text choices 
-class TextSelectionQuestion(SelectionQuestionMixin):
-    pass
+class SelectionQuestionMixin(BaseQuestion):
+    """ 
+    Mixin for selection question (one on more answer)
+    """
+    class Meta:
+        abstract = True
+    answer_type = SelectionAnswer
 
-# multiple media choices
-class MediaSelectionQuestion(SelectionQuestionMixin, MediaTypeMixin):
+class TextSelectionQuestion(SelectionQuestionMixin):
+    """ Multiple Choices (text) question - one or more answer """
     pass
 
 class TextRadioQuestion(RadioQuestionMixin):
+    """ Multiple Choice (text) question - single answer """
     pass 
 
+class MediaSelectionQuestion(SelectionQuestionMixin, MediaTypeMixin):
+    """ 
+    Multiple Choices (image or icon) question - one or more answer. 
+
+    Inherit from :model:`app.core.models.MediaTypeMixin`, thus inherit from its 
+    `media_type` model's field.
+    """
+    pass
+
 class MediaRadioQuestion(RadioQuestionMixin, MediaTypeMixin):
+    """ 
+    Multiple Choice (image or icon) question - single answer. 
+
+    Inherit from :model:`app.core.models.MediaTypeMixin`, thus inherit from its 
+    `media_type` model's field.
+    """
     pass
 
 # -----------------------------------------------------------------------------
@@ -164,13 +197,17 @@ class MediaRadioQuestion(RadioQuestionMixin, MediaTypeMixin):
 # 
 # -----------------------------------------------------------------------------
 class BaseChoiceField(models.Model):
+    """
+    Base class for choices, will be inherited by concrete choices (text and 
+    media)
+    """
     question = models.ForeignKey('BaseQuestion')
     title = models.CharField(_('Title of this choice'), max_length=120)
 
 class TextChoiceField(BaseChoiceField):
     pass
 
-class MediaChoiceField(BaseChoiceField, BaseMedia):
+class MediaChoiceField(BaseChoiceField, PictureMixin):
     pass
 
 # EOF

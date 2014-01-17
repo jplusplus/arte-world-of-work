@@ -22,7 +22,7 @@ import sys
 #
 # -----------------------------------------------------------------------------
 class InlineQuestionMedia(admin.StackedInline):
-    model = models.QuestionMedia
+    model = models.QuestionPicture
     extra = 0
     max_num = 1
 
@@ -69,7 +69,7 @@ class QuestionAdmin(admin.ModelAdmin):
 #    Register your models here
 #
 # -----------------------------------------------------------------------------
-admin.site.register(models.RangeNumberQuestion        , QuestionAdmin)
+admin.site.register(models.TypedNumberQuestion        , QuestionAdmin)
 admin.site.register(models.TextSelectionQuestion      , QuestionAdmin)
 admin.site.register(models.MediaSelectionQuestion     , QuestionAdmin)
 admin.site.register(models.TextRadioQuestion          , QuestionAdmin)
