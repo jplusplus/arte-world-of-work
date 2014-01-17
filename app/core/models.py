@@ -17,10 +17,6 @@ from django.contrib.contenttypes.models import ContentType
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
 
-def log(msg):
-    from datetime import datetime
-    print "\n{t}:\t{m}".format(t=datetime.now(), m=msg)
-
 # -----------------------------------------------------------------------------
 #
 #     Constants
@@ -80,7 +76,6 @@ class UserProfileAnswer(BaseAnswer):
         # get user profile
         profile       = UserProfile.objects.get(user=self.user)
         profile_field = self.question.__class__.profile_attribute
-        log("profile_field = %s; question = %s" % (profile_field, self.question))
         setattr(profile, profile_field, self.value)
         profile.save()
 
