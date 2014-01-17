@@ -14,3 +14,4 @@ psycopg2==2.4.6
 South==0.8.4
 Pillow==2.3.0
 sorl-thumbnail==11.12
+docutils==0.11
