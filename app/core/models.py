@@ -29,8 +29,8 @@ MEDIA_TYPES = (
 # User profile 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
-    age = models.PositiveIntegerField()
-    country = CountryField()
+    age = models.PositiveIntegerField(null=True)
+    country = CountryField(null=True)
 
 # -----------------------------------------------------------------------------
 # 
