@@ -17,6 +17,10 @@ from django.contrib.contenttypes.models import ContentType
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
 
+def log(msg):
+    from datetime import datetime
+    print "\n{t}:\t{m}".format(t=datetime.now(), m=msg)
+
 # -----------------------------------------------------------------------------
 #
 #     Constants
@@ -63,6 +67,7 @@ class RadioAnswer(BaseAnswer):
     value = models.ForeignKey('BaseChoiceField')
 
 class UserProfileAnswer(BaseAnswer):
+
     """
     Base class for user answers. Its default behavior is to update
     a related field in a user profile (for this answer's user).
@@ -70,10 +75,12 @@ class UserProfileAnswer(BaseAnswer):
 
     def save(self, *args, **kwargs):
         # retrieve user profile question (kind of downcasting of self.question)
-        question      = UserProfileQuestion.objects.get(id=self.question.id)
+        # import pdb; pdb.set_trace()
+
         # get user profile
         profile       = UserProfile.objects.get(user=self.user)
-        profile_field = question.profile_attribute
+        profile_field = self.question.__class__.profile_attribute
+        log("profile_field = %s; question = %s" % (profile_field, self.question))
         setattr(profile, profile_field, self.value)
         profile.save()
 
@@ -86,7 +93,7 @@ class UserAgeAnswer(UserProfileAnswer):
     value = models.PositiveIntegerField()
 # -----------------------------------------------------------------------------
 #
-#    
+#    Questions
 #
 # -----------------------------------------------------------------------------
 class QuestionManager(models.Manager):
@@ -129,10 +136,16 @@ class UserProfileQuestion(BaseQuestion):
 class UserAgeQuestion(UserProfileQuestion):
     profile_attribute = 'age'
     answer_type       = UserAgeAnswer
+    def __init__(self, *args, **kwargs):
+        super(UserAgeQuestion, self).__init__(*args, **kwargs)
+        self.fields['profile_attribute'] = 'age'
+
 
 class UserCountryQuestion(UserProfileQuestion):
     profile_attribute = 'country'
     answer_type       = UserCountryAnswer
+    def __init__(self, *args, **kwargs):
+        super(UserCountryQuestion, self).__init__(*args, **kwargs)
 
 class PictureMixin(models.Model):
     """
