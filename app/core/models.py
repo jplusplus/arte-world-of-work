@@ -16,7 +16,6 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
-from app.auth.models import UserProfile
 
 # -----------------------------------------------------------------------------
 #
@@ -27,6 +26,11 @@ MEDIA_TYPES = (
     ('icon', _('Icon (small)')),
     ('image', _('Image (big)')),
 )
+# User profile 
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, unique=True)
+    age = models.PositiveIntegerField()
+    country = CountryField()
 
 # -----------------------------------------------------------------------------
 # 

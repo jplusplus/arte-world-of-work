@@ -1,6 +1,5 @@
 # all core related tests should go here
-from app.auth.models             import UserProfile
-from app.core.models             import BaseAnswer, UserCountryQuestion
+from app.core.models             import BaseAnswer, UserCountryQuestion, UserProfile
 from django.contrib.auth.models  import User
 from django.test                 import TestCase
 from django_countries.fields     import CountryField
