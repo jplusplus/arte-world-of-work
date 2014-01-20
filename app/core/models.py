@@ -10,10 +10,12 @@
 # Creation : 14-Jan-2014
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
-from django.db import models
-from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.utils.translation import ugettext as _
+
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
 
@@ -63,6 +65,16 @@ class CountryAnswer(BaseAnswer):
 class NumberAnswer(BaseAnswer):
     value = models.IntegerField()
 
+class TypedNumberAnswer(NumberAnswer):
+
+    def clean(self):
+        question = TypedNumberQuestion.objects.get(pk=self.question_id)
+        if self.value:
+            if self.value < question.min_number:
+                raise ValidationError('Answer is out of range: inferior to min_number')
+            if self.value > question.max_number: 
+                raise ValidationError('Answer is out of range: inferior to min_number')
+
 class DateAnswer(BaseAnswer):
     value = models.DateTimeField()
 
@@ -80,9 +92,6 @@ class UserProfileAnswer(BaseAnswer):
     """
 
     def save(self, *args, **kwargs):
-        # retrieve user profile question (kind of downcasting of self.question)
-        # import pdb; pdb.set_trace()
-
         # get user profile
         profile       = UserProfile.objects.get(user=self.user)
         profile_field = self.question.__class__.profile_attribute
@@ -168,7 +177,7 @@ class TypedNumberQuestion(BaseQuestion):
     TypedNumber question are questions where we ask user to select a number
     defined insided an interval.
     """
-    answer_type = NumberAnswer
+    answer_type = TypedNumberAnswer
     unit = models.CharField(_('Number type'), help_text=_('Unit that will be displayed after the min and max numbers.'), max_length=15)
     min_number = models.PositiveIntegerField(default=0)
     max_number = models.PositiveIntegerField(default=100)
