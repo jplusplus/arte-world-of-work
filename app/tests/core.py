@@ -121,7 +121,6 @@ class CoreTestCase(TestCase):
             answer.save()
         except ValidationError:
             failed = True
-
         self.assertTrue(failed)
 
 
@@ -134,7 +133,6 @@ class CoreTestCase(TestCase):
             answer = BaseAnswer.objects.create_answer(question, self.user, value)
             answer.save()
             iteration += 1 
-
 
         answers = BaseQuestion.objects.get(pk=self.question4.id).baseanswer_set.all()
         self.assertEqual(len(answers), iteration)
