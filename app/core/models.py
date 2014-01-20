@@ -131,16 +131,11 @@ class UserProfileQuestion(BaseQuestion):
 class UserAgeQuestion(UserProfileQuestion):
     profile_attribute = 'age'
     answer_type       = UserAgeAnswer
-    def __init__(self, *args, **kwargs):
-        super(UserAgeQuestion, self).__init__(*args, **kwargs)
-        self.fields['profile_attribute'] = 'age'
 
 
 class UserCountryQuestion(UserProfileQuestion):
     profile_attribute = 'country'
     answer_type       = UserCountryAnswer
-    def __init__(self, *args, **kwargs):
-        super(UserCountryQuestion, self).__init__(*args, **kwargs)
 
 class PictureMixin(models.Model):
     """
