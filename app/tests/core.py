@@ -4,6 +4,7 @@ from app.core.models             import BaseAnswer, UserCountryQuestion, UserPro
 from app.core.models             import DateQuestion, TypedNumberQuestion
 from app.core.models             import TextSelectionQuestion, TextRadioQuestion
 from app.core.models             import UserAgeQuestion, TextChoiceField
+from app.core.models             import BaseQuestion
 from django.contrib.auth.models  import User
 from django.core.exceptions      import ValidationError
 from django.test                 import TestCase
@@ -125,6 +126,7 @@ class CoreTestCase(TestCase):
 
 
     def test_multiple_answer(self): 
+        # test that we can actually create multiple answer for a given question 
         iteration = 0
         question = self.question4
         while iteration < 20:
@@ -132,3 +134,7 @@ class CoreTestCase(TestCase):
             answer = BaseAnswer.objects.create_answer(question, self.user, value)
             answer.save()
             iteration += 1 
+
+
+        answers = BaseQuestion.objects.get(pk=self.question4.id).baseanswer_set.all()
+        self.assertEqual(len(answers), iteration)
