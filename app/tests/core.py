@@ -120,5 +120,15 @@ class CoreTestCase(TestCase):
             answer.save()
         except ValidationError:
             failed = True
-            
+
         self.assertTrue(failed)
+
+
+    def test_multiple_answer(self): 
+        iteration = 0
+        question = self.question4
+        while iteration < 20:
+            value = 100
+            answer = BaseAnswer.objects.create_answer(question, self.user, value)
+            answer.save()
+            iteration += 1 

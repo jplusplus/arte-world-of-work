@@ -69,10 +69,12 @@ class QuestionAdmin(admin.ModelAdmin):
 #    Register your models here
 #
 # -----------------------------------------------------------------------------
-admin.site.register(models.TypedNumberQuestion        , QuestionAdmin)
-admin.site.register(models.TextSelectionQuestion      , QuestionAdmin)
-admin.site.register(models.MediaSelectionQuestion     , QuestionAdmin)
-admin.site.register(models.TextRadioQuestion          , QuestionAdmin)
-admin.site.register(models.MediaRadioQuestion         , QuestionAdmin)
+admin.site.register(models.NumberQuestion        , QuestionAdmin)
+admin.site.register(models.DateQuestion          , QuestionAdmin)
+admin.site.register(models.TypedNumberQuestion   , QuestionAdmin)
+admin.site.register(models.TextSelectionQuestion , QuestionAdmin)
+admin.site.register(models.MediaSelectionQuestion, QuestionAdmin)
+admin.site.register(models.TextRadioQuestion     , QuestionAdmin)
+admin.site.register(models.MediaRadioQuestion    , QuestionAdmin)
 
 # EOF

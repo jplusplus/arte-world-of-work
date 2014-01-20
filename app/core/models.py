@@ -56,7 +56,7 @@ class AnswerManager(models.Manager):
 
 class BaseAnswer(models.Model):
     user = models.ForeignKey(User)
-    question = models.ForeignKey('BaseQuestion', unique=True)
+    question = models.ForeignKey('BaseQuestion')
     objects = AnswerManager()
 
 class CountryAnswer(BaseAnswer):
