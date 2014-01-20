@@ -39,7 +39,17 @@ class UserProfile(models.Model):
 # -----------------------------------------------------------------------------
 class AnswerManager(models.Manager):
     def create_answer(self, question, user, value):
-        answer =  question.answer_type(question=question, user=user, value=value)
+        answer_type =  question.answer_type
+        answer = answer_type(question=question, user=user)
+
+        # import pdb; pdb.set_trace()
+        # check if value field is ManyToMany, ForeignKey or other
+        if 'value' in [(f.name) for f in answer._meta.many_to_many]:
+            answer.save()
+            for val in value:
+                answer.value.add(val)
+        else:
+            answer.value = value
         return answer
 
 class BaseAnswer(models.Model):
