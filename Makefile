@@ -26,4 +26,7 @@ pip_install:
 	# Install pip packages
 	. $(VIRTUALENV)bin/activate; pip install -r requirements.txt
 
+test: 
+	. $(VIRTUALENV)bin/activate; django-admin.py test app.tests.core
+
 # EOF
