@@ -66,14 +66,13 @@ class NumberAnswer(BaseAnswer):
     value = models.IntegerField()
 
 class TypedNumberAnswer(NumberAnswer):
-
     def clean(self):
         question = TypedNumberQuestion.objects.get(pk=self.question_id)
         if self.value:
             if self.value < question.min_number:
                 raise ValidationError('Answer is out of range: inferior to min_number')
             if self.value > question.max_number: 
-                raise ValidationError('Answer is out of range: inferior to min_number')
+                raise ValidationError('Answer is out of range: superior to max_number')
 
 class DateAnswer(BaseAnswer):
     value = models.DateTimeField()

@@ -1,9 +1,11 @@
 # all core related tests should go here
 from app                         import utils   
 from app.core.models             import BaseAnswer, UserCountryQuestion, UserProfile
-from app.core.models             import UserAgeQuestion, TextChoiceField
+from app.core.models             import DateQuestion, TypedNumberQuestion
 from app.core.models             import TextSelectionQuestion, TextRadioQuestion
+from app.core.models             import UserAgeQuestion, TextChoiceField
 from django.contrib.auth.models  import User
+from django.core.exceptions      import ValidationError
 from django.test                 import TestCase
 
 
@@ -13,11 +15,14 @@ class CoreTestCase(TestCase):
         # create user
         self.user = User.objects.create()
         UserProfile.objects.create(user=self.user)
+        # user question (country)
         self.user_question1 = UserCountryQuestion(label='l', hint_text='h')
         self.user_question1.save()
+        # user question (age)
         self.user_question2 = UserAgeQuestion(label='Age ?', hint_text='Nope')
         self.user_question2.save()
 
+        # question 1 - text selection (1+ answer(s))
         self.question1 = TextSelectionQuestion(label='Choices ?', hint_text='Chose one answer')
         self.question1.save()
         self.question1_choices = (
@@ -26,6 +31,8 @@ class CoreTestCase(TestCase):
             TextChoiceField(title='choice3', question=self.question1),
         )
         [c.save() for c in self.question1_choices]
+
+        # question 2 - text radio (1 answer)
         self.question2 = TextRadioQuestion(label='Choices ?', hint_text='Chose one answer')
         self.question2.save()
         self.question2_choices = (
@@ -35,8 +42,16 @@ class CoreTestCase(TestCase):
         )
         [c.save() for c in self.question2_choices]
 
+        # question 3 - date question 
+        self.question3 = DateQuestion(label='Date ?', hint_text='Enter a date')
+        self.question3.save()        
 
+        # question 4 - typed number question 
+        self.question4 = TypedNumberQuestion(
+            label='Your weight ?', hint_text='Enter a date', unit='kg',
+            min_number=0, max_number=200)
 
+        self.question4.save()
 
     # Test that answering a user question change the answerer profile
     def test_answer_user_question_country(self): 
@@ -79,9 +94,31 @@ class CoreTestCase(TestCase):
 
     def test_answer_date_question(self):
         # TODO
-        code_me = 'PLEASE'
-        # value = 
+        from datetime import datetime
+        value = datetime.now()
+        question = self.question3 
+        answer = BaseAnswer.objects.create_answer(question, self.user, value)
+        answer.save()
+        self.assertEqual(value, answer.value)
 
-    def test_answer_number_question(self):
+
+    def test_answer_typednumber_question(self):
         # TODO
-        code_me = 'PLEASE'
+        value = 20
+        question = self.question4
+        answer = BaseAnswer.objects.create_answer(question, self.user, value)
+        answer.save()
+        self.assertEqual(value, answer.value)
+
+    def test_answer_typednumber_question_outofrange(self):
+        value = 300 
+        question = self.question4
+        failed = False
+        try:
+            answer = BaseAnswer.objects.create_answer(question, self.user, value)
+            answer.clean()
+            answer.save()
+        except ValidationError:
+            failed = True
+            
+        self.assertTrue(failed)
