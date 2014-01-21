@@ -151,6 +151,7 @@ INSTALLED_APPS = (
     'south',
     # ------------------------ internal dependencies ------------------------ # 
     'app.core',
+    'app.translations',
 )
 
 # A sample logging configuration. The only tangible logging
