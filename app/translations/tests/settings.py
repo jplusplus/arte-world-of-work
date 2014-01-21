@@ -23,3 +23,5 @@ def except_south(iterable):
             result.append(el)
 
     return result
+
+MIDDLEWARE_CLASSES = settings.MIDDLEWARE_CLASSES

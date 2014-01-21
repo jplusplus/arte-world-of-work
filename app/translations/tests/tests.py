@@ -28,7 +28,8 @@ class SyncFromDB(TestCase):
 
     def test_created_strings(self):
         call_command('sync_db_translations')
-        from .strings import STRINGS
+        # we import created python file
+        from .strings import STRINGS 
         self.assertEqual(len(STRINGS), 2)
             
 
