@@ -44,7 +44,6 @@ class AnswerManager(models.Manager):
         answer_type =  question.answer_type
         answer = answer_type(question=question, user=user)
 
-        # import pdb; pdb.set_trace()
         # check if value field is ManyToMany, ForeignKey or other
         if 'value' in [(f.name) for f in answer._meta.many_to_many]:
             answer.save()
