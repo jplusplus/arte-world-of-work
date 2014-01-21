@@ -2,7 +2,8 @@
 from django.db.models.base import ModelBase
 from django.utils.six import with_metaclass
 from django.db.models import fields
-from django.core.exceptions import ImproperlyConfigured
+from django.utils.translation import ugettext_lazy as _
+
 
 """
 Most parts come from django-modeltranslations. 
@@ -18,6 +19,10 @@ SUPPORTED_FIELDS = (
 )
 
 class GettextFieldDescriptor(object):
+    """
+    Field wrapper (for __get__ method)
+    """
+
     def __init__(self, field):
         self.field = field
 
@@ -26,7 +31,7 @@ class GettextFieldDescriptor(object):
             return self
         val = getattr(instance, self.field.name, None)
         if val is not None:
-            return val 
+            return _(val)
         return None
 
 
@@ -102,9 +107,12 @@ class Translator(object):
     def register(self, model, opts_class=None, **options):
         opts = self._get_options_for_model(model, opts_class, **options)
         for field_name in opts.local_fields.keys():
+
             field = model._meta.get_field(field_name)
+            ref_field_name = "ref_{field}".format(field=field_name)
             descriptor = GettextFieldDescriptor(field)
             setattr(model, field_name, descriptor)
+            setattr(model, ref_field_name, field)
 
 
     def unregister(self, model_or_iterable):

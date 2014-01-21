@@ -22,3 +22,4 @@ LANGUAGES = (('fr', 'French'),
 
 LANGUAGE_CODE = 'en'
 
+TRANSLATION_STRING_FILE = here('/translations/strings.py')
