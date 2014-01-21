@@ -26,7 +26,11 @@ pip_install:
 	# Install pip packages
 	. $(VIRTUALENV)bin/activate; pip install -r requirements.txt
 
-test: 
+test:
 	. $(VIRTUALENV)bin/activate; django-admin.py test app.tests.core
+
+test_translations:
+	. $(VIRTUALENV)bin/activate; django-admin.py test app.translations.tests --settings=app.translations.tests.settings
+
 
 # EOF
