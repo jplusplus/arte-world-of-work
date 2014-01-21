@@ -8,14 +8,11 @@ def autodiscover():
     not present. This forces an import on them to register.
     Also import explicit modules.
     """
-    import os
-    import sys
     import copy
     from django.conf import settings
     from django.utils.importlib import import_module
     from django.utils.module_loading import module_has_submodule
-    from modeltranslation.translator import translator
-    from modeltranslation.settings import TRANSLATION_FILES, DEBUG
+    from app.translations.translator import translator
 
     for app in settings.INSTALLED_APPS:
         mod = import_module(app)
@@ -35,9 +32,5 @@ def autodiscover():
             # attempting to import it, otherwise we want it to bubble up.
             if module_has_submodule(mod, 'translation'):
                 raise
-
-    for module in TRANSLATION_FILES:
-        import_module(module)
-
 
 autodiscover()

@@ -2,13 +2,23 @@
 """
 Settings overrided for test time
 """
-from django.conf import settings
+from app.settings import *
 
-INSTALLED_APPS = tuple(settings.INSTALLED_APPS) + (
+def except_south(iterable):
+    result = []
+    for el in iterable:
+        if el != 'south':
+            result.append(el)
+
+    return result
+
+INSTALLED_APPS = tuple(except_south(INSTALLED_APPS)) + (
     'app.translations.tests',
 )
+
 USE_I18N = True
-LANGUAGES = (('de', 'Deutsch'),
+LANGUAGES = (('fr', 'French'),
              ('en', 'English'))
 
 LANGUAGE_CODE = 'en'
+

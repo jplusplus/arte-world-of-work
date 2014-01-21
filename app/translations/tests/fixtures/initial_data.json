@@ -1,0 +1,16 @@
+[
+  {
+    "model": "tests.testmodel",
+    "pk": 1,
+    "fields": {
+      "title": "my title"
+    }
+  },
+  {
+    "model": "tests.testmodel",
+    "pk": 2,
+    "fields": {
+      "title": "an other title"
+    }
+  }
+]
