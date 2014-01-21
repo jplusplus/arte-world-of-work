@@ -14,9 +14,10 @@ class TranslationsLocalesTestCase(TestCase):
         pass 
 
     def test_translated_field_values(self):
-        self.obj = TestModel.objects.get(pk=1)
-        val = self.obj.title
         settings.LANGUAGE_CODE = 'fr'
+        self.obj = TestModel.objects.get(pk=1)
+        # import pdb; pdb.set_trace()
+        val = self.obj.title
         self.assertEqual(val, 'mon titre')
 
         settings.LANGUAGE_CODE = 'en'
@@ -27,12 +28,7 @@ class SyncFromDB(TestCase):
 
     def test_created_strings(self):
         call_command('sync_db_translations')
-        exists = False
-        try:
-            with open('translations_strings.py'):
-                exists = True
-        except IOError:
-            pass
-
-        self.assertTrue(exists)
+        from .strings import STRINGS
+        self.assertEqual(len(STRINGS), 2)
+            
 

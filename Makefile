@@ -30,7 +30,7 @@ test:
 	. $(VIRTUALENV)bin/activate; python manage.py test app.tests.core
 
 test_translations:
-	. $(VIRTUALENV)bin/activate; python manage.py test app.translations.tests --settings=app.translations.tests.settings
+	. $(VIRTUALENV)bin/activate; python manage.py test app.translations.tests --settings=app.translations.tests.settings_tests
 
 
 # EOF

@@ -18,6 +18,17 @@ SUPPORTED_FIELDS = (
     fields.TextField,
 )
 
+class OriginalFieldDescriptor(object):
+    def __init__(self, field):
+        self.field = field
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        val = getattr(instance, self.field.name, None)
+        if val is not None:
+            return val
+
 class GettextFieldDescriptor(object):
     """
     Field wrapper (for __get__ method)
@@ -28,6 +39,7 @@ class GettextFieldDescriptor(object):
 
     def __get__(self, instance, owner):
         if instance is None:
+            import pdb; pdb.set_trace()
             return self
         val = getattr(instance, self.field.name, None)
         if val is not None:
@@ -106,13 +118,17 @@ class Translator(object):
 
     def register(self, model, opts_class=None, **options):
         opts = self._get_options_for_model(model, opts_class, **options)
-        for field_name in opts.local_fields.keys():
+        opts.registered = True
 
+        for field_name in opts.local_fields.keys():
+            # override the default 'title' attr for model
             field = model._meta.get_field(field_name)
-            ref_field_name = "ref_{field}".format(field=field_name)
             descriptor = GettextFieldDescriptor(field)
             setattr(model, field_name, descriptor)
-            setattr(model, ref_field_name, field)
+
+            ref_field_name = "ref_{field}".format(field=field_name)
+            original_descriptor = OriginalFieldDescriptor(field)
+            setattr(model, ref_field_name, original_descriptor)
 
 
     def unregister(self, model_or_iterable):
@@ -147,7 +163,7 @@ class Translator(object):
         Returns a list of all registered models, or just concrete
         registered models.
         """
-        return [model for (model, opts) in self._registry.items()
+        return [(model, opts) for (model, opts) in self._registry.items()
                 if opts.registered and (not model._meta.abstract or abstract)]
 
     def _get_options_for_model(self, model, opts_class=None, **options):

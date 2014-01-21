@@ -8,10 +8,9 @@
 # License :  proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 2014-01-21 10:25:09
-# Last mod :  2014-01-21 16:32:08
+# Last mod :  2014-01-21 18:01:25
 # -----------------------------------------------------------------------------
-
-from django.core.management import call_command
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.template import Context, Template
 from optparse import make_option
@@ -23,7 +22,7 @@ OPT_STRINGS_ONLY='strings_only'
 def extract_strings_from_db():
     strings = []
     models = translator.get_registered_models()
-    for model, opts in models:
+    for (model, opts) in models:
         # loop over model instances
         for instance in model.objects.all():
             for field_name in opts.fields:
@@ -33,17 +32,12 @@ def extract_strings_from_db():
 
     return strings
 
-
 def write_strings(strings):
-    template = Template(u'''
-    STRINGS = (
-        {% for str in strings %}
-        _("{{ str }}"")
-        {% endfor %}
-    ''')
+    template = Template(u'''STRINGS = ({% for str in strings %}_("{{ str }}"),{% endfor %})''')
     context = Context({'strings': strings})
     output = template.render(context)
-    print output
+    f = open(settings.TRANSLATION_STRINGS_FILE, 'w+')
+    f.write(output)
 
 def sync_strings():
     strings = extract_strings_from_db()
@@ -53,14 +47,10 @@ def sync_strings():
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
         make_option('--strings-only', default=False, dest=OPT_STRINGS_ONLY,
-            help='Will update only settings.TRANSLATION_I18N_STRINGS file',
-            action='store_true')
+            help='Will update only settings.TRANSLATION_STRINGS_FILE file',
+            action='store_true'),
     )
     help = "Synchronize translations strings with database records"
 
-    def handle_noargs(self, *args, **opts):
-        strings_only = opts.get(OPT_STRINGS_ONLY)
+    def handle(self, *args, **opts):
         sync_strings()
-        if not strings_only:
-            call_command('makemessages')
-
