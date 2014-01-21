@@ -27,10 +27,10 @@ pip_install:
 	. $(VIRTUALENV)bin/activate; pip install -r requirements.txt
 
 test:
-	. $(VIRTUALENV)bin/activate; django-admin.py test app.tests.core
+	. $(VIRTUALENV)bin/activate; python manage.py test app.tests.core
 
 test_translations:
-	. $(VIRTUALENV)bin/activate; django-admin.py test app.translations.tests --settings=app.translations.tests.settings
+	. $(VIRTUALENV)bin/activate; python manage.py test app.translations.tests --settings=app.translations.tests.settings
 
 
 # EOF
