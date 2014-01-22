@@ -18,6 +18,36 @@ SUPPORTED_FIELDS = (
     fields.CharField, 
     fields.TextField,
 )
+
+def create_field(model, field_name):
+    field = model._meta.get_field(field_name)
+    field_cls  = field.__class__
+
+    if not isinstance(field, SUPPORTED_FIELDS):
+        raise ImproperlyConfigured(
+            '%s is not supported by modeltranslation.' % field_cls.__name__)
+
+    ref_field = field_cls()
+    return ref_field
+
+
+def bind_translation_fields(model, opts): 
+    """
+    Monkey patch the original model class to change every translatable field name 
+    in database. 
+
+    model.<field_name> will become model._<field_name> 
+    """
+
+    for field_name in opts.local_fields.keys():
+        ref_field = create_field(model=model, field_name=field_name)
+        ref_field_name = '_%s' % field_name
+
+        model.add_to_class(ref_field_name, ref_field)
+        opts.add_translation_field(field_name, ref_field)
+
+
+
 def delete_mt_init(sender, instance, **kwargs):
     if hasattr(instance, '_mt_init'):
         del instance._mt_init
@@ -81,15 +111,18 @@ class GettextFieldDescriptor(object):
     def __init__(self, field):
         self.field = field
 
+    def __set__(self, instance, value):
+        if getattr(instance, '_mt_init', False):
+            return
+        setattr(instance, '_%s' % self.field.name, value)
+
     def __get__(self, instance, owner):
-        import pdb; pdb.set_trace()
         if instance is None:
             return self
-        val = getattr(instance, self.field.attname, None)
-        if val != None:
+        val = getattr(instance, '_%s' % self.field.name, None)
+        if val is not None:
             return _(val)
-        else:
-            return None
+        return None
 
 class NONE:
     """
@@ -185,17 +218,23 @@ class Translator(object):
         # Connect signal for model
         post_init.connect(delete_mt_init, sender=model)
 
+
         patch_clean_fields(model)
         patch_metaclass(model)
 
         for field_name in opts.local_fields.keys():
             ref_field_name = "ref_{field}".format(field=field_name)
+
             field = model._meta.get_field(field_name)
-            descriptor = GettextFieldDescriptor(field)
+
             ref_descriptor = OriginalFieldDescriptor(field)
+            descriptor = GettextFieldDescriptor(field)
+
             setattr(model, field_name, descriptor)
             setattr(model, ref_field_name, ref_descriptor)
 
+            opts.add_translation_field(field_name, descriptor)
+            opts.add_translation_field(field_name, ref_descriptor)
 
 
     def unregister(self, model_or_iterable):
