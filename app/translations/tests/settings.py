@@ -14,7 +14,7 @@ LANGUAGES = (('fr', 'French'),
 
 LANGUAGE_CODE = 'en'
 
-TRANSLATION_STRINGS_FILE = here('strings.py')
+TRANSLATION_STRINGS_FILE = here('i18n_strings.py')
 
 def except_south(iterable):
     result = []

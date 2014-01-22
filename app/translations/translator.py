@@ -2,8 +2,9 @@
 from django.db.models.base import ModelBase
 from django.utils.six import with_metaclass
 from django.db.models import fields
-from django.utils.translation import ugettext_lazy as _
-
+from django.db.models.signals import post_init
+from django.utils.translation import gettext as _
+from .errors import *
 
 """
 Most parts come from django-modeltranslations. 
@@ -17,35 +18,78 @@ SUPPORTED_FIELDS = (
     fields.CharField, 
     fields.TextField,
 )
+def delete_mt_init(sender, instance, **kwargs):
+    if hasattr(instance, '_mt_init'):
+        del instance._mt_init
 
+
+def patch_clean_fields(model):
+    """
+    Patch clean_fields method to handle different form types submission.
+    """
+    old_clean_fields = model.clean_fields
+
+    def new_clean_fields(self, exclude=None):
+        if hasattr(self, '_mt_form_pending_clear'):
+            # Some form translation fields has been marked as clearing value.
+            # Check if corresponding translated field was also saved (not excluded):
+            # - if yes, it seems like form for MT-unaware app. Ignore clearing (left value from
+            #   translated field unchanged), as if field was omitted from form
+            # - if no, then proceed as normally: clear the field
+            for field_name, value in self._mt_form_pending_clear.items():
+                field = self._meta.get_field(field_name)
+                orig_field_name = field.translated_field.name
+                if orig_field_name in exclude:
+                    field.save_form_data(self, value, check=False)
+            delattr(self, '_mt_form_pending_clear')
+        old_clean_fields(self, exclude)
+    model.clean_fields = new_clean_fields
+
+def patch_metaclass(model):
+    """
+    Monkey patches original model metaclass to exclude translated fields on deferred subclasses.
+    """
+    old_mcs = model.__class__
+
+    class translation_deferred_mcs(old_mcs):
+        """
+        This metaclass is essential for deferred subclasses (obtained via only/defer) to work.
+
+        When deferred subclass is created, some translated fields descriptors could be overridden
+        by DeferredAttribute - which would cause translation retrieval to fail.
+        Prevent this from happening with deleting those attributes from class being created.
+        This metaclass would be called from django.db.models.query_utils.deferred_class_factory
+        """
+        def __new__(cls, name, bases, attrs):
+            if attrs.get('_deferred', False):
+                opts = translator.get_options_for_model(model)
+                for field_name in opts.fields.keys():
+                    attrs.pop(field_name, None)
+            return super(translation_deferred_mcs, cls).__new__(cls, name, bases, attrs)
+    # Assign to __metaclass__ wouldn't work, since metaclass search algorithm check for __class__.
+    # http://docs.python.org/2/reference/datamodel.html#__metaclass__
+    model.__class__ = translation_deferred_mcs
+
+# inspired from modeltranslations.fields.TranslationFieldDescriptor
 class OriginalFieldDescriptor(object):
     def __init__(self, field):
         self.field = field
 
-    def __get__(self, instance, owner):
-        if instance is None:
-            return self
-        val = getattr(instance, self.field.name, None)
-        if val is not None:
-            return val
 
+# inspired from modeltranslations.fields.TranslationFieldDescriptor
 class GettextFieldDescriptor(object):
-    """
-    Field wrapper (for __get__ method)
-    """
-
     def __init__(self, field):
         self.field = field
 
     def __get__(self, instance, owner):
+        import pdb; pdb.set_trace()
         if instance is None:
-            import pdb; pdb.set_trace()
             return self
-        val = getattr(instance, self.field.name, None)
-        if val is not None:
+        val = getattr(instance, self.field.attname, None)
+        if val != None:
             return _(val)
-        return None
-
+        else:
+            return None
 
 class NONE:
     """
@@ -54,8 +98,7 @@ class NONE:
     is not yet known and needs to be computed (e.g. field default).
     """
     pass
-class DescendantRegistered(Exception):
-    pass
+
 
 class FieldsAggregationMetaClass(type):
     """
@@ -117,18 +160,42 @@ class Translator(object):
             return setting
 
     def register(self, model, opts_class=None, **options):
+        # Ensure that a base is not registered after a subclass (_registry
+        # is closed with respect to taking bases, so we can just check if
+        # we've seen the model).
+        if model in self._registry:
+            if self._registry[model].registered:
+                raise AlreadyRegistered(
+                    'Model "%s" is already registered for translation' %
+                    model.__name__)
+            else:
+                descendants = [d.__name__ for d in self._registry.keys()
+                               if issubclass(d, model) and d != model]
+                raise DescendantRegistered(
+                    'Model "%s" cannot be registered after its subclass'
+                    ' "%s"' % (model.__name__, descendants[0]))
+
+
         opts = self._get_options_for_model(model, opts_class, **options)
         opts.registered = True
+        # Delete all fields cache for related model (parent and children)
+        for related_obj in model._meta.get_all_related_objects():
+            delete_cache_fields(related_obj.model)
+
+        # Connect signal for model
+        post_init.connect(delete_mt_init, sender=model)
+
+        patch_clean_fields(model)
+        patch_metaclass(model)
 
         for field_name in opts.local_fields.keys():
-            # override the default 'title' attr for model
+            ref_field_name = "ref_{field}".format(field=field_name)
             field = model._meta.get_field(field_name)
             descriptor = GettextFieldDescriptor(field)
+            ref_descriptor = OriginalFieldDescriptor(field)
             setattr(model, field_name, descriptor)
+            setattr(model, ref_field_name, ref_descriptor)
 
-            ref_field_name = "ref_{field}".format(field=field_name)
-            original_descriptor = OriginalFieldDescriptor(field)
-            setattr(model, ref_field_name, original_descriptor)
 
 
     def unregister(self, model_or_iterable):
@@ -190,5 +257,16 @@ class Translator(object):
             self._registry[model] = opts
 
         return self._registry[model]
+
+    def get_options_for_model(self, model):
+        """
+        Thin wrapper around ``_get_options_for_model`` to preserve the
+        semantic of throwing exception for models not directly registered.
+        """
+        opts = self._get_options_for_model(model)
+        if not opts.registered and not opts.related:
+            raise NotRegistered('The model "%s" is not registered for '
+                                'translation' % model.__name__)
+        return opt
 
 translator = Translator()

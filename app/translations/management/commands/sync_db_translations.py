@@ -8,7 +8,7 @@
 # License :  proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 2014-01-21 10:25:09
-# Last mod :  2014-01-21 18:01:25
+# Last mod :  2014-01-22 14:39:20
 # -----------------------------------------------------------------------------
 from django.conf import settings
 from django.core.management.base import BaseCommand
@@ -29,11 +29,12 @@ def extract_strings_from_db():
                 original_string = getattr(instance, 'ref_%s' % field_name, None)
                 if original_string is not None:
                     strings.append(original_string)
-
     return strings
 
 def write_strings(strings):
-    template = Template(u'''STRINGS = ({% for str in strings %}_("{{ str }}"),{% endfor %})''')
+    template = Template(u'''
+_ = lambda s: s
+STRINGS = ({% for str in strings %}_("{{ str }}"),{% endfor %})''')
     context = Context({'strings': strings})
     output = template.render(context)
     f = open(settings.TRANSLATION_STRINGS_FILE, 'w+')
