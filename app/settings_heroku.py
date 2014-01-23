@@ -8,7 +8,7 @@
 # License :  proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 2014-01-23 11:28:04
-# Last mod :  2014-01-23 15:01:09
+# Last mod :  2014-01-23 15:03:39
 # -----------------------------------------------------------------------------
 from settings import *
 
@@ -24,8 +24,7 @@ STATIC_URL                 = os.getenv('STATIC_URL')
 
 STATIC_ROOT                = here('staticfiles')
 
-STATICFILES_DIRS          += (here('static'),)
-print "STATIC DIRS: %s" % STATICFILES_DIRS
+STATICFILES_DIRS           = ()
 
 INSTALLED_APPS            += ('storages',)
 
