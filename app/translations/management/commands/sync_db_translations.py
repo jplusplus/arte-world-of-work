@@ -8,12 +8,11 @@
 # License :  proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 2014-01-21 10:25:09
-# Last mod :  2014-01-22 18:19:52
+# Last mod :  2014-01-23 10:55:40
 # -----------------------------------------------------------------------------
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.template import Context, Template
-from optparse import make_option
 
 from app.translations.translator import translator
 
