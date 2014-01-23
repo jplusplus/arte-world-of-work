@@ -8,11 +8,11 @@
 # License :  proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 2014-01-23 11:28:04
-# Last mod :  2014-01-23 12:44:55
+# Last mod :  2014-01-23 14:11:42
 # -----------------------------------------------------------------------------
 from settings import *
 
-ALLOWED_HOSTS = ["arte-wow-staging.herokuapp.com"]
+ALLOWED_HOSTS = ["arte-wow-staging.herokuapp.com", ".herokuapp.com"]
 
 AWS_ACCESS_KEY_ID          = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY      = os.getenv('AWS_SECRET_ACCESS_KEY')
@@ -35,3 +35,4 @@ CACHES = {
     }
 }
 
+ROOT_URLCONF = 'app.urls'

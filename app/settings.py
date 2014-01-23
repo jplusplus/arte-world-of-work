@@ -27,7 +27,10 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default' : dj_database_url.config(),
+    'default' : {
+        'ENGINE':'django.db.backends.sqlite3',
+        'NAME': 'dev.db'
+    }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -103,7 +106,6 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -140,7 +142,6 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     # ------------------------ external dependencies ------------------------ #
-    'debug_toolbar',
     'django_countries',
     'sorl.thumbnail',
     'south',
