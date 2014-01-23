@@ -11,7 +11,7 @@
 # Last mod : 14-Jan-2014
 # -----------------------------------------------------------------------------
 import os
-import dj_database_url
+
 here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
 
 
