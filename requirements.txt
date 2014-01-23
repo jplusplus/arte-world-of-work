@@ -15,3 +15,4 @@ South==0.8.4
 Pillow==2.3.0
 sorl-thumbnail==11.12
 docutils==0.11
+gunicorn==0.18.0
