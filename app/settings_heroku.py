@@ -8,7 +8,7 @@
 # License :  proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 2014-01-23 11:28:04
-# Last mod :  2014-01-23 14:25:20
+# Last mod :  2014-01-23 14:29:04
 # -----------------------------------------------------------------------------
 from settings import *
 
@@ -22,7 +22,7 @@ DEBUG                      = bool(os.getenv('DEBUG', False))
 
 STATIC_URL                 = os.getenv('STATIC_URL')
 
-STATIC_ROOT                = '/app/static/'
+STATIC_ROOT                = '/static/'
 
 INSTALLED_APPS            += ('storages',)
 
