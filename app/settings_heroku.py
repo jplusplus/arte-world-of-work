@@ -8,7 +8,7 @@
 # License :  proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 2014-01-23 11:28:04
-# Last mod :  2014-01-23 14:23:44
+# Last mod :  2014-01-23 14:25:20
 # -----------------------------------------------------------------------------
 from settings import *
 
@@ -21,6 +21,8 @@ AWS_STORAGE_BUCKET_NAME    = os.getenv('AWS_STORAGE_BUCKET_NAME')
 DEBUG                      = bool(os.getenv('DEBUG', False))
 
 STATIC_URL                 = os.getenv('STATIC_URL')
+
+STATIC_ROOT                = '/app/static/'
 
 INSTALLED_APPS            += ('storages',)
 
