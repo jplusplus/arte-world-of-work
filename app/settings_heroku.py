@@ -8,9 +8,11 @@
 # License :  proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 2014-01-23 11:28:04
-# Last mod :  2014-01-23 11:48:16
+# Last mod :  2014-01-23 12:24:55
 # -----------------------------------------------------------------------------
 from settings import *
+
+ALLOWED_HOSTS = [".herokuapp.com"]
 
 AWS_ACCESS_KEY_ID          = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY      = os.getenv('AWS_SECRET_ACCESS_KEY')
