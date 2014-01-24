@@ -1,10 +1,6 @@
 # all core related tests should go here
 from app                         import utils   
-from app.core.models             import BaseAnswer, UserCountryQuestion, UserProfile
-from app.core.models             import DateQuestion, TypedNumberQuestion
-from app.core.models             import TextSelectionQuestion, TextRadioQuestion
-from app.core.models             import UserAgeQuestion, TextChoiceField
-from app.core.models             import BaseQuestion
+from app.core.models             import * 
 from django.contrib.auth.models  import User
 from django.core.exceptions      import ValidationError
 from django.test                 import TestCase
@@ -81,8 +77,13 @@ class CoreTestCase(TestCase):
         choices  = self.question1_choices[:2]
         answer   = BaseAnswer.objects.create_answer(question, self.user, choices)
         answer.save()
-        assertion = lambda c: self.assertIsNotNone(utils.find_modelinstance(c,answer.value.all()))
-        map(assertion, choices)
+        answered_choices = answer.value.all()
+        # assert for every choice that 
+        map(lambda choice: 
+                # utils.find_modelinstance function will lookup for current `choice` in
+                # answered choices and check if the result is not None (=> exists)
+                self.assertIsNotNone(utils.find_modelinstance(choice, answered_choices)) 
+            , choices)
 
 
     def test_answer_radio_question(self):
@@ -136,3 +137,13 @@ class CoreTestCase(TestCase):
 
         answers = BaseQuestion.objects.get(pk=self.question4.id).baseanswer_set.all()
         self.assertEqual(len(answers), iteration)
+
+
+    def test_create_boolean_question(self):
+        question = BooleanQuestion.objects.create(label='bool question', hint_text='answer by yes or no' )
+        choices = TextChoiceField.objects.filter(question=question.pk)
+            
+        # check all choices are yes or no
+        self.assertEqual(len(choices), 2)
+        self.assertIsNotNone(choices.filter(title='yes')[0])
+        self.assertIsNotNone(choices.filter(title='no')[0])

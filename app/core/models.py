@@ -11,9 +11,11 @@
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
 from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic 
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 
 from django_countries.fields import CountryField
@@ -46,7 +48,8 @@ class AnswerManager(models.Manager):
 
         # check if value field is ManyToMany, ForeignKey or other
         if 'value' in [(f.name) for f in answer._meta.many_to_many]:
-            answer.save()
+            # we must save answer object before adding related values
+            answer.save() 
             for val in value:
                 answer.value.add(val)
         else:
@@ -103,6 +106,7 @@ class UserCountryAnswer(UserProfileAnswer):
 
 class UserAgeAnswer(UserProfileAnswer):
     value = models.PositiveIntegerField()
+
 # -----------------------------------------------------------------------------
 #
 #    Questions
@@ -181,7 +185,7 @@ class TypedNumberQuestion(BaseQuestion):
     max_number = models.PositiveIntegerField(default=100)
 
 class DateQuestion(BaseQuestion):
-    """ Use it when you want to ask a date to user """ 
+    """ Use it when you want to ask a date to user """
     answer_type = DateAnswer
 
 class CountryQuestion(BaseQuestion):
@@ -240,6 +244,22 @@ class TextRadioQuestion(RadioQuestionMixin):
     """ Multiple Choice (text) question - single answer """
     pass 
 
+class BooleanQuestion(RadioQuestionMixin):
+    """ yes or no question - single answer """
+    pass
+
+def create_boolean(sender, **kwargs):
+    # will create default choice
+    if kwargs.get('created', False):
+        instance = kwargs['instance']
+        yes = TextChoiceField(title='yes', question=instance)
+        no  = TextChoiceField(title='no', question=instance)
+        yes.save()
+        no.save()
+
+# will trigger `create_boolean` after every boolean question creation
+post_save.connect(create_boolean, sender=BooleanQuestion)
+
 class MediaSelectionQuestion(SelectionQuestionMixin, MediaTypeMixin):
     """ 
     Multiple Choices (image or icon) question - one or more answer. 
@@ -257,6 +277,7 @@ class MediaRadioQuestion(RadioQuestionMixin, MediaTypeMixin):
     `media_type` model's field.
     """
     pass
+
 
 # -----------------------------------------------------------------------------
 # 
@@ -276,5 +297,25 @@ class TextChoiceField(BaseChoiceField):
 
 class MediaChoiceField(BaseChoiceField, PictureMixin):
     pass
+
+# -----------------------------------------------------------------------------
+# 
+#     Thematics
+# 
+# -----------------------------------------------------------------------------
+class Thematic(models.Model):
+    title = models.CharField(_('Thematic title'), max_length=120)
+
+class ThematicElement(models.Model):
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    thematic = models.ForeignKey(Thematic, null=True)
+    position = models.PositiveIntegerField()
+
+
+
+
+
 
 # EOF
