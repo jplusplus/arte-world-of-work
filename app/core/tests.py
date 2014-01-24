@@ -8,7 +8,7 @@
 # License : proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 2014-01-10 15:58:02
-# Last mod :  2014-01-24 16:01:25
+# Last mod :  2014-01-24 16:59:37
 # -----------------------------------------------------------------------------
 
 # all core related tests should go here
@@ -20,7 +20,6 @@ from django.test                 import TestCase
 
 
 class CoreTestCase(TestCase):
-
     def setUp(self):
         # create user
         self.user = User.objects.create()
@@ -62,6 +61,8 @@ class CoreTestCase(TestCase):
             min_number=0, max_number=200)
 
         self.question4.save()
+
+        # thematic $ 
 
     # Test that answering a user question change the answerer profile
     def test_answer_user_question_country(self): 
@@ -165,3 +166,11 @@ class CoreTestCase(TestCase):
         question = BooleanQuestion.objects.create(label=u'é_è - ò_ó', hint_text=u'é_è')
         question.save()
         self.assertIsNotNone(question.__unicode__())
+
+
+    def test_create_thematic(self):
+        thematic = Thematic.objects.create(title='test')
+        thematic.save()
+        thematic.add_element(self.question1)
+        thematic.add_element(self.question2)
+        self.assertEqual(thematic.elements.length(), 2)

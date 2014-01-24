@@ -38,6 +38,66 @@ class UserProfile(models.Model):
 
 # -----------------------------------------------------------------------------
 # 
+#     Thematics
+# 
+# -----------------------------------------------------------------------------
+# generic element for thematic, shall be questions or feedback
+class ThematicElement(models.Model):
+    class Meta:
+        ordering= ['position']
+
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    
+    thematic = models.ForeignKey('Thematic', null=True)
+    position = models.PositiveIntegerField()
+
+class ThematicElementMixin(object):
+    def sub_elements(self):
+        raise NotImplementedError("Subclasses of ThematicElementMixin must implement `sub_elements()` method")
+        
+    def as_element(self):
+        raise NotImplementedError("Subclasses of ThematicElementMixin must implement `as_element()` method")
+
+
+class Thematic(models.Model):
+    title = models.CharField(_('Thematic title'), max_length=120)
+    elements = generic.GenericRelation(ThematicElement)
+
+    def add_element(self, instance):
+        # will convert passed concrete model `instance`, if instance doe
+        assert issubclass(instance.__class__, ThematicElementMixin)
+        element = instance.as_element() # can raise NotImplementedError 
+        element.thematic = self
+        element.save()
+
+def create_generic_element(sender, **kwargs):
+    # create a generic element appropriated 
+    if kwargs.get('created', False):
+        instance = kwargs.get('instance', None)
+        element  = ThematicElement(content_object=instance)
+
+# -----------------------------------------------------------------------------
+# 
+#     Feedbacks
+# 
+# -----------------------------------------------------------------------------
+class AbstractFeedback(models.Model):
+    class Meta:
+        abstract = True
+    html_sentence = models.CharField(_('Feedbacks sentence'), max_length=120, 
+        help_text=_('Sentence (as html content): "Hey did you knew .. ?"')
+    )
+                     
+
+class StaticFeedback(AbstractFeedback):
+    source_url = models.URLField()
+    source_title = models.CharField(max_length=120)
+
+
+# -----------------------------------------------------------------------------
+# 
 #     Answer types
 # 
 # -----------------------------------------------------------------------------
@@ -127,7 +187,7 @@ class QuestionManager(models.Manager):
         return questions
 
 
-class BaseQuestion(models.Model):
+class BaseQuestion(models.Model, ThematicElementMixin):
     """
     Base class for question, will be inherited by concrete question typologies
     """
@@ -137,6 +197,7 @@ class BaseQuestion(models.Model):
     content_type = models.ForeignKey(ContentType, editable=False)
     # Managers
     objects = QuestionManager()
+    generic_element = generic.GenericRelation(ThematicElement)
 
     def save(self, *args, **kwargs):
         self.content_type = ContentType.objects.get_for_model(self)
@@ -144,6 +205,14 @@ class BaseQuestion(models.Model):
 
     def __unicode__(self):
         return u"{type}: {label}".format(type=self.content_type, label=self.label[:25])
+
+    def as_element(self):
+        return self.generic_element.all()
+        import pdb; pdb.set_trace()
+        return self.as_element
+
+post_save.connect(create_generic_element, sender=BaseQuestion)
+
 
 class UserProfileQuestion(BaseQuestion):
     profile_attribute = None
@@ -204,12 +273,12 @@ class QuestionPicture(PictureMixin):
     question = models.OneToOneField('BaseQuestion')
 
 
+
 # -----------------------------------------------------------------------------
 #
 #   Single (radio) & multiple (selection) possible answer questions  
 #
 # -----------------------------------------------------------------------------
-
 class MediaTypeMixin(models.Model):
     """ 
     Special model mixin for MediaChoices (radio and selection)
@@ -297,31 +366,6 @@ class TextChoiceField(BaseChoiceField):
 
 class MediaChoiceField(BaseChoiceField, PictureMixin):
     pass
-
-# -----------------------------------------------------------------------------
-# 
-#     Thematics
-# 
-# -----------------------------------------------------------------------------
-# generic element for thematic, shall be questions or feedback
-class ThematicElement(models.Model):
-    class Meta:
-        ordering= ['position']
-
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
-    
-    thematic = models.ForeignKey('Thematic', null=True)
-    position = models.PositiveIntegerField()
-
-
-class Thematic(models.Model):
-    title = models.CharField(_('Thematic title'), max_length=120)
-    elements = generic.GenericRelation(ThematicElement)
-
-
-
 
 
 # EOF
