@@ -92,7 +92,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -129,6 +129,19 @@ TEMPLATE_DIRS = (
     here('templates'),
 )
 
+# JS/CSS COMPRESSOR SETTINGS
+COMPRESS_PRECOMPILERS = (
+    ('text/coffeescript', 'coffee --compile --stdio --bare'),
+    ('text/less', 'lessc --include-path="%s" {infile} {outfile}' % here('static') ),
+)
+
+COMPRESS_TEMPLATE_FILTER_CONTEXT = {
+    'STATIC_URL': STATIC_URL
+}
+
+COMPRESS_ENABLED = False
+
+
 INSTALLED_APPS = (
     # ------------------------ django dependencies -------------------------- # 
     'django.contrib.auth',
@@ -140,6 +153,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     # ------------------------ external dependencies ------------------------ #
+    'compressor',
     'django_countries',
     'sorl.thumbnail',
     'south',
