@@ -303,16 +303,22 @@ class MediaChoiceField(BaseChoiceField, PictureMixin):
 #     Thematics
 # 
 # -----------------------------------------------------------------------------
-class Thematic(models.Model):
-    title = models.CharField(_('Thematic title'), max_length=120)
-
+# generic element for thematic, shall be questions or feedback
 class ThematicElement(models.Model):
+    class Meta:
+        ordering= ['position']
+
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    thematic = models.ForeignKey(Thematic, null=True)
+    
+    thematic = models.ForeignKey('Thematic', null=True)
     position = models.PositiveIntegerField()
 
+
+class Thematic(models.Model):
+    title = models.CharField(_('Thematic title'), max_length=120)
+    elements = generic.GenericRelation(ThematicElement)
 
 
 

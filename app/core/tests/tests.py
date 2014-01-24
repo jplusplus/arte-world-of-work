@@ -1,4 +1,16 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# -----------------------------------------------------------------------------
+# Project : Arte World of Work
+# -----------------------------------------------------------------------------
+# Author : Pierre Bellon
+# -----------------------------------------------------------------------------
+# License : proprietary journalism++
+# -----------------------------------------------------------------------------
+# Creation : 2014-01-10 15:58:02
+# Last mod :  2014-01-24 16:01:25
+# -----------------------------------------------------------------------------
+
 # all core related tests should go here
 from app                         import utils   
 from app.core.models             import * 
@@ -150,6 +162,6 @@ class CoreTestCase(TestCase):
         self.assertIsNotNone(choices.filter(title='no')[0])
 
     def test_special_characters_question(self):
-        question = BooleanQuestion.objects.create(label='é_è - ò_ó', hint_text='é_è')
+        question = BooleanQuestion.objects.create(label=u'é_è - ò_ó', hint_text=u'é_è')
         question.save()
         self.assertIsNotNone(question.__unicode__())
