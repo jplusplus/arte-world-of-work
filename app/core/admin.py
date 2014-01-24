@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # Encoding: utf-8
 # -----------------------------------------------------------------------------
 # Project : Arte - WoW
@@ -76,5 +77,6 @@ admin.site.register(models.TextSelectionQuestion , QuestionAdmin)
 admin.site.register(models.MediaSelectionQuestion, QuestionAdmin)
 admin.site.register(models.TextRadioQuestion     , QuestionAdmin)
 admin.site.register(models.MediaRadioQuestion    , QuestionAdmin)
+admin.site.register(models.BooleanQuestion       , QuestionAdmin)
 
 # EOF

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # all core related tests should go here
 from app                         import utils   
 from app.core.models             import * 
@@ -147,3 +148,8 @@ class CoreTestCase(TestCase):
         self.assertEqual(len(choices), 2)
         self.assertIsNotNone(choices.filter(title='yes')[0])
         self.assertIsNotNone(choices.filter(title='no')[0])
+
+    def test_special_characters_question(self):
+        question = BooleanQuestion.objects.create(label='é_è - ò_ó', hint_text='é_è')
+        question.save()
+        self.assertIsNotNone(question.__unicode__())
