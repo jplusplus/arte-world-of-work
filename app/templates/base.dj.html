@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html ng-app="arte-ww" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html ng-app="arte-ww" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html ng-app="arte-ww" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html ng-app="arte-ww" class="no-js"> <!--<![endif]-->
+    <head >
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title ng-bind="Page.title() + ' - World of Work'">Arte # World Of Work</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="icon" type="image/png" href="{% static '/img/favicon.ico' %}">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700|Roboto:400,700,500' 
+              rel='stylesheet' 
+              type='text/css'>
+        {% block extracss %}{% endblock %}
+        <base href="{% url 'home' %}" />
+    </head>
+    <body ng-cloak>
+        {% block content %}{% endblock %}
+        {% block extrajs %}{% endblock %}
+    </body>
+</html>
