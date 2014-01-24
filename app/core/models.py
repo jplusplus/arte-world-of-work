@@ -143,7 +143,7 @@ class BaseQuestion(models.Model):
         super(BaseQuestion, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return "{type}: {label}".format(type=self.content_type, label=self.label[:25])
+        return u"{type}: {label}".format(type=self.content_type, label=self.label[:25])
 
 class UserProfileQuestion(BaseQuestion):
     profile_attribute = None
