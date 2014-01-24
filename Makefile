@@ -27,7 +27,7 @@ pip_install:
 	. $(VIRTUALENV)bin/activate; pip install -r requirements.txt
 
 test:
-	. $(VIRTUALENV)bin/activate; python manage.py test app.tests.core
+	. $(VIRTUALENV)bin/activate; python manage.py test app.core
 
 test_translations:
 	. $(VIRTUALENV)bin/activate; python manage.py test app.translations.tests --settings=app.translations.tests.settings_tests
