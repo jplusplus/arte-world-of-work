@@ -18,13 +18,13 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'ArteWow.views.home', name='home'),
-    # url(r'^ArteWow/', include('ArteWow.foo.urls')),
+    # url(r'^api/',                                                 include('app.api.urls')),
+    url(r'^$',                                                    'app.views.home', name='home'),
+    url(r'^404/$',                                                'app.views.home', name='404'),
+    url(r'^partial/(?P<partial_name>([a-zA-Z0-9_\-/]+))\.html$',  'app.views.partial', name='partial'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )
