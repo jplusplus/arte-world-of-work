@@ -72,11 +72,11 @@ msgstr "J'ai fini"
 
 #: core/models.py:235
 msgid "Numeric input question"
-msgstr "Champs libre numérique"
+msgstr "Champ libre numérique"
 
 #: core/models.py:236
 msgid "Numeric input questions"
-msgstr "Champs libre numérique"
+msgstr "Champ libre numérique"
 
 #: core/models.py:241
 msgid "Number choice question"
