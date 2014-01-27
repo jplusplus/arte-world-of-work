@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-27 16:42+0100\n"
+"POT-Creation-Date: 2014-01-27 17:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,7 +86,7 @@ msgid "Number choice questions"
 msgstr ""
 
 #: core/models.py:248
-msgid "Number type"
+msgid "Number unit"
 msgstr ""
 
 #: core/models.py:248
@@ -123,16 +123,4 @@ msgstr ""
 
 #: core/models.py:340
 msgid "Title of this choice"
-msgstr ""
-
-#: translations/tests/i18n_strings.py:3
-msgid "my title"
-msgstr ""
-
-#: translations/tests/i18n_strings.py:3
-msgid "an other title"
-msgstr ""
-
-#: translations/tests/models.py:6
-msgid "Title"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-27 16:42+0100\n"
+"POT-Creation-Date: 2014-01-27 17:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,27 +20,27 @@ msgstr ""
 
 #: settings.py:51
 msgid "English"
-msgstr ""
+msgstr "Anglais"
 
 #: settings.py:52
 msgid "French"
-msgstr ""
+msgstr "Français"
 
 #: core/models.py:30
 msgid "Icon (small)"
-msgstr ""
+msgstr "Îcone (petit)"
 
 #: core/models.py:31
 msgid "Image (big)"
-msgstr ""
+msgstr "Image (grand)"
 
 #: core/models.py:71
 msgid "Thematic title"
-msgstr ""
+msgstr "Titre de la thématique"
 
 #: core/models.py:88
 msgid "Feedbacks sentence"
-msgstr ""
+msgstr "Phrase du feedback"
 
 #: core/models.py:89
 msgid "Sentence (as html content): \"Hey did you knew .. ?\""
@@ -48,92 +48,84 @@ msgstr ""
 
 #: core/models.py:190
 msgid "Question label"
-msgstr ""
+msgstr "Label de la question"
 
 #: core/models.py:191
 msgid "Question hint text"
-msgstr ""
+msgstr "Text d'aide de la question"
 
 #: core/models.py:193
 msgid "Skip button (label)"
-msgstr ""
+msgstr "Bouton passer (label)"
 
 #: core/models.py:193
 msgid "Skip this question"
-msgstr ""
+msgstr "Passer cette question"
 
 #: core/models.py:232 core/models.py:288
 msgid "Validate button (label)"
-msgstr ""
+msgstr "Bouton valider (label)"
 
 #: core/models.py:232 core/models.py:288
 msgid "I'm done"
-msgstr ""
+msgstr "J'ai fini"
 
 #: core/models.py:235
 msgid "Numeric input question"
-msgstr ""
+msgstr "Champs libre numérique"
 
 #: core/models.py:236
 msgid "Numeric input questions"
-msgstr ""
+msgstr "Champs libre numérique"
 
 #: core/models.py:241
 msgid "Number choice question"
-msgstr ""
+msgstr "Choix nombre"
 
 #: core/models.py:242
 msgid "Number choice questions"
-msgstr ""
+msgstr "Choix nombre"
 
 #: core/models.py:248
-msgid "Number type"
-msgstr ""
+msgid "Number unit"
+msgstr "Unité"
 
 #: core/models.py:248
 msgid "Unit that will be displayed after the min and max numbers."
-msgstr ""
+msgstr "L'unité qui sera affiché après les nombres minimum et maximum"
 
 #: core/models.py:294
 msgid "Text (multiple choice) question"
-msgstr ""
+msgstr "Texte (choix multiple)"
 
 #: core/models.py:295
 msgid "Text (multiple choice) questions"
-msgstr ""
+msgstr "Texte (choix multiple)"
 
 #: core/models.py:300
 msgid "Text (single choice) question"
-msgstr ""
+msgstr "Texte (choix unique)"
 
 #: core/models.py:301
 msgid "Text (single choice) questions"
-msgstr ""
+msgstr "Texte (choix unique)"
 
 #: core/models.py:315
 msgid "Choice's media type"
-msgstr ""
+msgstr "Type de média"
 
 #: core/models.py:326
 msgid "Media choice question"
-msgstr ""
+msgstr "Choix média"
 
 #: core/models.py:327
 msgid "Media choice questions"
-msgstr ""
+msgstr "Choix média"
 
 #: core/models.py:340
 msgid "Title of this choice"
-msgstr ""
+msgstr "Titre de ce choix"
 
-#: translations/tests/i18n_strings.py:3
-msgid "my title"
-msgstr ""
-
-#: translations/tests/i18n_strings.py:3
-msgid "an other title"
-msgstr ""
-
-#: translations/tests/models.py:6
-msgid "Title"
-msgstr ""
+#, fuzzy
+#~ msgid "my title"
+#~ msgstr "Titre de la thématique"
