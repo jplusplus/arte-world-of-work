@@ -21,6 +21,8 @@ AWS_STORAGE_BUCKET_NAME    = os.getenv('AWS_STORAGE_BUCKET_NAME')
 
 DEBUG                      = bool(os.getenv('DEBUG', False))
 
+LANGUAGE_CODE              = os.getenv('LANGUAGE_CODE', 'fr')
+
 STATIC_URL                 = os.getenv('STATIC_URL')
 
 STATIC_ROOT                = here('staticfiles')
