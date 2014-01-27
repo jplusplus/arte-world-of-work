@@ -134,9 +134,6 @@ class TypedNumberAnswer(NumberAnswer):
             if self.value > question.max_number: 
                 raise ValidationError('Answer is out of range: superior to max_number')
 
-class DateAnswer(BaseAnswer):
-    value = models.DateTimeField()
-
 class SelectionAnswer(BaseAnswer):
     value = models.ManyToManyField('BaseChoiceField')
 
@@ -234,8 +231,15 @@ class NumberQuestion(BaseQuestion):
     answer_type = NumberAnswer
     validate_button_label = models.CharField(_('Validate button (label)'), default=_('I\'m done'), max_length=120)
 
+    class Meta:
+        verbose_name = _('Numeric input question')
+        verbose_name_plural = _('Numeric input questions')
+
 
 class TypedNumberQuestion(BaseQuestion):
+    class Meta:
+        verbose_name = _('Number choice question')
+        verbose_name_plural = _('Number choice questions')
     """
     TypedNumber question are questions where we ask user to select a number
     defined insided an interval.
@@ -244,10 +248,6 @@ class TypedNumberQuestion(BaseQuestion):
     unit = models.CharField(_('Number type'), help_text=_('Unit that will be displayed after the min and max numbers.'), max_length=15)
     min_number = models.PositiveIntegerField(default=0)
     max_number = models.PositiveIntegerField(default=100)
-
-class DateQuestion(BaseQuestion):
-    """ Use it when you want to ask a date to user """
-    answer_type = DateAnswer
 
 class CountryQuestion(BaseQuestion):
     """ Question designed to let user select between a list of countries """ 
@@ -263,8 +263,6 @@ class QuestionMediaAttachement(PictureMixin):
     Attached picture for a question
     """
     question = models.OneToOneField('BaseQuestion')
-
-
 
 # -----------------------------------------------------------------------------
 #
@@ -292,11 +290,15 @@ class SelectionQuestionMixin(BaseQuestion):
 
 class TextSelectionQuestion(SelectionQuestionMixin):
     """ Multiple Choices (text) question - one or more answer """
-    pass
+    class Meta:
+        verbose_name = _('Text (multiple choice) question')
+        verbose_name_plural = _('Text (multiple choice) questions')
 
 class TextRadioQuestion(RadioQuestionMixin):
     """ Multiple Choice (text) question - single answer """
-    pass 
+    class Meta:
+        verbose_name = _('Text (single choice) question')
+        verbose_name_plural = _('Text (single choice) questions')
 
 class BooleanQuestion(RadioQuestionMixin):
     """ yes or no question - single answer """
@@ -313,15 +315,6 @@ class MediaTypeMixin(models.Model):
     media_type = models.CharField(_('Choice\'s media type'), max_length=15, \
                     choices=MEDIA_TYPES)
 
-class MediaSelectionQuestion(SelectionQuestionMixin, MediaTypeMixin):
-    """ 
-    Multiple Choices (image or icon) question - one or more answer. 
-
-    Inherit from :model:`app.core.models.MediaTypeMixin`, thus inherit from its 
-    `media_type` model's field.
-    """
-    pass
-
 class MediaRadioQuestion(RadioQuestionMixin, MediaTypeMixin):
     """ 
     Multiple Choice (image or icon) question - single answer. 
@@ -329,8 +322,9 @@ class MediaRadioQuestion(RadioQuestionMixin, MediaTypeMixin):
     Inherit from :model:`app.core.models.MediaTypeMixin`, thus inherit from its 
     `media_type` model's field.
     """
-    pass
-
+    class Meta:
+        verbose_name = _('Media choice question')
+        verbose_name_plural = _('Media choice questions')
 
 # -----------------------------------------------------------------------------
 # 
@@ -363,7 +357,13 @@ def create_generic_element(sender, **kwargs):
         instance = kwargs.get('instance', None)
         ctype = ContentType.objects.get_for_model(instance)
         element  = ThematicElement.objects.get_or_create(content_type=ctype, object_id=instance.id)
+        element.save()
 
+def delete_generic_element(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    ctype = ContentType.objects.get_for_model(instance)
+    element = ThematicElement.objects.get(content_type=ctype, object_id=instance.id)
+    element.delete()
 
 def create_boolean(sender, **kwargs):
     # will create default choice fields for boolean questions ("yes" and "no")
