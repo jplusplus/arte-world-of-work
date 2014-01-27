@@ -23,7 +23,7 @@ import sys
 #
 # -----------------------------------------------------------------------------
 class InlineQuestionMedia(admin.StackedInline):
-    model = models.QuestionPicture
+    model = models.QuestionMediaAttachement
     extra = 0
     max_num = 1
 
@@ -35,7 +35,7 @@ class InlineTextSelectionQuestion(admin.StackedInline):
 class InlineMediaSelectionQuestion(AdminImageMixin, admin.StackedInline):
     model   = models.MediaChoiceField
     extra   = 0
-    max_num = 10 
+    max_num = 10
 
 class InlineTextRadioQuestion(InlineTextSelectionQuestion):
     pass 
@@ -51,7 +51,7 @@ class InlineMediaRadioQuestion(InlineMediaSelectionQuestion):
 class QuestionAdmin(admin.ModelAdmin):
     readonly_fields = ('content_type',)
     inlines = (
-        InlineQuestionMedia, # nesting question media edition
+        InlineQuestionMedia,
     )
 
     def get_inline_instances(self, request, obj=None):
