@@ -53,12 +53,18 @@ class ThematicElement(models.Model):
     thematic = models.ForeignKey('Thematic', null=True)
     position = models.PositiveIntegerField()
 
-class ThematicElementMixin(object):
     def sub_elements(self):
-        raise NotImplementedError("Subclasses of ThematicElementMixin must implement `sub_elements()` method")
+        return self.content_object.sub_elements()
+
+
+class ThematicElementMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    generic_element = generic.GenericRelation(ThematicElement)
         
     def as_element(self):
-        raise NotImplementedError("Subclasses of ThematicElementMixin must implement `as_element()` method")
+        return generic_element.filter(object_id=self.id)
 
 
 class Thematic(models.Model):
@@ -72,26 +78,18 @@ class Thematic(models.Model):
         element.thematic = self
         element.save()
 
-def create_generic_element(sender, **kwargs):
-    # create a generic element appropriated 
-    if kwargs.get('created', False):
-        instance = kwargs.get('instance', None)
-        element  = ThematicElement(content_object=instance)
 
 # -----------------------------------------------------------------------------
 # 
 #     Feedbacks
 # 
 # -----------------------------------------------------------------------------
-class AbstractFeedback(models.Model):
-    class Meta:
-        abstract = True
+class BaseFeedback(models.Model):
     html_sentence = models.CharField(_('Feedbacks sentence'), max_length=120, 
         help_text=_('Sentence (as html content): "Hey did you knew .. ?"')
     )
-                     
 
-class StaticFeedback(AbstractFeedback):
+class StaticFeedback(BaseFeedback, ThematicElementMixin):
     source_url = models.URLField()
     source_title = models.CharField(max_length=120)
 
@@ -187,32 +185,24 @@ class QuestionManager(models.Manager):
         return questions
 
 
-class BaseQuestion(models.Model, ThematicElementMixin):
+class BaseQuestion(ThematicElementMixin):
     """
     Base class for question, will be inherited by concrete question typologies
     """
-    answer_type  = None
-    label        = models.CharField(_('Question label')    , max_length=220)
-    hint_text    = models.CharField(_('Question hint text'), max_length=120)
-    content_type = models.ForeignKey(ContentType, editable=False)
+    answer_type       = None
+    label             = models.CharField(_('Question label')    , max_length=220)
+    hint_text         = models.CharField(_('Question hint text'), max_length=120)
+    content_type      = models.ForeignKey(ContentType, editable=False)
+    skip_button_label = models.CharField(_('Skip button (label)'), default=_('Skip this question'),max_length=120)
     # Managers
     objects = QuestionManager()
-    generic_element = generic.GenericRelation(ThematicElement)
 
     def save(self, *args, **kwargs):
         self.content_type = ContentType.objects.get_for_model(self)
         super(BaseQuestion, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return u"{type}: {label}".format(type=self.content_type, label=self.label[:25])
-
-    def as_element(self):
-        return self.generic_element.all()
-        import pdb; pdb.set_trace()
-        return self.as_element
-
-post_save.connect(create_generic_element, sender=BaseQuestion)
-
+        return self.label[:25]
 
 class UserProfileQuestion(BaseQuestion):
     profile_attribute = None
@@ -242,6 +232,8 @@ class NumberQuestion(BaseQuestion):
     we ask user to enter a 2 digit number
     """
     answer_type = NumberAnswer
+    validate_button_label = models.CharField(_('Validate button (label)'), default=_('I\'m done'), max_length=120)
+
 
 class TypedNumberQuestion(BaseQuestion):
     """
@@ -266,7 +258,7 @@ class CountryQuestion(BaseQuestion):
 #   Question attachments
 # 
 # -----------------------------------------------------------------------------
-class QuestionPicture(PictureMixin):
+class QuestionMediaAttachement(PictureMixin):
     """
     Attached picture for a question
     """
@@ -279,15 +271,6 @@ class QuestionPicture(PictureMixin):
 #   Single (radio) & multiple (selection) possible answer questions  
 #
 # -----------------------------------------------------------------------------
-class MediaTypeMixin(models.Model):
-    """ 
-    Special model mixin for MediaChoices (radio and selection)
-    Will include media_type field to inherited classes
-    """ 
-    class Meta:
-        abstract = True
-    media_type = models.CharField(_('Choice\'s media type'), max_length=15, \
-                    choices=MEDIA_TYPES)
 
 class RadioQuestionMixin(BaseQuestion):
     """
@@ -304,6 +287,8 @@ class SelectionQuestionMixin(BaseQuestion):
     class Meta:
         abstract = True
     answer_type = SelectionAnswer
+    validate_button_label = models.CharField(_('Validate button (label)'), default=_('I\'m done'), max_length=120)
+
 
 class TextSelectionQuestion(SelectionQuestionMixin):
     """ Multiple Choices (text) question - one or more answer """
@@ -317,17 +302,16 @@ class BooleanQuestion(RadioQuestionMixin):
     """ yes or no question - single answer """
     pass
 
-def create_boolean(sender, **kwargs):
-    # will create default choice
-    if kwargs.get('created', False):
-        instance = kwargs['instance']
-        yes = TextChoiceField(title='yes', question=instance)
-        no  = TextChoiceField(title='no', question=instance)
-        yes.save()
-        no.save()
 
-# will trigger `create_boolean` after every boolean question creation
-post_save.connect(create_boolean, sender=BooleanQuestion)
+class MediaTypeMixin(models.Model):
+    """ 
+    Special model mixin for MediaChoices (radio and selection)
+    Will include media_type field to inherited classes
+    """ 
+    class Meta:
+        abstract = True
+    media_type = models.CharField(_('Choice\'s media type'), max_length=15, \
+                    choices=MEDIA_TYPES)
 
 class MediaSelectionQuestion(SelectionQuestionMixin, MediaTypeMixin):
     """ 
@@ -366,6 +350,37 @@ class TextChoiceField(BaseChoiceField):
 
 class MediaChoiceField(BaseChoiceField, PictureMixin):
     pass
+
+
+# -----------------------------------------------------------------------------
+# 
+#   Post save callback definitions and binding with django signals framework
+# 
+# -----------------------------------------------------------------------------
+def create_generic_element(sender, **kwargs):
+    # create a generic element appropriated 
+    if kwargs.get('created', False):
+        instance = kwargs.get('instance', None)
+        ctype = ContentType.objects.get_for_model(instance)
+        element  = ThematicElement.objects.get_or_create(content_type=ctype, object_id=instance.id)
+
+
+def create_boolean(sender, **kwargs):
+    # will create default choice fields for boolean questions ("yes" and "no")
+    # I must reckon that's clever.
+    if kwargs.get('created', False):
+        instance = kwargs['instance']
+        yes = TextChoiceField(title='yes', question=instance)
+        no  = TextChoiceField(title='no', question=instance)
+        yes.save()
+        no.save()
+
+# will trigger `create_boolean` after every boolean question creation
+post_save.connect(create_boolean,         sender=BooleanQuestion)
+
+# we trigger the creation of a generic element that will be used by thematics
+post_save.connect(create_generic_element, sender=BaseQuestion)
+post_save.connect(create_generic_element, sender=BaseFeedback)
 
 
 # EOF
