@@ -245,7 +245,7 @@ class TypedNumberQuestion(BaseQuestion):
     defined insided an interval.
     """
     answer_type = TypedNumberAnswer
-    unit = models.CharField(_('Number type'), help_text=_('Unit that will be displayed after the min and max numbers.'), max_length=15)
+    unit = models.CharField(_('Number unit'), help_text=_('Unit that will be displayed after the min and max numbers.'), max_length=15)
     min_number = models.PositiveIntegerField(default=0)
     max_number = models.PositiveIntegerField(default=100)
 
