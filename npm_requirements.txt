@@ -1,2 +1,2 @@
-less==1.6.1
-coffee-script==1.6.3
+less@1.6.1
+coffee-script@1.6.3
