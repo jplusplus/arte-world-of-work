@@ -11,6 +11,7 @@
 # Last mod :  2014-01-23 15:03:39
 # -----------------------------------------------------------------------------
 from settings import *
+ROOT_URLCONF = 'app.urls'
 
 ALLOWED_HOSTS = ["arte-wow-staging.herokuapp.com", ".herokuapp.com"]
 
@@ -38,6 +39,6 @@ CACHES = {
     }
 }
 
-ROOT_URLCONF = 'app.urls'
-
-COMPRESSOR_URL = STATIC_URL
+COMPRESSOR_ROOT  = STATIC_ROOT
+COMPRESSOR_URL   = STATIC_URL
+COMPRESS_STORAGE = STATICFILES_STORAGE
