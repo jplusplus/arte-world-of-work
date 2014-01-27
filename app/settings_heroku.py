@@ -25,7 +25,7 @@ STATIC_URL                 = os.getenv('STATIC_URL')
 
 STATIC_ROOT                = here('staticfiles')
 
-STATICFILES_DIRS           = ()
+STATICFILES_DIRS           = (here('static'))
 
 INSTALLED_APPS            += ('storages',)
 
