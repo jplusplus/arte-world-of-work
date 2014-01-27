@@ -39,3 +39,5 @@ CACHES = {
 }
 
 ROOT_URLCONF = 'app.urls'
+
+COMPRESSOR_URL = STATIC_URL
