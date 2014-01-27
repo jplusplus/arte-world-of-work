@@ -16,7 +16,7 @@ createsuperuser:
 
 setup_db:
 	# setup database
-	. $(VIRTUALENV)bin/activate; python manage.py syncdb
+	. $(VIRTUALENV)bin/activate; python manage.py syncdb ; . $(VIRTUALENV)bin/activate; python manage.py migrate --all
 
 npm_install:
 	# Install npm packages
