@@ -52,7 +52,11 @@ LANGUAGES = (
     (_('French'), 'fr'),
 )
 
-SITE_ID = 1
+LOCALE_PATHS = (
+    here('locale/'),
+)
+
+# SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
