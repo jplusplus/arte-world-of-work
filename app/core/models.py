@@ -16,7 +16,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
