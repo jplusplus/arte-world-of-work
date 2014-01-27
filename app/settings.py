@@ -45,11 +45,11 @@ TIME_ZONE = 'Europe/Paris'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-US'
+LANGUAGE_CODE = 'en'
 
 LANGUAGES = (
-    (_('English'), 'en-US'),
-    (_('French'), 'fr-FR'),
+    (_('English'), 'en'),
+    (_('French'), 'fr'),
 )
 
 SITE_ID = 1
