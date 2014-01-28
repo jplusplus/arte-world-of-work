@@ -56,7 +56,7 @@ class Migration(SchemaMigration):
             db.add_column(u'core_textselectionquestion', 'validate_button_label',
                           self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
                           keep_default=False)
-        except ProgrammingError: 
+        except Exception: 
             pass
 
 
