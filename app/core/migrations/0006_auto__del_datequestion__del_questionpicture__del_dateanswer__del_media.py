@@ -3,86 +3,125 @@ from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
-
+from app.utils import db_table_exists
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'BaseQuestion.skip_button_label'
-        db.add_column(u'core_basequestion', 'skip_button_label',
-                      self.gf('django.db.models.fields.CharField')(default=u'Skip this question', max_length=120),
-                      keep_default=False)
+        # Deleting model 'DateQuestion'
+        if db_table_exists(u'core_datequestion'):
+            db.delete_table(u'core_datequestion')
 
         # Deleting model 'QuestionPicture'
-        db.delete_table(u'core_questionpicture')
+        if db_table_exists(u'core_questionpicture'):
+            db.delete_table(u'core_questionpicture')
+
+        # Deleting model 'DateAnswer'
+        if db_table_exists(u'core_dateanswer'):
+            db.delete_table(u'core_dateanswer')
+
+        # Deleting model 'MediaSelectionQuestion'
+        if db_table_exists(u'core_mediaselectionquestion'):
+            db.delete_table(u'core_mediaselectionquestion')
 
         # Adding model 'BaseFeedback'
-        db.create_table(u'core_basefeedback', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        if not db_table_exists(u'core_basefeedback'):
+            db.create_table(u'core_basefeedback', (
+                (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('html_sentence', self.gf('django.db.models.fields.CharField')(max_length=120)),
         ))
         db.send_create_signal(u'core', ['BaseFeedback'])
 
         # Adding model 'StaticFeedback'
-        db.create_table(u'core_staticfeedback', (
-            (u'basefeedback_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseFeedback'], unique=True, primary_key=True)),
+        if not db_table_exists(u'core_staticfeedback'):
+            db.create_table(u'core_staticfeedback', (
+                (u'basefeedback_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseFeedback'], unique=True, primary_key=True)),
             ('source_url', self.gf('django.db.models.fields.URLField')(max_length=200)),
             ('source_title', self.gf('django.db.models.fields.CharField')(max_length=120)),
         ))
         db.send_create_signal(u'core', ['StaticFeedback'])
 
         # Adding model 'QuestionMediaAttachement'
-        db.create_table(u'core_questionmediaattachement', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('picture', self.gf('sorl.thumbnail.fields.ImageField')(max_length=100)),
-            ('question', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True)),
-        ))
-        db.send_create_signal(u'core', ['QuestionMediaAttachement'])
+        if not db_table_exists(u'core_questionmediaattachement'):
+            db.create_table(u'core_questionmediaattachement', (
+                (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+                ('picture', self.gf('sorl.thumbnail.fields.ImageField')(max_length=100)),
+                ('question', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True)),
+            ))
+            db.send_create_signal(u'core', ['QuestionMediaAttachement'])
 
         # Adding field 'TextSelectionQuestion.validate_button_label'
         db.add_column(u'core_textselectionquestion', 'validate_button_label',
-                      self.gf('django.db.models.fields.CharField')(default=u"I'm done", max_length=120),
+                      self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
                       keep_default=False)
 
+
+        # Changing field 'ThematicElement.position'
+        db.alter_column(u'core_thematicelement', 'position', self.gf('django.db.models.fields.PositiveIntegerField')(null=True))
         # Adding field 'NumberQuestion.validate_button_label'
         db.add_column(u'core_numberquestion', 'validate_button_label',
-                      self.gf('django.db.models.fields.CharField')(default=u"I'm done", max_length=120),
+                      self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
                       keep_default=False)
 
-        # Adding field 'MediaSelectionQuestion.validate_button_label'
-        db.add_column(u'core_mediaselectionquestion', 'validate_button_label',
-                      self.gf('django.db.models.fields.CharField')(default=u"I'm done", max_length=120),
+        # Adding field 'BaseQuestion.skip_button_label'
+        db.add_column(u'core_basequestion', 'skip_button_label',
+                      self.gf('django.db.models.fields.CharField')(default=u'Skip this question', max_length=120),
                       keep_default=False)
-
- 
 
 
     def backwards(self, orm):
+        # Adding model 'DateQuestion'
+        if not db_table_exists(u'core_datequestion'):
+            db.create_table(u'core_datequestion', (
+                (u'basequestion_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True, primary_key=True)),
+            ))
+            db.send_create_signal(u'core', ['DateQuestion'])
+
         # Adding model 'QuestionPicture'
-        db.create_table(u'core_questionpicture', (
-            ('picture', self.gf('sorl.thumbnail.fields.ImageField')(max_length=100)),
-            ('question', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True)),
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-        ))
-        db.send_create_signal(u'core', ['QuestionPicture'])
+        if not db_table_exists(u'core_questionpicture'):
+            db.create_table(u'core_questionpicture', (
+                ('picture', self.gf('sorl.thumbnail.fields.ImageField')(max_length=100)),
+                ('question', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True)),
+                (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ))
+            db.send_create_signal(u'core', ['QuestionPicture'])
+
+        # Adding model 'DateAnswer'
+        if not db_table_exists(u'core_dateanswer'):
+            db.create_table(u'core_dateanswer', (
+                (u'baseanswer_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseAnswer'], unique=True, primary_key=True)),
+                ('value', self.gf('django.db.models.fields.DateTimeField')()),
+            ))
+            db.send_create_signal(u'core', ['DateAnswer'])
+
+        # Adding model 'MediaSelectionQuestion'
+        if not db_table_exists(u'core_mediaselectionquestion'):
+            db.create_table(u'core_mediaselectionquestion', (
+                (u'basequestion_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True, primary_key=True)),
+                ('media_type', self.gf('django.db.models.fields.CharField')(max_length=15)),
+            ))
+            db.send_create_signal(u'core', ['MediaSelectionQuestion'])
 
         # Deleting model 'BaseFeedback'
-        db.delete_table(u'core_basefeedback')
+        if db_table_exists(u'core_basefeedback'):
+            db.delete_table(u'core_basefeedback')
 
         # Deleting model 'StaticFeedback'
-        db.delete_table(u'core_staticfeedback')
+        if db_table_exists(u'core_staticfeedback'):
+            db.delete_table(u'core_staticfeedback')
 
         # Deleting model 'QuestionMediaAttachement'
-        db.delete_table(u'core_questionmediaattachement')
+        if db_table_exists(u'core_questionmediaattachement'):
+            db.delete_table(u'core_questionmediaattachement')
 
         # Deleting field 'TextSelectionQuestion.validate_button_label'
         db.delete_column(u'core_textselectionquestion', 'validate_button_label')
 
+
+        # Changing field 'ThematicElement.position'
+        db.alter_column(u'core_thematicelement', 'position', self.gf('django.db.models.fields.PositiveIntegerField')(default=0))
         # Deleting field 'NumberQuestion.validate_button_label'
         db.delete_column(u'core_numberquestion', 'validate_button_label')
-
-        # Deleting field 'MediaSelectionQuestion.validate_button_label'
-        db.delete_column(u'core_mediaselectionquestion', 'validate_button_label')
 
         # Deleting field 'BaseQuestion.skip_button_label'
         db.delete_column(u'core_basequestion', 'skip_button_label')
@@ -163,15 +202,6 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'CountryQuestion', '_ormbases': [u'core.BaseQuestion']},
             u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'core.dateanswer': {
-            'Meta': {'object_name': 'DateAnswer', '_ormbases': [u'core.BaseAnswer']},
-            u'baseanswer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseAnswer']", 'unique': 'True', 'primary_key': 'True'}),
-            'value': ('django.db.models.fields.DateTimeField', [], {})
-        },
-        u'core.datequestion': {
-            'Meta': {'object_name': 'DateQuestion', '_ormbases': [u'core.BaseQuestion']},
-            u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'})
-        },
         u'core.mediachoicefield': {
             'Meta': {'object_name': 'MediaChoiceField', '_ormbases': [u'core.BaseChoiceField']},
             u'basechoicefield_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseChoiceField']", 'unique': 'True', 'primary_key': 'True'}),
@@ -182,12 +212,6 @@ class Migration(SchemaMigration):
             u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'}),
             'media_type': ('django.db.models.fields.CharField', [], {'max_length': '15'})
         },
-        u'core.mediaselectionquestion': {
-            'Meta': {'object_name': 'MediaSelectionQuestion'},
-            u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'}),
-            'media_type': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
-            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': 'u"I\'m done"', 'max_length': '120'})
-        },
         u'core.numberanswer': {
             'Meta': {'object_name': 'NumberAnswer', '_ormbases': [u'core.BaseAnswer']},
             u'baseanswer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseAnswer']", 'unique': 'True', 'primary_key': 'True'}),
@@ -196,7 +220,7 @@ class Migration(SchemaMigration):
         u'core.numberquestion': {
             'Meta': {'object_name': 'NumberQuestion', '_ormbases': [u'core.BaseQuestion']},
             u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'}),
-            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': 'u"I\'m done"', 'max_length': '120'})
+            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': 'u"Done"', 'max_length': '120'})
         },
         u'core.questionmediaattachement': {
             'Meta': {'object_name': 'QuestionMediaAttachement'},
@@ -231,7 +255,7 @@ class Migration(SchemaMigration):
         u'core.textselectionquestion': {
             'Meta': {'object_name': 'TextSelectionQuestion'},
             u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'}),
-            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': 'u"I\'m done"', 'max_length': '120'})
+            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': 'u"Done"', 'max_length': '120'})
         },
         u'core.thematic': {
             'Meta': {'object_name': 'Thematic'},
@@ -243,7 +267,7 @@ class Migration(SchemaMigration):
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-            'position': ('django.db.models.fields.PositiveIntegerField', [], {}),
+            'position': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True'}),
             'thematic': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.Thematic']", 'null': 'True'})
         },
         u'core.typednumberanswer': {
