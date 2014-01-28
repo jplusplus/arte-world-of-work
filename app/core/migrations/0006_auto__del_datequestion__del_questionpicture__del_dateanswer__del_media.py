@@ -98,13 +98,13 @@ class Migration(SchemaMigration):
         # Deleting model 'BaseFeedback'
         db.delete_table(u'core_basefeedback')
 
-    # Deleting model 'StaticFeedback'
+        # Deleting model 'StaticFeedback'
         db.delete_table(u'core_staticfeedback')
 
-    # Deleting model 'QuestionMediaAttachement'
+        # Deleting model 'QuestionMediaAttachement'
         db.delete_table(u'core_questionmediaattachement')
 
-    # Deleting field 'TextSelectionQuestion.validate_button_label'
+        # Deleting field 'TextSelectionQuestion.validate_button_label'
         db.delete_column(u'core_textselectionquestion', 'validate_button_label')
 
 
