@@ -3,6 +3,7 @@ from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from django.db.utils import ProgrammingError
 from app.utils import db_table_exists
 
 class Migration(SchemaMigration):
@@ -50,10 +51,13 @@ class Migration(SchemaMigration):
             ))
             db.send_create_signal(u'core', ['QuestionMediaAttachement'])
 
-        # Adding field 'TextSelectionQuestion.validate_button_label'
-        db.add_column(u'core_textselectionquestion', 'validate_button_label',
-                      self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
-                      keep_default=False)
+        try:
+            # Adding field 'TextSelectionQuestion.validate_button_label'
+            db.add_column(u'core_textselectionquestion', 'validate_button_label',
+                          self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
+                          keep_default=False)
+        except ProgrammingError: 
+            pass
 
 
         # Changing field 'ThematicElement.position'
