@@ -50,20 +50,20 @@ class Migration(SchemaMigration):
 
         # Adding field 'TextSelectionQuestion.validate_button_label'
         db.add_column(u'core_textselectionquestion', 'validate_button_label',
-                      self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
-                      keep_default=False)
+            self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
+            keep_default=False)
 
         # Changing field 'ThematicElement.position'
         db.alter_column(u'core_thematicelement', 'position', self.gf('django.db.models.fields.PositiveIntegerField')(null=True))
         # Adding field 'NumberQuestion.validate_button_label'
         db.add_column(u'core_numberquestion', 'validate_button_label',
-                      self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
-                      keep_default=False)
+            self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
+            keep_default=False)
 
         # Adding field 'BaseQuestion.skip_button_label'
         db.add_column(u'core_basequestion', 'skip_button_label',
-                      self.gf('django.db.models.fields.CharField')(default=u'Skip this question', max_length=120),
-                      keep_default=False)
+            self.gf('django.db.models.fields.CharField')(default=u'Skip this question', max_length=120),
+            keep_default=False)
 
 
     def backwards(self, orm):
