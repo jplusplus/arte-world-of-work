@@ -26,30 +26,27 @@ class Migration(SchemaMigration):
             db.delete_table(u'core_mediaselectionquestion')
 
         # Adding model 'BaseFeedback'
-        if not db_table_exists(u'core_basefeedback'):
-            db.create_table(u'core_basefeedback', (
-                (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table(u'core_basefeedback', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('html_sentence', self.gf('django.db.models.fields.CharField')(max_length=120)),
         ))
         db.send_create_signal(u'core', ['BaseFeedback'])
 
         # Adding model 'StaticFeedback'
-        if not db_table_exists(u'core_staticfeedback'):
-            db.create_table(u'core_staticfeedback', (
-                (u'basefeedback_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseFeedback'], unique=True, primary_key=True)),
+        db.create_table(u'core_staticfeedback', (
+            (u'basefeedback_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseFeedback'], unique=True, primary_key=True)),
             ('source_url', self.gf('django.db.models.fields.URLField')(max_length=200)),
             ('source_title', self.gf('django.db.models.fields.CharField')(max_length=120)),
         ))
         db.send_create_signal(u'core', ['StaticFeedback'])
 
         # Adding model 'QuestionMediaAttachement'
-        if not db_table_exists(u'core_questionmediaattachement'):
-            db.create_table(u'core_questionmediaattachement', (
-                (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-                ('picture', self.gf('sorl.thumbnail.fields.ImageField')(max_length=100)),
-                ('question', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True)),
-            ))
-            db.send_create_signal(u'core', ['QuestionMediaAttachement'])
+        db.create_table(u'core_questionmediaattachement', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('picture', self.gf('sorl.thumbnail.fields.ImageField')(max_length=100)),
+            ('question', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True)),
+        ))
+        db.send_create_signal(u'core', ['QuestionMediaAttachement'])
 
         # Adding field 'TextSelectionQuestion.validate_button_label'
         db.add_column(u'core_textselectionquestion', 'validate_button_label',
