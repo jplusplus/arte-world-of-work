@@ -68,50 +68,43 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         # Adding model 'DateQuestion'
-        if not db_table_exists(u'core_datequestion'):
-            db.create_table(u'core_datequestion', (
-                (u'basequestion_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True, primary_key=True)),
-            ))
-            db.send_create_signal(u'core', ['DateQuestion'])
+        db.create_table(u'core_datequestion', (
+            (u'basequestion_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True, primary_key=True)),
+        ))
+        db.send_create_signal(u'core', ['DateQuestion'])
 
         # Adding model 'QuestionPicture'
-        if not db_table_exists(u'core_questionpicture'):
-            db.create_table(u'core_questionpicture', (
-                ('picture', self.gf('sorl.thumbnail.fields.ImageField')(max_length=100)),
-                ('question', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True)),
-                (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ))
-            db.send_create_signal(u'core', ['QuestionPicture'])
+        db.create_table(u'core_questionpicture', (
+            ('picture', self.gf('sorl.thumbnail.fields.ImageField')(max_length=100)),
+            ('question', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True)),
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        ))
+        db.send_create_signal(u'core', ['QuestionPicture'])
 
         # Adding model 'DateAnswer'
-        if not db_table_exists(u'core_dateanswer'):
-            db.create_table(u'core_dateanswer', (
-                (u'baseanswer_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseAnswer'], unique=True, primary_key=True)),
-                ('value', self.gf('django.db.models.fields.DateTimeField')()),
-            ))
-            db.send_create_signal(u'core', ['DateAnswer'])
+        db.create_table(u'core_dateanswer', (
+            (u'baseanswer_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseAnswer'], unique=True, primary_key=True)),
+            ('value', self.gf('django.db.models.fields.DateTimeField')()),
+        ))
+        db.send_create_signal(u'core', ['DateAnswer'])
 
         # Adding model 'MediaSelectionQuestion'
-        if not db_table_exists(u'core_mediaselectionquestion'):
-            db.create_table(u'core_mediaselectionquestion', (
-                (u'basequestion_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True, primary_key=True)),
-                ('media_type', self.gf('django.db.models.fields.CharField')(max_length=15)),
-            ))
-            db.send_create_signal(u'core', ['MediaSelectionQuestion'])
+        db.create_table(u'core_mediaselectionquestion', (
+            (u'basequestion_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True, primary_key=True)),
+            ('media_type', self.gf('django.db.models.fields.CharField')(max_length=15)),
+        ))
+        db.send_create_signal(u'core', ['MediaSelectionQuestion'])
 
         # Deleting model 'BaseFeedback'
-        if db_table_exists(u'core_basefeedback'):
-            db.delete_table(u'core_basefeedback')
+        db.delete_table(u'core_basefeedback')
 
-        # Deleting model 'StaticFeedback'
-        if db_table_exists(u'core_staticfeedback'):
-            db.delete_table(u'core_staticfeedback')
+    # Deleting model 'StaticFeedback'
+        db.delete_table(u'core_staticfeedback')
 
-        # Deleting model 'QuestionMediaAttachement'
-        if db_table_exists(u'core_questionmediaattachement'):
-            db.delete_table(u'core_questionmediaattachement')
+    # Deleting model 'QuestionMediaAttachement'
+        db.delete_table(u'core_questionmediaattachement')
 
-        # Deleting field 'TextSelectionQuestion.validate_button_label'
+    # Deleting field 'TextSelectionQuestion.validate_button_label'
         db.delete_column(u'core_textselectionquestion', 'validate_button_label')
 
 
