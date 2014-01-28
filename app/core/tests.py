@@ -51,18 +51,21 @@ class CoreTestCase(TestCase):
         )
         [c.save() for c in self.question2_choices]
 
-        # question 3 - date question 
-        self.question3 = DateQuestion(label='Date ?', hint_text='Enter a date')
-        self.question3.save()        
-
-        # question 4 - typed number question 
-        self.question4 = TypedNumberQuestion(
+        # question 3 - typed number question 
+        self.question3 = TypedNumberQuestion(
             label='Your weight ?', hint_text='Enter a date', unit='kg',
             min_number=0, max_number=200)
 
-        self.question4.save()
+        self.question3.save()
 
-        # thematic $ 
+    def test_create_question(self):
+        question = NumberQuestion.objects.create(label='label', hint_text='hint')
+        question.save()
+
+        ctype = ContentType.objects.get_for_model(question)
+        thematic_element = ThematicElement.objects.filter(content_type=ctype, object_id=question.pk)
+        self.assertEqual(len(thematic_element), 1)
+
 
     # Test that answering a user question change the answerer profile
     def test_answer_user_question_country(self): 
@@ -108,27 +111,18 @@ class CoreTestCase(TestCase):
         answer.save()
         self.assertEqual(value, answer.value)
 
-    def test_answer_date_question(self):
-        # TODO
-        from datetime import datetime
-        value = datetime.now()
-        question = self.question3 
-        answer = BaseAnswer.objects.create_answer(question, self.user, value)
-        answer.save()
-        self.assertEqual(value, answer.value)
-
 
     def test_answer_typednumber_question(self):
         # TODO
         value = 20
-        question = self.question4
+        question = self.question3
         answer = BaseAnswer.objects.create_answer(question, self.user, value)
         answer.save()
         self.assertEqual(value, answer.value)
 
     def test_answer_typednumber_question_outofrange(self):
         value = 300 
-        question = self.question4
+        question = self.question3
         failed = False
         try:
             answer = BaseAnswer.objects.create_answer(question, self.user, value)
@@ -142,14 +136,14 @@ class CoreTestCase(TestCase):
     def test_multiple_answer(self): 
         # test that we can actually create multiple answer for a given question 
         iteration = 0
-        question = self.question4
+        question = self.question3
         while iteration < 20:
             value = 100
             answer = BaseAnswer.objects.create_answer(question, self.user, value)
             answer.save()
             iteration += 1 
 
-        answers = BaseQuestion.objects.get(pk=self.question4.id).baseanswer_set.all()
+        answers = BaseQuestion.objects.get(pk=self.question3.id).baseanswer_set.all()
         self.assertEqual(len(answers), iteration)
 
 
@@ -166,11 +160,3 @@ class CoreTestCase(TestCase):
         question = BooleanQuestion.objects.create(label=u'é_è - ò_ó', hint_text=u'é_è')
         question.save()
         self.assertIsNotNone(question.__unicode__())
-
-
-    def test_create_thematic(self):
-        thematic = Thematic.objects.create(title='test')
-        thematic.save()
-        thematic.add_element(self.question1)
-        thematic.add_element(self.question2)
-        self.assertEqual(thematic.elements.length(), 2)

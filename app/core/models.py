@@ -20,7 +20,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
-
+from app.utils import receiver_subclasses
 # -----------------------------------------------------------------------------
 #
 #     Constants
@@ -51,7 +51,7 @@ class ThematicElement(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     
     thematic = models.ForeignKey('Thematic', null=True)
-    position = models.PositiveIntegerField()
+    position = models.PositiveIntegerField(null=True)
 
     def sub_elements(self):
         return self.content_object.sub_elements()
@@ -64,7 +64,12 @@ class ThematicElementMixin(models.Model):
     generic_element = generic.GenericRelation(ThematicElement)
         
     def as_element(self):
-        return generic_element.filter(object_id=self.id)
+        ctype = ContentType.objects.get_for_model(self)
+        elements = self.generic_element.filter(content_type=ctype, object_id=self.pk)
+        if len(elements) > 0:
+            return elements[0]
+        else: 
+            return None
 
 
 class Thematic(models.Model):
@@ -351,12 +356,14 @@ class MediaChoiceField(BaseChoiceField, PictureMixin):
 #   Post save callback definitions and binding with django signals framework
 # 
 # -----------------------------------------------------------------------------
+@receiver_subclasses(post_save, BaseQuestion, "basequestion_post_save")
+@receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
 def create_generic_element(sender, **kwargs):
     # create a generic element appropriated 
     if kwargs.get('created', False):
         instance = kwargs.get('instance', None)
         ctype = ContentType.objects.get_for_model(instance)
-        element  = ThematicElement.objects.get_or_create(content_type=ctype, object_id=instance.id)
+        element  = ThematicElement.objects.get_or_create(content_type=ctype, object_id=instance.pk)[0]
         element.save()
 
 def delete_generic_element(sender, **kwargs):
@@ -378,9 +385,12 @@ def create_boolean(sender, **kwargs):
 # will trigger `create_boolean` after every boolean question creation
 post_save.connect(create_boolean,         sender=BooleanQuestion)
 
-# we trigger the creation of a generic element that will be used by thematics
-post_save.connect(create_generic_element, sender=BaseQuestion)
-post_save.connect(create_generic_element, sender=BaseFeedback)
 
+# @receiver_subclasses(post_save,BaseQuestion, "basequestion_post_save")
+# def create_generic_element_question(sender, **kwargs):
+#     create_generic_element(sender, **kwargs)
 
+# @receiver_subclasses(post_save,BaseFeedback, "basefeedback_post_save")
+# def create_generic_element_feedback(sender, **kwargs):
+#     create_generic_element(sender, **kwargs)
 # EOF

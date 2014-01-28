@@ -11,10 +11,13 @@
 # Creation : 14-Jan-2014
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
+from django import forms
 from django.contrib import admin
+from django.contrib.contenttypes import generic
 from sorl.thumbnail.admin import AdminImageMixin
+from app.core import models
+from app.core.models import ThematicElement
 
-import app.core.models as models
 import sys
 
 # -----------------------------------------------------------------------------
@@ -22,6 +25,7 @@ import sys
 #    Inlines
 #
 # -----------------------------------------------------------------------------
+# Question related inlines 
 class InlineQuestionMedia(admin.StackedInline):
     model = models.QuestionMediaAttachement
     extra = 0
@@ -46,6 +50,12 @@ class InlineMediaRadioQuestion(InlineMediaSelectionQuestion):
 class InlineBooleanQuestion(InlineTextRadioQuestion):
     pass
 
+class InlineThematicElement(generic.GenericTabularInline):
+    model = ThematicElement
+    max_num = 1
+    extra = 0
+
+
 # -----------------------------------------------------------------------------
 #
 #    Question
@@ -55,6 +65,7 @@ class QuestionAdmin(admin.ModelAdmin):
     readonly_fields = ('content_type',)
     inlines = (
         InlineQuestionMedia,
+        InlineThematicElement,
     )
 
     def get_inline_instances(self, request, obj=None):
@@ -68,11 +79,14 @@ class QuestionAdmin(admin.ModelAdmin):
                 inline = inline(self.model, self.admin_site)
                 inline_model_admins.append(inline)
         return inline_model_admins
+
+
 # -----------------------------------------------------------------------------
 #
 #    Register your models here
 #
 # -----------------------------------------------------------------------------
+# all questions models 
 admin.site.register(models.NumberQuestion        , QuestionAdmin)
 admin.site.register(models.TypedNumberQuestion   , QuestionAdmin)
 admin.site.register(models.TextSelectionQuestion , QuestionAdmin)
