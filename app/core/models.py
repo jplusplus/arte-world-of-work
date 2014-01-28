@@ -50,11 +50,11 @@ class ThematicElement(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     
-    thematic = models.ForeignKey('Thematic', null=True)
-    position = models.PositiveIntegerField(null=True)
+    thematic = models.ForeignKey('Thematic', null=True, blank=True)
+    position = models.PositiveIntegerField(null=True, blank=True)
 
-    def sub_elements(self):
-        return self.content_object.sub_elements()
+    def clean(self, exclude=None):
+        pass
 
 
 class ThematicElementMixin(models.Model):
