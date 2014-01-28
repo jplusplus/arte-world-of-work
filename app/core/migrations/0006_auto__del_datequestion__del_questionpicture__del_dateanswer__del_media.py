@@ -51,14 +51,10 @@ class Migration(SchemaMigration):
             ))
             db.send_create_signal(u'core', ['QuestionMediaAttachement'])
 
-        try:
-            # Adding field 'TextSelectionQuestion.validate_button_label'
-            db.add_column(u'core_textselectionquestion', 'validate_button_label',
-                          self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
-                          keep_default=False)
-        except Exception: 
-            pass
-
+        # Adding field 'TextSelectionQuestion.validate_button_label'
+        db.add_column(u'core_textselectionquestion', 'validate_button_label',
+                      self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
+                      keep_default=False)
 
         # Changing field 'ThematicElement.position'
         db.alter_column(u'core_thematicelement', 'position', self.gf('django.db.models.fields.PositiveIntegerField')(null=True))
