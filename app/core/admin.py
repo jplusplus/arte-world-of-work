@@ -43,6 +43,9 @@ class InlineTextRadioQuestion(InlineTextSelectionQuestion):
 class InlineMediaRadioQuestion(InlineMediaSelectionQuestion):
     pass
 
+class InlineBooleanQuestion(InlineTextRadioQuestion):
+    pass
+
 # -----------------------------------------------------------------------------
 #
 #    Question
