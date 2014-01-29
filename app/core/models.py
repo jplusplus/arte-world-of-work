@@ -58,6 +58,9 @@ class ThematicElement(models.Model):
 
 
 class ThematicElementMixin(models.Model):
+    """
+    Inject generic_element to a model that has a representative ThematicElement
+    """
     class Meta:
         abstract = True
 
@@ -71,6 +74,10 @@ class ThematicElementMixin(models.Model):
         else: 
             return None
 
+    def set_thematic(self, thematic):
+        element = self.as_element()
+        element.thematic = thematic
+        element.save()
 
 class Thematic(models.Model):
     title = models.CharField(_('Thematic title'), max_length=120)

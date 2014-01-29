@@ -150,7 +150,7 @@ class CoreTestCase(TestCase):
     def test_create_boolean_question(self):
         question = BooleanQuestion.objects.create(label='bool question', hint_text='answer by yes or no' )
         choices = TextChoiceField.objects.filter(question=question.pk)
-            
+        
         # check all choices are yes or no
         self.assertEqual(len(choices), 2)
         self.assertIsNotNone(choices.filter(title='yes')[0])
@@ -160,3 +160,11 @@ class CoreTestCase(TestCase):
         question = BooleanQuestion.objects.create(label=u'é_è - ò_ó', hint_text=u'é_è')
         question.save()
         self.assertIsNotNone(question.__unicode__())
+
+
+    def test_create_thematic(self):
+        thematic = Thematic.objects.create(title='You')
+        self.question1.set_thematic(thematic)
+        self.question2.set_thematic(thematic)
+        self.question3.set_thematic(thematic)
+        self.assertEqual(len(thematic.thematicelement_set.all()), 3)
