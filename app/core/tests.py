@@ -114,16 +114,16 @@ class CoreTestCase(TestCase):
 
     def test_answer_typednumber_question(self):
         # TODO
-        value = 20
+        value    = 20
         question = self.question3
-        answer = BaseAnswer.objects.create_answer(question, self.user, value)
+        answer   = BaseAnswer.objects.create_answer(question, self.user, value)
         answer.save()
         self.assertEqual(value, answer.value)
 
     def test_answer_typednumber_question_outofrange(self):
-        value = 300 
+        value    = 300 
         question = self.question3
-        failed = False
+        failed   = False
         try:
             answer = BaseAnswer.objects.create_answer(question, self.user, value)
             answer.clean()
@@ -135,13 +135,13 @@ class CoreTestCase(TestCase):
 
     def test_multiple_answer(self): 
         # test that we can actually create multiple answer for a given question 
-        iteration = 0
-        question = self.question3
-        while iteration < 20:
+        iterations = 0
+        question   = self.question3
+        while iterations < 20:
             value = 100
             answer = BaseAnswer.objects.create_answer(question, self.user, value)
             answer.save()
-            iteration += 1 
+            iterations += 1 
 
         answers = BaseQuestion.objects.get(pk=self.question3.id).baseanswer_set.all()
         self.assertEqual(len(answers), iteration)
