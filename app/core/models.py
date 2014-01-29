@@ -16,7 +16,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext, ugettext_lazy as _
 
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
@@ -53,9 +53,12 @@ class ThematicElement(models.Model):
     thematic = models.ForeignKey('Thematic', null=True, blank=True)
     position = models.PositiveIntegerField(null=True, blank=True)
 
-    def clean(self, exclude=None):
-        pass
-
+    def __unicode__(self):
+        return u"{type} - {title}".format(
+            type=self.content_type,
+            title=self.content_object.__unicode__()
+        )
+                
 
 class ThematicElementMixin(models.Model):
     """
@@ -90,7 +93,8 @@ class Thematic(models.Model):
         element.thematic = self
         element.save()
 
-
+    def __unicode__(self):
+        return u"{id} - {title}".format(id=self.pk, title=self.title)
 # -----------------------------------------------------------------------------
 # 
 #     Feedbacks

@@ -144,7 +144,7 @@ class CoreTestCase(TestCase):
             iterations += 1 
 
         answers = BaseQuestion.objects.get(pk=self.question3.id).baseanswer_set.all()
-        self.assertEqual(len(answers), iteration)
+        self.assertEqual(len(answers), iterations)
 
 
     def test_create_boolean_question(self):
@@ -168,3 +168,33 @@ class CoreTestCase(TestCase):
         self.question2.set_thematic(thematic)
         self.question3.set_thematic(thematic)
         self.assertEqual(len(thematic.thematicelement_set.all()), 3)
+
+
+    def test_create_feedback(self):
+        html_sentence = """
+        Did you knew that we had <strong>6</strong> people working at 
+        Journalism++ ? #RDP©
+        """ 
+        kwargs = {
+            'html_sentence': html_sentence,
+            'source_url': "http://jplusplus.org",
+            'source_title': "jplusplus website"
+        }
+        feedback = StaticFeedback.objects.create(**kwargs)
+        self.assertIsNotNone(feedback.as_element())
+
+    def test_generic_thematic_elements(self):
+        html_sentence = """
+        Did you knew that we had <strong>6</strong> people working at 
+        Journalism++ ? #RDP©
+        """ 
+        kwargs = {
+            'html_sentence': html_sentence,
+            'source_url': "http://jplusplus.org",
+            'source_url': "jplusplus website"
+        }
+        feedback = StaticFeedback.objects.create(**kwargs)
+        thematic = Thematic.objects.create(title='Your work')
+        feedback.set_thematic(thematic)
+        self.question1.set_thematic(thematic)
+        self.assertEqual(len(thematic.thematicelement_set.all()), 2)
