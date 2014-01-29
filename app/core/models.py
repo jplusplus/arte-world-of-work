@@ -303,8 +303,8 @@ class SelectionQuestionMixin(BaseQuestion):
 class TextSelectionQuestion(SelectionQuestionMixin):
     """ Multiple Choices (text) question - one or more answer """
     class Meta:
-        verbose_name = _('Text (multiple choice) question')
-        verbose_name_plural = _('Text (multiple choice) questions')
+        verbose_name = _('Text (multiple choices) question')
+        verbose_name_plural = _('Text (multiple choices) questions')
 
 class TextRadioQuestion(RadioQuestionMixin):
     """ Multiple Choice (text) question - single answer """
@@ -335,8 +335,19 @@ class MediaRadioQuestion(RadioQuestionMixin, MediaTypeMixin):
     `media_type` model's field.
     """
     class Meta:
-        verbose_name = _('Media choice question')
-        verbose_name_plural = _('Media choice questions')
+        verbose_name = _('Media (single choice) question')
+        verbose_name_plural = _('Media (single choice) questions')
+
+class MediaSelectionQuestion(SelectionQuestionMixin, MediaTypeMixin):
+    """ 
+    Multiple Choice (image or icon) question - multiple answer. 
+
+    Inherit from :model:`app.core.models.MediaTypeMixin`, thus inherit from its 
+    `media_type` model's field.
+    """
+    class Meta:
+        verbose_name = _('Media (multiple choices) question')
+        verbose_name_plural = _('Media (multiple choices) questions')
 
 # -----------------------------------------------------------------------------
 # 
