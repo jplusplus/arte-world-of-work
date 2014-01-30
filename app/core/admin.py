@@ -11,8 +11,6 @@
 # Creation : 14-Jan-2014
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
-from django import forms
-from django.forms.models import BaseModelFormSet, BaseInlineFormSet
 from django.contrib import admin
 from django.contrib.contenttypes import generic
 from sorl.thumbnail.admin import AdminImageMixin
@@ -50,6 +48,9 @@ class InlineMediaRadioQuestion(InlineMediaSelectionQuestion):
 
 class InlineBooleanQuestion(InlineTextRadioQuestion):
     pass
+
+class InlineUserGenderQuestion(InlineTextRadioQuestion):
+    model = models.UserChoiceQuestion
 
 class GenericInlineThematicElement(generic.GenericStackedInline):
     model = ThematicElement
@@ -119,6 +120,7 @@ admin.site.register(models.BooleanQuestion       , QuestionAdmin)
 
 admin.site.register(models.UserAgeQuestion       , QuestionAdmin)
 admin.site.register(models.UserCountryQuestion   , QuestionAdmin)
+admin.site.register(models.UserGenderQuestion    , QuestionAdmin)
 
 admin.site.register(models.Thematic              , ThematicAdmin)
 # EOF

@@ -61,6 +61,7 @@ class CoreTestCase(TestCase):
         self.question3.save()
 
     def test_get_field_names(self):
+        # unit test for utils.get_fields_names function
         names = get_fields_names(UserProfile, CountryField)
         self.assertTrue('native_country' in names)
         self.assertTrue('living_country' in names)
@@ -82,11 +83,12 @@ class CoreTestCase(TestCase):
     def test_answer_user_question_country(self): 
         country      = 'FR' # france country
         answer       = BaseAnswer.objects.create_answer(self.user_question1, self.user, country)
+        answer_field = self.user_question1.profile_attribute
         answer.save()
         user_profile = UserProfile.objects.get(user_id=self.user)
 
         self.assertIsNotNone(answer)
-        self.assertEqual(user_profile.country.code, country)
+        self.assertEqual(getattr(user_profile, answer_field).code, country)
 
 
     def test_answer_user_question_age(self):
@@ -100,17 +102,40 @@ class CoreTestCase(TestCase):
         user_profile = UserProfile.objects.get(user_id=self.user)
         self.assertEqual(user_profile.age, age)
 
+    def test_create_user_gender_question(self): 
+        question = UserGenderQuestion.objects.create(label='What is your gender?',
+            hint_text='help')
+        question.save()
+        # import pdb; pdb.set_trace()
+        choices = UserChoiceField.objects.filter(question=question)
+        self.assertEqual(len(choices), 2)
+        self.assertIsNotNone(choices.filter(value='male')[0])
+        self.assertIsNotNone(choices.filter(value='female')[0])
+
+    def test_answer_user_gender_question(self):
+        question = UserGenderQuestion.objects.create(label='What is your gender?',
+            hint_text='help')
+        question.save()
+        choices = UserChoiceField.objects.filter(question=question)
+        answer = question.create_answer(value=choices.filter(value='male')[0],
+            user=self.user)
+        answer.save()
+        profile = UserProfile.objects.get(user=self.user)
+        self.assertEqual(profile.gender, 'male')
+
     def test_answer_selection_question(self):
         question = self.question1
         choices  = self.question1_choices[:2]
         answer   = BaseAnswer.objects.create_answer(question, self.user, choices)
         answer.save()
         answered_choices = answer.value.all()
-        # assert for every choice that 
+
+        # `find_modelinstance` function will lookup for current `choice` in 
+        # answered choices to check every answered choices have been recorded
         map(lambda choice: 
-                # utils.find_modelinstance function will lookup for current `choice` in
-                # answered choices and check if the result is not None (=> exists)
-                self.assertIsNotNone(utils.find_modelinstance(choice, answered_choices)) 
+                self.assertIsNotNone(
+                    utils.find_modelinstance(choice, answered_choices)
+                ) 
             , choices)
 
 

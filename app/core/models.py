@@ -31,12 +31,29 @@ MEDIA_TYPES = (
     ('icon', _('Icon (small)')),
     ('image', _('Image (big)')),
 )
+
+GENDER_TYPES = (
+    ('male', _('Male')),
+    ('female', _('Female')),
+)
+
+
+class PictureMixin(models.Model):
+    """
+    Mixin for attached pictures (to question or choice)
+    """
+    class Meta:
+        abstract = True 
+    picture = ImageField(upload_to='uploaded')
+
 # User profile 
 class UserProfile(models.Model):
     user           = models.ForeignKey(User, unique=True)
     age            = models.PositiveIntegerField(null=True)
     native_country = CountryField(null=True)
     living_country = CountryField(null=True)
+    gender         = models.CharField(_('User gender'), max_length=50, 
+        choices=GENDER_TYPES, null=True)
 
 # -----------------------------------------------------------------------------
 # 
@@ -60,7 +77,6 @@ class ThematicElement(models.Model):
             type=self.content_type,
             title=self.content_object.__unicode__()
         )
-                
 
 class ThematicElementMixin(models.Model):
     """
@@ -132,6 +148,10 @@ class AnswerManager(models.Manager):
             for val in value:
                 answer.value.add(val)
         else:
+            if isinstance(value, UserChoiceField):
+                # if answered value is an User choice we need to check for its 
+                # inner value attribute or its title if value is `None`
+                value = value.value or value.title 
             answer.value = value
         return answer
 
@@ -176,7 +196,7 @@ class UserProfileAnswer(BaseAnswer):
 
     def save(self, *args, **kwargs):
         # get user profile
-        profile       = UserProfile.objects.get(user=self.user)
+        profile = UserProfile.objects.get(user=self.user)
         profile_attribute = self.get_profile_attribute()
         setattr(profile, profile_attribute, self.value)
         profile.save()
@@ -188,6 +208,8 @@ class UserCountryAnswer(UserProfileAnswer):
 class UserAgeAnswer(UserProfileAnswer):
     value = models.PositiveIntegerField()
 
+class UserGenderAnswer(UserProfileAnswer):
+    value = models.CharField(_('User gender'), max_length=50, choices=GENDER_TYPES)
 # -----------------------------------------------------------------------------
 #
 #    Questions
@@ -228,31 +250,10 @@ class BaseQuestion(ThematicElementMixin):
         return self.label[:25]
 
     def create_answer(self, *args, **kwargs):
+        # we pass to `create_answer` method the related question 
+        # (`kwargs['question']` or `self`
         kwargs['question'] = kwargs.get('question', self)
         return BaseAnswer.objects.create_answer(*args, **kwargs)
-
-
-class UserProfileQuestion(BaseQuestion):
-    profile_attribute = None
-    answer_type       = UserProfileAnswer
-
-class UserAgeQuestion(UserProfileQuestion):
-    profile_attribute = 'age'
-    answer_type       = UserAgeAnswer
-
-class UserCountryQuestion(UserProfileQuestion):
-    answer_type       = UserCountryAnswer
-    profile_attribute = models.CharField(_('Related profile attribute'), max_length=20, 
-        choices=[ ( name, name) for name in get_fields_names(type=CountryField, model=UserProfile)],
-        help_text=_('Select user profile attribute that will be changed by user answer'), null=True)
-
-class PictureMixin(models.Model):
-    """
-    Mixin for attached pictures (to question or choice)
-    """
-    class Meta:
-        abstract = True 
-    picture = ImageField(upload_to='uploaded')
 
     
 class NumberQuestion(BaseQuestion):
@@ -301,7 +302,6 @@ class QuestionMediaAttachement(PictureMixin):
 #   Single (radio) & multiple (selection) possible answer questions  
 #
 # -----------------------------------------------------------------------------
-
 class RadioQuestionMixin(BaseQuestion):
     """
     Mixin for radio question (one single answer)
@@ -371,6 +371,29 @@ class MediaSelectionQuestion(SelectionQuestionMixin, MediaTypeMixin):
 
 # -----------------------------------------------------------------------------
 # 
+#     User specific questions
+# 
+# -----------------------------------------------------------------------------
+class UserProfileQuestion(BaseQuestion):
+    profile_attribute = None
+    answer_type       = UserProfileAnswer
+
+class UserAgeQuestion(UserProfileQuestion):
+    profile_attribute = 'age'
+    answer_type       = UserAgeAnswer
+
+class UserCountryQuestion(UserProfileQuestion):
+    answer_type       = UserCountryAnswer
+    profile_attribute = models.CharField(_('Related profile attribute'), max_length=20, 
+        choices=[ ( name, name) for name in get_fields_names(type=CountryField, model=UserProfile)],
+        help_text=_('Select user profile attribute that will be changed by user answer'), null=True)
+
+class UserGenderQuestion(UserProfileQuestion):
+    profile_attribute = 'gender'
+    answer_type = UserGenderAnswer
+
+# -----------------------------------------------------------------------------
+# 
 #     Choices field types
 # 
 # -----------------------------------------------------------------------------
@@ -385,9 +408,14 @@ class BaseChoiceField(models.Model):
 class TextChoiceField(BaseChoiceField):
     pass
 
+
 class MediaChoiceField(BaseChoiceField, PictureMixin):
     pass
 
+class UserChoiceField(BaseChoiceField):
+    value = models.CharField(_('Value of this field'), blank=True, 
+        null=True, max_length=120, help_text=_('It will user models what\
+         value should be stored'))
 
 # -----------------------------------------------------------------------------
 # 
@@ -410,7 +438,7 @@ def delete_generic_element(sender, **kwargs):
     element = ThematicElement.objects.get(content_type=ctype, object_id=instance.id)
     element.delete()
 
-def create_boolean(sender, **kwargs):
+def create_boolean_choices(sender, **kwargs):
     # will create default choice fields for boolean questions ("yes" and "no")
     # I must reckon that's clever.
     if kwargs.get('created', False):
@@ -420,15 +448,17 @@ def create_boolean(sender, **kwargs):
         yes.save()
         no.save()
 
+
+def create_user_choice_fieds(sender, **kwargs):
+    if kwargs.get('created', False):
+        question = kwargs['instance']
+        field = UserProfile._meta.get_field(question.__class__.profile_attribute)
+        # import pdb; pdb.set_trace()
+        for c in field.choices: 
+            field = UserChoiceField(value=c[0], title= c[1], question=question)
+            field.save()
+
 # will trigger `create_boolean` after every boolean question creation
-post_save.connect(create_boolean,         sender=BooleanQuestion)
-
-
-# @receiver_subclasses(post_save,BaseQuestion, "basequestion_post_save")
-# def create_generic_element_question(sender, **kwargs):
-#     create_generic_element(sender, **kwargs)
-
-# @receiver_subclasses(post_save,BaseFeedback, "basefeedback_post_save")
-# def create_generic_element_feedback(sender, **kwargs):
-#     create_generic_element(sender, **kwargs)
-# EOF
+post_save.connect(create_boolean_choices, sender=BooleanQuestion)
+post_save.connect(create_user_choice_fieds, sender=UserGenderQuestion)
+#EOF
