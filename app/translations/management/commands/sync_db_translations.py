@@ -11,12 +11,13 @@
 # Last mod :  2014-01-23 10:55:40
 # -----------------------------------------------------------------------------
 from django.conf import settings
+from django.utils import translation
 from django.core.management.base import BaseCommand
 from django.template import Context, Template
 
 from app.translations.translator import translator
 
-OPT_STRINGS_ONLY='strings_only'
+TRANSLATION_DEFAULT_LANGUAGE = getattr(settings, 'TRANSLATION_DEFAULT_LANGUAGE', 'en')
 
 def extract_strings_from_db(verbosity=1):
     strings = []
@@ -57,5 +58,8 @@ class Command(BaseCommand):
     help = "Synchronize translations strings with database records"
 
     def handle(self, *args, **opts):
+        current_language = translation.get_language()
+        translation.activate(TRANSLATION_DEFAULT_LANGUAGE)
         verbosity = opts.get('verbosity', 1)
         sync_strings(verbosity)
+        translation.activate(current_language)
