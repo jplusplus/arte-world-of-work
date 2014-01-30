@@ -14,10 +14,11 @@
 # all core related tests should go here
 from app                         import utils   
 from app.core.models             import * 
+from app.utils                   import get_fields_names
+from django_countries.fields     import CountryField
 from django.contrib.auth.models  import User
 from django.core.exceptions      import ValidationError
 from django.test                 import TestCase
-
 
 class CoreTestCase(TestCase):
     def setUp(self):
@@ -25,7 +26,8 @@ class CoreTestCase(TestCase):
         self.user = User.objects.create()
         UserProfile.objects.create(user=self.user)
         # user question (country)
-        self.user_question1 = UserCountryQuestion(label='l', hint_text='h')
+        self.user_question1 = UserCountryQuestion(label='l', hint_text='h', 
+            profile_attribute='native_country' )
         self.user_question1.save()
         # user question (age)
         self.user_question2 = UserAgeQuestion(label='Age ?', hint_text='Nope')
@@ -58,6 +60,11 @@ class CoreTestCase(TestCase):
 
         self.question3.save()
 
+    def test_get_field_names(self):
+        names = get_fields_names(UserProfile, CountryField)
+        self.assertTrue('native_country' in names)
+        self.assertTrue('living_country' in names)
+
     def test_create_question(self):
         question = NumberQuestion.objects.create(label='label', hint_text='hint')
         question.save()
@@ -66,6 +73,10 @@ class CoreTestCase(TestCase):
         thematic_element = ThematicElement.objects.filter(content_type=ctype, object_id=question.pk)
         self.assertEqual(len(thematic_element), 1)
 
+    def test_create_answer_from_its_question(self):
+        answer = self.question1.create_answer(user=self.user, value=(self.question1_choices[0]))
+        answer.save()
+        self.assertIsNotNone(answer)
 
     # Test that answering a user question change the answerer profile
     def test_answer_user_question_country(self): 
@@ -198,3 +209,5 @@ class CoreTestCase(TestCase):
         feedback.set_thematic(thematic)
         self.question1.set_thematic(thematic)
         self.assertEqual(len(thematic.thematicelement_set.all()), 2)
+
+

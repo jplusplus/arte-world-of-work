@@ -16,11 +16,12 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
+from django.db.models.fields import FieldDoesNotExist
 from django.utils.translation import gettext, ugettext_lazy as _
 
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
-from app.utils import receiver_subclasses
+from app.utils import receiver_subclasses, get_fields_names
 # -----------------------------------------------------------------------------
 #
 #     Constants
@@ -32,9 +33,10 @@ MEDIA_TYPES = (
 )
 # User profile 
 class UserProfile(models.Model):
-    user = models.ForeignKey(User, unique=True)
-    age = models.PositiveIntegerField(null=True)
-    country = CountryField(null=True)
+    user           = models.ForeignKey(User, unique=True)
+    age            = models.PositiveIntegerField(null=True)
+    native_country = CountryField(null=True)
+    living_country = CountryField(null=True)
 
 # -----------------------------------------------------------------------------
 # 
@@ -119,11 +121,14 @@ class AnswerManager(models.Manager):
     def create_answer(self, question, user, value):
         answer_type =  question.answer_type
         answer = answer_type(question=question, user=user)
-
+        field  = answer._meta.get_field('value')
         # check if value field is ManyToMany, ForeignKey or other
-        if 'value' in [(f.name) for f in answer._meta.many_to_many]:
+        if isinstance(field, models.ManyToManyField):
             # we must save answer object before adding related values
-            answer.save() 
+            answer.save()
+            # if value is a single field object we need to wrap it in a list
+            if isinstance(value, models.Model):
+                value = (value,)
             for val in value:
                 answer.value.add(val)
         else:
@@ -157,19 +162,24 @@ class RadioAnswer(BaseAnswer):
     value = models.ForeignKey('BaseChoiceField')
 
 class UserProfileAnswer(BaseAnswer):
-
     """
     Base class for user answers. Its default behavior is to update
     a related field in a user profile (for this answer's user).
     """
+    def get_profile_attribute(self): 
+        # try to get field from meta // dynamic value
+        try:
+            profile_attribute = self.question.profile_attribute
+        except FieldDoesNotExist:
+            profile_attribute = self.question.__class__.profile_attribute
+        return profile_attribute
 
     def save(self, *args, **kwargs):
         # get user profile
         profile       = UserProfile.objects.get(user=self.user)
-        profile_field = self.question.__class__.profile_attribute
-        setattr(profile, profile_field, self.value)
+        profile_attribute = self.get_profile_attribute()
+        setattr(profile, profile_attribute, self.value)
         profile.save()
-
         super(UserProfileAnswer, self).save(*args, **kwargs)
 
 class UserCountryAnswer(UserProfileAnswer):
@@ -217,6 +227,11 @@ class BaseQuestion(ThematicElementMixin):
     def __unicode__(self):
         return self.label[:25]
 
+    def create_answer(self, *args, **kwargs):
+        kwargs['question'] = kwargs.get('question', self)
+        return BaseAnswer.objects.create_answer(*args, **kwargs)
+
+
 class UserProfileQuestion(BaseQuestion):
     profile_attribute = None
     answer_type       = UserProfileAnswer
@@ -225,10 +240,11 @@ class UserAgeQuestion(UserProfileQuestion):
     profile_attribute = 'age'
     answer_type       = UserAgeAnswer
 
-
 class UserCountryQuestion(UserProfileQuestion):
-    profile_attribute = 'country'
     answer_type       = UserCountryAnswer
+    profile_attribute = models.CharField(_('Related profile attribute'), max_length=20, 
+        choices=[ ( name, name) for name in get_fields_names(type=CountryField, model=UserProfile)],
+        help_text=_('Select user profile attribute that will be changed by user answer'), null=True)
 
 class PictureMixin(models.Model):
     """

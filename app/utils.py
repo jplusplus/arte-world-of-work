@@ -54,3 +54,12 @@ def receiver_subclasses(signal, sender, dispatch_uid_prefix, **kwargs):
             signal.connect(func, sender=snd, dispatch_uid=dispatch_uid_prefix+'_'+snd.__name__, **kwargs)
         return func
     return _decorator
+
+
+def get_fields_names(model=None, type=None):
+    names = []
+    if type != None and model != None:
+        for field in model._meta.fields:
+            if isinstance(field, type):
+                names.append(field.name)
+    return names
