@@ -30,11 +30,6 @@ class InlineQuestionMedia(admin.StackedInline):
     extra = 0
     max_num = 1
 
-class InlineFeedbackMedia(admin.StackedInline):
-    model = models.FeedbackMediaAttachement
-    extra = 0 
-    max_num = 1
-
 class InlineTextSelectionQuestion(admin.StackedInline):
     model   = models.TextChoiceField
     extra   = 0
