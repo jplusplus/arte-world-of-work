@@ -1,0 +1,2 @@
+class SurveySerializer(object):
+    pass 
