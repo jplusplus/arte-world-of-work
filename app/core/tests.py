@@ -34,7 +34,7 @@ class CoreTestCase(TestCase):
         self.user_question2.save()
 
         # question 1 - text selection (1+ answer(s))
-        self.question1 = TextSelectionQuestion(label='Choices ?', hint_text='Chose one answer')
+        self.question1 = TextSelectionQuestion(label='Question1 ?', hint_text='Chose one answer')
         self.question1.save()
         self.question1_choices = (
             TextChoiceField(title='choice1', question=self.question1),
@@ -44,7 +44,7 @@ class CoreTestCase(TestCase):
         [c.save() for c in self.question1_choices]
 
         # question 2 - text radio (1 answer)
-        self.question2 = TextRadioQuestion(label='Choices ?', hint_text='Chose one answer')
+        self.question2 = TextRadioQuestion(label='Question2 ?', hint_text='Chose one answer')
         self.question2.save()
         self.question2_choices = (
             TextChoiceField(title='choice1', question=self.question2),
@@ -59,6 +59,12 @@ class CoreTestCase(TestCase):
             min_number=0, max_number=200)
 
         self.question3.save()
+
+        # feedback 1 - a static feedback to be embed in a thematic 
+        self.feedback1 = StaticFeedback.objects.create(html_sentence="Feedback1", 
+                source_url='http://jplusplus.org', source_title='jpp', 
+                picture='')
+        self.feedback1.save()
 
     def test_get_field_names(self):
         # unit test for utils.get_fields_names function
@@ -92,6 +98,7 @@ class CoreTestCase(TestCase):
 
 
     def test_answer_user_question_age(self):
+        # check if AnswerManager's `create_answer` has the expected behavior
         age = 20 
         user_profile = UserProfile.objects.get(user_id=self.user)
         user_profile.age = 30
@@ -137,7 +144,6 @@ class CoreTestCase(TestCase):
                     utils.find_modelinstance(choice, answered_choices)
                 ) 
             , choices)
-
 
     def test_answer_radio_question(self):
         question = self.question2
@@ -234,5 +240,29 @@ class CoreTestCase(TestCase):
         feedback.set_thematic(thematic)
         self.question1.set_thematic(thematic)
         self.assertEqual(len(thematic.thematicelement_set.all()), 2)
+
+
+    def test_thematic_all_elements(self):
+        thematic = Thematic.objects.create(title='Random title is random')
+        thematic.save()
+
+        thematic.add_element(self.question1, 1)
+        thematic.add_element(self.question2, 2)
+        thematic.add_element(self.feedback1, 3)
+        thematic.save()
+        elements = thematic.all_elements()
+
+        self.assertEqual(len(elements), 3)
+        self.assertEqual(elements[0].pk, self.question1.pk)
+        self.assertIsNotNone(elements[0].label)
+
+        self.assertEqual(elements[1].label, self.question2.label)
+        self.assertIsNotNone(elements[1].label)
+
+        self.assertEqual(elements[2].pk, self.feedback1.pk)
+        self.assertIsNotNone(elements[2].source_url)
+
+
+
 
 

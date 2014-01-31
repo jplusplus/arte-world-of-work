@@ -30,6 +30,11 @@ class InlineQuestionMedia(admin.StackedInline):
     extra = 0
     max_num = 1
 
+class InlineFeedbackMedia(admin.StackedInline):
+    model = models.FeedbackMediaAttachement
+    extra = 0 
+    max_num = 1
+
 class InlineTextSelectionQuestion(admin.StackedInline):
     model   = models.TextChoiceField
     extra   = 0
@@ -92,17 +97,10 @@ class ThematicAdmin(admin.ModelAdmin):
         InlineThematicElement,
     )
 
-    def get_inline_instances(self, request, obj=None):
-        """ Add a inline with the name Inline<QuestionClassName> if exists """
-        inline_model_admins = super(ThematicAdmin, self).get_inline_instances(request, obj)
-        if self.model:
-            # return the related Inline class for the given question_type.
-            # Inline class must have a name like Inline<QuestionClassName>
-            inline = getattr(sys.modules[__name__], "Inline%s" % (self.model.__name__), None)
-            if inline:
-                inline = inline(self.model, self.admin_site)
-                inline_model_admins.append(inline)
-        return inline_model_admins
+class FeedbackAdmin(admin.ModelAdmin):
+    inlines = (
+        GenericInlineThematicElement,
+    )
 
 # -----------------------------------------------------------------------------
 #
@@ -123,4 +121,7 @@ admin.site.register(models.UserCountryQuestion   , QuestionAdmin)
 admin.site.register(models.UserGenderQuestion    , QuestionAdmin)
 
 admin.site.register(models.Thematic              , ThematicAdmin)
+
+admin.site.register(models.StaticFeedback        , FeedbackAdmin)
+
 # EOF

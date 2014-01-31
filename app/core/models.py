@@ -37,15 +37,6 @@ GENDER_TYPES = (
     ('female', _('Female')),
 )
 
-
-class PictureMixin(models.Model):
-    """
-    Mixin for attached pictures (to question or choice)
-    """
-    class Meta:
-        abstract = True 
-    picture = ImageField(upload_to='uploaded')
-
 # User profile 
 class UserProfile(models.Model):
     user           = models.ForeignKey(User, unique=True)
@@ -54,6 +45,25 @@ class UserProfile(models.Model):
     living_country = CountryField(null=True)
     gender         = models.CharField(_('User gender'), max_length=50, 
         choices=GENDER_TYPES, null=True)
+
+# -----------------------------------------------------------------------------
+# 
+#     Pictures & Inherithed models 
+# 
+# -----------------------------------------------------------------------------
+class PictureMixin(models.Model):
+    """
+    Generic model for attached pictures (to question, choice or feedback)
+    """
+    class Meta:
+        abstract = True
+    picture = ImageField(upload_to='uploaded', null=True, blank=True)
+
+class QuestionMediaAttachement(PictureMixin):
+    """
+    Attached picture for a question
+    """
+    question = models.OneToOneField('BaseQuestion')
 
 # -----------------------------------------------------------------------------
 # 
@@ -104,15 +114,28 @@ class Thematic(models.Model):
     title = models.CharField(_('Thematic title'), max_length=120)
     elements = generic.GenericRelation(ThematicElement)
 
-    def add_element(self, instance):
+    def add_element(self, instance, position=None):
         # will convert passed concrete model `instance`, if instance doe
         assert issubclass(instance.__class__, ThematicElementMixin)
         element = instance.as_element() # can raise NotImplementedError 
         element.thematic = self
+        if position != None:
+            element.position = position
         element.save()
 
     def __unicode__(self):
         return u"{id} - {title}".format(id=self.pk, title=self.title)
+
+    def all_elements(self):
+        final_elements = []
+        # TODO: maybe we can 
+        for element in self.thematicelement_set.all():
+            final_element = element.content_object
+            final_element.position = element.position
+            final_element.thematic = element.thematic
+            # to keep original order we insert at the begining of the list
+            final_elements.append(final_element)
+        return final_elements
 # -----------------------------------------------------------------------------
 # 
 #     Feedbacks
@@ -123,10 +146,12 @@ class BaseFeedback(models.Model):
         help_text=_('Sentence (as html content): "Hey did you knew .. ?"')
     )
 
-class StaticFeedback(BaseFeedback, ThematicElementMixin):
+class StaticFeedback(BaseFeedback, ThematicElementMixin, PictureMixin):
     source_url = models.URLField()
     source_title = models.CharField(max_length=120)
 
+    def __unicode__(self):
+        return 'StaticFeedback: %s' % self.html_sentence[:50]
 
 # -----------------------------------------------------------------------------
 # 
@@ -285,17 +310,6 @@ class TypedNumberQuestion(BaseQuestion):
 class CountryQuestion(BaseQuestion):
     """ Question designed to let user select between a list of countries """ 
     answer_type = CountryAnswer
-
-# -----------------------------------------------------------------------------
-# 
-#   Question attachments
-# 
-# -----------------------------------------------------------------------------
-class QuestionMediaAttachement(PictureMixin):
-    """
-    Attached picture for a question
-    """
-    question = models.OneToOneField('BaseQuestion')
 
 # -----------------------------------------------------------------------------
 #
