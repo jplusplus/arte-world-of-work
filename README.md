@@ -18,8 +18,8 @@ sudo apt-get install build-essential git-core python python-pip python-dev libme
 
 ```bash
 # pwd: ~
-git clone git@github.com:jplusplus/arte-wow.git 
-cd arte-wow
+git clone git@github.com:jplusplus/arte-world-of-work.git 
+cd arte-world-of-work
 ``` 
 
 **3. Install** 
