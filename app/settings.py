@@ -150,7 +150,7 @@ COMPRESS_TEMPLATE_FILTER_CONTEXT = {
     'STATIC_URL': STATIC_URL
 }
 
-COMPRESS_ENABLED = False
+COMPRESS_ENABLED = True
 
 
 INSTALLED_APPS = (
@@ -166,6 +166,7 @@ INSTALLED_APPS = (
     # ------------------------ external dependencies ------------------------ #
     'compressor',
     'django_countries',
+    'rest_framework',
     'sorl.thumbnail',
     'south',
     # ------------------------ internal dependencies ------------------------ # 
