@@ -1,0 +1,13 @@
+language: python
+python:
+  - "2.7"
+install:
+  - pip install --use-mirrors -r requirements.txt
+  - pip install --use-mirrors coveralls
+  - python ./manage.py syncdb --pythonpath=. --noinput
+matrix:
+  allow_failures:
+script:
+  - coverage run --source=app ./manage.py test app.tests.core app.tests.api
+after_success:
+  - coveralls
