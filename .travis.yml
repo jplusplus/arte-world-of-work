@@ -4,7 +4,7 @@ python:
 before_install:
   - export DJANGO_SETTINGS_MODULE="app.settings_tests"
 install:
-  - pip install --use-mirrors -r test_requirements.txt
+  - pip install --use-mirrors -r tests_requirements.txt
   - pip install --use-mirrors coveralls
   - python ./manage.py syncdb --pythonpath=. --noinput
 matrix:
