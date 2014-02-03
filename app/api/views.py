@@ -12,7 +12,7 @@ class SurveyViewSet(viewsets.ReadOnlyModelViewSet):
         return the list of all thematic and their respective
         questions + feedback
     """ 
-    queryset = Thematic.objects.all_elements()
+    queryset = Thematic.objects.all()
     serializer_class = serializers.SurveySerializer
 
 
