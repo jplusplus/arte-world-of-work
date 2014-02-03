@@ -8,6 +8,6 @@ install:
 matrix:
   allow_failures:
 script:
-  - coverage run --source=app ./manage.py test app.tests.core app.tests.api
+  - coverage run --source=app ./manage.py test app.core app.api
 after_success:
   - coveralls
