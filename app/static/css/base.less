@@ -1,5 +1,28 @@
 @import "bootstrap-overload.less";
 
+
 .header {
-    
+
+}
+.nav__element {
+    font-weight: normal;
+    display: inline-block;
+    a {
+        padding-left: 10px;
+        &:before , &:after {
+            // width: 15px;
+            text-align: center;
+            display: inline;
+        }
+    }
+}
+
+.nav__element--active {
+    font-weight: bold;
+    a {
+        padding-left: 0px;
+        &:before , &:after {
+            content: "\16eb";
+        }
+    }
 }

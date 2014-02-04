@@ -10,8 +10,11 @@ arteww = angular
     .run([
             '$rootScope'
             '$location'
-            ($rootScope, $location)->
+            '$route'
+            ($rootScope, $location, $route)->
                 $rootScope.location = $location
+
+                $rootScope.currentCategory = -> return $location.path().split('/')[1]
     ])
     .config([
             '$interpolateProvider'
