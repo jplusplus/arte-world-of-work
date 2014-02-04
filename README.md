@@ -1,6 +1,7 @@
 # Arte: World of Work
 [![Build Status](https://travis-ci.org/jplusplus/arte-world-of-work.png?branch=master)](https://travis-ci.org/jplusplus/arte-world-of-work)
-[![Coverage Status](https://coveralls.io/repos/jplusplus/arte-world-of-work/badge.png)](https://coveralls.io/r/jplusplus/arte-world-of-work)
+
+[![Coverage Status](https://coveralls.io/repos/jplusplus/arte-world-of-work/badge.png?branch=master)](https://coveralls.io/r/jplusplus/arte-world-of-work?branch=master) 
 
 ## Installation
 **1. Prerequisites**
