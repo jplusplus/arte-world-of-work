@@ -20,6 +20,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Front-end URLs
     url(r'^$',                                                    'app.views.home', name='home'),
+    url(r'^survey/$',                                             'app.views.home', name='survey'),
+    url(r'^results/$',                                            'app.views.home', name='results'),
     url(r'^404/$',                                                'app.views.home', name='404'),
     url(r'^partial/(?P<partial_name>([a-zA-Z0-9_\-/]+))\.html$',  'app.views.partial', name='partial'),
     # API application URLs
