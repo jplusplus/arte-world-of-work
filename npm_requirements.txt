@@ -1,2 +1,3 @@
 less@1.6.1
-coffee-script@1.6.3
+coffee-script@1.7.1
+protractor@0.17.0
