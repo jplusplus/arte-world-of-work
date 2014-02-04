@@ -1,6 +1,12 @@
 
 arteww = angular
-    .module('arte-ww', ['arte-ww.services', 'arte-ww.filters', 'ui.bootstrap', 'ngRoute'])
+    .module('arte-ww', [
+        'arte-ww.services',
+        'arte-ww.filters',
+        'pascalprecht.translate',
+        'ui.bootstrap',
+        'ngRoute',
+    ])
     .run([
             '$rootScope'
             '$location'
@@ -18,10 +24,11 @@ arteww = angular
                 $locationProvider.html5Mode true
                 # Bind routes to the controllers
                 $routeProvider
-                    .when('/',  
-                        controller : 'HomeCtrl'
-                        templateUrl: "/partial/home.html"
-                    )
+                    .when '/', redirectTo: '/survey'
+                    .when '/survey',
+                        controller: 'SurveyCtrl'
+                        templateUrl: '/partial/survey.html'
+
     ])
 
 angular.module('arte-ww.filters', [])
