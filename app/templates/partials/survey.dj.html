@@ -1,3 +1,15 @@
 {% load staticfiles %}
 
-<h1>Test</h1>
+<div class="question-viewer">
+    <!-- do stuff with current question -->
+    <div class="current-question row">
+        <h1 class="current-question__label" ng-bind="currentQuestion.label"></h1>
+        <question data-question="currentQuestion"></question>
+    </div>
+    <nav class="question-view__nav row">
+        <ul>
+            <li>Previous</li>
+            <li>Previous</li>
+        </ul>
+    </nav>
+</div>
