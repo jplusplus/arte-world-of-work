@@ -15,7 +15,6 @@ from django.contrib import admin
 from django.contrib.contenttypes import generic
 from sorl.thumbnail.admin import AdminImageMixin
 from app.core import models
-from app.core.models import ThematicElement
 
 import sys
 
@@ -53,12 +52,12 @@ class InlineUserGenderQuestion(InlineTextRadioQuestion):
     model = models.UserGenderQuestion
 
 class GenericInlineThematicElement(generic.GenericStackedInline):
-    model = ThematicElement
+    model = models.ThematicElement
     extra = 0
     max_num = 1
 
 class InlineThematicElement(admin.TabularInline):
-    model = ThematicElement
+    model = models.ThematicElement
     readonly_fields = 'content_type', 'object_id'
     extra = 0
 
@@ -103,7 +102,6 @@ class FeedbackAdmin(admin.ModelAdmin):
 #
 # -----------------------------------------------------------------------------
 # all questions models 
-admin.site.register(models.NumberQuestion        , QuestionAdmin)
 admin.site.register(models.TypedNumberQuestion   , QuestionAdmin)
 admin.site.register(models.TextSelectionQuestion , QuestionAdmin)
 admin.site.register(models.TextRadioQuestion     , QuestionAdmin)

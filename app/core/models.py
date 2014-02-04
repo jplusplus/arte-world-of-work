@@ -65,6 +65,12 @@ class QuestionMediaAttachement(PictureMixin):
     """
     question = models.OneToOneField('BaseQuestion')
 
+class ValidateButtonMixin(models.Model):
+    class Meta:
+        abstract = True
+    validate_button_label = models.CharField(_('Validate button (label)'), default=_('Done'), max_length=120)
+
+
 # -----------------------------------------------------------------------------
 # 
 #     Thematics
@@ -110,11 +116,19 @@ class ThematicElementMixin(models.Model):
         element.thematic = thematic
         element.save()
 
+class ThematicManager(models.Manager):
+    def all_elements(self):
+        thematics = self.all()
+        elements = []
+        for t in thematics: 
+            elements += t.all_elements()
+        return elements
+
 class Thematic(models.Model):
     title = models.CharField(_('Thematic title'), max_length=120)
     elements = generic.GenericRelation(ThematicElement)
-
-    def add_element(self, instance, position=None):
+    objects = ThematicManager()
+    def add_elements(self, instance, position=None):
         # will convert passed concrete model `instance`, if instance doe
         assert issubclass(instance.__class__, ThematicElementMixin)
         element = instance.as_element() # can raise NotImplementedError 
@@ -185,13 +199,9 @@ class BaseAnswer(models.Model):
     question = models.ForeignKey('BaseQuestion')
     objects = AnswerManager()
 
-class CountryAnswer(BaseAnswer):
-    value = CountryField()
-
-class NumberAnswer(BaseAnswer):
+class TypedNumberAnswer(BaseAnswer):
     value = models.IntegerField()
 
-class TypedNumberAnswer(NumberAnswer):
     def clean(self):
         question = TypedNumberQuestion.objects.get(pk=self.question_id)
         if self.value:
@@ -281,35 +291,18 @@ class BaseQuestion(ThematicElementMixin):
         return BaseAnswer.objects.create_answer(*args, **kwargs)
 
     
-class NumberQuestion(BaseQuestion):
-    """
-    Number question are designed for age and other types of questions where 
-    we ask user to enter a 2 digit number
-    """
-    answer_type = NumberAnswer
-    validate_button_label = models.CharField(_('Validate button (label)'), default=_('I\'m done'), max_length=120)
-
-    class Meta:
-        verbose_name = _('Numeric input question')
-        verbose_name_plural = _('Numeric input questions')
-
-
-class TypedNumberQuestion(BaseQuestion):
-    class Meta:
-        verbose_name = _('Number choice question')
-        verbose_name_plural = _('Number choice questions')
+class TypedNumberQuestion(BaseQuestion, ValidateButtonMixin):
     """
     TypedNumber question are questions where we ask user to select a number
     defined insided an interval.
     """
+    class Meta:
+        verbose_name = _('Number choice question')
+        verbose_name_plural = _('Number choice questions')
     answer_type = TypedNumberAnswer
     unit = models.CharField(_('Number unit'), help_text=_('Unit that will be displayed after the min and max numbers.'), max_length=15)
     min_number = models.PositiveIntegerField(default=0)
     max_number = models.PositiveIntegerField(default=100)
-
-class CountryQuestion(BaseQuestion):
-    """ Question designed to let user select between a list of countries """ 
-    answer_type = CountryAnswer
 
 # -----------------------------------------------------------------------------
 #
@@ -324,14 +317,13 @@ class RadioQuestionMixin(BaseQuestion):
         abstract = True
     answer_type = RadioAnswer
 
-class SelectionQuestionMixin(BaseQuestion):
+class SelectionQuestionMixin(BaseQuestion, ValidateButtonMixin):
     """ 
     Mixin for selection question (one on more answer)
     """
     class Meta:
         abstract = True
     answer_type = SelectionAnswer
-    validate_button_label = models.CharField(_('Validate button (label)'), default=_('I\'m done'), max_length=120)
 
 
 class TextSelectionQuestion(SelectionQuestionMixin):
@@ -398,6 +390,7 @@ class UserAgeQuestion(UserProfileQuestion):
 
 class UserCountryQuestion(UserProfileQuestion):
     answer_type       = UserCountryAnswer
+    # will lookup every CountryField attribute from UserProfile model
     profile_attribute = models.CharField(_('Related profile attribute'), max_length=20, 
         choices=[ ( name, name) for name in get_fields_names(type=CountryField, model=UserProfile)],
         help_text=_('Select user profile attribute that will be changed by user answer'), null=True)
