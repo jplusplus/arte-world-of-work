@@ -73,7 +73,7 @@ class CoreTestCase(TestCase):
         self.assertTrue('living_country' in names)
 
     def test_create_question(self):
-        question = NumberQuestion.objects.create(label='label', hint_text='hint')
+        question = TypedNumberQuestion.objects.create(label='label', hint_text='hint', unit='%')
         question.save()
 
         ctype = ContentType.objects.get_for_model(question)
@@ -216,7 +216,7 @@ class CoreTestCase(TestCase):
         html_sentence = """
         Did you knew that we had <strong>6</strong> people working at 
         Journalism++ ? #RDP©
-        """ 
+        """
         kwargs = {
             'html_sentence': html_sentence,
             'source_url': "http://jplusplus.org",

@@ -128,7 +128,7 @@ class Thematic(models.Model):
     title = models.CharField(_('Thematic title'), max_length=120)
     elements = generic.GenericRelation(ThematicElement)
     objects = ThematicManager()
-    def add_elements(self, instance, position=None):
+    def add_element(self, instance, position=None):
         # will convert passed concrete model `instance`, if instance doe
         assert issubclass(instance.__class__, ThematicElementMixin)
         element = instance.as_element() # can raise NotImplementedError 
