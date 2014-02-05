@@ -125,6 +125,7 @@ class ThematicManager(models.Manager):
         return elements
 
 class Thematic(models.Model):
+    position = models.PositiveIntegerField(default=0)
     title = models.CharField(_('Thematic title'), max_length=120)
     elements = generic.GenericRelation(ThematicElement)
     objects = ThematicManager()
