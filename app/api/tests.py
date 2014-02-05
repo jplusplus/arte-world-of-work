@@ -4,10 +4,11 @@ from rest_framework.test import APITestCase
 from app.core.models import *
 from datetime import datetime
 
-class AccountTests(APITestCase):
+class SurveyTests(APITestCase):
     # ------------------------------------------------------------------------- 
     # Utility methods
-    def assetLenIs(self, enum, size):
+    # ------------------------------------------------------------------------- 
+    def assertLenIs(self, enum, size):
         # check the passed `enum` has the appropriated length 
         self.assertEqual(len(enum), size)
 
@@ -75,32 +76,47 @@ class AccountTests(APITestCase):
         self.feedback2.set_thematic(self.thematic1) 
 
 
-    def test_get_survey(self):
+    def test_list_survey(self):
         # import pdb; pdb.set_trace()
         url = reverse('survey-list')
         response = self.client.get(url)
         all_thematics = response.data
-        self.assetLenIs(all_thematics, 2)
+        self.assertLenIs(all_thematics, 2)
         for thematic in all_thematics:
             # contract on arguments present
-            self.assertIsNotNone(thematic.get('elements', None))
-            self.assertIsNotNone(thematic.get('id',       None))
-            self.assertIsNotNone(thematic.get('title',    None))
-
-            if thematic['id'] == self.thematic1:
-                self.assertLenIs(thematic.elements, 6)
-                self.assertModelIn(thematic.elements, self.question1)
-                self.assertModelIn(thematic.elements, self.question2)
-                self.assertModelIn(thematic.elements, self.question3)
-                self.assertModelIn(thematic.elements, self.question4)
-
-
-            for sub_element in thematic.get('elements'): 
+            self.assertAttrNotNone(thematic, 'elements')
+            self.assertAttrNotNone(thematic, 'id')
+            self.assertAttrNotNone(thematic, 'title')
+            sub_elements = thematic.get('elements')
+            for sub_element in sub_elements: 
                 self.assertAttrNotNone(sub_element, 'position')
                 self.assertAttrNotNone(sub_element, 'type')
                 self.assertIn(sub_element['type'], ('feedback','question'))
-                try:
-                    self.assertIsNotNone(sub_element.get('position', None))
-                except Exception, e:
-                    self.debug("Element doesn't have a position: %s" % sub_element)
-                    raise e
+
+    def test_survey_detail(self):
+        url = reverse('survey-detail', kwargs={ 'pk': self.thematic1.pk})
+        response = self.client.get(url)
+        thematic = response.data
+        sub_elements = thematic.get('elements')
+
+        self.assertLenIs(sub_elements, 6)
+
+        question1_elem = sub_elements[0]
+        question2_elem = sub_elements[1]
+        question3_elem = sub_elements[2]
+        question4_elem = sub_elements[3]
+        feedback1_elem = sub_elements[4]
+        feedback2_elem = sub_elements[5]
+
+        self.assertEqual(question1_elem.get('type'), 'question')
+        self.assertEqual(question1_elem.get('id'), self.question1.as_element().pk)
+        self.assertEqual(question2_elem.get('type'), 'question')
+        self.assertEqual(question2_elem.get('id'), self.question2.as_element().pk)
+        self.assertEqual(question3_elem.get('type'), 'question')
+        self.assertEqual(question3_elem.get('id'), self.question3.as_element().pk)
+        self.assertEqual(question4_elem.get('type'), 'question')
+        self.assertEqual(question4_elem.get('id'), self.question4.as_element().pk)
+        self.assertEqual(feedback1_elem.get('type'), 'feedback')
+        self.assertEqual(feedback1_elem.get('id'), self.feedback1.as_element().pk)
+        self.assertEqual(feedback2_elem.get('type'), 'feedback')
+        self.assertEqual(feedback2_elem.get('id'), self.feedback2.as_element().pk)

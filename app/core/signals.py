@@ -22,10 +22,15 @@ def set_element_position(sender, **kwargs):
         element  = kwargs['instance']
         thematic = element.thematic
         if thematic != None and not element.position:
+            sub_elements = thematic.thematicelement_set.all()
             # we get the max position set, if none set it will result as 
             # position = 0
-            max_pos_dict = thematic.thematicelement_set.all().aggregate(Max('position'))
-            position = ( max_pos_dict['position__max'] or -1) + 1
+            max_pos_dict = sub_elements.aggregate(Max('position'))
+            position = max_pos_dict['position__max']
+            if position == None:
+                position = 0
+            else:
+                position += 1
             element.position = position
 
 @receiver_subclasses(post_save, BaseQuestion, "basequestion_post_save")

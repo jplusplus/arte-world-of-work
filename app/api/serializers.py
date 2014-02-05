@@ -17,6 +17,7 @@ class ThematicElementField(serializers.RelatedField):
 
         serializer.data['position'] = value.position
         serializer.data['type'] = value.type
+        serializer.data['id'] = value.id
 
         return serializer.data
 
