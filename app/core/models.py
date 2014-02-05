@@ -15,13 +15,12 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models.signals import post_save
 from django.db.models.fields import FieldDoesNotExist
 from django.utils.translation import gettext, ugettext_lazy as _
 
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
-from app.utils import receiver_subclasses, get_fields_names
+from app.utils import get_fields_names
 # -----------------------------------------------------------------------------
 #
 #     Constants
@@ -70,7 +69,6 @@ class ValidateButtonMixin(models.Model):
         abstract = True
     validate_button_label = models.CharField(_('Validate button (label)'), default=_('Done'), max_length=120)
 
-
 # -----------------------------------------------------------------------------
 # 
 #     Thematics
@@ -87,6 +85,18 @@ class ThematicElement(models.Model):
     
     thematic = models.ForeignKey('Thematic', null=True, blank=True)
     position = models.PositiveIntegerField(null=True, blank=True)
+
+    def _get_type(self):
+        type = None
+        model_klass = self.content_type.model_class()
+        if issubclass(model_klass, BaseQuestion):
+            type = 'question'
+        elif issubclass(model_klass, BaseFeedback):
+            type = 'feedback'
+        return type
+
+    # properties         
+    type = property(_get_type)
 
     def __unicode__(self):
         return u"{type} - {title}".format(
@@ -129,6 +139,7 @@ class Thematic(models.Model):
     title = models.CharField(_('Thematic title'), max_length=120)
     elements = generic.GenericRelation(ThematicElement)
     objects = ThematicManager()
+
     def add_element(self, instance, position=None):
         # will convert passed concrete model `instance`, if instance doe
         assert issubclass(instance.__class__, ThematicElementMixin)
@@ -264,7 +275,6 @@ class QuestionManager(models.Manager):
                 q = final_class.objects.get(basequestion_ptr=q.id)
             questions.append(q)
         return questions
-
 
 class BaseQuestion(ThematicElementMixin):
     """
@@ -416,7 +426,6 @@ class BaseChoiceField(models.Model):
 class TextChoiceField(BaseChoiceField):
     pass
 
-
 class MediaChoiceField(BaseChoiceField, PictureMixin):
     pass
 
@@ -425,48 +434,5 @@ class UserChoiceField(BaseChoiceField):
         null=True, max_length=120, help_text=_('It will user models what\
          value should be stored'))
 
-# -----------------------------------------------------------------------------
-# 
-#   Post save callback definitions and binding with django signals framework
-# 
-# -----------------------------------------------------------------------------
-@receiver_subclasses(post_save, BaseQuestion, "basequestion_post_save")
-@receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
-def create_generic_element(sender, **kwargs):
-    # create a generic element appropriated 
-    if kwargs.get('created', False):
-        instance = kwargs.get('instance', None)
-        ctype = ContentType.objects.get_for_model(instance)
-        element  = ThematicElement.objects.get_or_create(content_type=ctype, object_id=instance.pk)[0]
-        element.save()
-
-def delete_generic_element(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    ctype = ContentType.objects.get_for_model(instance)
-    element = ThematicElement.objects.get(content_type=ctype, object_id=instance.id)
-    element.delete()
-
-def create_boolean_choices(sender, **kwargs):
-    # will create default choice fields for boolean questions ("yes" and "no")
-    # I must reckon that's clever.
-    if kwargs.get('created', False):
-        instance = kwargs['instance']
-        yes = TextChoiceField(title='yes', question=instance)
-        no  = TextChoiceField(title='no', question=instance)
-        yes.save()
-        no.save()
-
-
-def create_user_choice_fieds(sender, **kwargs):
-    if kwargs.get('created', False):
-        question = kwargs['instance']
-        field = UserProfile._meta.get_field(question.__class__.profile_attribute)
-        # import pdb; pdb.set_trace()
-        for c in field.choices: 
-            field = UserChoiceField(value=c[0], title= c[1], question=question)
-            field.save()
-
-# will trigger `create_boolean` after every boolean question creation
-post_save.connect(create_boolean_choices, sender=BooleanQuestion)
-post_save.connect(create_user_choice_fieds, sender=UserGenderQuestion)
-#EOF
+# trigger signals binding 
+import signals; signals.bind()

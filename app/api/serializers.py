@@ -14,7 +14,10 @@ class ThematicElementField(serializers.RelatedField):
             serializer = FeedbackSerializer(rel_object)
         if isinstance(rel_object, BaseQuestion):
             serializer = QuestionSerializer(rel_object)
+
         serializer.data['position'] = value.position
+        serializer.data['type'] = value.type
+
         return serializer.data
 
 class ChoiceField(serializers.RelatedField):
