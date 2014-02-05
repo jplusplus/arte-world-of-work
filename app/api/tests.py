@@ -48,9 +48,9 @@ class AccountTests(APITestCase):
         self.question1 = self.createQuestion(TypedNumberQuestion, **{'unit': '%'})
         self.question2 = self.createQuestion(BooleanQuestion)
         self.question3 = self.createQuestion(TextSelectionQuestion)
-        self.question3.add_choice(self.createChoice(self.question3, TextChoiceField))
-        self.question3.add_choice(self.createChoice(self.question3, TextChoiceField))
-        self.question3.add_choice(self.createChoice(self.question3, TextChoiceField))
+        self.createChoice(self.question3, TextChoiceField)
+        self.createChoice(self.question3, TextChoiceField)
+        self.createChoice(self.question3, TextChoiceField)
 
         self.question4 = self.createQuestion(TypedNumberQuestion, **{'unit': '%'})
         self.feedback1 = self.createFeedback(StaticFeedback, **default_source)
