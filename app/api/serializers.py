@@ -5,6 +5,7 @@ from app.core.models import *
 class ThematicElementField(serializers.RelatedField):
     class Meta:
         model = ThematicElement
+
     def to_native(self, value): 
         serializer = None
         # import pdb; pdb.set_trace()
@@ -66,9 +67,9 @@ class UserAgeQuestionSerializer(serializers.ModelSerializer):
         model = UserAgeQuestion
 
 class SurveySerializer(serializers.ModelSerializer):
-    thematicelement_set = ThematicElementField(many=True)
+    elements = ThematicElementField(many=True, source='thematicelement_set')
     class Meta:
         model = Thematic
-        fields = ('id', 'title', 'thematicelement_set')
+        fields = ('id', 'title', 'elements')
         depth = 1
 

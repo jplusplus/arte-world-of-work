@@ -22,3 +22,4 @@ class AnswerViewSet(viewsets.ModelViewSet):
     @list():
         return all current user answers (can be saw as its parcour) 
     """ 
+    # queryset = BaseAnswer.objects.all()
