@@ -1,15 +1,21 @@
 {% load staticfiles %}
 
-<div class="question-viewer">
+<div class="survey-navigator">
     <!-- do stuff with current question -->
-    <div class="current-question row">
-        <h1 class="current-question__label" ng-bind="currentQuestion.label"></h1>
-        <question data-question="currentQuestion"></question>
+
+    <div class="survey-navigator__current-element row">
+
+        <h1 class="survey-navigator__title">
+            <span ng-if="currentElement.type == 'question'" ng-bind="currentElement.label"></span>
+            <span ng-if="currentElement.type == 'survey'"   ng-bind-html="currentElement.html_sentence"></span>
+        </h1>
+
+        <div data-element="currentQuestion"></question>
     </div>
     <nav class="question-view__nav row">
         <ul>
-            <li>Previous</li>
-            <li>Previous</li>
+            <li class=''>Previous</li>
+            <li class=''>[[ currentElement.skip_button_label || "Skip" ]]</li>
         </ul>
     </nav>
 </div>

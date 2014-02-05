@@ -13,46 +13,34 @@ arteww = angular
     .run([
             '$rootScope'
             '$location'
-            '$routeParams'
-            ($rootScope, $location, $routeParams)->
+            '$route'
+            ($rootScope, $location, $route)->
                 $rootScope.location = $location
-                $rootScope.currentCategory = -> $routeParams.category
+                $rootScope.currentCategory = -> 
+                    # get the current category thanks to current root
+                    category = null
+                    if $route.current
+                        category = $route.current.category or null
+                    return category
     ])
     .config([
             '$interpolateProvider'
             '$routeProvider'
             '$locationProvider'
             ($interpolateProvider, $routeProvider, $locationProvider)->
-                # little trick to have a named parameter 
-                categories = 
-                    default: 'survey'
-                    survey: 
-                        controller: 'SurveyCtrl'
-                        templateUrl: '/partial/survey.html'
-
-                    results: 
-                        controller: 'ResultsCtrl'
-                        templateUrl: '/partial/results.html'
-
-                getCategory = (name)->
-                    unless _.has(categories, name)
-                        category = categories[categories.default]
-                    else
-                        category = categories[name]
-                    return category
-
                 # Avoid a conflict with Django Template's tags
                 $interpolateProvider.startSymbol '[['
                 $interpolateProvider.endSymbol   ']]'
                 $locationProvider.html5Mode true
                 # Bind routes to the controllers
                 $routeProvider
-                    .when('/', redirectTo: '/categories/survey')
-                    .when('/categories/:category',
-                        controllerProvider:  (parm)-> 
-                            return getCategory(parm.category).controller
-                        templateUrl: (parm)-> 
-                            return getCategory(parm.category).templateUrl
-                    )
-
+                    .when('/', redirectTo: '/survey')
+                    .when '/survey',
+                            controller: 'SurveyCtrl'
+                            templateUrl: '/partial/survey.html'
+                            category: 'survey'
+                    .when '/results',
+                            category: 'results'
+                            controller: 'ResultsCtrl'
+                            templateUrl: '/partial/results.html'
     ])

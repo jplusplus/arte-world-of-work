@@ -1,9 +1,10 @@
 <header class="header container">
     <nav class="nav row">
         <div class="header__brand-logo col-xs-3">
-            <h2>World <small>of</small> Work</h2>
-            <p class="header__brand-logo__caption">[[ "Youth work in Europe" | translate ]]</p>
-
+            <a ng-href="{% url 'home' %}">
+                <h2>World <small>of</small> Work</h2>
+                <p class="header__brand-logo__caption">[[ "Youth work in Europe" | translate ]]</p>
+            </a>
         </div>
         <ul class="col-xs-5">
             <li class="nav__element col-xs-6" 
