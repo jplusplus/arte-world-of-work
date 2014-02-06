@@ -135,10 +135,16 @@ class ThematicManager(models.Manager):
         return elements
 
 class Thematic(models.Model):
+    class Meta:
+        ordering = ('position',)
+
     position = models.PositiveIntegerField(default=0)
     title = models.CharField(_('Thematic title'), max_length=120)
     elements = generic.GenericRelation(ThematicElement)
     objects = ThematicManager()
+
+    intro_description = models.TextField(_('Introduction description'))
+    intro_data_button_title = models.TextField(_('Introduction data button title'))
 
     def add_element(self, instance, position=None):
         # will convert passed concrete model `instance`, if instance doe
