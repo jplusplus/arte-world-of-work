@@ -7,13 +7,28 @@ from app.core.models import Thematic
 # /survey/
 class SurveyViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    Base viewset for Arte-WoW survey
-    @list():
-        return the list of all thematic and their respective
-        questions + feedback
-    """ 
+    API Endpoint of survey. 
+    
+      - GET `/api/survey/`
+        
+        > return a list of thematics and their survey elements (feedbacks + questions)
+      
+      - GET `/api/survey/:id/`
+
+        >  return the survey elements
+
+    """
+
     queryset = Thematic.objects.all()
     serializer_class = serializers.SurveySerializer
+
+
+class FeedbackViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint for dynamic feedback. 
+
+    Generate on demand dynamic feedback objects.
+    """
 
 
 class AnswerViewSet(viewsets.ModelViewSet):
