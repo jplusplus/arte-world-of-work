@@ -14,6 +14,6 @@ matrix:
   allow_failures:
 script:
   - coverage run --omit=app/core/migrations/ --source=app ./manage.py test app.core app.api --settings=app.settings_tests
-  - ./node_modules/.bin/karma start --single-run --browsers PhantomJS
+  - karma start --single-run --browsers PhantomJS
 after_success:
   - coveralls
