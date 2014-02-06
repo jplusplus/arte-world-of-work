@@ -35,7 +35,7 @@ arteww = angular
                 # Bind routes to the controllers
                 $routeProvider
                     .when('/', redirectTo: '/survey')
-                    .when '/survey',
+                    .when '/survey/:thematic_id',
                             controller: 'SurveyCtrl'
                             templateUrl: '/partial/survey.html'
                             category: 'survey'
@@ -43,4 +43,6 @@ arteww = angular
                             category: 'results'
                             controller: 'ResultsCtrl'
                             templateUrl: '/partial/results.html'
+                    .when '/about',
+                        templateUrl: '/partial/about.html'
     ])
