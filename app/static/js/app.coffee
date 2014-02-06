@@ -1,8 +1,10 @@
 angular.module('arte-ww.filters', [])
 angular.module('arte-ww.services', [])
+angular.module('arte-ww.utils', [])
 
 arteww = angular
     .module('arte-ww', [
+        'arte-ww.utils',
         'arte-ww.services',
         'arte-ww.filters',
         'pascalprecht.translate',
@@ -35,7 +37,7 @@ arteww = angular
                 # Bind routes to the controllers
                 $routeProvider
                     .when('/', redirectTo: '/survey')
-                    .when '/survey/:thematic_id',
+                    .when '/survey',
                             controller: 'SurveyCtrl'
                             templateUrl: '/partial/survey.html'
                             category: 'survey'

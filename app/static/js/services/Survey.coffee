@@ -3,7 +3,7 @@ angular.module('arte-ww.services').service 'Survey', [
         ($resource, $routeParams)->
             params = 
                 thematic: $routeParams.thematic
-            $resource '/api/survey/:thematic', params
+            $resource '/api/survey/:thematicId', params
 
     ]
 
