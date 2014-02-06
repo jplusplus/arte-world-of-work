@@ -2,8 +2,8 @@ language: python
 python:
   - "2.7"
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
   - xargs -a npm_requirements.txt npm install -g
   - export DJANGO_SETTINGS_MODULE="app.settings_tests"
 install:
@@ -14,6 +14,6 @@ matrix:
   allow_failures:
 script:
   - coverage run --omit=app/core/migrations/ --source=app ./manage.py test app.core app.api --settings=app.settings_tests
-  - karma start 
+  - ./node_modules/.bin/karma start --single-run --browsers PhantomJS
 after_success:
   - coveralls
