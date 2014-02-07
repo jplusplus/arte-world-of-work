@@ -1,21 +1,31 @@
 {% load staticfiles %}
 
-<div class="survey-navigator">
-    <!-- do stuff with current question -->
 
+<div class="container survey-navigator">
+    <!-- do stuff with current question -->
     <div class="survey-navigator__current-element row">
+
+        <div ng-if="isIntro()">
+            <h1>[[ currentThematic.title ]]</h1>
+            <p>[[ currentThematic.intro_description ]]</p>
+            <a ng-if="currentThematic.intro_button_label"> [[currentThematic.intro_button_label ]]</a>
+        </div>
+
+        <div ng-if="isOutro()">
+        </div>
 
         <h1 class="survey-navigator__title">
             <span ng-if="currentElement.type == 'question'" ng-bind="currentElement.label"></span>
             <span ng-if="currentElement.type == 'survey'"   ng-bind-html="currentElement.html_sentence"></span>
         </h1>
 
-        <div data-element="currentQuestion"></question>
+        <div data-thematic-element="currentElement"></div>
+
     </div>
     <nav class="question-view__nav row">
         <ul>
-            <li class=''>Previous</li>
-            <li class=''>[[ currentElement.skip_button_label || "Skip" ]]</li>
+            <li ng-click="previous()" class=''>Previous</li>
+            <li ng-click="skip()" class=''>[[ currentElement.skip_button_label || "Skip" ]]</li>
         </ul>
     </nav>
 </div>

@@ -1,7 +1,7 @@
 class ThematicCtrl
-    @$inject: [ '$scope', 'Survey', 'utils']
+    @$inject: [ '$scope', 'Thematics', 'utils']
 
-    constructor: (@scope, @Survey, @utils)->
+    constructor: (@scope, @Thematics, @utils)->
         # ---------------------------------------------------------------------
         # Scope variables bindings
         # ---------------------------------------------------------------------
