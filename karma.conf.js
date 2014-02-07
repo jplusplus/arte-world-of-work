@@ -14,18 +14,18 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'app/static/vendor/underscore/underscore.js',
-      'app/static/vendor/angular/angular.js',
-      'app/static/vendor/angular-sanitize/angular-sanitize.js',
-      'app/static/vendor/angular-resource/angular-resource.js',
-      'app/static/vendor/angular-mocks/angular-mocks.js',
-      'app/static/vendor/angular-translate/angular-translate.js',
-      'app/static/vendor/angular/angular.js',
-      'app/static/vendor/angular-ui-bootstrap-bower/ui-bootstrap.js',
-      'app/static/vendor/angular-route/angular-route.js',
-      'app/static/js/*',
-      'app/static/js/*/*',
-      'app/static/tests/*.coffee',
+      'app/static/arte_ww/vendor/underscore/underscore.js',
+      'app/static/arte_ww/vendor/angular/angular.js',
+      'app/static/arte_ww/vendor/angular-sanitize/angular-sanitize.js',
+      'app/static/arte_ww/vendor/angular-resource/angular-resource.js',
+      'app/static/arte_ww/vendor/angular-mocks/angular-mocks.js',
+      'app/static/arte_ww/vendor/angular-translate/angular-translate.js',
+      'app/static/arte_ww/vendor/angular/angular.js',
+      'app/static/arte_ww/vendor/angular-ui-bootstrap-bower/ui-bootstrap.js',
+      'app/static/arte_ww/vendor/angular-route/angular-route.js',
+      'app/static/arte_ww/js/*',
+      'app/static/arte_ww/js/*/*',
+      'app/static/arte_ww/tests/*.coffee',
     ],
 
 
