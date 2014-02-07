@@ -18,7 +18,7 @@ from app.core.models import UserGenderQuestion
 # -----------------------------------------------------------------------------
 def set_element_position(sender, **kwargs):
     # on every ThematicElement.save() we will try to set the appropriate position
-    if kwargs.get('instance' , False):
+    if kwargs.get('instance' , False) and not kwargs.get('raw'):
         element  = kwargs['instance']
         thematic = element.thematic
         if thematic != None and not element.position:
@@ -37,7 +37,7 @@ def set_element_position(sender, **kwargs):
 @receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
 def create_generic_element(sender, **kwargs):
     # create a generic element appropriated 
-    if kwargs.get('created', False):
+    if kwargs.get('created', False) and not kwargs.get('raw'):
         instance = kwargs.get('instance', None)
         ctype = ContentType.objects.get_for_model(instance)
         element  = ThematicElement.objects.get_or_create(content_type=ctype, object_id=instance.pk)[0]
@@ -52,7 +52,7 @@ def delete_generic_element(sender, **kwargs):
 def create_boolean_choices(sender, **kwargs):
     # will create default choice fields for boolean questions ("yes" and "no")
     # I must reckon that's clever.
-    if kwargs.get('created', False):
+    if kwargs.get('created', False) and not kwargs.get('raw'):
         instance = kwargs['instance']
         yes = TextChoiceField(title='yes', question=instance)
         no  = TextChoiceField(title='no', question=instance)
@@ -62,7 +62,7 @@ def create_boolean_choices(sender, **kwargs):
 
 def create_user_choice_fieds(sender, **kwargs):
     # will create user gender choice 
-    if kwargs.get('created', False):
+    if kwargs.get('created', False) and not kwargs.get('raw'):
         question = kwargs['instance']
         field = UserProfile._meta.get_field(question.__class__.profile_attribute)
         # import pdb; pdb.set_trace()

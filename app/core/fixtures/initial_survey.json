@@ -1,6 +1,26 @@
 [
   {
     "pk": 1,
+    "model": "core.thematic",
+    "fields": {
+      "intro_description": "Introduction",
+      "position": 0,
+      "intro_button_label": "",
+      "title": "You"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "core.thematic",
+    "fields": {
+      "intro_description": "Serious business",
+      "position": 1,
+      "intro_button_label": "See the data",
+      "title": "Your work"
+    }
+  },
+  {
+    "pk": 1,
     "model": "core.questionmediaattachement",
     "fields": {
       "picture": "uploaded/VIOLENCE.jpeg",
@@ -105,26 +125,6 @@
       "object_id": 10,
       "content_type": 27,
       "position": 0
-    }
-  },
-  {
-    "pk": 1,
-    "model": "core.thematic",
-    "fields": {
-      "intro_description": "Introduction",
-      "position": 0,
-      "intro_button_label": "",
-      "title": "You"
-    }
-  },
-  {
-    "pk": 2,
-    "model": "core.thematic",
-    "fields": {
-      "intro_description": "Serious business",
-      "position": 1,
-      "intro_button_label": "See the data",
-      "title": "Your work"
     }
   },
   {
