@@ -51,4 +51,4 @@ class ThematicCtrl
         elements.length == (position + 1) or elements[position + 1]?
 
 angular.module('arte-ww') 
-    .controller('SurveyCtrl', SurveyCtrl) 
+    .controller('ThematicCtrl', ThematicCtrl) 
