@@ -2,31 +2,11 @@
 from django.core.urlresolvers import reverse
 from rest_framework.test import APITestCase
 from app.core.models import *
+from app.utils import TestCaseMixin
 from datetime import datetime
 
-class SurveyTests(APITestCase):
-    # ------------------------------------------------------------------------- 
-    # Utility methods
-    # ------------------------------------------------------------------------- 
-    def assertLenIs(self, enum, size):
-        # check the passed `enum` has the appropriated length 
-        self.assertEqual(len(enum), size)
 
-    def assertModelIn(self, enum, model_instance):
-        # check the element with `pk` is in `enum`
-        self.assertIsNotNone(self.findElement(enum, model_instance.pk))
-
-    def assertAttrNotNone(self, elem, attr):
-        self.assertIsNotNone(elem.get(attr, None))
-
-    def debug(self, msg):
-        print "\n[DBG - {time}] {msg}".format(time=datetime.now(), msg=msg)
-
-    def createModelInstance(self, klass, **kwargs):
-        elem = klass.objects.create(**kwargs)
-        elem.save()
-        return elem
-
+class ThematicTests(APITestCase, TestCaseMixin):
     def createQuestion(self, klass=None, **kwargs):
         kwargs['label']     = kwargs.get('label', 'Default label')
         kwargs['hint_text'] = kwargs.get('hint_text', 'Default hint text')
@@ -76,9 +56,9 @@ class SurveyTests(APITestCase):
         self.feedback2.set_thematic(self.thematic1) 
 
 
-    def test_list_survey(self):
+    def test_list_thematic(self):
         # import pdb; pdb.set_trace()
-        url = reverse('survey-list')
+        url = reverse('thematic-list')
         response = self.client.get(url)
         all_thematics = response.data
         self.assertLenIs(all_thematics, 2)
@@ -93,8 +73,8 @@ class SurveyTests(APITestCase):
                 self.assertAttrNotNone(sub_element, 'type')
                 self.assertIn(sub_element['type'], ('feedback','question'))
 
-    def test_survey_detail(self):
-        url = reverse('survey-detail', kwargs={ 'pk': self.thematic1.pk})
+    def test_thematic_detail(self):
+        url = reverse('thematic-detail', kwargs={ 'pk': self.thematic1.pk})
         response = self.client.get(url)
         thematic = response.data
         sub_elements = thematic.get('elements')
@@ -120,3 +100,24 @@ class SurveyTests(APITestCase):
         self.assertEqual(feedback1_elem.get('id'), self.feedback1.as_element().pk)
         self.assertEqual(feedback2_elem.get('type'), 'feedback')
         self.assertEqual(feedback2_elem.get('id'), self.feedback2.as_element().pk)
+
+
+
+
+class UserTestCase(APITestCase, TestCaseMixin):
+
+    def test_post_user_list(self):
+        url = reverse('user-list')
+        result = self.client.post(url)
+        self.assertEqual(result.status_code, 201)
+
+        data = result.data
+        self.assertAttrNotNone(data, 'profile')
+
+    # def test_user_auth():
+        # url = reverse('user-auth')
+
+
+    # def test_user_mypostion():
+        # pass
+

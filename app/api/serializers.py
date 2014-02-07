@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from app.core.models import *
 
+from django.contrib.auth.models import User
+
 
 class ThematicElementField(serializers.RelatedField):
     class Meta:
@@ -24,7 +26,6 @@ class ThematicElementField(serializers.RelatedField):
 class ChoiceField(serializers.RelatedField):
     def to_native(self, value):
         pass
-
 
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
@@ -65,16 +66,26 @@ class BooleanQuestionSerializer(MultipleChoicesSerializer):
     class Meta(MultipleChoicesSerializer.Meta): 
         model = BooleanQuestion
 
-
 class UserAgeQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAgeQuestion
 
-class SurveySerializer(serializers.ModelSerializer):
+class ThematicSerializer(serializers.ModelSerializer):
     elements = ThematicElementField(many=True, source='thematicelement_set')
     class Meta:
         model = Thematic
         fields = ('id', 'title', 'elements', 'intro_description', 
             'intro_button_label')
         depth = 1
+
+
+class UserSerializer(serializers.ModelSerializer):
+    profile = serializers.RelatedField(source='userprofile_set', many=False)
+    class Meta:
+        model = User
+
+
+class UserPositionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserPosition
 
