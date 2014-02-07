@@ -447,8 +447,8 @@ class MediaChoiceField(BaseChoiceField, PictureMixin):
 
 class UserChoiceField(BaseChoiceField):
     value = models.CharField(_('Value of this field'), blank=True, 
-        null=True, max_length=120, help_text=_('It will user models what\
-         value should be stored'))
+        null=True, max_length=120, help_text=_('It will tell user model what \
+        value should be stored in related field'))
 
 # trigger signals binding 
 import signals; signals.bind()

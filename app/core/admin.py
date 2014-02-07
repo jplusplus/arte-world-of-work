@@ -49,7 +49,7 @@ class InlineBooleanQuestion(InlineTextRadioQuestion):
     pass
 
 class InlineUserGenderQuestion(InlineTextRadioQuestion):
-    model = models.UserGenderQuestion
+    model = models.UserChoiceField
 
 class GenericInlineThematicElement(generic.GenericStackedInline):
     model = models.ThematicElement
