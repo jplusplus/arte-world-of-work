@@ -147,7 +147,8 @@ class Thematic(models.Model):
     objects = ThematicManager()
 
     intro_description = models.TextField(_('Introduction description'))
-    intro_button_label = models.CharField(_('Introduction button label'), default=_('See the data'), max_length=120)
+    intro_button_label = models.CharField(_('Introduction button label'), 
+        default=_('See the data'), max_length=120, null=True, blank=True)
 
     def add_element(self, instance, position=None):
         # will convert passed concrete model `instance`, if instance doe
