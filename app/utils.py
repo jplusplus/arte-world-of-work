@@ -72,3 +72,27 @@ def camel_to_underscore(str):
     # took from http://stackoverflow.com/a/1176023/885541
     _str = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', str)
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', _str).lower()
+
+
+class TestCaseMixin():
+    # ------------------------------------------------------------------------- 
+    # Utility methods for test case
+    # ------------------------------------------------------------------------- 
+    def assertLenIs(self, enum, size):
+        # check the passed `enum` has the appropriated length 
+        self.assertEqual(len(enum), size)
+
+    def assertModelIn(self, enum, model_instance):
+        # check the element with `pk` is in `enum`
+        self.assertIsNotNone(self.findElement(enum, model_instance.pk))
+
+    def assertAttrNotNone(self, elem, attr):
+        self.assertIsNotNone(elem.get(attr, None))
+
+    def debug(self, msg):
+        print "\n[DBG - {time}] {msg}".format(time=datetime.now(), msg=msg)
+
+    def createModelInstance(self, klass, **kwargs):
+        elem = klass.objects.create(**kwargs)
+        elem.save()
+        return elem

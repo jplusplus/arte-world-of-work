@@ -48,6 +48,11 @@ class UserProfile(models.Model):
     gender         = models.CharField(_('User gender'), max_length=50, 
         choices=GENDER_TYPES, null=True)
 
+class UserPosition(models.Model):
+    user              = models.ForeignKey(User, unique=True)
+    thematic_position = models.PositiveIntegerField(default=0, null=False)
+    element_position  = models.PositiveIntegerField(default=0, null=False)
+
 # -----------------------------------------------------------------------------
 # 
 #     Pictures & Inherithed models 
