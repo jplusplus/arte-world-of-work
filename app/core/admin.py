@@ -60,6 +60,7 @@ class InlineThematicElement(admin.TabularInline):
     model = models.ThematicElement
     readonly_fields = 'content_type', 'object_id'
     extra = 0
+    max_num = 0
 
 # -----------------------------------------------------------------------------
 #
