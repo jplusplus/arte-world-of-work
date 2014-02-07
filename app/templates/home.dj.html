@@ -11,27 +11,27 @@
 {% block extrajs %}
     
     {% compress js %}
-        <script type="text/javascript" src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'vendor/underscore/underscore.js' %}"></script>
+        <script type="text/javascript" src="{% static 'arte_ww/vendor/jquery/jquery.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'arte_ww/vendor/underscore/underscore.js' %}"></script>
     {% endcompress %}
 
-    <script type="text/javascript" src="{% static 'vendor/angular/angular.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'vendor/angular-cookies/angular-cookies.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'vendor/angular-resource/angular-resource.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'vendor/angular-route/angular-route.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'vendor/angular-sanitize/angular-sanitize.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'vendor/angular-translate/angular-translate.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'vendor/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'arte_ww/vendor/angular/angular.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'arte_ww/vendor/angular-cookies/angular-cookies.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'arte_ww/vendor/angular-resource/angular-resource.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'arte_ww/vendor/angular-route/angular-route.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'arte_ww/vendor/angular-sanitize/angular-sanitize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'arte_ww/vendor/angular-translate/angular-translate.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'arte_ww/vendor/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js' %}"></script>
 
     {% compress js %}
-        <script type="text/coffeescript" src="{% static 'js/app.coffee' %}"></script>
-        <script type="text/coffeescript" src="{% static 'js/filters.coffee' %}"></script>
+        <script type="text/coffeescript" src="{% static 'arte_ww/js/app.coffee' %}"></script>
+        <script type="text/coffeescript" src="{% static 'arte_ww/js/filters.coffee' %}"></script>
         <!-- controllers -->
-        <script type="text/coffeescript" src="{% static 'js/controllers/SurveyCtrl.coffee' %}"></script>
-        <script type="text/coffeescript" src="{% static 'js/controllers/ResultsCtrl.coffee' %}"></script>
+        <script type="text/coffeescript" src="{% static 'arte_ww/js/controllers/SurveyCtrl.coffee' %}"></script>
+        <script type="text/coffeescript" src="{% static 'arte_ww/js/controllers/ResultsCtrl.coffee' %}"></script>
         <!-- services -->
-        <script type="text/coffeescript" src="{% static 'js/services/Survey.coffee' %}"></script>
-        <script type="text/coffeescript" src="{% static 'js/utils.coffee' %}"></script>
+        <script type="text/coffeescript" src="{% static 'arte_ww/js/services/Survey.coffee' %}"></script>
+        <script type="text/coffeescript" src="{% static 'arte_ww/js/utils.coffee' %}"></script>
         <!-- directives -->
         <!-- 
             <script type="text/coffeescript" src="{% static 'js/directives/charts.coffee' %}"></script>
@@ -41,5 +41,5 @@
 
 {% block content %}
     {% include "partials/header.dj.html" %}
-    <div ng-view id="content"></div>
+    <div ng-view id="content" class="container"></div>
 {% endblock %}
