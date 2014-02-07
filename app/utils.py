@@ -1,3 +1,5 @@
+import re
+
 def find(iterator, iterable):
     """
     Return the first element wich return true by applying iterator to iterable.
@@ -63,3 +65,10 @@ def get_fields_names(model=None, type=None):
             if isinstance(field, type):
                 names.append(field.name)
     return names
+
+
+
+def camel_to_underscore(str):
+    # took from http://stackoverflow.com/a/1176023/885541
+    _str = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', str)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', _str).lower()

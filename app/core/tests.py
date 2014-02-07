@@ -66,12 +66,6 @@ class CoreTestCase(TestCase):
                 picture='')
         self.feedback1.save()
 
-    def test_get_field_names(self):
-        # unit test for utils.get_fields_names function
-        names = get_fields_names(UserProfile, CountryField)
-        self.assertTrue('native_country' in names)
-        self.assertTrue('living_country' in names)
-
     def test_create_question(self):
         question = TypedNumberQuestion.objects.create(label='label', hint_text='hint', unit='%')
         question.save()
@@ -105,7 +99,7 @@ class CoreTestCase(TestCase):
         user_profile.save()
         answer = BaseAnswer.objects.create_answer(self.user_question2, self.user, age)
         answer.save()
-        # get latest object
+        # get latest object and check age is set to correct value
         user_profile = UserProfile.objects.get(user_id=self.user)
         self.assertEqual(user_profile.age, age)
 
@@ -263,6 +257,35 @@ class CoreTestCase(TestCase):
         self.assertIsNotNone(elements[2].source_url)
 
 
+    def test_question_typologies(self):
+
+        user_age_question        = UserAgeQuestion.objects.create(label='label', hint_text='hint')
+        user_gender_question     = UserGenderQuestion.objects.create(label='label', hint_text='hint')
+        user_country_question    = UserCountryQuestion.objects.create(label='label', hint_text='hint')
+        text_selection_question  = TextSelectionQuestion.objects.create(label='label', hint_text='hint')
+        media_selection_question = MediaSelectionQuestion.objects.create(label='label', hint_text='hint')
+        text_radio_question      = TextRadioQuestion.objects.create(label='label', hint_text='hint')
+        media_radio_question     = MediaRadioQuestion.objects.create(label='label', hint_text='hint')
+
+        self.assertEqual( user_age_question.typology,         'user_age')
+        self.assertEqual( user_gender_question.typology,      'user_gender')
+        self.assertEqual( user_country_question.typology,     'user_country')
+        self.assertEqual( text_selection_question.typology,   'text_selection')
+        self.assertEqual( media_selection_question.typology,  'media_selection')
+        self.assertEqual( text_radio_question.typology,       'text_radio')
+        self.assertEqual( media_radio_question.typology,      'media_radio')
 
 
 
+
+
+class UtilsTestCase(TestCase):
+
+    def test_get_field_names(self):
+        # unit test for utils.get_fields_names function
+        names = utils.get_fields_names(UserProfile, CountryField)
+        self.assertTrue(UserProfile._meta.get_field('native_country').name in names)
+        self.assertTrue(UserProfile._meta.get_field('living_country').name in names)
+
+    def test_camel_to_underscore(self):
+        self.assertEqual(utils.camel_to_underscore("CamelCaseToUnderscore"), "camel_case_to_underscore")

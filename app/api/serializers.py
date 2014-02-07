@@ -75,6 +75,6 @@ class SurveySerializer(serializers.ModelSerializer):
     class Meta:
         model = Thematic
         fields = ('id', 'title', 'elements', 'intro_description', 
-            'intro_data_button_title')
+            'intro_button_label')
         depth = 1
 

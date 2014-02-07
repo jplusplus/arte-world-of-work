@@ -16,11 +16,14 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.fields import FieldDoesNotExist
-from django.utils.translation import gettext, ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
-from app.utils import get_fields_names
+from app import utils 
+
+import re
+
 # -----------------------------------------------------------------------------
 #
 #     Constants
@@ -291,8 +294,15 @@ class BaseQuestion(ThematicElementMixin):
     hint_text         = models.CharField(_('Question hint text'), max_length=120)
     content_type      = models.ForeignKey(ContentType, editable=False)
     skip_button_label = models.CharField(_('Skip button (label)'), default=_('Skip this question'),max_length=120)
+    objects           = QuestionManager()
+    # properties 
+    def _get_typology(self):
+        klass = self.content_type.model_class().__name__
+        klass = klass.replace('Question', '') # remove Question from klass name 
+        return utils.camel_to_underscore(klass)
+
+    typology          = property(_get_typology)
     # Managers
-    objects = QuestionManager()
 
     def save(self, *args, **kwargs):
         self.content_type = ContentType.objects.get_for_model(self)
@@ -306,6 +316,7 @@ class BaseQuestion(ThematicElementMixin):
         # (`kwargs['question']` or `self`
         kwargs['question'] = kwargs.get('question', self)
         return BaseAnswer.objects.create_answer(*args, **kwargs)
+
 
     
 class TypedNumberQuestion(BaseQuestion, ValidateButtonMixin):
@@ -359,7 +370,6 @@ class BooleanQuestion(RadioQuestionMixin):
     """ yes or no question - single answer """
     pass
 
-
 class MediaTypeMixin(models.Model):
     """ 
     Special model mixin for MediaChoices (radio and selection)
@@ -409,7 +419,7 @@ class UserCountryQuestion(UserProfileQuestion):
     answer_type       = UserCountryAnswer
     # will lookup every CountryField attribute from UserProfile model
     profile_attribute = models.CharField(_('Related profile attribute'), max_length=20, 
-        choices=[ ( name, name) for name in get_fields_names(type=CountryField, model=UserProfile)],
+        choices=[ ( name, name) for name in utils.get_fields_names(type=CountryField, model=UserProfile)],
         help_text=_('Select user profile attribute that will be changed by user answer'), null=True)
 
 class UserGenderQuestion(UserProfileQuestion):
