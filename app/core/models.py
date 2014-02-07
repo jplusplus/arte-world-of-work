@@ -144,7 +144,7 @@ class Thematic(models.Model):
     objects = ThematicManager()
 
     intro_description = models.TextField(_('Introduction description'))
-    intro_data_button_title = models.TextField(_('Introduction data button title'))
+    intro_button_label = models.CharField(_('Introduction button label'), default=_('See the data'), max_length=120)
 
     def add_element(self, instance, position=None):
         # will convert passed concrete model `instance`, if instance doe
@@ -401,7 +401,7 @@ class UserProfileQuestion(BaseQuestion):
     profile_attribute = None
     answer_type       = UserProfileAnswer
 
-class UserAgeQuestion(UserProfileQuestion):
+class UserAgeQuestion(UserProfileQuestion, ValidateButtonMixin):
     profile_attribute = 'age'
     answer_type       = UserAgeAnswer
 
