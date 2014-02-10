@@ -3,9 +3,9 @@ Key responsibilities of ThematicCtrl
     - handle different thematic states: thematic introduction
 ### 
 class ThematicCtrl
-    @$inject: [ '$scope', 'utils', UserPosition]
+    @$inject: [ '$scope', 'utils']
 
-    constructor: (@scope, @utils, UserPosition)->
+    constructor: (@scope, @utils)->
         # ---------------------------------------------------------------------
         # Scope variables bindings
         # ---------------------------------------------------------------------
@@ -20,7 +20,7 @@ class ThematicCtrl
 
     skipElement: => 
         UserPosition.skipElement()
-        
+
     previousElement: => 
         UserPosition.previousElement()
 

@@ -1,7 +1,6 @@
 class SurveyCtrl
-    @$inject: ['$scope', 'Thematic', 'UserPosition']
-
-    constructor: (@scope, @Thematic, @UserPosition)->
+    @$inject: ['$scope', 'Thematic']
+    constructor: (@scope, @Thematic)->
         
         @scope.survey =
             state: 0
@@ -19,7 +18,4 @@ class SurveyCtrl
     nextThematic: => 
         UserPosition.nextThematic() 
 
-
-
-angular.module 'arte-ww'
-    .controller 'SurveyCtrl', SurveyCtrl
+angular.module('arte-ww').controller 'SurveyCtrl', SurveyCtrl

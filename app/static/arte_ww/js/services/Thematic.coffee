@@ -24,6 +24,5 @@ class ThematicService
         return @resource.get thematicId, cb 
 
 
-angular.module 'arte-ww.services'
-    .service 'Thematic', ThematicService
+angular.module('arte-ww.services').service 'Thematic', ThematicService
         
