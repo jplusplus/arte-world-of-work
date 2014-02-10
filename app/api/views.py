@@ -2,14 +2,32 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-
-from rest_framework.authtoken.models import Token
-
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from app.api import serializers
-from app.core.models import Thematic, UserProfile
+from app.core.models import Thematic, UserPosition
+
+# get user model 
+User = get_user_model()
+
 # /results/
+
+# /survey/
+class NestedThematicViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API Endpoint of survey. 
+    
+      - GET `/api/thematic/`
+        
+        > return a list of thematics and their survey elements (feedbacks + questions)
+      
+      - GET `/api/thematic/:id/`
+
+        >  return the survey elements
+
+    """
+    queryset = Thematic.objects.all()
+    serializer_class = serializers.NestedThematicSerializer
 
 # /survey/
 class ThematicViewSet(viewsets.ReadOnlyModelViewSet):
@@ -25,10 +43,8 @@ class ThematicViewSet(viewsets.ReadOnlyModelViewSet):
         >  return the survey elements
 
     """
-
     queryset = Thematic.objects.all()
     serializer_class = serializers.ThematicSerializer
-
 
 class FeedbackViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -36,7 +52,6 @@ class FeedbackViewSet(viewsets.ReadOnlyModelViewSet):
 
     Generate on demand dynamic feedback objects.
     """
-
 
 class AnswerViewSet(viewsets.ModelViewSet):
     """
@@ -48,13 +63,13 @@ class AnswerViewSet(viewsets.ModelViewSet):
 
 class UserViewSet(viewsets.ViewSet):
     def create(self, request):
-        user = User.objects.create(username='', password='')
+        user = User.objects.create()
         serializer = serializers.UserSerializer(user)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
     @action(methods=['GET', 'PUT'])
-    def mypostion(self, request):
-        position = UserPosition.objects.get(user=request.user)
+    def mypostion(self, request, pk):
+        position = UserPosition.objects.get(user=pk)
         serializer = serializers.UserPositionSerializer(position)
         return Response(data=serializer.data)
 

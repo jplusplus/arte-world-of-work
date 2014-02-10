@@ -1,9 +1,9 @@
 from rest_framework import routers
-from .views import ThematicViewSet, UserViewSet
+from .views import ThematicViewSet, NestedThematicViewSet, UserViewSet
 
 router = routers.SimpleRouter()
-router.register(r'thematics', ThematicViewSet)
-router.register(r'user',      UserViewSet, base_name='user')
-
+router.register(r'thematics',        ThematicViewSet)
+router.register(r'thematics-nested', NestedThematicViewSet)
+router.register(r'user',             UserViewSet, base_name='user')
 
 urlpatterns = router.urls

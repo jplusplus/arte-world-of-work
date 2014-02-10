@@ -16,15 +16,16 @@ from app                         import utils
 from app.core.models             import * 
 from app.utils                   import get_fields_names
 from django_countries.fields     import CountryField
-from django.contrib.auth.models  import User
 from django.core.exceptions      import ValidationError
 from django.test                 import TestCase
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class CoreTestCase(TestCase):
     def setUp(self):
         # create user
-        self.user = User.objects.create()
-        UserProfile.objects.create(user=self.user)
+        self.user = User.objects.create_user()
         # user question (country)
         self.user_question1 = UserCountryQuestion(label='l', hint_text='h', 
             profile_attribute='native_country' )

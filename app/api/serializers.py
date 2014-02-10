@@ -1,88 +1,118 @@
 from rest_framework import serializers
 from app.core.models import *
-
-from django.contrib.auth.models import User
-
+from django.contrib.auth import get_user_model
+from six import with_metaclass
 
 class ThematicElementField(serializers.RelatedField):
+    type = serializers.Field()
     class Meta:
         model = ThematicElement
+        field = ('position', 'type')
+        depth = 0
 
-    def to_native(self, value): 
-        serializer = None
-        # import pdb; pdb.set_trace()
-        rel_object = value.content_object
-        if isinstance(rel_object, BaseFeedback):
-            serializer = FeedbackSerializer(rel_object)
-        if isinstance(rel_object, BaseQuestion):
-            serializer = QuestionSerializer(rel_object)
-
-        serializer.data['position'] = value.position
-        serializer.data['type'] = value.type
-        serializer.data['id'] = value.id
-
-        return serializer.data
-
-class ChoiceField(serializers.RelatedField):
     def to_native(self, value):
-        pass
+        rel_klass  = value.content_type.model_class()
+        if issubclass(rel_klass, BaseFeedback):
+            serializer = FeedbackSerializer(value.content_object)
+        elif issubclass(rel_klass, BaseQuestion):
+            serializer = QuestionSerializer(value.content_object)
+
+        base_data  = ThematicElementSerializer(value).data
+        base_data.update({ 'type': value.type })
+        base_data.update(serializer.data)
+        return base_data
+
+class ThematicElementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ThematicElement
+        exclude = ('content_type','id')
+
+
+class ChoiceField(serializers.ModelSerializer):
+    class Meta:
+        model = BaseChoiceField
+    def to_native(self, value):
+        return super(ChoiceField, self).to_native(value)
 
 class FeedbackSerializer(serializers.ModelSerializer):
+    sub_type = serializers.Field()
     class Meta:
         model = BaseFeedback
+        fields = ('html_sentence', 'sub_type')
+
+    def to_native(self, value):
+        base_data  = super(FeedbackSerializer, self).to_native(value)
+        base_data.update({'': value.sub_type})
+        serializer = self.get_final_serializer(value)
+        if serializer:
+            base_data.update(serializer.data)
+        return base_data
+
+    def get_final_serializer(self, value):
+        serializer = None
+        if isinstance(value, StaticFeedback):
+            serializer = StaticFeedbackSerializer(value)
+        return serializer
+
+class StaticFeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StaticFeedback
 
 class QuestionSerializer(serializers.ModelSerializer):
+    typology = serializers.Field()
     class Meta:
         model = BaseQuestion
-        fields = ('id', 'label', 'skip_button_label')
+        fields = ('id', 'label', 'skip_button_label', 'typology')
         depth = 1
 
     def to_native(self, value):
+        base_data = super(QuestionSerializer, self).to_native(value)
         serializer = self.get_final_serializer(value)
-        if serializer is None:
-            data = super(QuestionSerializer, self).to_native(value)
-        else:
-            data = serializer.data
-        data['typology'] = value.content_type.model_class().__name__
-        data['answer_type'] = value.answer_type.__name__
-        return data
+        if serializer:
+            base_data.update(serializer.data)
+        return base_data
 
     def get_final_serializer(self, value):
         serializer = None
         if isinstance(value, UserAgeQuestion):
             serializer = UserAgeQuestionSerializer(value)
-        if isinstance(value, BooleanQuestion):
+        elif isinstance(value, BooleanQuestion):
             serializer = BooleanQuestionSerializer(value)
+        elif isinstance(value, TypedNumberQuestion):
+            serializer = TypedNumberQuestionSerializer(value)
         return serializer
 
 class MultipleChoicesSerializer(serializers.ModelSerializer):
-    choices = ChoiceField(many=True)
-    class Meta:
-        fields = ('basechoicefield_set',)
-        depth = 1
+    choices = ChoiceField(source='basechoicefield_set', many=True)
 
+class TypedNumberQuestionSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = TypedNumberQuestion
+        fields = ('unit', 'min_number', 'max_number',)
 
 class BooleanQuestionSerializer(MultipleChoicesSerializer):
     class Meta(MultipleChoicesSerializer.Meta): 
         model = BooleanQuestion
 
 class UserAgeQuestionSerializer(serializers.ModelSerializer):
-    class Meta:
+    class Meta(QuestionSerializer.Meta):
         model = UserAgeQuestion
 
 class ThematicSerializer(serializers.ModelSerializer):
-    elements = ThematicElementField(many=True, source='thematicelement_set')
+    elements = serializers.PrimaryKeyRelatedField(many=True, source='thematicelement_set')
     class Meta:
         model = Thematic
-        fields = ('id', 'title', 'elements', 'intro_description', 
-            'intro_button_label')
+        fields = ('id', 'title',  'intro_description', 
+            'intro_button_label', 'elements')
         depth = 1
 
+class NestedThematicSerializer(ThematicSerializer):
+    elements = ThematicElementField(many=True, source='thematicelement_set')
 
 class UserSerializer(serializers.ModelSerializer):
-    profile = serializers.RelatedField(source='userprofile_set', many=False)
+    profile = serializers.RelatedField(source='userprofile', many=False)
     class Meta:
-        model = User
+        model = get_user_model()
 
 
 class UserPositionSerializer(serializers.ModelSerializer):

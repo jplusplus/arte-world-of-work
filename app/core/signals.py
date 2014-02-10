@@ -1,6 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Max
 from django.db.models.signals import post_save, pre_save
+from rest_framework.authtoken.models import Token
 
 from app.utils import receiver_subclasses
 from app.core.models import BaseQuestion
@@ -9,6 +11,7 @@ from app.core.models import ThematicElement
 from app.core.models import TextChoiceField
 from app.core.models import BooleanQuestion
 from app.core.models import UserProfile
+from app.core.models import UserPosition
 from app.core.models import UserChoiceField
 from app.core.models import UserGenderQuestion
 # -----------------------------------------------------------------------------
@@ -70,12 +73,25 @@ def create_user_choice_fieds(sender, **kwargs):
             field = UserChoiceField(value=c[0], title= c[1], question=question)
             field.save()
 
+def create_user_informations(sender, **kwargs):
+    # will create a profile & a token for evey newly created user
+    if kwargs.get('created', False) and not kwargs.get('raw'): 
+        user = kwargs.get('instance')
+        profile = UserProfile.objects.create(user=user)
+        position = UserPosition.objects.create(user=user)
+        token = Token.objects.create(user=user)
+        profile.save()
+        position.save()
+        token.save()
 
 def bind():
     pre_save.connect(set_element_position, sender=ThematicElement)
+    
     # will trigger `create_boolean` after every boolean question creation
     post_save.connect(create_boolean_choices, sender=BooleanQuestion)
     post_save.connect(create_user_choice_fieds, sender=UserGenderQuestion)
 
+    # create user information on user created
+    post_save.connect(create_user_informations, sender=get_user_model())
 
 #EOF

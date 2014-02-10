@@ -10,19 +10,17 @@
 # Creation : 14-Jan-2014
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
-from django.contrib.auth.models import User
+
 from django.contrib.contenttypes import generic 
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
+from django.conf import settings
 from django.db import models
 from django.db.models.fields import FieldDoesNotExist
 from django.utils.translation import ugettext_lazy as _
-
 from django_countries.fields import CountryField
 from sorl.thumbnail import ImageField
 from app import utils 
-
-import re
 
 # -----------------------------------------------------------------------------
 #
@@ -41,7 +39,7 @@ GENDER_TYPES = (
 
 # User profile 
 class UserProfile(models.Model):
-    user           = models.ForeignKey(User, unique=True)
+    user           = models.OneToOneField(settings.AUTH_USER_MODEL, unique=True)
     age            = models.PositiveIntegerField(null=True)
     native_country = CountryField(null=True)
     living_country = CountryField(null=True)
@@ -49,9 +47,9 @@ class UserProfile(models.Model):
         choices=GENDER_TYPES, null=True)
 
 class UserPosition(models.Model):
-    user              = models.ForeignKey(User, unique=True)
-    thematic_position = models.PositiveIntegerField(default=0, null=False)
-    element_position  = models.PositiveIntegerField(default=0, null=False)
+    user              = models.OneToOneField(settings.AUTH_USER_MODEL, unique=True)
+    thematic_position = models.PositiveIntegerField(default=0, null=True, blank=True)
+    element_position  = models.PositiveIntegerField(default=0, null=True, blank=True)
 
 # -----------------------------------------------------------------------------
 # 
@@ -129,9 +127,11 @@ class ThematicElementMixin(models.Model):
         else: 
             return None
 
-    def set_thematic(self, thematic):
+    def set_thematic(self, thematic, position=None):
         element = self.as_element()
         element.thematic = thematic
+        if position != None:
+            element.position = position
         element.save()
 
 class ThematicManager(models.Manager):
@@ -183,16 +183,32 @@ class Thematic(models.Model):
 # 
 # -----------------------------------------------------------------------------
 class BaseFeedback(models.Model):
+    content_type  = models.ForeignKey(ContentType, editable=False)
     html_sentence = models.CharField(_('Feedbacks sentence'), max_length=120, 
         help_text=_('Sentence (as html content): "Hey did you knew .. ?"')
     )
+    # properties 
+    def _get_sub_type(self):
+        klass = self.content_type.model_class().__name__
+        klass = klass.replace('Feedback', '') # remove Question from klass name 
+        return utils.camel_to_underscore(klass)
+
+    sub_type = property(_get_sub_type)
+
+    def save(self, *args, **kwargs):
+        self.content_type = ContentType.objects.get_for_model(self)
+        super(BaseFeedback, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return 'Feedback: %s' % self.html_sentence[:60]
 
 class StaticFeedback(BaseFeedback, ThematicElementMixin, PictureMixin):
     source_url = models.URLField()
     source_title = models.CharField(max_length=120)
-
     def __unicode__(self):
-        return 'StaticFeedback: %s' % self.html_sentence[:50]
+        return 'StaticFeedback: %s' % self.html_sentence[:60]
+
+
 
 # -----------------------------------------------------------------------------
 # 
@@ -222,7 +238,7 @@ class AnswerManager(models.Manager):
         return answer
 
 class BaseAnswer(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     question = models.ForeignKey('BaseQuestion')
     objects = AnswerManager()
 
@@ -306,9 +322,7 @@ class BaseQuestion(ThematicElementMixin):
         klass = self.content_type.model_class().__name__
         klass = klass.replace('Question', '') # remove Question from klass name 
         return utils.camel_to_underscore(klass)
-
-    typology          = property(_get_typology)
-    # Managers
+    typology = property(_get_typology)
 
     def save(self, *args, **kwargs):
         self.content_type = ContentType.objects.get_for_model(self)
