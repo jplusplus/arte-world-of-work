@@ -27,15 +27,14 @@
         <script type="text/coffeescript" src="{% static 'arte_ww/js/app.coffee' %}"></script>
         <script type="text/coffeescript" src="{% static 'arte_ww/js/filters.coffee' %}"></script>
         <!-- controllers -->
+        <script type="text/coffeescript" src="{% static 'arte_ww/js/controllers/SurveyCtrl.coffee' %}"></script>
         <script type="text/coffeescript" src="{% static 'arte_ww/js/controllers/ThematicCtrl.coffee' %}"></script>
         <script type="text/coffeescript" src="{% static 'arte_ww/js/controllers/ResultsCtrl.coffee' %}"></script>
         <!-- services -->
-        <script type="text/coffeescript" src="{% static 'arte_ww/js/services/Survey.coffee' %}"></script>
+        <script type="text/coffeescript" src="{% static 'arte_ww/js/services/Thematic.coffee' %}"></script>
         <script type="text/coffeescript" src="{% static 'arte_ww/js/utils.coffee' %}"></script>
         <!-- directives -->
-        <!-- 
-            <script type="text/coffeescript" src="{% static 'js/directives/charts.coffee' %}"></script>
-         -->
+        <script type="text/coffeescript" src="{% static 'arte_ww/js/directives/surveyElement.coffee' %}"></script>
     {% endcompress %}
 {% endblock %}
 
