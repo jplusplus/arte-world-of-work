@@ -1,2 +1,0 @@
-class TokenAuthentication(object):
-    pass 
