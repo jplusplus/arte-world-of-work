@@ -38,7 +38,7 @@ arteww = angular
                 $routeProvider
                     .when('/', redirectTo: '/survey')
                     .when '/survey',
-                            controller: 'ThematicCtrl'
+                            controller: 'SurveyCtrl'
                             templateUrl: '/partial/survey.html'
                             category: 'survey'
                     .when '/results',

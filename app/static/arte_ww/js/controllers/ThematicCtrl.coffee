@@ -1,14 +1,21 @@
+### 
+Key responsibilities of ThematicCtrl
+    - handle different thematic states: thematic introduction
+### 
 class ThematicCtrl
-    @$inject: [ '$scope', 'Thematics', 'utils']
+    @$inject: [ '$scope', 'Thematic', 'utils']
 
-    constructor: (@scope, @Thematics, @utils)->
+    constructor: (@scope, @Thematic, @utils)->
+
+        @scope.thematic = 
+            state: 0
         # ---------------------------------------------------------------------
         # Scope variables bindings
         # ---------------------------------------------------------------------
         @scope.currentThematicPosition = 0
         @scope.currentElementPosition = 0
 
-        @Survey.all (l)=>
+        @Thematic.all (l)=>
             @thematics = l
             @scope.currentThematic = @thematics[@scope.currentThematicPosition]
 

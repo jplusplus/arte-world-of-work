@@ -1,0 +1,19 @@
+ 
+<div ng-controller="ThematicCtrl">
+    <div class="thematic-intro" ng-if="isIntro()">
+        <h1 class="thematic-intro__title">
+            [[ currentThematic.title ]]</h1>
+        <p class="thematic-intro__description">
+            [[ currentThematic.intro_description ]]</p>
+        <a class="thematic-intro__button" ng-if="currentThematic.intro_button_label">[[currentThematic.intro_button_label ]]</a>
+
+    </div>
+
+
+
+    <h1 class="survey-navigator__title">
+    <span ng-if="currentElement.type == 'question'" ng-bind="currentElement.label"></span>
+    <span ng-if="currentElement.type == 'survey'"   ng-bind-html="currentElement.html_sentence"></span>
+    </h1>
+
+    <survey-element "currentElement"></div>

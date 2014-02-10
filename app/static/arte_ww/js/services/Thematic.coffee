@@ -1,11 +1,11 @@
-angular.module('arte-ww.services').service 'Survey', [
+angular.module('arte-ww.services').service 'Thematic', [
         '$resource', '$routeParams', 
         ($resource, $routeParams)->
             params = 
                 thematic: $routeParams.thematic
-            $resource '/api/survey/', params,
+            $resource '/api/thematics/', params,
                 get: 
-                    url: '/api/survey/:thematic_id'
+                    url: '/api/thematics/:thematic_id'
                 all:
                     method: 'GET'
                     isArray: yes
