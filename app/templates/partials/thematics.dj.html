@@ -1,19 +1,20 @@
- 
-<div ng-controller="ThematicCtrl">
-    <div class="thematic-intro" ng-if="isIntro()">
-        <h1 class="thematic-intro__title">
-            [[ currentThematic.title ]]</h1>
+<div ng-controller="ThematicCtrl" ng-switch="thematic.state">
+    <!-- step 0 -> thematic intro, displaying all info we need about this thematic -->
+    <div class="thematic-intro" ng-switch-when="0">
+        <h1 class="thematic-intro__title">[[ currentThematic.title ]]</h1>
         <p class="thematic-intro__description">
             [[ currentThematic.intro_description ]]</p>
-        <a class="thematic-intro__button" ng-if="currentThematic.intro_button_label">[[currentThematic.intro_button_label ]]</a>
-
+        <a class="thematic-intro__button" ng-if="currentThematic.intro_button_label">
+            [[currentThematic.intro_button_label ]]</a>
+        <a ng-click="thematic.state=1" class="btn btn-primary" ng-translate>Let's go</a>
     </div>
 
+    <!-- step 1 -> we're starting this thematic question -->
+    <div class="thematic-element" ng-switch-when="1">
+        <survey-element ng-model="thematic.element"></survey-element>
+    </div>
 
-
-    <h1 class="survey-navigator__title">
-    <span ng-if="currentElement.type == 'question'" ng-bind="currentElement.label"></span>
-    <span ng-if="currentElement.type == 'survey'"   ng-bind-html="currentElement.html_sentence"></span>
-    </h1>
-
-    <survey-element "currentElement"></div>
+    <!-- step 2 -> thematic outro we're starting this thematic question -->
+    <div class="thematic-outro" ng-switch-when="2">
+    </div>
+</div>
