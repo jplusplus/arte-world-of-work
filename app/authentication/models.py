@@ -2,21 +2,30 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from uuid import uuid4 as uuid 
 
+
 class WWUserManager(BaseUserManager):
-    def create_user(self):
-        user = WWUser()
+    def create_user(self, username, password=None):
+        user = WWUser(username=username)
+        if password:
+            user.password = password
+        user.save()
+        return user
+
+    def create_superuser(self, username, password=None):
+        user = self.create_user(username, password)
+        user.is_staff = user.is_superuser = True
         user.save()
         return user
 
 # Custom User model with UUID as identifier 
 class WWUser(AbstractBaseUser):
-    uuid = models.CharField(max_length=36, unique=True)
+    username = models.CharField('User name', max_length=36, unique=True)
+    USERNAME_FIELD = 'username'
     objects = WWUserManager()
-    USERNAME_FIELD = 'uuid'
     def save(self, *args, **kwargs):
-        if not self.uuid:
-            self.uuid = uuid()
+        if not self.username:
+            self.username = uuid()
         super(WWUser, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return "User {id}".format(id=self.uuid)
+        return "User {id}".format(id=self.username)
