@@ -97,9 +97,6 @@ class BarChart extends Chart
 
 
 class HBarChart extends BarChart
-    constructor: (@scope, @element) ->
-        super @scope, @element
-
     defineXY: =>
         @x = (do d3.scale.linear).range [0, @_size.width]
         @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.2);
@@ -128,9 +125,9 @@ angular.module('arte-ww').directive 'dynamicChart', [->
         link: (scope, elem, attr) ->
             scope.chart = undefined
             # We instanciate the right chart from data.chart_type
-            switch (do scope.data.chart_type.toLowerCase)
-                when 'pie' then scope.chart = new PieChart scope, elem
-                when 'bar' then scope.chart = new BarChart scope, elem
-                when 'hbar' then scope.chart = new HBarChart scope, elem
+            scope.chart = switch (do scope.data.chart_type.toLowerCase)
+                when 'pie' then new PieChart scope, elem
+                when 'bar' then new BarChart scope, elem
+                when 'hbar' then new HBarChart scope, elem
                 else throw "Chart type '#{scope.data.chart_type}' does not exist."
 ]
