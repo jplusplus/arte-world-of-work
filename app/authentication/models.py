@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from uuid import uuid4 as uuid 
 
 
@@ -17,12 +17,22 @@ class WWUserManager(BaseUserManager):
         return user
 
 # Custom User model with UUID as identifier 
-class WWUser(AbstractBaseUser):
+class WWUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField('User name', max_length=36, unique=True)
     USERNAME_FIELD = 'username'
     objects = WWUserManager()
     is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
+
+    def get_username(self):
+        return self.username
+
+    def get_fullname(self):
+        return self.get_username()
+
+    def get_short_name(self):
+        return self.get_fullname()
+
+
     def save(self, *args, **kwargs):
         if not self.username:
             self.username = uuid()
@@ -30,3 +40,6 @@ class WWUser(AbstractBaseUser):
 
     def __unicode__(self):
         return "User {id}".format(id=self.username)
+
+
+
