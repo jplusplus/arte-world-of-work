@@ -71,14 +71,24 @@ class ThematicTests(APITestCase, TestCaseMixin):
             self.assertAttrNotNone(thematic, 'elements')
             self.assertAttrNotNone(thematic, 'id')
             self.assertAttrNotNone(thematic, 'title')
-            sub_elements = thematic.get('elements')
-            for sub_element in sub_elements: 
-                self.assertAttrNotNone(sub_element, 'position')
-                self.assertAttrNotNone(sub_element, 'type')
-                self.assertIn(sub_element['type'], ('feedback','question'))
 
-    def test_thematic_detail(self):
-        url = reverse('thematic-detail', kwargs={ 'pk': self.thematic1.pk})
+
+    def test_list_thematic_nested(self):
+        url = reverse('thematic-nested-list')
+        response = self.client.get(url)
+        all_thematics = response.data
+        for thematic in all_thematics:
+            # contract on arguments present
+            self.assertAttrNotNone(thematic, 'elements')
+            self.assertAttrNotNone(thematic, 'id')
+            self.assertAttrNotNone(thematic, 'title')
+            for element in thematic.get('elements'):
+                self.assertAttrNotNone(element, 'position')
+                self.assertAttrNotNone(element, 'type')
+                self.assertIn(element['type'], ('feedback','question'))
+
+    def test_thematic_nested_detail(self):
+        url = reverse('thematic-nested-detail', kwargs={ 'pk': self.thematic1.pk})
         response = self.client.get(url)
         thematic = response.data
         sub_elements = thematic.get('elements')

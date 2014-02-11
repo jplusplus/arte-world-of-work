@@ -62,8 +62,9 @@ class QuestionSerializer(serializers.ModelSerializer):
     typology = serializers.Field()
     class Meta:
         model = BaseQuestion
-        fields = ('id', 'label', 'skip_button_label', 'typology')
+        # fields = ('id', 'label', 'skip_button_label', 'typology')
         depth = 1
+        exclude = ('content_type',)
 
     def to_native(self, value):
         base_data = super(QuestionSerializer, self).to_native(value)
@@ -88,7 +89,6 @@ class MultipleChoicesSerializer(serializers.ModelSerializer):
 class TypedNumberQuestionSerializer(serializers.ModelSerializer):
     class Meta: 
         model = TypedNumberQuestion
-        fields = ('unit', 'min_number', 'max_number',)
 
 class BooleanQuestionSerializer(MultipleChoicesSerializer):
     class Meta(MultipleChoicesSerializer.Meta): 

@@ -187,13 +187,12 @@ class BaseFeedback(models.Model):
     html_sentence = models.CharField(_('Feedbacks sentence'), max_length=120, 
         help_text=_('Sentence (as html content): "Hey did you knew .. ?"')
     )
-    # properties 
-    def _get_sub_type(self):
+    # properties
+    @property 
+    def sub_type(self):
         klass = self.content_type.model_class().__name__
         klass = klass.replace('Feedback', '') # remove Question from klass name 
         return utils.camel_to_underscore(klass)
-
-    sub_type = property(_get_sub_type)
 
     def save(self, *args, **kwargs):
         self.content_type = ContentType.objects.get_for_model(self)
@@ -318,11 +317,11 @@ class BaseQuestion(ThematicElementMixin):
     skip_button_label = models.CharField(_('Skip button (label)'), default=_('Skip this question'),max_length=120)
     objects           = QuestionManager()
     # properties 
-    def _get_typology(self):
+    @property
+    def typology(self):
         klass = self.content_type.model_class().__name__
         klass = klass.replace('Question', '') # remove Question from klass name 
         return utils.camel_to_underscore(klass)
-    typology = property(_get_typology)
 
     def save(self, *args, **kwargs):
         self.content_type = ContentType.objects.get_for_model(self)
