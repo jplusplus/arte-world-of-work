@@ -25,7 +25,7 @@ User = get_user_model()
 class CoreTestCase(TestCase):
     def setUp(self):
         # create user
-        self.user = User.objects.create_user()
+        self.user = User.objects.create_user('myuser', 'myuser')
         # user question (country)
         self.user_question1 = UserCountryQuestion(label='l', hint_text='h', 
             profile_attribute='native_country' )
