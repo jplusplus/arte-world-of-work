@@ -26,6 +26,7 @@ INSTALLED_APPS = (
     'compressor',
     'django_countries',
     'rest_framework',
+    'rest_framework.authtoken',
     'sorl.thumbnail',
     # ------------------------ internal dependencies ------------------------ # 
     'app.authentication',
