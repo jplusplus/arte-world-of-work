@@ -63,33 +63,60 @@ class BarChart extends Chart
             right : 10
             bottom : 20
             left : 10
-        size =
+        @_size =
             width : @size.width - margin.right - margin.left
             height : @size.height - margin.top - margin.bottom
 
-        x = (do d3.scale.linear).range [0, size.width]
-        y = (do d3.scale.ordinal).rangeRoundBands([0, size.height], 0.2);
-
-        x.domain [0, @scope.data.total_answers]
-        y.domain _.map @results, (d) -> d[0]
+        do @defineXY
 
         @svg = (@svg.append 'g')
             .attr 'transform', "translate(#{margin.left}, #{margin.top})"
 
         entered = do ((@svg.selectAll '.bar').data @results).enter
         g = (entered.append 'g').attr 'class', 'bar'
-        (g.append 'rect')
-            .attr
-                x : 0
-                y : (d) => y(d[0])
-                width : (d) => x(d[1])
-                height : do y.rangeBand
-        (g.append 'text')
-            .attr
-                x : 10
-                y : (d) => y(d[0]) + (do y.rangeBand) / 2
-                'dominant-baseline' : 'central'
+        (g.append 'rect').attr do @getRectAttrs
+        ((g.append 'text').attr do @getTextAttrs)
             .text (d) -> d[0]
+
+    defineXY: =>
+        @x = (do d3.scale.ordinal).rangeRoundBands([0, @_size.width], 0.2);
+        @y = (do d3.scale.linear).range [@_size.height, 0]
+        @x.domain _.map @results, (d) -> d[0]
+        @y.domain [0, @scope.data.total_answers]
+
+    getRectAttrs: =>
+        x : (d) => @x(d[0])
+        y : (d) => @y(d[1])
+        width : do @x.rangeBand
+        height : (d) => @_size.height - @y(d[1])
+
+    getTextAttrs: =>
+        x : (d) => @x(d[0]) + (do @x.rangeBand) / 2
+        y : @_size.height - 30
+        'text-anchor' : 'middle'
+
+
+class HBarChart extends BarChart
+    constructor: (@scope, @element) ->
+        super @scope, @element
+
+    defineXY: =>
+        @x = (do d3.scale.linear).range [0, @_size.width]
+        @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.2);
+        @x.domain [0, @scope.data.total_answers]
+        @y.domain _.map @results, (d) -> d[0]
+
+    getRectAttrs: =>
+        x : 0
+        y : (d) => @y(d[0])
+        width : (d) => @x(d[1])
+        height : do @y.rangeBand
+
+    getTextAttrs: =>
+        x : 10
+        y : (d) => @y(d[0]) + (do @y.rangeBand) / 2
+        'dominant-baseline' : 'central'
+
 
 angular.module('arte-ww').directive 'dynamicChart', [->
     directive =
@@ -104,5 +131,6 @@ angular.module('arte-ww').directive 'dynamicChart', [->
             switch (do scope.data.chart_type.toLowerCase)
                 when 'pie' then scope.chart = new PieChart scope, elem
                 when 'bar' then scope.chart = new BarChart scope, elem
+                when 'hbar' then scope.chart = new HBarChart scope, elem
                 else throw "Chart type '#{scope.data.chart_type}' does not exist."
 ]
