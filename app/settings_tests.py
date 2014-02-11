@@ -28,6 +28,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'sorl.thumbnail',
     # ------------------------ internal dependencies ------------------------ # 
+    'app.authentication',
     'app.core',
     'app.translations',
 )
