@@ -34,7 +34,7 @@ pip_install:
 
 test: test_django_app
 
-test_django_app: . $(VIRTUALENV)bin/activate; python manage.py test app.core app.api
+test_django_app: . $(VIRTUALENV)bin/activate; python manage.py test app.core app.api app.authentication --settings=app.settings_tests
 
 test_translations:
 	. $(VIRTUALENV)bin/activate; python manage.py test app.translations.tests --settings=app.translations.tests.settings_tests
