@@ -12,7 +12,7 @@ create_virtualenv:
 	if [ ! -d venv ]; then virtualenv venv --no-site-packages --distribute --prompt=Arte-WoW; fi
 
 createsuperuser:
-	. $(VIRTUALENV)bin/activate; python manage.py createsuperuser --email root@arte-wow.fr --username root
+	. $(VIRTUALENV)bin/activate; python manage.py createsuperuser --username root
 
 setup_db:
 	# setup database
