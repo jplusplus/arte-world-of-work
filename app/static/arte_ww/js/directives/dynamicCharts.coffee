@@ -3,23 +3,27 @@ class Chart
         # Compute the result into something usable by the pie layout
         @results = []
         _.forEach (_.keys @scope.data.results), (key) =>
-            @results.push [key, @scope.data.results[key]]
-
-        @size =
-            width : do @element.width
-            height : (do @element.width) * 0.5
+            percent = parseInt (@scope.data.results[key] * 100 / @scope.data.total_answers + 0.5)
+            @results.push [key, @scope.data.results[key], percent]
 
         # Create the svg element
         @svg = (d3.select @element[0]).append 'svg'
-        @svg.attr
-            width : @size.width
-            height : @size.height
 
         # Create a color range
         @color = (do d3.scale.category20)
 
         @layout = undefined
 
+        do @setSize
+
+    setSize: =>
+        @size =
+            width : do @element.width
+            height : do @element.height
+
+        @svg.attr
+            width : @size.width
+            height : @size.height
 
 class PieChart extends Chart
     constructor: (@scope, @element) ->
