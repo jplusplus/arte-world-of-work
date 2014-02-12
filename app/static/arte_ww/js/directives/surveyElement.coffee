@@ -2,11 +2,9 @@ angular.module('arte-ww').directive 'surveyElement', [
     ()->
         directive = 
             restrict: "AE"
-            scope:
-                ngModel: "=" 
-
-            link: (scope, elem, attr)->
-                
-                console.log elem, scope, attr
+            templateUrl: "partial/directives/survey-element.html"
+            compile: ->
+                    pre: (scope, elem, attrs)->
+                        scope.element = scope.$eval(attrs.surveyElement)
 
 ]

@@ -1,21 +1,10 @@
 class SurveyCtrl
-    @$inject: ['$scope', 'Thematic']
-    constructor: (@scope, @Thematic)->
-        
-        @scope.survey =
+    @$inject: ['$scope', 'Thematic', 'UserPosition']
+    constructor: (@scope, @thematic, @userPosition)->
+        # scope function binding - public API of this controller
+        @scope.survey =  
             state: 0
-            thematic: null
+            thematic: @thematic.currentThematic
 
-        @scope.$watch UserPosition.currentThematic, 'onThematicChanged'
-
-        _.extend @scope, 
-            previous: @previousThematic
-            next: @previousThematic
-
-    previousThematic: => 
-        UserPosition.previousThematic()
-
-    nextThematic: => 
-        UserPosition.nextThematic() 
 
 angular.module('arte-ww').controller 'SurveyCtrl', SurveyCtrl

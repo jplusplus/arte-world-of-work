@@ -1,9 +1,5 @@
 @import "bootstrap-overload.less";
 
-
-.header {
-
-}
 .nav__element {
     font-weight: normal;
     display: inline-block;
@@ -29,4 +25,33 @@
 
 .thematic-intro {
     background-color: #bbb;
+}
+
+.survey-element__nav {
+    background-color: #bbb;
+    display: block;
+    color: grey;
+    list-style: none;
+    ul {
+        margin: 0;
+        padding: 0;
+        li {
+            display: inline-block;
+        }
+        &:after {
+            display: block;
+            clear: both;
+            content: " ";
+            height: 0;
+        }
+    }
+
+}
+
+.survey-element__nav__previous {
+    float: left;
+}
+
+.survey-element__nav__next {
+    float: right;
 }

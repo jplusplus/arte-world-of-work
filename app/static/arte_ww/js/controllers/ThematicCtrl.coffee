@@ -3,12 +3,13 @@ Key responsibilities of ThematicCtrl
     - handle different thematic states: thematic introduction
 ### 
 class ThematicCtrl
-    @$inject: [ '$scope', 'utils']
+    @$inject: [ '$scope',  'UserPosition', 'Thematic']
 
-    constructor: (@scope, @utils)->
+    constructor: (@scope, @userPosition, @thematicService)->
         # ---------------------------------------------------------------------
         # Scope variables bindings
         # ---------------------------------------------------------------------
+        
         @scope.thematic = 
             state: 0
         # ---------------------------------------------------------------------
@@ -18,11 +19,39 @@ class ThematicCtrl
             previous: @previousElement
             skip: @skipElement
 
-    skipElement: => 
-        UserPosition.skipElement()
+        # Watches 
+        @scope.$watch =>
+                @userPosition.thematicPosition
+            , @onThematicChanged 
 
-    previousElement: => 
-        UserPosition.previousElement()
+        @scope.$watch =>
+                @userPosition.elementPosition
+            , @onElementChanged
 
-angular.module('arte-ww') 
-    .controller('ThematicCtrl', ThematicCtrl) 
+
+
+    skipElement: =>
+        @userPosition.nextElement()
+
+    previousElement: =>
+        if @userPosition.elementPosition is 0
+            @scope.thematic.state = 0
+        else
+            @userPosition.previousElement()
+
+    isIntro: => return @scope.survey.thematic.state == 0
+
+    isOutro: => return @scope.survey.thematic.state == 2
+
+
+    onThematicChanged: (new_position, old_position)=> 
+        @thematicService.getAt new_position, (thematic)=>
+            @scope.currentThematic = thematic
+            @scope.currentElement = thematic.elements[0]
+
+
+    onElementChanged: (position)=>
+        return unless @scope.currentThematic
+        @scope.currentElement = @scope.currentThematic.elements[position]
+
+angular.module('arte-ww').controller 'ThematicCtrl', ThematicCtrl
