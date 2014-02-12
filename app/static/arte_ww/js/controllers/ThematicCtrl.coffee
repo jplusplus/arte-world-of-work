@@ -3,15 +3,20 @@ Key responsibilities of ThematicCtrl
     - handle different thematic states: thematic introduction
 ### 
 class ThematicCtrl
-    @$inject: [ '$scope',  'UserPosition', 'Thematic']
+    @$inject: [ '$scope', 'utils',  'UserPosition', 'Thematic']
 
-    constructor: (@scope, @userPosition, @thematicService)->
+    constructor: (@scope, @utils, @userPosition, @thematicService)->
+        # ---------------------------------------------------------------------
+        # Class attributes
+        # ---------------------------------------------------------------------
+        @states = utils.states.thematic
         # ---------------------------------------------------------------------
         # Scope variables bindings
         # ---------------------------------------------------------------------
-        
         @scope.thematic = 
-            state: 0
+            state: @states.INTRO
+            states: @states
+
         # ---------------------------------------------------------------------
         # Scope function bindings
         # ---------------------------------------------------------------------
@@ -19,39 +24,70 @@ class ThematicCtrl
             previous: @previousElement
             skip: @skipElement
 
+        # ---------------------------------------------------------------------
         # Watches 
-        @scope.$watch =>
+        # ---------------------------------------------------------------------
+         @scope.$watch ()=>
                 @userPosition.thematicPosition
-            , @onThematicChanged 
+            , @onThematicPositionChanged
+
+        @scope.$watch 'currentThematic', @onThematicChanged
 
         @scope.$watch =>
                 @userPosition.elementPosition
-            , @onElementChanged
+            , (position)=> @scope.elementPosition = position
 
+    currentThematic: => @scope.currentThematic
 
+    currentState: (state)=> 
+        if state?
+            @scope.thematic.state = state
+        return @scope.thematic.state
 
     skipElement: =>
-        @userPosition.nextElement()
+        currentThematic = @currentThematic()
+        if @hasNextElement()
+            @userPosition.nextElement()
+        else if @isOutro()
+            @userPosition.nextThematic()
+        else
+            @currentState(@states.OUTRO)
 
     previousElement: =>
-        if @userPosition.elementPosition is 0
-            @scope.thematic.state = 0
+        @userPosition.previousElement()
+        if @isIntro()
+            @userPosition.previousThematic()
+        else if @hasPreviousElement()
         else
-            @userPosition.previousElement()
+            @currentState(@states.INTRO)
 
-    isIntro: => return @scope.survey.thematic.state == 0
+    hasNextElement: => 
+        thematic = @currentThematic()
+        return false unless thematic
+        elements = thematic.elements
+        elements[@userPosition.elementPosition + 1]?
 
-    isOutro: => return @scope.survey.thematic.state == 2
+    hasPreviousElement: =>
+        thematic = @currentThematic()
+        return false unless thematic
+        elements = thematic.elements
+        elements[@userPosition.elementPosition - 1]?
 
+    isIntro: => @currentState() == @states.INTRO
 
-    onThematicChanged: (new_position, old_position)=> 
-        @thematicService.getAt new_position, (thematic)=>
+    isOutro: => @currentState() == @states.OUTRO
+
+    onThematicPositionChanged: (position)=> 
+        @thematicService.getAt position, (thematic)=>
             @scope.currentThematic = thematic
-            @scope.currentElement = thematic.elements[0]
 
+    onThematicChanged: (thematic, old_thematic)=>
+        shouldSetOutro = old_thematic? and thematic.position > old_thematic.position
+        @currentState(if shouldSetOutro then @states.OUTRO else @states.INTRO)
+        if @isIntro()
+            @userPosition.elementPosition = 0 
+        else 
+            @userPosition.elementPosition = thematic.elements.length - 1 if thematic.elements
 
-    onElementChanged: (position)=>
-        return unless @scope.currentThematic
-        @scope.currentElement = @scope.currentThematic.elements[position]
 
 angular.module('arte-ww').controller 'ThematicCtrl', ThematicCtrl
