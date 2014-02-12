@@ -21,8 +21,8 @@ class ThematicCtrl
         # Scope function bindings
         # ---------------------------------------------------------------------
         _.extend @scope, 
-            previous: @previousElement
-            skip: @skipElement
+            previousElement: @previousElement
+            skipElement: @skipElement
 
         # ---------------------------------------------------------------------
         # Watches 
@@ -47,19 +47,25 @@ class ThematicCtrl
     skipElement: =>
         currentThematic = @currentThematic()
         if @hasNextElement()
+            console.log 'ThematicCtrl.skipElement', "if @hasNextElement()"
             @userPosition.nextElement()
         else if @isOutro()
+            console.log 'ThematicCtrl.skipElement', "else if @isOutro()"
             @userPosition.nextThematic()
         else
-            @currentState(@states.OUTRO)
+            console.log 'ThematicCtrl.skipElement', "else"
+            @scope.thematic.state = @states.OUTRO
 
     previousElement: =>
-        @userPosition.previousElement()
         if @isIntro()
+            console.log 'ThematicCtrl.previousElement', "if @isIntro()"
             @userPosition.previousThematic()
         else if @hasPreviousElement()
+            console.log 'ThematicCtrl.previousElement', "else if @hasPreviousElement()"
+            @userPosition.previousElement()
         else
-            @currentState(@states.INTRO)
+            console.log 'ThematicCtrl.previousElement', "else"
+            @scope.thematic.state = @states.INTRO
 
     hasNextElement: => 
         thematic = @currentThematic()

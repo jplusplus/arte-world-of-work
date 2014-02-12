@@ -12,39 +12,42 @@
     </div>
     <!-- step 1 -> we start the first thematic and going on until the end --> 
     <div class="survey-navigator--doing" ng-switch-when="1">
-        <div ng-controller='ThematicCtrl' ng-switch="thematic.state">
+        <div ng-controller='ThematicCtrl'>
             <!-- step 0 -> thematic intro, displaying all info we need about this thematic -->
-            <div class="thematic-intro" ng-switch-default>
+            <div class="thematic-intro" ng-if='thematic.state == thematic.states.INTRO'>
                 <h1 class="thematic-intro__title">[[ currentThematic.title ]]</h1>
-                <p class="thematic-intro__description">
-                    [[ currentThematic.intro_description ]]</p>
-                <a class="thematic-intro__button" ng-if="currentThematic.intro_button_label">
-                    [[ currentThematic.intro_button_label ]]</a>
-                <a ng-click="thematic.state=thematic.states.ELEMENTS" class="btn btn-primary" ng-translate>Let's go</a>
+
+                <p class="thematic-intro__description">[[ currentThematic.intro_description ]]</p>
+
+                <a class="thematic-intro__button" ng-if="currentThematic.intro_button_label">[[ currentThematic.intro_button_label ]]</a>
+
+                <a ng-click="thematic.state = thematic.states.ELEMENTS" class="btn btn-primary" ng-translate>Let's go</a>
             </div>
 
             <!-- step 1 -> we're starting this thematic question -->
-            <div class="survey-element" ng-switch-when="1">
+            <div class="survey-element" ng-if='thematic.state == thematic.states.ELEMENTS'>
                 <div ng-repeat='element in currentThematic.elements' 
-                     ng-class="{ '': elementPosition == element.position, 'hidden': elementPosition != element.position}">
+                     ng-class="elementPosition == element.position ? 'visible' : 'hidden'">
                     <div survey-element="element"></div>
                 </div>
                 <nav class="survey-element__nav">
                     <ul>
-                        <li class="survey-element__nav__previous"><a href="#" ng-click="previous()">Previous</a></li>
-                        <li class="survey-element__nav__next"><a href="#" ng-click="skip()">Next</a></li>
+                        <li class="survey-element__nav__previous"><a ng-href="" ng-click="previousElement()">Previous</a></li>
+                        <li class="survey-element__nav__next"><a ng-href="" ng-click="skipElement()">Next</a></li>
                     </ul>
                 </nav>
             </div>
 
             <!-- step 2 -> thematic outro we're starting this thematic question -->
-            <div class="thematic-outro" ng-switch-when="2">
+            <div class="thematic-outro" ng-if='thematic.state == thematic.states.OUTRO'>
                 <h1> OUTRO </h1>
+                <a ng-href="" ng-click='previousElement()'>Previous</a>
+                <a ng-href="" ng-click='skipElement()'> Go to next thematic</a>
             </div>
         </div>
     </div>
 
     <!-- step 2 -> all thematic/feedback and question are now done --> 
-    <div class="survey-navigator--end" ng-if="survey.state == survey.states.OUTRO">
+    <div class="survey-navigator--end" ng-switch-when="2">
     </div>
 </div>
