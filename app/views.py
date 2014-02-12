@@ -19,6 +19,12 @@ def home(request):
     response = render_to_response('home.dj.html')
     return response
 
+def directive_partial(request, partial_name=None):
+    template_name = 'partials/directives/' + partial_name + '.dj.html'
+    try:
+        return render_to_response(template_name)
+    except TemplateDoesNotExist:
+        raise Http404
 
 def partial(request, partial_name=None):
     template_name = 'partials/' + partial_name + '.dj.html'
