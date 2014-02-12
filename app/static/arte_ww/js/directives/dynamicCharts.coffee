@@ -15,6 +15,7 @@ class Chart
         @layout = undefined
 
         do @setSize
+        do @update
 
     setSize: =>
         @size =
@@ -25,10 +26,13 @@ class Chart
             width : @size.width
             height : @size.height
 
+    update: =>
+
 class PieChart extends Chart
     constructor: (@scope, @element) ->
         super @scope, @element
 
+    update : =>
         # Create arcs
         radius = (Math.min @size.width, @size.height) / 2
         arc = do d3.svg.arc
@@ -62,6 +66,7 @@ class BarChart extends Chart
     constructor: (@scope, @element) ->
         super @scope, @element
 
+    update : =>
         margin =
             top : 20
             right : 10
