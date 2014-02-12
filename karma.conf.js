@@ -18,6 +18,7 @@ module.exports = function(config) {
       'app/static/arte_ww/vendor/angular/angular.js',
       'app/static/arte_ww/vendor/angular-sanitize/angular-sanitize.js',
       'app/static/arte_ww/vendor/angular-resource/angular-resource.js',
+      'app/static/arte_ww/vendor/angular-cookies/angular-cookies.js',
       'app/static/arte_ww/vendor/angular-mocks/angular-mocks.js',
       'app/static/arte_ww/vendor/angular-translate/angular-translate.js',
       'app/static/arte_ww/vendor/angular/angular.js',
