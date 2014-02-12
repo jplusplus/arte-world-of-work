@@ -5,13 +5,19 @@
         <p class="thematic-intro__description">
             [[ currentThematic.intro_description ]]</p>
         <a class="thematic-intro__button" ng-if="currentThematic.intro_button_label">
-            [[currentThematic.intro_button_label ]]</a>
+            [[ currentThematic.intro_button_label ]]</a>
         <a ng-click="thematic.state=1" class="btn btn-primary" ng-translate>Let's go</a>
     </div>
 
     <!-- step 1 -> we're starting this thematic question -->
-    <div class="thematic-element" ng-switch-when="1">
-        <survey-element ng-model="thematic.element"></survey-element>
+    <div class="survey-element" ng-switch-when="1">
+        <div survey-element="currentElement"></div>
+        <nav class="survey-element__nav">
+            <ul>
+                <li class="survey-element__nav__previous"><a href="#" ng-click="previous()">Previous</a></li>
+                <li class="survey-element__nav__next"><a href="#" ng-click="skip()">Next</a></li>
+            </ul>
+        </nav>
     </div>
 
     <!-- step 2 -> thematic outro we're starting this thematic question -->

@@ -1,0 +1,13 @@
+<div ng-switch='element.type'>
+    <div ng-switch-when='feedback'>
+        <!-- static feedback -->
+        <h1>[[ element.html_sentence ]]</h1>
+        <static-feedback 
+            ng-if="element.sub_type == 'static'" 
+            data-element='element'/>
+
+    <div ng-switch-when='question' ng-switch='element.typology'>
+        <h1>[[ element.label ]]</h1>
+        <typed-number-question ng-switch-when='typed_number' data-element='element'/>
+        <boolean-question ng-switch-when='boolean' data-element='element'/>
+
