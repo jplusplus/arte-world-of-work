@@ -32,7 +32,7 @@ class PieChart extends Chart
         # Create arcs
         radius = (Math.min @size.width, @size.height) / 2
         arc = do d3.svg.arc
-        arc.outerRadius radius - 100
+        arc.outerRadius radius
         arc.innerRadius 0
 
         # Center the pie
@@ -55,7 +55,7 @@ class PieChart extends Chart
                 transform : (d) -> "translate(#{arc.centroid d})"
             .style
                 'text-anchor' : 'middle'
-            .text (d) -> d.data[0]
+            .text (d) -> "#{d.data[0]} - #{d.data[2]}%"
 
 
 class BarChart extends Chart
@@ -80,7 +80,7 @@ class BarChart extends Chart
         g = (entered.append 'g').attr 'class', 'bar'
         (g.append 'rect').attr do @getRectAttrs
         ((g.append 'text').attr do @getTextAttrs)
-            .text (d) -> d[0]
+            .text (d) -> "#{d[0]} - #{d[2]}%"
 
     defineXY: =>
         @x = (do d3.scale.ordinal).rangeRoundBands([0, @_size.width], 0.2);
