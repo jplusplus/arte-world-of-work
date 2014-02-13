@@ -182,7 +182,7 @@ class Thematic(models.Model):
 #     Feedbacks
 # 
 # -----------------------------------------------------------------------------
-class BaseFeedback(models.Model):
+class BaseFeedback(ValidateButtonMixin):
     content_type  = models.ForeignKey(ContentType, editable=False)
     html_sentence = models.CharField(_('Feedbacks sentence'), max_length=120, 
         help_text=_('Sentence (as html content): "Hey did you knew .. ?"')

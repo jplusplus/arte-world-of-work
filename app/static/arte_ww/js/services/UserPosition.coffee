@@ -2,8 +2,8 @@
 class UserPositionService
 
     positions:
-        thematicPosition: 0
-        elementPosition: 0
+        thematicPosition: 1
+        elementPosition: 1
 
 
 

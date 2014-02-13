@@ -74,14 +74,14 @@ class ThematicCtrl
     isOutro: => @currentState() == @states.OUTRO
 
     onThematicPositionChanged: (position)=>
-        @thematicService.getAt position, (thematic)=>
+        @thematicService.getAt position-1, (thematic)=>
             @scope.currentThematic = thematic
 
     onThematicChanged: (thematic, old_thematic)=>
         shouldSetOutro = old_thematic? and thematic.position > old_thematic.position
         @currentState(if shouldSetOutro then @states.OUTRO else @states.INTRO)
         if @isIntro()
-            elementPosition = 0 
+            elementPosition = 1 
         else 
             elementPosition = thematic.elements.length - 1 if thematic.elements
 
