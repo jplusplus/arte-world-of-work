@@ -93,7 +93,9 @@ class QuestionSerializer(serializers.ModelSerializer):
             serializer = BooleanQuestionSerializer(value)
         elif isinstance(value, TypedNumberQuestion):
             serializer = TypedNumberQuestionSerializer(value)
-        elif issubclass(klass, RadioQuestionMixin) or issubclass(klass, SelectionQuestionMixin):
+        elif isinstance(value, UserGenderQuestion) \
+            or issubclass(klass, RadioQuestionMixin) \
+            or issubclass(klass, SelectionQuestionMixin):
             serializer = MultipleChoicesSerializer(value)
         return serializer
 
