@@ -455,8 +455,14 @@ class BaseChoiceField(models.Model):
     Base class for choices, will be inherited by concrete choices (text and 
     media)
     """
+    content_type = models.ForeignKey(ContentType, editable=False)
+    content_object = generic.GenericForeignKey('content_type', 'pk')
     question = models.ForeignKey('BaseQuestion')
     title = models.CharField(_('Title of this choice'), max_length=120)
+
+    def save(self, *args, **kwargs):
+        self.content_type = ContentType.objects.get_for_model(self)
+        super(BaseChoiceField, self).save(*args, **kwargs)
 
 class TextChoiceField(BaseChoiceField):
     pass

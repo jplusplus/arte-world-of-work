@@ -1,1 +1,6 @@
 {% extends "partials/directives/question-base.dj.html" %}
+
+
+<input ng-repeat='choice for question.choices' type='checkbox' 
+      ng-true-value="addChoice(choice)"
+      ng-false-value="removeChoice(choice)">

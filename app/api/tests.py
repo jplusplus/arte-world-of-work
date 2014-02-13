@@ -60,6 +60,15 @@ class ThematicTests(APITestCase, TestCaseMixin):
         self.feedback1.set_thematic(self.thematic1, 4)
         self.feedback2.set_thematic(self.thematic1, 5) 
 
+        # thematic 2 question
+
+        self.question5 = self.createQuestion(MediaSelectionQuestion, media_type='icon')
+        self.question5_choice1 = self.createChoice(self.question5, MediaChoiceField, picture='pict1')
+        self.question5_choice2 = self.createChoice(self.question5, MediaChoiceField, picture='pict2')
+        self.question5_choice3 = self.createChoice(self.question5, MediaChoiceField, picture='pict3')
+        self.question5_choice4 = self.createChoice(self.question5, MediaChoiceField, picture='pict3')
+        self.question5.set_thematic(self.thematic2)
+
 
     def test_list_thematic(self):
         # import pdb; pdb.set_trace()
@@ -124,6 +133,18 @@ class ThematicTests(APITestCase, TestCaseMixin):
         self.assertEqual(feedback2_elem.get('type'), 'feedback')
         self.assertEqual(feedback2_elem.get('sub_type'), 'static')
         self.assertEqual(feedback2_elem.get('object_id'), self.feedback2.id)
+
+    def test_thematic_nested_detail_with_pictures(self):
+        url = reverse('thematic-nested-detail', kwargs={ 'pk': self.thematic2.pk})
+        response = self.client.get(url)
+        thematic = response.data
+        sub_elements = thematic.get('elements')
+        question = sub_elements[0]
+        self.assertEqual(question['type'], 'question')
+        for choice in question.get('choices'):
+            self.assertAttrNotNone(choice, 'title')
+            self.assertAttrNotNone(choice, 'picture')
+
 
 
 class UserTestCase(APITestCase, TestCaseMixin):

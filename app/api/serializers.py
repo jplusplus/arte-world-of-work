@@ -27,12 +27,23 @@ class ThematicElementSerializer(serializers.ModelSerializer):
         model = ThematicElement
         exclude = ('content_type','id')
 
-
 class ChoiceField(serializers.ModelSerializer):
     class Meta:
         model = BaseChoiceField
+        exclude = ('question', )
+
     def to_native(self, value):
-        return super(ChoiceField, self).to_native(value)
+        base_data = super(ChoiceField, self).to_native(value)
+        # check if this choice field 
+        if isinstance(value.content_object, MediaChoiceField):
+            final_data = MediaChoiceFieldSerializer(value.content_object).data
+            base_data.update(final_data)
+        return base_data
+
+class MediaChoiceFieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MediaChoiceField
+        fields = ('picture',)
 
 class FeedbackSerializer(serializers.ModelSerializer):
     sub_type = serializers.Field()
@@ -75,22 +86,28 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     def get_final_serializer(self, value):
         serializer = None
+        klass = value.__class__
         if isinstance(value, UserAgeQuestion):
             serializer = UserAgeQuestionSerializer(value)
         elif isinstance(value, BooleanQuestion):
             serializer = BooleanQuestionSerializer(value)
         elif isinstance(value, TypedNumberQuestion):
             serializer = TypedNumberQuestionSerializer(value)
+        elif issubclass(klass, RadioQuestionMixin) or issubclass(klass, SelectionQuestionMixin):
+            serializer = MultipleChoicesSerializer(value)
         return serializer
 
 class MultipleChoicesSerializer(serializers.ModelSerializer):
     choices = ChoiceField(source='basechoicefield_set', many=True)
+    class Meta:
+        model = BaseQuestion
 
 class TypedNumberQuestionSerializer(serializers.ModelSerializer):
     class Meta: 
         model = TypedNumberQuestion
 
 class BooleanQuestionSerializer(MultipleChoicesSerializer):
+    choices = ChoiceField(source='basechoicefield_set', many=True)
     class Meta(MultipleChoicesSerializer.Meta): 
         model = BooleanQuestion
 
