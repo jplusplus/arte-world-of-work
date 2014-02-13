@@ -153,6 +153,8 @@ COMPRESS_TEMPLATE_FILTER_CONTEXT = {
 COMPRESS_ENABLED = True
 
 INSTALLED_APPS = (
+    # contain user model, install it first
+    'app.authentication',
     # ------------------------ django dependencies -------------------------- # 
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -171,7 +173,6 @@ INSTALLED_APPS = (
     'south',
     # ------------------------ internal dependencies ------------------------ # 
     'app.core',
-    'app.authentication',
     'app.translations',
 )
 
