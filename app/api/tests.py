@@ -121,6 +121,8 @@ class ThematicTests(APITestCase, TestCaseMixin):
         self.assertEqual(question3_elem.get('type'), 'question')
         self.assertEqual(question3_elem.get('typology'), 'text_selection')
         self.assertEqual(question3_elem.get('object_id'), self.question3.id)
+        self.assertAttrNotNone(question3_elem, 'validate_button_label')
+
 
         self.assertEqual(question4_elem.get('type'), 'question')
         self.assertEqual(question4_elem.get('typology'), 'typed_number')
@@ -140,6 +142,7 @@ class ThematicTests(APITestCase, TestCaseMixin):
         thematic = response.data
         sub_elements = thematic.get('elements')
         question = sub_elements[0]
+        self.assertAttrNotNone(question, 'validate_button_label')
         self.assertEqual(question['type'], 'question')
         for choice in question.get('choices'):
             self.assertAttrNotNone(choice, 'title')

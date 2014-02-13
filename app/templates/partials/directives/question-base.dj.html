@@ -7,3 +7,10 @@
 
 {% block actions %}
 {% endblock %}
+
+<nav class="survey-element__nav">
+    <ul>
+        <li class="survey-element__nav__previous"><a ng-href="" ng-click="previousElement()">Previous</a></li>
+        <li class="survey-element__nav__next"><a ng-href="" ng-click="skipElement()">[[ question.skip_button_label ]]</a></li>
+    </ul>
+</nav>

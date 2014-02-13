@@ -104,6 +104,12 @@ class MultipleChoicesSerializer(serializers.ModelSerializer):
     class Meta:
         model = BaseQuestion
 
+    def to_native(self, value): 
+        base_data = super(MultipleChoicesSerializer, self).to_native(value)
+        if isinstance(value, ValidateButtonMixin):
+            base_data['validate_button_label'] = value.validate_button_label
+        return base_data
+
 class TypedNumberQuestionSerializer(serializers.ModelSerializer):
     class Meta: 
         model = TypedNumberQuestion
