@@ -215,7 +215,7 @@ class Migration(SchemaMigration):
         },
         u'core.typednumberanswer': {
             'Meta': {'object_name': 'TypedNumberAnswer', '_ormbases': [u'core.BaseAnswer']},
-            u'baseanswer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseAnswer']", 'unique': 'True', 'primary_key': 'True'}),
+            u'numberanswer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.NumberAnswer']", 'unique': 'True', 'primary_key': 'True'}),
             'value': ('django.db.models.fields.IntegerField', [], {})
         },
         u'core.typednumberquestion': {
