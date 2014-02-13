@@ -27,7 +27,7 @@
             <!-- step 1 -> we're starting this thematic question -->
             <div class="survey-element" ng-if='thematic.state == thematic.states.ELEMENTS'>
                 <div ng-repeat='element in currentThematic.elements' 
-                     ng-class="elementPosition == element.position ? 'visible' : 'hidden'">
+                     ng-class="positions.elementPosition == element.position ? 'visible' : 'hidden'">
                     <div survey-element="element"></div>
                 </div>
                 <nav class="survey-element__nav">
