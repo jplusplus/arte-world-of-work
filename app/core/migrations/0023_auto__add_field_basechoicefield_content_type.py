@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'BaseChoiceField.content_type'
         db.add_column(u'core_basechoicefield', 'content_type',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['contenttypes.ContentType']),
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['contenttypes.ContentType']),
                       keep_default=False)
 
 
