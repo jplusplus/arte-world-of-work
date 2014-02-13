@@ -8,8 +8,7 @@ class SurveyCtrl
         @scope.survey =  
             state: 0
             states: @states
-            
-        @scope.$watch 'survey.state', => console.log('survey.state changed !', @scope.survey.state)
-
 
 angular.module('arte-ww').controller 'SurveyCtrl', SurveyCtrl
+
+
