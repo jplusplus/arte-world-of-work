@@ -31,7 +31,7 @@ def set_element_position(sender, **kwargs):
             max_pos_dict = sub_elements.aggregate(Max('position'))
             position = max_pos_dict['position__max']
             if position == None:
-                position = 0
+                position = 1
             else:
                 position += 1
             element.position = position
