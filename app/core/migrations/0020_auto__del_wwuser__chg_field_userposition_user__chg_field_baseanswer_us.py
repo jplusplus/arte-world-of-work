@@ -11,15 +11,22 @@ class Migration(SchemaMigration):
         # Deleting model 'WWUser'
         db.delete_table(u'core_wwuser')
 
+        db.create_table(u'authentication_wwuser', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('password', self.gf('django.db.models.fields.CharField')(max_length=128)),
+            ('last_login', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('uuid', self.gf('django.db.models.fields.CharField')(unique=True, max_length=36)),
+        ))
+
 
         # Changing field 'UserPosition.user'
-        db.alter_column(u'core_userposition', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.WWUser'], unique=True))
+        db.alter_column(u'core_userposition', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['authentication.WWUser'], unique=True))
 
         # Changing field 'BaseAnswer.user'
-        db.alter_column(u'core_baseanswer', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.WWUser']))
+        db.alter_column(u'core_baseanswer', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['authentication.WWUser']))
 
         # Changing field 'UserProfile.user'
-        db.alter_column(u'core_userprofile', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.WWUser'], unique=True))
+        db.alter_column(u'core_userprofile', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['authentication.WWUser'], unique=True))
 
     def backwards(self, orm):
         # Adding model 'WWUser'
@@ -42,7 +49,7 @@ class Migration(SchemaMigration):
         db.alter_column(u'core_userprofile', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.WWUser'], unique=True))
 
     models = {
-        u'auth.wwuser': {
+        u'authentication.wwuser': {
             'Meta': {'object_name': 'WWUser'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
@@ -60,7 +67,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'BaseAnswer'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'question': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.BaseQuestion']"}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.WWUser']"})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['authentication.WWUser']"})
         },
         u'core.basechoicefield': {
             'Meta': {'object_name': 'BaseChoiceField'},
@@ -205,7 +212,7 @@ class Migration(SchemaMigration):
             'element_position': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'thematic_position': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.WWUser']", 'unique': 'True'})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['authentication.WWUser']", 'unique': 'True'})
         },
         u'core.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
@@ -214,7 +221,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'living_country': ('django_countries.fields.CountryField', [], {'max_length': '2', 'null': 'True'}),
             'native_country': ('django_countries.fields.CountryField', [], {'max_length': '2', 'null': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.WWUser']", 'unique': 'True'})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['authentication.WWUser']", 'unique': 'True'})
         },
         u'core.userprofileanswer': {
             'Meta': {'object_name': 'UserProfileAnswer', '_ormbases': [u'core.BaseAnswer']},
