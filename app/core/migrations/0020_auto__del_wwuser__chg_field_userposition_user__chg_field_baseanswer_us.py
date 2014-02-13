@@ -31,6 +31,7 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         # Adding model 'WWUser'
+        db.delete_table(u'authentication_wwuser')
         db.create_table(u'core_wwuser', (
             ('password', self.gf('django.db.models.fields.CharField')(max_length=128)),
             ('last_login', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
@@ -39,7 +40,6 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'core', ['WWUser'])
 
-        db.delete_table(u'authentication_wwuser')
 
         # Changing field 'UserPosition.user'
         db.alter_column(u'core_userposition', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.WWUser'], unique=True))
