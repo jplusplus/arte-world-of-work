@@ -17,6 +17,7 @@ class Migration(SchemaMigration):
             ('last_login', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
             ('uuid', self.gf('django.db.models.fields.CharField')(unique=True, max_length=36)),
         ))
+        db.send_create_signal(u'authentication', ['WWUser'])
 
 
         # Changing field 'UserPosition.user'
@@ -38,6 +39,7 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'core', ['WWUser'])
 
+        db.delete_table(u'authentication_wwuser')
 
         # Changing field 'UserPosition.user'
         db.alter_column(u'core_userposition', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.WWUser'], unique=True))
