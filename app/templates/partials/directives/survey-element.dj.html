@@ -10,12 +10,11 @@
         <div ng-switch-when="user_country"         question-user-country></div>
         <div ng-switch-when="user_age"             question-user-age></div>
         <!-- all `regular` question --> 
-        <div ng-switch-when="typed_number"         question-typed-number></div>
-        <div ng-switch-when="boolean"              question-boolean></div>
-        <div ng-switch-when="media_selection"      question-media-selection></div>
-        <div ng-switch-when="text_selection"       question-media-selection-></div>
-        <div ng-switch-when="boolean"              question-boolean></div>
-
-
+        <div ng-switch-when="typed_number" question-typed-number></div>
+        <!-- all radio questions -->
+        <div ng-if="['boolean', 'text_radio', 'media_radio'].indexOf(element.typology) != -1" question-radio></div>
+        <!-- all selection questions -->
+        <div ng-if="['text_selection', 'media_selection'].indexOf(element.typology) != -1" question-selection></div>
     </div>
+</div>
 
