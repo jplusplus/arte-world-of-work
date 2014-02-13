@@ -148,6 +148,11 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'BooleanQuestion'},
             u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'})
         },
+        u'core.numberanswer': {
+            'Meta': {'object_name': 'NumberAnswer', '_ormbases': [u'core.BaseAnswer']},
+            u'baseanswer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseAnswer']", 'unique': 'True', 'primary_key': 'True'}),
+            'value': ('django.db.models.fields.IntegerField', [], {})
+        },
         u'core.mediachoicefield': {
             'Meta': {'object_name': 'MediaChoiceField', '_ormbases': [u'core.BaseChoiceField']},
             u'basechoicefield_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseChoiceField']", 'unique': 'True', 'primary_key': 'True'}),
