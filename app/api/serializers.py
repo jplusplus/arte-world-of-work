@@ -1,7 +1,7 @@
 from rest_framework import serializers
+from rest_framework.serializers import ValidationError
 from app.core.models import *
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 class InherithedModelSerializerMixin(object):
@@ -179,13 +179,13 @@ class SelectionSerializer(serializers.ModelSerializer):
         exclude = ('content_type',)
 
     def validate_value(self, attrs, source):
+        # super(SelectionSerializer, self).validate(attrs)
         value = attrs.get('value')
         question = attrs.get('question').as_final()
         if len(value) > 0:
-            for elem in value:
-                choice = BaseChoiceField.object.get(elem)
+            for choice in value:
                 if choice.question.pk != question.pk:
                     raise ValidationError(_('This choice {c} is not related to the answered question').format(c=choice))
         else:
             raise ValidationError(_('You have to select at least one choice'))
-        super(SelectionSerializer, self).validate_value(attrs, source)
+        return attrs

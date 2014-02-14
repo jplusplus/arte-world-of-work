@@ -164,7 +164,6 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
 
 
     def test_list_my_answers_auth(self):
-        # expect HTTP_OK - 200
         list_url = reverse('answer-list')
         response = self.authed_client.get(list_url)
         self.assertEqual(response.status_code, 200)
@@ -172,7 +171,6 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertLenIs(answers,  2)
     
     def test_create_anonymous(self):
-        # expected: HTTP 403
         url = reverse('answer-list')
         # import pdb; pdb.set_trace()
         data = {
@@ -183,7 +181,6 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual(response.status_code, 401)
 
     def test_create_typed_number_success(self):
-        # expected: HTTP 201
         url = reverse('answer-list')
         data = {
             'value': 20,
@@ -196,7 +193,6 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
 
 
     def test_create_typed_number_out_of_range(self):
-        # expected: HTTP 400
         url = reverse('answer-list')
         data = {
             'value': 400, # max number is 100 by default, it should work
@@ -215,10 +211,19 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         response = self.authed_client.post(url, data, format='json')
         self.assertEqual(response.status_code, 201)   
 
-    def test_create_selection_answer_success(self):
+    def test_create_selection_answer_no_choice(self):
         url = reverse('answer-list')
         data = {
             'value': [],
+            'question': self.question3.pk
+        }
+        response = self.authed_client.post(url, data, format='json')
+        self.assertEqual(response.status_code, 400)
+
+    def test_create_selection_answer_unrelated_choice(self):
+        url = reverse('answer-list')
+        data = {
+            'value': [self.question5_choice1.pk],
             'question': self.question3.pk
         }
         response = self.authed_client.post(url, data, format='json')
