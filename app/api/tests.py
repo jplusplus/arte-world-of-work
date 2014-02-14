@@ -8,8 +8,44 @@ from rest_framework.test import APITestCase, APIClient
 from app.core.models import *
 from app.utils import TestCaseMixin
 
+def init(instance):
+    default_source = {'source_url': 'http://jplusplus.org', 'source_title': 'Jpp website' }
 
-class ThematicTests(APITestCase, TestCaseMixin):
+    instance.thematic1 = Thematic.objects.create(position=0, title='You')
+    instance.thematic2 = Thematic.objects.create(position=1, title='Your Work')
+
+    # thematic1 question and feedback 
+    instance.question1 = instance.createQuestion(TypedNumberQuestion, **{'unit': '%'})
+    instance.question2 = instance.createQuestion(BooleanQuestion)
+    instance.question3 = instance.createQuestion(TextSelectionQuestion)
+    instance.question4 = instance.createQuestion(TypedNumberQuestion, **{'unit': '%'})
+
+    instance.feedback1 = instance.createFeedback(StaticFeedback, **default_source)
+    instance.feedback2 = instance.createFeedback(StaticFeedback, **default_source)
+
+    # question 3 choices
+    instance.question3_choice1 = instance.createChoice(instance.question3, TextChoiceField)
+    instance.question3_choice2 = instance.createChoice(instance.question3, TextChoiceField)
+    instance.question3_choice2 = instance.createChoice(instance.question3, TextChoiceField)
+
+    instance.question1.set_thematic(instance.thematic1, 0) 
+    instance.question2.set_thematic(instance.thematic1, 1) 
+    instance.question3.set_thematic(instance.thematic1, 2) 
+    instance.question4.set_thematic(instance.thematic1, 3)
+
+    instance.feedback1.set_thematic(instance.thematic1, 4)
+    instance.feedback2.set_thematic(instance.thematic1, 5) 
+
+    # thematic 2 question
+    instance.question5 = instance.createQuestion(MediaSelectionQuestion, media_type='icon')
+    instance.question5_choice1 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict1')
+    instance.question5_choice2 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict2')
+    instance.question5_choice3 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict3')
+    instance.question5_choice4 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict3')
+    instance.question5.set_thematic(instance.thematic2)
+
+
+class TestUtils(object):
     def createQuestion(self, klass=None, **kwargs):
         kwargs['label']     = kwargs.get('label', 'Default label')
         kwargs['hint_text'] = kwargs.get('hint_text', 'Default hint text')
@@ -32,46 +68,12 @@ class ThematicTests(APITestCase, TestCaseMixin):
                 result = elem 
         return result
 
+class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
+
     def setUp(self):
-        default_source = {'source_url': 'http://jplusplus.org', 'source_title': 'Jpp website' }
-        # thematics 
-        self.thematic1 = Thematic.objects.create(position=0, title='You')
-        self.thematic2 = Thematic.objects.create(position=1, title='Your Work')
-
-        # thematic1 question and feedback 
-        self.question1 = self.createQuestion(TypedNumberQuestion, **{'unit': '%'})
-        self.question2 = self.createQuestion(BooleanQuestion)
-        self.question3 = self.createQuestion(TextSelectionQuestion)
-        self.question4 = self.createQuestion(TypedNumberQuestion, **{'unit': '%'})
-
-        self.feedback1 = self.createFeedback(StaticFeedback, **default_source)
-        self.feedback2 = self.createFeedback(StaticFeedback, **default_source)
-        
-        # question 3 choices
-        self.question3_choice1 = self.createChoice(self.question3, TextChoiceField)
-        self.question3_choice2 = self.createChoice(self.question3, TextChoiceField)
-        self.question3_choice2 = self.createChoice(self.question3, TextChoiceField)
-
-        self.question1.set_thematic(self.thematic1, 0) 
-        self.question2.set_thematic(self.thematic1, 1) 
-        self.question3.set_thematic(self.thematic1, 2) 
-        self.question4.set_thematic(self.thematic1, 3)
-
-        self.feedback1.set_thematic(self.thematic1, 4)
-        self.feedback2.set_thematic(self.thematic1, 5) 
-
-        # thematic 2 question
-
-        self.question5 = self.createQuestion(MediaSelectionQuestion, media_type='icon')
-        self.question5_choice1 = self.createChoice(self.question5, MediaChoiceField, picture='pict1')
-        self.question5_choice2 = self.createChoice(self.question5, MediaChoiceField, picture='pict2')
-        self.question5_choice3 = self.createChoice(self.question5, MediaChoiceField, picture='pict3')
-        self.question5_choice4 = self.createChoice(self.question5, MediaChoiceField, picture='pict3')
-        self.question5.set_thematic(self.thematic2)
-
+        init(self)
 
     def test_list_thematic(self):
-        # import pdb; pdb.set_trace()
         url = reverse('thematic-list')
         response = self.client.get(url)
         all_thematics = response.data
@@ -80,7 +82,6 @@ class ThematicTests(APITestCase, TestCaseMixin):
             self.assertAttrNotNone(thematic, 'elements')
             self.assertAttrNotNone(thematic, 'id')
             self.assertAttrNotNone(thematic, 'title')
-
 
     def test_list_thematic_nested(self):
         url = reverse('thematic-nested-list')
@@ -149,14 +150,41 @@ class ThematicTests(APITestCase, TestCaseMixin):
             self.assertAttrNotNone(choice, 'picture')
 
 
+class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
+    def setUp(self):
+        init(self)
+        self.user = User.objects.create()
+        self.anon_client = APIClient()
+        self.authed_client = APIClient()
+        token, created = Token.objects.get_or_create(user=self.user)
+        self.authed_client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        self.answer1 = self.question1.create_answer(user=self.user, value=2)
+        self.answer2 = self.question2.create_answer(user=self.user, value=self.question2.choices()[0])
+
+    def test_list_my_answers_auth(self):
+        # expect HTTP_OK - 200
+        list_url = reverse('answer-list')
+        response = self.authed_client.get(list_url)
+        self.assertEqual(response.status_code, 200)
+        answers = response.data
+        self.assertLenIs(answers,  2)
+
+
+    def test_create_authenticated(self):
+        # expected: HTTP 201
+        pass
+
+    def test_create_anonymous(self):
+        # expected: HTTP 403
+        pass
+
 
 class UserTestCase(APITestCase, TestCaseMixin):
     def setUp(self):
         self.user = User.objects.create()
         self.client = APIClient()
-
         token, created = Token.objects.get_or_create(user=self.user)
-
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
     def test_post_user_list(self):

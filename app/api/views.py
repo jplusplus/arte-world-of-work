@@ -1,11 +1,13 @@
 from rest_framework import viewsets
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.contrib.auth import get_user_model
 
 from app.api import serializers
-from app.core.models import Thematic, UserPosition
+from app.core.models import Thematic, UserPosition, BaseAnswer
 
 # get user model 
 User = get_user_model()
@@ -58,8 +60,15 @@ class AnswerViewSet(viewsets.ModelViewSet):
     Endpoint for every answer actions
     @list():
         return all current user answers (can be saw as its parcour) 
-    """ 
-    # queryset = BaseAnswer.objects.all()
+    """
+    serializer_class = serializers.AnswerSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    def get_queryset(self):
+        request = self.request
+        answers = BaseAnswer.objects.user_answers(request.user.pk)
+        return answers
+
 
 class UserViewSet(viewsets.ViewSet):
     def create(self, request):

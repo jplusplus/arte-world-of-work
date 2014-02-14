@@ -3,31 +3,31 @@ from app.core.models import *
 from django.contrib.auth import get_user_model
 from six import with_metaclass
 
-class ThematicElementField(serializers.RelatedField):
+
+class ThematicElementSerializer(serializers.ModelSerializer):
     type = serializers.Field()
     class Meta:
         model = ThematicElement
         field = ('position', 'type')
+        exclude = ('content_type','id')
         depth = 0
 
     def to_native(self, value):
+        base_data  = super(ThematicElementSerializer, self).to_native(value)
         rel_klass  = value.content_type.model_class()
         if issubclass(rel_klass, BaseFeedback):
             serializer = FeedbackSerializer(value.content_object)
         elif issubclass(rel_klass, BaseQuestion):
             serializer = QuestionSerializer(value.content_object)
-
-        base_data  = ThematicElementSerializer(value).data
-        base_data.update({ 'type': value.type })
         base_data.update(serializer.data)
         return base_data
 
-class ThematicElementSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ThematicElement
-        exclude = ('content_type','id')
-
 class ChoiceField(serializers.ModelSerializer):
+    class MediaChoiceFieldSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = MediaChoiceField
+            fields = ('picture',)
+
     class Meta:
         model = BaseChoiceField
         exclude = ('question', )
@@ -36,16 +36,15 @@ class ChoiceField(serializers.ModelSerializer):
         base_data = super(ChoiceField, self).to_native(value)
         # check if this choice field 
         if isinstance(value.content_object, MediaChoiceField):
-            final_data = MediaChoiceFieldSerializer(value.content_object).data
+            final_data = ChoiceField.MediaChoiceFieldSerializer(value.content_object).data
             base_data.update(final_data)
         return base_data
 
-class MediaChoiceFieldSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MediaChoiceField
-        fields = ('picture',)
-
 class FeedbackSerializer(serializers.ModelSerializer):
+    class StaticFeedbackSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = StaticFeedback
+
     sub_type = serializers.Field()
     class Meta:
         model = BaseFeedback
@@ -62,12 +61,9 @@ class FeedbackSerializer(serializers.ModelSerializer):
     def get_final_serializer(self, value):
         serializer = None
         if isinstance(value, StaticFeedback):
-            serializer = StaticFeedbackSerializer(value)
+            serializer = FeedbackSerializer.StaticFeedbackSerializer(value)
         return serializer
 
-class StaticFeedbackSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StaticFeedback
 
 class QuestionSerializer(serializers.ModelSerializer):
     typology = serializers.Field()
@@ -132,7 +128,7 @@ class ThematicSerializer(serializers.ModelSerializer):
         depth = 1
 
 class NestedThematicSerializer(ThematicSerializer):
-    elements = ThematicElementField(many=True, source='thematicelement_set')
+    elements = ThematicElementSerializer(many=True, source='thematicelement_set')
 
 class UserSerializer(serializers.ModelSerializer):
     profile = serializers.RelatedField(source='userprofile', many=False)
@@ -144,3 +140,7 @@ class UserPositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPosition
 
+
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = BaseAnswer

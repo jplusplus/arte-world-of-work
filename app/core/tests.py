@@ -108,7 +108,6 @@ class CoreTestCase(TestCase):
         question = UserGenderQuestion.objects.create(label='What is your gender?',
             hint_text='help')
         question.save()
-        # import pdb; pdb.set_trace()
         choices = UserChoiceField.objects.filter(question=question)
         self.assertEqual(len(choices), 2)
         self.assertIsNotNone(choices.filter(value='male')[0])

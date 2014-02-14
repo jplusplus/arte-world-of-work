@@ -194,10 +194,6 @@ class BaseFeedback(ValidateButtonMixin):
         klass = klass.replace('Feedback', '') # remove Question from klass name 
         return utils.camel_to_underscore(klass)
 
-    def save(self, *args, **kwargs):
-        self.content_type = ContentType.objects.get_for_model(self)
-        super(BaseFeedback, self).save(*args, **kwargs)
-
     def __unicode__(self):
         return 'Feedback: %s' % self.html_sentence[:60]
 
@@ -234,9 +230,20 @@ class AnswerManager(models.Manager):
                 # inner value attribute or its title if value is `None`
                 value = value.value or value.title 
             answer.value = value
+        answer.save()
         return answer
 
+    def user_answers(self, user):
+        final_answers = []
+        base_answers = self.filter(user=user)
+        for answer in base_answers: 
+            final_answers.append(answer.content_object)
+        return final_answers
+
+
 class BaseAnswer(models.Model):
+    content_type = models.ForeignKey(ContentType, editable=False)
+    content_object = generic.GenericForeignKey('content_type', 'pk')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     question = models.ForeignKey('BaseQuestion')
     objects = AnswerManager()
@@ -292,20 +299,6 @@ class UserGenderAnswer(UserProfileAnswer):
 #    Questions
 #
 # -----------------------------------------------------------------------------
-class QuestionManager(models.Manager):
-    def all_questions(self):
-        """ Rerturn all the question in the right and final type """
-        # FIXME: should return a QuerySet, not a list
-        generic_questions = super(QuestionManager, self).all()
-        questions = []
-        for q in generic_questions:
-            final_class = q.content_type.model_class()
-            # if it's a child of BaseQuestion
-            if "basequestion_ptr" in final_class.__dict__.keys():
-                q = final_class.objects.get(basequestion_ptr=q.id)
-            questions.append(q)
-        return questions
-
 class BaseQuestion(ThematicElementMixin):
     """
     Base class for question, will be inherited by concrete question typologies
@@ -315,7 +308,6 @@ class BaseQuestion(ThematicElementMixin):
     hint_text         = models.CharField(_('Question hint text'), max_length=120)
     content_type      = models.ForeignKey(ContentType, editable=False)
     skip_button_label = models.CharField(_('Skip button (label)'), default=_('Skip this question'),max_length=120)
-    objects           = QuestionManager()
     # properties 
     @property
     def typology(self):
@@ -323,12 +315,11 @@ class BaseQuestion(ThematicElementMixin):
         klass = klass.replace('Question', '') # remove Question from klass name 
         return utils.camel_to_underscore(klass)
 
-    def save(self, *args, **kwargs):
-        self.content_type = ContentType.objects.get_for_model(self)
-        super(BaseQuestion, self).save(*args, **kwargs)
-
     def __unicode__(self):
         return self.label[:25]
+
+    def choices(self):
+        return self.basechoicefield_set.all()
 
     def create_answer(self, *args, **kwargs):
         # we pass to `create_answer` method the related question 
@@ -459,10 +450,6 @@ class BaseChoiceField(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'pk')
     question = models.ForeignKey('BaseQuestion')
     title = models.CharField(_('Title of this choice'), max_length=120)
-
-    def save(self, *args, **kwargs):
-        self.content_type = ContentType.objects.get_for_model(self)
-        super(BaseChoiceField, self).save(*args, **kwargs)
 
 class TextChoiceField(BaseChoiceField):
     pass
