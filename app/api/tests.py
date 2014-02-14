@@ -26,7 +26,7 @@ def init(instance):
     # question 3 choices
     instance.question3_choice1 = instance.createChoice(instance.question3, TextChoiceField)
     instance.question3_choice2 = instance.createChoice(instance.question3, TextChoiceField)
-    instance.question3_choice2 = instance.createChoice(instance.question3, TextChoiceField)
+    instance.question3_choice3 = instance.createChoice(instance.question3, TextChoiceField)
 
     instance.question1.set_thematic(instance.thematic1, 0) 
     instance.question2.set_thematic(instance.thematic1, 1) 
@@ -162,6 +162,7 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.answer1 = self.question1.create_answer(user=self.user, value=2)
         self.answer2 = self.question2.create_answer(user=self.user, value=self.question2.choices()[0])
 
+
     def test_list_my_answers_auth(self):
         # expect HTTP_OK - 200
         list_url = reverse('answer-list')
@@ -169,6 +170,17 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual(response.status_code, 200)
         answers = response.data
         self.assertLenIs(answers,  2)
+    
+    def test_create_anonymous(self):
+        # expected: HTTP 403
+        url = reverse('answer-list')
+        # import pdb; pdb.set_trace()
+        data = {
+            'value': 20,
+            'question': self.question1.pk
+        }
+        response = self.anon_client.post(url, data, format='json')
+        self.assertEqual(response.status_code, 401)
 
     def test_create_typed_number_success(self):
         # expected: HTTP 201
@@ -194,22 +206,23 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual(response.status_code, 400)
 
 
-    def test_create_selection_answer(self):
-        pass
-
-    def test_create_anonymous(self):
-        # expected: HTTP 403
+    def test_create_selection_answer_success(self):
         url = reverse('answer-list')
-        # import pdb; pdb.set_trace()
         data = {
-            'value': 20,
-            'question': self.question1.pk
+            'value': [ self.question3_choice1.pk, self.question3_choice2.pk ],
+            'question': self.question3.pk
         }
-        response = self.anon_client.post(url, data, format='json')
-        self.assertEqual(response.status_code, 401)
+        response = self.authed_client.post(url, data, format='json')
+        self.assertEqual(response.status_code, 201)   
 
-
-
+    def test_create_selection_answer_success(self):
+        url = reverse('answer-list')
+        data = {
+            'value': [],
+            'question': self.question3.pk
+        }
+        response = self.authed_client.post(url, data, format='json')
+        self.assertEqual(response.status_code, 400)
 
 class UserTestCase(APITestCase, TestCaseMixin):
     def setUp(self):

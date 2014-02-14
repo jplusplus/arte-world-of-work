@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from app.core.models import *
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 
 class InherithedModelSerializerMixin(object):
     def as_final_serializer(self, data, files):
@@ -137,11 +139,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
 
-
 class UserPositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPosition
-
 
 class AnswerSerializer(serializers.Serializer, InherithedModelSerializerMixin):
     def as_final_serializer(self, data, files):
@@ -163,10 +163,10 @@ class AnswerSerializer(serializers.Serializer, InherithedModelSerializerMixin):
         }
         return klass_to_serializer[klass]
 
-
 class RadioSerializer(serializers.ModelSerializer): 
     class Meta: 
         model = RadioAnswer        
+        exclude = ('content_type',)
 
 class TypedNumberSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -176,3 +176,16 @@ class TypedNumberSerializer(serializers.ModelSerializer):
 class SelectionSerializer(serializers.ModelSerializer): 
     class Meta: 
         model = SelectionAnswer
+        exclude = ('content_type',)
+
+    def validate_value(self, attrs, source):
+        value = attrs.get('value')
+        question = attrs.get('question').as_final()
+        if len(value) > 0:
+            for elem in value:
+                choice = BaseChoiceField.object.get(elem)
+                if choice.question.pk != question.pk:
+                    raise ValidationError(_('This choice {c} is not related to the answered question').format(c=choice))
+        else:
+            raise ValidationError(_('You have to select at least one choice'))
+        super(SelectionSerializer, self).validate_value(attrs, source)
