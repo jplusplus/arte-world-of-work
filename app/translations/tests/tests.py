@@ -10,9 +10,6 @@ class TranslationsLocalesTestCase(TestCase):
     def setUp(self):
         pass
 
-    def test_extraction(self): 
-        pass 
-
     def test_translated_field_values(self):
         activate('fr')
         obj = TestModel.objects.get(pk=1)

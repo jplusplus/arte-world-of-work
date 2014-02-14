@@ -13,7 +13,7 @@ install:
 matrix:
   allow_failures:
 script:
-  - coverage run --omit=app/core/migrations/ --source=app ./manage.py test app.core app.api --settings=app.settings_tests
+  - coverage run --omit=app/core/migrations/ --source=app ./manage.py test --settings=app.settings_tests
   - karma start --single-run --browsers PhantomJS
 after_success:
   - coveralls

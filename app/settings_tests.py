@@ -32,4 +32,5 @@ INSTALLED_APPS = (
     'app.authentication',
     'app.core',
     'app.translations',
+    'app.translations.tests',
 )

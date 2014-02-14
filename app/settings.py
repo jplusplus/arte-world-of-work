@@ -207,3 +207,5 @@ LOGGING = {
 }
 
 SOUTH_TESTS_MIGRATE = False
+
+TRANSLATION_STRINGS_FILE = here('i18n_strings.py')
