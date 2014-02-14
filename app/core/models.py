@@ -251,8 +251,8 @@ class BaseAnswer(models.Model):
 class TypedNumberAnswer(BaseAnswer):
     value = models.IntegerField()
 
-    def clean(self):
-        question = TypedNumberQuestion.objects.get(pk=self.question_id)
+    def clean(self, *args, **kwargs):
+        question = TypedNumberQuestion.objects.get(pk=self.question.pk)
         if self.value:
             if self.value < question.min_number:
                 raise ValidationError('Answer is out of range: inferior to min_number')
@@ -299,6 +299,11 @@ class UserGenderAnswer(UserProfileAnswer):
 #    Questions
 #
 # -----------------------------------------------------------------------------
+class QuestionManager(models.Manager):
+    def get_final_question(self, pk):
+        base_question = self.get(id=pk)
+        return base_question.as_final()
+
 class BaseQuestion(ThematicElementMixin):
     """
     Base class for question, will be inherited by concrete question typologies
@@ -308,6 +313,7 @@ class BaseQuestion(ThematicElementMixin):
     hint_text         = models.CharField(_('Question hint text'), max_length=120)
     content_type      = models.ForeignKey(ContentType, editable=False)
     skip_button_label = models.CharField(_('Skip button (label)'), default=_('Skip this question'),max_length=120)
+    objects = QuestionManager()
     # properties 
     @property
     def typology(self):
@@ -326,6 +332,10 @@ class BaseQuestion(ThematicElementMixin):
         # (`kwargs['question']` or `self`
         kwargs['question'] = kwargs.get('question', self)
         return BaseAnswer.objects.create_answer(*args, **kwargs)
+
+    def as_final(self):
+        final_klass = self.content_type.model_class()
+        return final_klass.objects.get(id=self.pk)
 
 
     

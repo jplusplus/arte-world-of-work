@@ -1,8 +1,10 @@
 from rest_framework import serializers
 from app.core.models import *
 from django.contrib.auth import get_user_model
-from six import with_metaclass
 
+class InherithedModelSerializerMixin(object):
+    def as_final_serializer(self, data, files):
+        raise NotImplementedError('Please implement this method on your serializer')
 
 class ThematicElementSerializer(serializers.ModelSerializer):
     type = serializers.Field()
@@ -141,6 +143,36 @@ class UserPositionSerializer(serializers.ModelSerializer):
         model = UserPosition
 
 
-class AnswerSerializer(serializers.ModelSerializer):
+class AnswerSerializer(serializers.Serializer, InherithedModelSerializerMixin):
+    def as_final_serializer(self, data, files):
+        final_question = BaseQuestion.objects.get_final_question(pk=data.get('question'))
+        return self.get_final_serializer(final_question.answer_type)(data=data, files=files)
+
+    def to_native(self, value):
+        base_data = super(AnswerSerializer, self).to_native(value)
+        final_serializer = self.get_final_serializer(value.content_type.model_class())
+        if final_serializer != None:
+            base_data.update(final_serializer(value.content_object).data)
+        return base_data
+        
+    def get_final_serializer(self, klass):
+        klass_to_serializer = {
+            TypedNumberAnswer: TypedNumberSerializer,
+            SelectionAnswer: SelectionSerializer,
+            RadioAnswer: RadioSerializer,
+        }
+        return klass_to_serializer[klass]
+
+
+class RadioSerializer(serializers.ModelSerializer): 
     class Meta: 
-        model = BaseAnswer
+        model = RadioAnswer        
+
+class TypedNumberSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = TypedNumberAnswer
+        exclude = ('content_type',)
+
+class SelectionSerializer(serializers.ModelSerializer): 
+    class Meta: 
+        model = SelectionAnswer

@@ -170,15 +170,39 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         answers = response.data
         self.assertLenIs(answers,  2)
 
-
-    def test_create_authenticated(self):
+    def test_create_typed_number_success(self):
         # expected: HTTP 201
-        pass
+        url = reverse('answer-list')
+        data = {
+            'value': 20,
+            'question': self.question1.pk,
+            'user': self.user.pk
+        }
+        response = self.authed_client.post(url, data, format='json')
+        self.assertEqual(response.status_code, 201)
+
+    def test_create_typed_number_out_of_range(self):
+        # expected: HTTP 400
+        url = reverse('answer-list')
+        data = {
+            'value': 400, # max number is 100 by default, it should work
+            'question': self.question1.pk,
+            'user': self.user.pk
+        }
+        response = self.authed_client.post(url, data, format='json')
+        self.assertEqual(response.status_code, 400)
+
 
     def test_create_anonymous(self):
         # expected: HTTP 403
-        pass
-
+        url = reverse('answer-list')
+        # import pdb; pdb.set_trace()
+        data = {
+            'value': 20,
+            'question': self.question1.pk
+        }
+        response = self.anon_client.post(url, data, format='json')
+        self.assertEqual(response.status_code, 401)
 
 class UserTestCase(APITestCase, TestCaseMixin):
     def setUp(self):
