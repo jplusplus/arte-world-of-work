@@ -85,6 +85,10 @@ class AnswerViewSet(viewsets.ModelViewSet, InheritedModelCreateMixin):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
+    def create(self, request, *args, **kwargs):
+        request.DATA.update({'user': request.user.pk})
+        return super(AnswerViewSet, self).create(request, *args, **kwargs)
+
     def get_queryset(self):
         return BaseAnswer.objects.user_answers(self.request.user.pk)
 

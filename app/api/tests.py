@@ -176,10 +176,12 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         data = {
             'value': 20,
             'question': self.question1.pk,
-            'user': self.user.pk
         }
         response = self.authed_client.post(url, data, format='json')
         self.assertEqual(response.status_code, 201)
+        answer = response.data
+        self.assertEqual(answer['user'], self.user.pk)
+
 
     def test_create_typed_number_out_of_range(self):
         # expected: HTTP 400
@@ -187,11 +189,13 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         data = {
             'value': 400, # max number is 100 by default, it should work
             'question': self.question1.pk,
-            'user': self.user.pk
         }
         response = self.authed_client.post(url, data, format='json')
         self.assertEqual(response.status_code, 400)
 
+
+    def test_create_selection_answer(self):
+        pass
 
     def test_create_anonymous(self):
         # expected: HTTP 403
@@ -203,6 +207,9 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         }
         response = self.anon_client.post(url, data, format='json')
         self.assertEqual(response.status_code, 401)
+
+
+
 
 class UserTestCase(APITestCase, TestCaseMixin):
     def setUp(self):
