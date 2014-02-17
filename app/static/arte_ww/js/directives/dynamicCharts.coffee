@@ -33,6 +33,16 @@ class PieChart extends Chart
     constructor: (@scope, @element) ->
         super @scope, @element
 
+        # Create the layout
+        @layout = do d3.layout.pie
+        @layout.value (d) -> d[1]
+
+        # Create arcs
+        radius = (Math.min @size.width, @size.height) / 2
+        @arc = do d3.svg.arc
+        @arc.outerRadius radius
+        @arc.innerRadius 0
+
         # Center the pie
         @svg = (@svg.append 'g').attr 'transform', "translate(#{@size.width / 2}, #{@size.height / 2})"
         do @update
@@ -40,16 +50,7 @@ class PieChart extends Chart
     update : =>
         do @computeResults
 
-        # Create arcs
-        radius = (Math.min @size.width, @size.height) / 2
-        arc = do d3.svg.arc
-        arc.outerRadius radius
-        arc.innerRadius 0
-
-        # Create the layout
-        @layout = do d3.layout.pie
-        @layout.value (d) -> d[1]
-
+        # Remove old arcs
         do (@svg.selectAll '.arc').remove
 
         # Get all e1ntering data
@@ -57,12 +58,12 @@ class PieChart extends Chart
         g.attr 'class', 'arc'
 
         # Append the path
-        ((g.append 'path').attr 'd', arc).style 'fill', (d) => @color d.data[0]
+        ((g.append 'path').attr 'd', @arc).style 'fill', (d) => @color d.data[0]
 
         # And append the text
         (g.append 'text')
             .attr
-                transform : (d) -> "translate(#{arc.centroid d})"
+                transform : (d) => "translate(#{@arc.centroid d})"
             .style
                 'text-anchor' : 'middle'
             .text (d) -> "#{d.data[0]} - #{d.data[2]}%"
@@ -89,8 +90,10 @@ class BarChart extends Chart
             width : @size.width - @margin.right - @margin.left
             height : @size.height - @margin.top - @margin.bottom
 
+        # Compute scales
         do @defineXY
 
+        # Remove old rects
         do (@svg.selectAll '.bar').remove
 
         data = (@svg.selectAll '.bar').data @results
