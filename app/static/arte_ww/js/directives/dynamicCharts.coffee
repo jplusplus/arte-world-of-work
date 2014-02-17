@@ -151,7 +151,7 @@ class HBarChart extends BarChart
         'dominant-baseline' : 'central'
 
 
-angular.module('arte-ww').directive 'dynamicChart', [->
+angular.module('arte-ww').directive 'dynamicChart', ['$window', ($window) ->
     directive =
         template : '<div></div>'
         replace : yes
@@ -173,7 +173,7 @@ angular.module('arte-ww').directive 'dynamicChart', [->
             scope.chart = undefined
 
             scope.$watch =>
-                return (angular.element window)[0].innerWidth
+                return (angular.element $window)[0].innerWidth
             , =>
                 if scope.chart?
                     do scope.chart.setSize
