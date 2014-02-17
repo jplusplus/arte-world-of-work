@@ -50,9 +50,11 @@ class PieChart extends Chart
         @layout = do d3.layout.pie
         @layout.value (d) -> d[1]
 
-        # Get all entering data
+        do (@svg.selectAll '.arc').remove
+
+        # Get all e1ntering data
         g = (do ((@svg.selectAll '.arc').data (@layout @results)).enter).append 'g'
-        g.attr '.arc'
+        g.attr 'class', 'arc'
 
         # Append the path
         ((g.append 'path').attr 'd', arc).style 'fill', (d) => @color d.data[0]
@@ -89,18 +91,15 @@ class BarChart extends Chart
 
         do @defineXY
 
-        data = (@svg.selectAll '.bar').data @results, (d) ->
-            d[0]
+        do (@svg.selectAll '.bar').remove
+
+        data = (@svg.selectAll '.bar').data @results
 
         entered = do data.enter
         g = (entered.append 'g').attr 'class', 'bar'
         (g.append 'rect').attr do @getRectAttrs
         ((g.append 'text').attr do @getTextAttrs)
             .text (d) -> "#{d[0]} - #{d[2]}%"
-        do (do data.exit).remove
-
-        (@svg.selectAll '.bar rect').attr do @getRectAttrs
-        (@svg.selectAll '.bar text').attr do @getTextAttrs
 
     defineXY: =>
         @x = (do d3.scale.ordinal).rangeRoundBands([0, @_size.width], 0.2);
