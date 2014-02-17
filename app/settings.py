@@ -170,11 +170,17 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'sorl.thumbnail',
-    'south',
+    'south',    
+    'debug_toolbar',
     # ------------------------ internal dependencies ------------------------ # 
     'app.core',
     'app.translations',
 )
+
+DEBUG_TOOLBAR_PATCH_SETTINGS = True
+DEBUG_TOOLBAR_CONFIG = {
+    'ENABLE_STACKTRACES': False
+}
 
 AUTH_USER_MODEL = 'authentication.WWUser'
 # A sample logging configuration. The only tangible logging
