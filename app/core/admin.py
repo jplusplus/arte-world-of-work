@@ -12,9 +12,10 @@
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
 from django.contrib import admin
+from django.contrib.contenttypes import generic
 from sorl.thumbnail.admin import AdminImageMixin
+from app.core import models
 
-import app.core.models as models
 import sys
 
 # -----------------------------------------------------------------------------
@@ -22,8 +23,9 @@ import sys
 #    Inlines
 #
 # -----------------------------------------------------------------------------
+# Question related inlines 
 class InlineQuestionMedia(admin.StackedInline):
-    model = models.QuestionPicture
+    model = models.QuestionMediaAttachement
     extra = 0
     max_num = 1
 
@@ -35,13 +37,30 @@ class InlineTextSelectionQuestion(admin.StackedInline):
 class InlineMediaSelectionQuestion(AdminImageMixin, admin.StackedInline):
     model   = models.MediaChoiceField
     extra   = 0
-    max_num = 10 
+    max_num = 10
 
 class InlineTextRadioQuestion(InlineTextSelectionQuestion):
     pass 
 
 class InlineMediaRadioQuestion(InlineMediaSelectionQuestion):
     pass
+
+class InlineBooleanQuestion(InlineTextRadioQuestion):
+    pass
+
+class InlineUserGenderQuestion(InlineTextRadioQuestion):
+    model = models.UserChoiceField
+
+class GenericInlineThematicElement(generic.GenericStackedInline):
+    model = models.ThematicElement
+    extra = 0
+    max_num = 1
+
+class InlineThematicElement(admin.TabularInline):
+    model = models.ThematicElement
+    readonly_fields = 'content_type', 'object_id'
+    extra = 0
+    max_num = 0
 
 # -----------------------------------------------------------------------------
 #
@@ -51,7 +70,8 @@ class InlineMediaRadioQuestion(InlineMediaSelectionQuestion):
 class QuestionAdmin(admin.ModelAdmin):
     readonly_fields = ('content_type',)
     inlines = (
-        InlineQuestionMedia, # nesting question media edition
+        InlineQuestionMedia,
+        GenericInlineThematicElement,
     )
 
     def get_inline_instances(self, request, obj=None):
@@ -65,18 +85,37 @@ class QuestionAdmin(admin.ModelAdmin):
                 inline = inline(self.model, self.admin_site)
                 inline_model_admins.append(inline)
         return inline_model_admins
+
+
+class ThematicAdmin(admin.ModelAdmin):
+    inlines = (
+        InlineThematicElement,
+    )
+
+class FeedbackAdmin(admin.ModelAdmin):
+    inlines = (
+        GenericInlineThematicElement,
+    )
+
 # -----------------------------------------------------------------------------
 #
 #    Register your models here
 #
 # -----------------------------------------------------------------------------
-admin.site.register(models.NumberQuestion        , QuestionAdmin)
-admin.site.register(models.DateQuestion          , QuestionAdmin)
+# all questions models 
 admin.site.register(models.TypedNumberQuestion   , QuestionAdmin)
 admin.site.register(models.TextSelectionQuestion , QuestionAdmin)
-admin.site.register(models.MediaSelectionQuestion, QuestionAdmin)
 admin.site.register(models.TextRadioQuestion     , QuestionAdmin)
 admin.site.register(models.MediaRadioQuestion    , QuestionAdmin)
+admin.site.register(models.MediaSelectionQuestion, QuestionAdmin)
 admin.site.register(models.BooleanQuestion       , QuestionAdmin)
+
+admin.site.register(models.UserAgeQuestion       , QuestionAdmin)
+admin.site.register(models.UserCountryQuestion   , QuestionAdmin)
+admin.site.register(models.UserGenderQuestion    , QuestionAdmin)
+
+admin.site.register(models.Thematic              , ThematicAdmin)
+
+admin.site.register(models.StaticFeedback        , FeedbackAdmin)
 
 # EOF

@@ -13,7 +13,7 @@
 import os
 
 here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
-
+_ = lambda str:str
 
 # Django settings for ArteWow project.
 
@@ -37,17 +37,28 @@ DATABASES = {
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Paris'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
-SITE_ID = 1
+LANGUAGES = (
+    (_('English'), 'en'),
+    (_('French'), 'fr'),
+)
+
+LOCALE_PATHS = (
+    here('locale/'),
+)
+
+# SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -139,10 +150,11 @@ COMPRESS_TEMPLATE_FILTER_CONTEXT = {
     'STATIC_URL': STATIC_URL
 }
 
-COMPRESS_ENABLED = False
-
+COMPRESS_ENABLED = True
 
 INSTALLED_APPS = (
+    # contain user model, install it first
+    'app.authentication',
     # ------------------------ django dependencies -------------------------- # 
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -155,13 +167,22 @@ INSTALLED_APPS = (
     # ------------------------ external dependencies ------------------------ #
     'compressor',
     'django_countries',
+    'rest_framework',
+    'rest_framework.authtoken',
     'sorl.thumbnail',
-    'south',
+    'south',    
+    'debug_toolbar',
     # ------------------------ internal dependencies ------------------------ # 
     'app.core',
     'app.translations',
 )
 
+DEBUG_TOOLBAR_PATCH_SETTINGS = True
+DEBUG_TOOLBAR_CONFIG = {
+    'ENABLE_STACKTRACES': False
+}
+
+AUTH_USER_MODEL = 'authentication.WWUser'
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
@@ -190,3 +211,7 @@ LOGGING = {
         },
     }
 }
+
+SOUTH_TESTS_MIGRATE = False
+
+TRANSLATION_STRINGS_FILE = here('i18n_strings.py')

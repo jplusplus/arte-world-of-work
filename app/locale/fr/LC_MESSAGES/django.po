@@ -1,0 +1,131 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-27 17:09+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: settings.py:51
+msgid "English"
+msgstr "Anglais"
+
+#: settings.py:52
+msgid "French"
+msgstr "Français"
+
+#: core/models.py:30
+msgid "Icon (small)"
+msgstr "Îcone (petit)"
+
+#: core/models.py:31
+msgid "Image (big)"
+msgstr "Image (grand)"
+
+#: core/models.py:71
+msgid "Thematic title"
+msgstr "Titre de la thématique"
+
+#: core/models.py:88
+msgid "Feedbacks sentence"
+msgstr "Phrase du feedback"
+
+#: core/models.py:89
+msgid "Sentence (as html content): \"Hey did you knew .. ?\""
+msgstr ""
+
+#: core/models.py:190
+msgid "Question label"
+msgstr "Label de la question"
+
+#: core/models.py:191
+msgid "Question hint text"
+msgstr "Text d'aide de la question"
+
+#: core/models.py:193
+msgid "Skip button (label)"
+msgstr "Bouton passer (label)"
+
+#: core/models.py:193
+msgid "Skip this question"
+msgstr "Passer cette question"
+
+#: core/models.py:232 core/models.py:288
+msgid "Validate button (label)"
+msgstr "Bouton valider (label)"
+
+#: core/models.py:232 core/models.py:288
+msgid "I'm done"
+msgstr "J'ai fini"
+
+#: core/models.py:235
+msgid "Numeric input question"
+msgstr "Champ libre numérique"
+
+#: core/models.py:236
+msgid "Numeric input questions"
+msgstr "Champ libre numérique"
+
+#: core/models.py:241
+msgid "Number choice question"
+msgstr "Choix nombre"
+
+#: core/models.py:242
+msgid "Number choice questions"
+msgstr "Choix nombre"
+
+#: core/models.py:248
+msgid "Number unit"
+msgstr "Unité"
+
+#: core/models.py:248
+msgid "Unit that will be displayed after the min and max numbers."
+msgstr "L'unité qui sera affiché après les nombres minimum et maximum"
+
+#: core/models.py:294
+msgid "Text (multiple choice) question"
+msgstr "Texte (choix multiple)"
+
+#: core/models.py:295
+msgid "Text (multiple choice) questions"
+msgstr "Texte (choix multiple)"
+
+#: core/models.py:300
+msgid "Text (single choice) question"
+msgstr "Texte (choix unique)"
+
+#: core/models.py:301
+msgid "Text (single choice) questions"
+msgstr "Texte (choix unique)"
+
+#: core/models.py:315
+msgid "Choice's media type"
+msgstr "Type de média"
+
+#: core/models.py:326
+msgid "Media choice question"
+msgstr "Choix média"
+
+#: core/models.py:327
+msgid "Media choice questions"
+msgstr "Choix média"
+
+#: core/models.py:340
+msgid "Title of this choice"
+msgstr "Titre de ce choix"
+
+#, fuzzy
+#~ msgid "my title"
+#~ msgstr "Titre de la thématique"

@@ -11,6 +11,7 @@
 # Last mod :  2014-01-23 15:03:39
 # -----------------------------------------------------------------------------
 from settings import *
+ROOT_URLCONF = 'app.urls'
 
 ALLOWED_HOSTS = ["arte-wow-staging.herokuapp.com", ".herokuapp.com"]
 
@@ -20,11 +21,13 @@ AWS_STORAGE_BUCKET_NAME    = os.getenv('AWS_STORAGE_BUCKET_NAME')
 
 DEBUG                      = bool(os.getenv('DEBUG', False))
 
+LANGUAGE_CODE              = os.getenv('LANGUAGE_CODE', 'fr')
+
 STATIC_URL                 = os.getenv('STATIC_URL')
 
 STATIC_ROOT                = here('staticfiles')
 
-STATICFILES_DIRS           = ()
+STATICFILES_DIRS           = (here('static'),)
 
 INSTALLED_APPS            += ('storages',)
 
@@ -38,4 +41,9 @@ CACHES = {
     }
 }
 
-ROOT_URLCONF = 'app.urls'
+AUTH_USER_MODEL = 'authentication.WWUser'
+
+
+COMPRESSOR_ROOT  = STATIC_ROOT
+COMPRESSOR_URL   = STATIC_URL
+COMPRESS_STORAGE = STATICFILES_STORAGE

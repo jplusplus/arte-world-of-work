@@ -1,0 +1,14 @@
+{% extends "partials/directives/question-base.dj.html" %}
+
+{% block form %}
+<span>Min_number: [[ question.min_number ]]</span>
+<span>Max_number: [[ question.max_number ]]</span>
+<span>Unit: [[ question.unit ]]</span>
+
+<!-- <number-slider ng-model='answer' min-number='question.min_number' max-number='question.min_number'
+    unit='question.unit'></number-slider> -->
+{% endblock %}
+
+{% block actions %}
+    <a class="btn btn-primary" ng-click='submit()'>[[ question.validate_button_label ]]</a>
+{% endblock %}

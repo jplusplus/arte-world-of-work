@@ -1,4 +1,6 @@
 # Arte: World of Work
+[![Build Status](https://travis-ci.org/jplusplus/arte-world-of-work.png?branch=master)](https://travis-ci.org/jplusplus/arte-world-of-work) 
+[![Coverage Status](https://coveralls.io/repos/jplusplus/arte-world-of-work/badge.png?branch=master)](https://coveralls.io/r/jplusplus/arte-world-of-work?branch=master) 
 
 ## Installation
 **1. Prerequisites**
@@ -18,8 +20,8 @@ sudo apt-get install build-essential git-core python python-pip python-dev libme
 
 ```bash
 # pwd: ~
-git clone git@github.com:jplusplus/arte-wow.git 
-cd arte-wow
+git clone git@github.com:jplusplus/arte-world-of-work.git 
+cd arte-world-of-work
 ``` 
 
 **3. Install** 

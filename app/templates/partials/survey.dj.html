@@ -1,0 +1,47 @@
+{% load staticfiles %}
+
+<div class="survey-navigator" ng-switch on='survey.state'>
+    <!-- step 0 -> Introduction of the survey, first step  -->
+    <div class="survey-navigator--start"  ng-switch-when="0">
+        <img class="survey-navigator__illustration"></img> 
+        <p ng-translate>A 40-hours-a-week office job and a laid-down career path?</p>
+        <p ng-translate>If you're under 30, you know that's not how it is.</p>
+        <p ng-translate>Temporary employment, internships, volunteering, informal jobs, self-learning, emigration… Thatʼs what we do to make a living. Neither good nor bad, itʼs our world.</p>
+        <p ng-translate><strong>Explore the questions to know what it means to work today, in Europe, when you're under 30.</strong></p>
+        <a class="btn btn-primary" ng-click="survey.state=survey.states.DOING">Start the survey</a>
+    </div>
+    <!-- step 1 -> we start the first thematic and going on until the end --> 
+    <div class="survey-navigator--doing" ng-switch-when="1">
+        <div ng-controller='ThematicCtrl'>
+            <!-- step 0 -> thematic intro, displaying all info we need about this thematic -->
+            <div class="thematic-intro" ng-if='thematic.state == thematic.states.INTRO'>
+                <h1 class="thematic-intro__title">[[ currentThematic.title ]]</h1>
+
+                <p class="thematic-intro__description">[[ currentThematic.intro_description ]]</p>
+
+                <a class="thematic-intro__button" ng-if="currentThematic.intro_button_label">[[ currentThematic.intro_button_label ]]</a>
+
+                <a ng-click="thematic.state = thematic.states.ELEMENTS" class="btn btn-primary" ng-translate>Let's go</a>
+            </div>
+
+            <!-- step 1 -> we're starting this thematic question -->
+            <div class="survey-element" ng-if='thematic.state == thematic.states.ELEMENTS'>
+                <div ng-repeat='element in currentThematic.elements' 
+                     ng-class="positions.elementPosition == element.position ? 'visible' : 'hidden'">
+                    <div survey-element="element"></div>
+                </div>
+            </div>
+
+            <!-- step 2 -> thematic outro we're starting this thematic question -->
+            <div class="thematic-outro" ng-if='thematic.state == thematic.states.OUTRO'>
+                <h1> OUTRO </h1>
+                <a ng-href="" ng-click='previousElement()'>Previous</a>
+                <a ng-href="" ng-click='skipElement()'> Go to next thematic</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- step 2 -> all thematic/feedback and question are now done --> 
+    <div class="survey-navigator--end" ng-switch-when="2">
+    </div>
+</div>

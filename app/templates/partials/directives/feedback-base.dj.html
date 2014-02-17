@@ -1,0 +1,11 @@
+<h1 ng-bind-html='html_sentence'></h1>
+
+{% block content %}
+{% endblock %}
+
+<nav class="survey-element__nav">
+    <ul>
+        <li class="survey-element__nav__previous"><a ng-href="" ng-click="previousElement()">Previous</a></li>
+        <li class="survey-element__nav__next"><a ng-href="" ng-click="skipElement()">[[ feedback.validate_button_label ]]</a></li>
+    </ul>
+</nav>

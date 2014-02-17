@@ -1,0 +1,8 @@
+{% extends "partials/directives/question-base.dj.html" %}
+{% block form %}
+    <input type="text" ng-maxlength='2' ng-model='answer'/>
+{% endblock %}
+
+{% block actions %}
+    <a class="btn btn-primary" ng-click='submit()'>[[ question.validate_button_label ]]</a>
+{% endblock %}

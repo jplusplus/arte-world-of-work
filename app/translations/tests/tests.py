@@ -10,9 +10,6 @@ class TranslationsLocalesTestCase(TestCase):
     def setUp(self):
         pass
 
-    def test_extraction(self): 
-        pass 
-
     def test_translated_field_values(self):
         activate('fr')
         obj = TestModel.objects.get(pk=1)
@@ -28,7 +25,7 @@ class SyncFromDB(TestCase):
 
         call_command('sync_db_translations', verbosity=1)
         # we import created python file
-        from .i18n_strings import STRINGS 
+        from app.i18n_strings import STRINGS
         self.assertEqual(len(STRINGS), 2)
             
 
