@@ -22,7 +22,7 @@ class Chart
             width : do @element.width
             height : do @element.height
 
-        @svg.attr
+        ((d3.select @element[0]).selectAll 'svg').attr
             width : @size.width
             height : @size.height
 
