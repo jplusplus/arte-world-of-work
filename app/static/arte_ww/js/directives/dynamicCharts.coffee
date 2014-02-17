@@ -1,11 +1,5 @@
 class Chart
     constructor: (@scope, @element) ->
-        # Compute the result into something usable by the pie layout
-        @results = []
-        _.forEach (_.keys @scope.data.results), (key) =>
-            percent = parseInt (@scope.data.results[key] * 100 / @scope.data.total_answers + 0.5)
-            @results.push [key, @scope.data.results[key], percent]
-
         # Create the svg element
         @svg = (d3.select @element[0]).append 'svg'
 
@@ -15,7 +9,13 @@ class Chart
         @layout = undefined
 
         do @setSize
-        do @update
+
+    computeResults: =>
+        # Compute the result into something usable by the pie layout
+        @results = []
+        _.forEach (_.keys @scope.data.results), (key) =>
+            percent = parseInt (@scope.data.results[key] * 100 / @scope.data.total_answers + 0.5)
+            @results.push [key, @scope.data.results[key], percent]
 
     setSize: =>
         @size =
@@ -27,20 +27,24 @@ class Chart
             height : @size.height
 
     update: =>
+        do @computeResults
 
 class PieChart extends Chart
     constructor: (@scope, @element) ->
         super @scope, @element
 
+        # Center the pie
+        @svg = (@svg.append 'g').attr 'transform', "translate(#{@size.width / 2}, #{@size.height / 2})"
+        do @update
+
     update : =>
+        do @computeResults
+
         # Create arcs
         radius = (Math.min @size.width, @size.height) / 2
         arc = do d3.svg.arc
         arc.outerRadius radius
         arc.innerRadius 0
-
-        # Center the pie
-        @svg = (@svg.append 'g').attr 'transform', "translate(#{@size.width / 2}, #{@size.height / 2})"
 
         # Create the layout
         @layout = do d3.layout.pie
@@ -64,28 +68,39 @@ class PieChart extends Chart
 
 class BarChart extends Chart
     constructor: (@scope, @element) ->
-        super @scope, @element
-
-    update : =>
-        margin =
+        @margin =
             top : 20
             right : 10
             bottom : 20
             left : 10
+
+        super @scope, @element
+
+        @svg = (@svg.append 'g')
+            .attr 'transform', "translate(#{@margin.left}, #{@margin.top})"
+        do @update
+
+    update : =>
+        do @computeResults
+
         @_size =
-            width : @size.width - margin.right - margin.left
-            height : @size.height - margin.top - margin.bottom
+            width : @size.width - @margin.right - @margin.left
+            height : @size.height - @margin.top - @margin.bottom
 
         do @defineXY
 
-        @svg = (@svg.append 'g')
-            .attr 'transform', "translate(#{margin.left}, #{margin.top})"
+        data = (@svg.selectAll '.bar').data @results, (d) ->
+            d[0]
 
-        entered = do ((@svg.selectAll '.bar').data @results).enter
+        entered = do data.enter
         g = (entered.append 'g').attr 'class', 'bar'
         (g.append 'rect').attr do @getRectAttrs
         ((g.append 'text').attr do @getTextAttrs)
             .text (d) -> "#{d[0]} - #{d[2]}%"
+        do (do data.exit).remove
+
+        (@svg.selectAll '.bar rect').attr do @getRectAttrs
+        (@svg.selectAll '.bar text').attr do @getTextAttrs
 
     defineXY: =>
         @x = (do d3.scale.ordinal).rangeRoundBands([0, @_size.width], 0.2);
