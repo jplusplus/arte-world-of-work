@@ -1,18 +1,27 @@
 # all API endpoints test should go here 
 from django.contrib.auth import get_user_model
 User = get_user_model()
+from django.test import TestCase
 from django.core.urlresolvers import reverse
+from rest_framework.serializers import ModelSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase, APIClient
 
 from app.core.models import *
 from app.utils import TestCaseMixin
+from app.api import mixins 
 
 def init(instance):
-    default_source = {'source_url': 'http://jplusplus.org', 'source_title': 'Jpp website' }
+    # auth & client setup
+    instance.user = User.objects.create()
+    instance.anon_client = APIClient()
+    instance.authed_client = APIClient()
+    token, created = Token.objects.get_or_create(user=instance.user)
+    instance.authed_client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
-    instance.thematic1 = Thematic.objects.create(position=0, title='You')
-    instance.thematic2 = Thematic.objects.create(position=1, title='Your Work')
+    # thematics 
+    instance.thematic1 = Thematic.objects.create(position=1, title='You')
+    instance.thematic2 = Thematic.objects.create(position=2, title='Your Work')
 
     # thematic1 question and feedback 
     instance.question1 = instance.createQuestion(TypedNumberQuestion, **{'unit': '%'})
@@ -20,6 +29,7 @@ def init(instance):
     instance.question3 = instance.createQuestion(TextSelectionQuestion)
     instance.question4 = instance.createQuestion(TypedNumberQuestion, **{'unit': '%'})
 
+    default_source = {'source_url': 'http://jplusplus.org', 'source_title': 'Jpp website' }
     instance.feedback1 = instance.createFeedback(StaticFeedback, **default_source)
     instance.feedback2 = instance.createFeedback(StaticFeedback, **default_source)
 
@@ -28,13 +38,13 @@ def init(instance):
     instance.question3_choice2 = instance.createChoice(instance.question3, TextChoiceField)
     instance.question3_choice3 = instance.createChoice(instance.question3, TextChoiceField)
 
-    instance.question1.set_thematic(instance.thematic1, 0) 
-    instance.question2.set_thematic(instance.thematic1, 1) 
-    instance.question3.set_thematic(instance.thematic1, 2) 
-    instance.question4.set_thematic(instance.thematic1, 3)
+    instance.question1.set_thematic(instance.thematic1, 1) 
+    instance.question2.set_thematic(instance.thematic1, 2) 
+    instance.question3.set_thematic(instance.thematic1, 3) 
+    instance.question4.set_thematic(instance.thematic1, 4)
 
-    instance.feedback1.set_thematic(instance.thematic1, 4)
-    instance.feedback2.set_thematic(instance.thematic1, 5) 
+    instance.feedback1.set_thematic(instance.thematic1, 5)
+    instance.feedback2.set_thematic(instance.thematic1, 6) 
 
     # thematic 2 question
     instance.question5 = instance.createQuestion(MediaSelectionQuestion, media_type='icon')
@@ -42,7 +52,11 @@ def init(instance):
     instance.question5_choice2 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict2')
     instance.question5_choice3 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict3')
     instance.question5_choice4 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict3')
-    instance.question5.set_thematic(instance.thematic2)
+    instance.question5.set_thematic(instance.thematic2, 1)
+
+    # answers creation
+    instance.answer1 = instance.question1.create_answer(user=instance.user, value=2)
+    instance.answer2 = instance.question2.create_answer(user=instance.user, value=instance.question2.choices()[0])
 
 
 class TestUtils(object):
@@ -102,7 +116,6 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
         response = self.client.get(url)
         thematic = response.data
         sub_elements = thematic.get('elements')
-
         self.assertLenIs(sub_elements, 6)
         question1_elem = sub_elements[0]
         question2_elem = sub_elements[1]
@@ -153,26 +166,21 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
 class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
     def setUp(self):
         init(self)
-        self.user = User.objects.create()
-        self.anon_client = APIClient()
-        self.authed_client = APIClient()
-        token, created = Token.objects.get_or_create(user=self.user)
-        self.authed_client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-
-        self.answer1 = self.question1.create_answer(user=self.user, value=2)
-        self.answer2 = self.question2.create_answer(user=self.user, value=self.question2.choices()[0])
-
 
     def test_list_my_answers_auth(self):
-        list_url = reverse('answer-list')
+        list_url = reverse('my-answers-list')
         response = self.authed_client.get(list_url)
         self.assertEqual(response.status_code, 200)
         answers = response.data
         self.assertLenIs(answers,  2)
+
+    def test_list_my_answers_anon(self):
+        list_url = reverse('my-answers-list')
+        response = self.anon_client.get(list_url)
+        self.assertEqual(response.status_code, 401)
     
     def test_create_anonymous(self):
         url = reverse('answer-list')
-        # import pdb; pdb.set_trace()
         data = {
             'value': 20,
             'question': self.question1.pk
@@ -201,7 +209,6 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         response = self.authed_client.post(url, data, format='json')
         self.assertEqual(response.status_code, 400)
 
-
     def test_create_selection_answer_success(self):
         url = reverse('answer-list')
         data = {
@@ -229,6 +236,12 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         response = self.authed_client.post(url, data, format='json')
         self.assertEqual(response.status_code, 400)
 
+    def test_thematic_results_list(self):
+        url = reverse('thematic-results-list')
+        response = self.authed_client.get(url)
+        thematics = response.data
+        self.assertLenIs(thematics, 2)
+
 class UserTestCase(APITestCase, TestCaseMixin):
     def setUp(self):
         self.user = User.objects.create()
@@ -247,9 +260,51 @@ class UserTestCase(APITestCase, TestCaseMixin):
     # def test_user_auth():
         # url = reverse('user-auth')
 
-
     def test_user_mypostion(self):
         url = reverse('user-mypostion', kwargs={'pk': self.user.pk})
         result = self.client.get(url)
-        # pass
+        self.assertIsNotNone(result)
 
+
+class TypedNumberSerializer(ModelSerializer):
+    class Meta:
+        model = TypedNumberQuestion
+
+class TestSerializer(mixins.ContentTypeMixin, ModelSerializer):
+    ctype_mapping = {
+        TypedNumberQuestion: TypedNumberSerializer,
+    }
+    class Meta:
+        model = BaseQuestion
+
+class MixinsTestCase(TestCase, TestCaseMixin, TestUtils):
+
+    def setUp(self):
+        self.thematic = Thematic.objects.create(position=1, title='You')
+        self.question = self.createQuestion(TypedNumberQuestion, **{'unit': '%'})
+        self.question.set_thematic(self.thematic, 1) 
+
+    def test_get_generic(self):
+        question = BaseQuestion.objects.get(pk=self.question.pk)
+        serializer = TestSerializer(question)
+        ctype, cobject = serializer.get_generic(question)
+        self.assertEqual(ctype, self.question.content_type)
+        self.assertEqual(cobject, self.question)
+
+    def test_get_ctype_serializer(self):
+        question = BaseQuestion.objects.get(pk=self.question.pk)
+        serializer = TestSerializer(question)
+        final_serializer = serializer.get_ctype_serializer(question)
+        self.assertEqual(final_serializer, TypedNumberSerializer)
+
+    def test_serialize(self):
+        data = TestSerializer(self.question).data
+        # should contain all basic question informations
+        self.assertAttrNotNone(data, 'label')
+        self.assertAttrNotNone(data, 'skip_button_label')
+        self.assertAttrNotNone(data, 'hint_text')
+
+        # and all typed number information
+        self.assertAttrNotNone(data, 'min_number')
+        self.assertAttrNotNone(data, 'max_number')
+        self.assertAttrNotNone(data, 'unit')
