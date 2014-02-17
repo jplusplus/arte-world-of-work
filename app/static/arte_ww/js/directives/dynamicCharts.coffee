@@ -29,9 +29,14 @@ class Chart
     update: =>
         do @computeResults
 
+    delete: =>
+        do ((d3.select @element[0]).selectAll 'svg').remove
+
 class PieChart extends Chart
     constructor: (@scope, @element) ->
         super @scope, @element
+
+        @type = 'pie'
 
         # Create the layout
         @layout = do d3.layout.pie
@@ -45,10 +50,9 @@ class PieChart extends Chart
 
         # Center the pie
         @svg = (@svg.append 'g').attr 'transform', "translate(#{@size.width / 2}, #{@size.height / 2})"
-        do @update
 
     update : =>
-        do @computeResults
+        super ''
 
         # Remove old arcs
         do (@svg.selectAll '.arc').remove
@@ -79,12 +83,13 @@ class BarChart extends Chart
 
         super @scope, @element
 
+        @type = 'bar'
+
         @svg = (@svg.append 'g')
             .attr 'transform', "translate(#{@margin.left}, #{@margin.top})"
-        do @update
 
     update : =>
-        do @computeResults
+        super ''
 
         @_size =
             width : @size.width - @margin.right - @margin.left
@@ -123,6 +128,11 @@ class BarChart extends Chart
 
 
 class HBarChart extends BarChart
+    constructor: (@scope, @element) ->
+        super @scope, @element
+
+        @type = 'hbar'
+
     defineXY: =>
         @x = (do d3.scale.linear).range [0, @_size.width]
         @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.2);
@@ -149,11 +159,34 @@ angular.module('arte-ww').directive 'dynamicChart', [->
         scope :
             data : '='
         link: (scope, elem, attr) ->
+            newChart = =>
+                # We instanciate the right chart from data.chart_type
+                scope.chart = switch (do scope.data.chart_type.toLowerCase)
+                    when 'pie' then new PieChart scope, elem
+                    when 'bar' then new BarChart scope, elem
+                    when 'hbar' then new HBarChart scope, elem
+                    else throw "Chart type '#{scope.data.chart_type}' does not exist."
+
+            window.onresize = =>
+                do scope.$apply
+
             scope.chart = undefined
-            # We instanciate the right chart from data.chart_type
-            scope.chart = switch (do scope.data.chart_type.toLowerCase)
-                when 'pie' then new PieChart scope, elem
-                when 'bar' then new BarChart scope, elem
-                when 'hbar' then new HBarChart scope, elem
-                else throw "Chart type '#{scope.data.chart_type}' does not exist."
+
+            scope.$watch =>
+                return (angular.element window)[0].innerWidth
+            , =>
+                if scope.chart?
+                    do scope.chart.setSize
+                    do scope.chart.update
+
+            scope.$watch 'data', (newValues, oldValues) =>
+                if scope.chart? and scope.chart.type isnt (do scope.data.chart_type.toLowerCase)
+                    do scope.chart.delete
+                    do newChart
+                do scope.chart.update
+            , yes
+
+
+            do newChart
+
 ]
