@@ -1,84 +1,10 @@
-@import "bootstrap-overload.less";
+// Bootstrap dependancies
+@import "bootstrap.variables.less";
+@import "bootstrap.loader.less";
 
-.nav__element {
-    font-weight: normal;
-    display: inline-block;
-    a {
-        padding-left: 10px;
-        &:before , &:after {
-            // width: 15px;
-            text-align: center;
-            display: inline;
-        }
-    }
-}
-
-.nav__element--active {
-    font-weight: bold;
-    a {
-        padding-left: 0px;
-        &:before , &:after {
-            content: "\16eb";
-        }
-    }
-}
-
-.thematic-intro {
-    background-color: #bbb;
-}
-
-.survey-element__nav {
-    background-color: #bbb;
-    display: block;
-    color: grey;
-    list-style: none;
-    ul {
-        margin: 0;
-        padding: 0;
-        li {
-            display: inline-block;
-        }
-        &:after {
-            display: block;
-            clear: both;
-            content: " ";
-            height: 0;
-        }
-    }
-
-}
-
-.survey-element {
-    background: #bbb;
-}
-
-.survey-element--visible {
-    background: pink;
-}
-.survey-element__nav__previous {
-    float: left;
-}
-
-.survey-element__nav__next {
-    float: right;
-}
-
-.question-choices {
-    &.icon {
-        img {
-            max-height: 40px; 
-        }
-    }
-
-    &.image {
-        img {
-            height: auto;
-        }
-
-    }
-}
-
-.question-choice {
-    .btn();
-    .btn-primary()
-;}
+@import "global.less";
+@import "nav.less";
+@import "question.less";
+@import "survey.less";
+@import "thematic.intro.less";
+@import "thematic.less";
