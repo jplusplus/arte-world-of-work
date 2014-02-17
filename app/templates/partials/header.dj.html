@@ -1,22 +1,30 @@
 <header class="header">
     <div class="container">
-        <nav class="nav row">
-            <div class="header__brand-logo col-xs-3">
-                <a ng-href="{% url 'home' %}">
-                    <h2>World <small>of</small> Work</h2>
-                    <p class="header__brand-logo__caption">[[ "Youth work in Europe" | translate ]]</p>
-                </a>
-            </div>
-            <ul class="col-xs-5">
-                <li class="nav__element col-xs-6" 
-                    ng-class="{ 'nav__element--active': currentCategory() == 'survey' }">
+        <nav class="header__nav">
+            <a class="header__nav__brand-logo" ng-href="{% url 'home' %}">
+                <h2>World <small>of</small> Work</h2>
+                <p class="header__nav__brand-logo__caption">[[ "Youth work in Europe" | translate ]]</p>                
+            </a>
+            <ul class="header__nav__links list-inline">
+                <li class="header__nav__links__element" 
+                    ng-class="{ 'header__nav__links__element--active': currentCategory() == 'survey' }">
                     <a ng-href="{% url 'survey' %}">Survey</a>
                 </li>
-                <li class="nav__element col-xs-6" 
-                    ng-class="{ 'nav__element--active': currentCategory() == 'results' }">
+                <li class="header__nav__links__element" 
+                    ng-class="{ 'header__nav__links__element--active': currentCategory() == 'results' }">
                     <a ng-href="{% url 'results' %}">Results</a>
                 </li>
             </ul>
+            <div class="header__nav__back-to-beginning" ng-if="currentCategory() == 'survey' ">   
+                <a href="{% url 'survey' %}">[[ "Back to the beginning" | translate ]]</a>         
+            </div>
+            <div class="header__nav__progress">
+                <div class="header__nav__progress__container progress">
+                    <div class="progress-bar header__nav__progress__container__bar" role="progressbar" style="width: 60%;">
+                        60%
+                    </div>            
+                </div>
+            </div>  
         </nav>
     </div>
 </header>

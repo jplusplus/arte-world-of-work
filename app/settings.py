@@ -147,7 +147,7 @@ COMPRESS_PRECOMPILERS = (
 )
 
 COMPRESS_CSS_FILTERS = (
-    "app.detective.compress_filter.CustomCssAbsoluteFilter",
+    "compressor.filters.css_default.CssAbsoluteFilter",
     "compressor.filters.template.TemplateFilter",
 )
 
@@ -159,7 +159,7 @@ COMPRESS_TEMPLATE_FILTER_CONTEXT = {
     'STATIC_URL': STATIC_URL
 }
 
-COMPRESS_PARSER = 'compressor.parser.HtmlParser'
+COMPRESS_PARSER  = 'compressor.parser.HtmlParser'
 COMPRESS_ENABLED = False
 
 INSTALLED_APPS = (
