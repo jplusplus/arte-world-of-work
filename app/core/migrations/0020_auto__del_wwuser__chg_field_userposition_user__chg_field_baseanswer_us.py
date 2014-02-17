@@ -11,15 +11,6 @@ class Migration(SchemaMigration):
         # Deleting model 'WWUser'
         db.delete_table(u'core_wwuser')
 
-        db.create_table(u'authentication_wwuser', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('password', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('last_login', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('uuid', self.gf('django.db.models.fields.CharField')(unique=True, max_length=36)),
-        ))
-        db.send_create_signal(u'authentication', ['WWUser'])
-
-
         # Changing field 'UserPosition.user'
         db.alter_column(u'core_userposition', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['authentication.WWUser'], unique=True))
 
@@ -31,7 +22,6 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         # Adding model 'WWUser'
-        db.delete_table(u'authentication_wwuser')
         db.create_table(u'core_wwuser', (
             ('password', self.gf('django.db.models.fields.CharField')(max_length=128)),
             ('last_login', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
