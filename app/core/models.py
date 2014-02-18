@@ -148,9 +148,10 @@ class Thematic(models.Model):
         ordering = ('position',)
 
     position = models.PositiveIntegerField(default=0)
-    title = models.CharField(_('Thematic title'), max_length=120)
+    title    = models.CharField(_('Thematic title'), max_length=120)
     elements = generic.GenericRelation(ThematicElement)
-    objects = ThematicManager()
+    objects  = ThematicManager()
+    slug     = models.SlugField(max_length=250, unique=True, null=True, blank=True)
 
     intro_description = models.TextField(_('Introduction description'))
     intro_button_label = models.CharField(_('Introduction button label'), 
@@ -180,6 +181,7 @@ class Thematic(models.Model):
             # to keep original order we insert at the begining of the list
             final_elements.append(final_element)
         return final_elements
+
 
 # -----------------------------------------------------------------------------
 # 

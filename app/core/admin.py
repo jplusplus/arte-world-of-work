@@ -87,7 +87,8 @@ class QuestionAdmin(admin.ModelAdmin):
         return inline_model_admins
 
 
-class ThematicAdmin(admin.ModelAdmin):
+class ThematicAdmin(admin.ModelAdmin):    
+    prepopulated_fields = {'slug': ('title',)}
     inlines = (
         InlineThematicElement,
     )
