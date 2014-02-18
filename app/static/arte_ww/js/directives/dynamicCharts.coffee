@@ -15,7 +15,7 @@ class Chart
         @results = []
         _.forEach (_.keys @scope.data.results), (key) =>
             percent = parseInt (@scope.data.results[key] * 100 / @scope.data.total_answers + 0.5)
-            @results.push [key, @scope.data.results[key], percent]
+            @results.push [@scope.data.sets[key].name, @scope.data.results[key], percent]
 
     setSize: =>
         @size =
