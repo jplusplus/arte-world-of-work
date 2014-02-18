@@ -151,6 +151,32 @@ class HBarChart extends BarChart
         'dominant-baseline' : 'central'
 
 
+class Histogram extends BarChart
+    constructor: (@scope, @element) ->
+        super @scope, @element
+
+    computeResults: =>
+        # Compute the result into something usable by the pie layout
+        @results = []
+        _.forEach (_.keys @scope.data.results), (key) =>
+            percent = parseInt (@scope.data.results[key] * 100 / @scope.data.total_answers + 0.5)
+            @results.push [@scope.data.sets[key].min, @scope.data.sets[key].max, @scope.data.results[key], percent]
+
+    defineXY: =>
+        @x = (do d3.scale.linear).range [0, @_size.width];
+        @y = (do d3.scale.linear).range [@_size.height, 0]
+        @x.domain [0, (_.max @results, (elem) -> elem[1])[1]]
+        @y.domain [0, @scope.data.total_answers]
+
+    getTextAttrs: =>
+
+    getRectAttrs: =>
+        x : (d) => (@x d[0])
+        y : (d) => (@y d[2])
+        width : (d) => (@x d[1]) - (@x d[0])
+        height : (d) => @_size.height - @y(d[1])
+
+
 angular.module('arte-ww').directive 'dynamicChart', ['$window', ($window) ->
     directive =
         template : '<div></div>'
@@ -165,6 +191,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', ($window) ->
                     when 'pie' then new PieChart scope, elem
                     when 'bar' then new BarChart scope, elem
                     when 'hbar' then new HBarChart scope, elem
+                    when 'histo' then new Histogram scope, elem
                     else throw "Chart type '#{scope.data.chart_type}' does not exist."
 
             window.onresize = =>
