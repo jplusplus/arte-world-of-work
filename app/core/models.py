@@ -136,11 +136,12 @@ class ThematicElementMixin(models.Model):
 
 class ThematicManager(models.Manager):
     def all_elements(self):
-        thematics = self.all()
+        thematics = self.get_queryset()
         elements = []
         for t in thematics: 
             elements += t.all_elements()
         return elements
+
 
 class Thematic(models.Model):
     class Meta:
@@ -155,7 +156,9 @@ class Thematic(models.Model):
     intro_button_label = models.CharField(_('Introduction button label'), 
         default=_('See the data'), max_length=120, null=True, blank=True)
 
+
     def add_element(self, instance, position=None):
+        # Add an element to a thematic object 
         # will convert passed concrete model `instance`, if instance doe
         assert issubclass(instance.__class__, ThematicElementMixin)
         element = instance.as_element() # can raise NotImplementedError 
@@ -168,8 +171,8 @@ class Thematic(models.Model):
         return u"{id} - {title}".format(id=self.pk, title=self.title)
 
     def all_elements(self):
+        # list all elements (feedback + question) of a thematic object
         final_elements = []
-        # TODO: maybe we can 
         for element in self.thematicelement_set.all():
             final_element = element.content_object
             final_element.position = element.position
@@ -177,6 +180,7 @@ class Thematic(models.Model):
             # to keep original order we insert at the begining of the list
             final_elements.append(final_element)
         return final_elements
+
 # -----------------------------------------------------------------------------
 # 
 #     Feedbacks
@@ -233,12 +237,26 @@ class AnswerManager(models.Manager):
         answer.save()
         return answer
 
-    def user_answers(self, user):
-        final_answers = []
-        base_answers = self.filter(user=user)
-        for answer in base_answers: 
-            final_answers.append(answer.content_object)
-        return final_answers
+
+
+class ResultManager(models.Manager):
+
+    def all(self, question=None, gender=None, age_min=None, age_max=None):
+        qs = self.get_queryset(question=question, gender=gender, age_min=age_min, age_max=age_max)
+        return qs
+
+    def get_queryset(self, question=None, gender=None, age_min=None, age_max=None):
+        assert question != None, "ResultManager need a question to get your results"
+        qs = super(ResultManager, self).get_queryset().filter(question=question)
+        if gender != None:
+            assert gender in map(lambda x:x[0], GENDER_TYPES), ("The given gender ",
+                "({gender}) is not recognized as a valid gender.".format(gender=gender))
+
+            qs = qs.filter(user__profile__gender=gender)
+
+        if age_min and age_max:
+            qs = qs.filter(user__profile__age__lte=age_max, user__profile__age__gte=age_min)
+        return qs
 
 
 class BaseAnswer(models.Model):
@@ -247,6 +265,11 @@ class BaseAnswer(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     question = models.ForeignKey('BaseQuestion')
     objects = AnswerManager()
+    results = ResultManager()
+
+
+
+
 
 class TypedNumberAnswer(BaseAnswer):
     value = models.IntegerField()
@@ -336,6 +359,10 @@ class BaseQuestion(ThematicElementMixin):
     def as_final(self):
         final_klass = self.content_type.model_class()
         return final_klass.objects.get(id=self.pk)
+
+    @property
+    def results(self, gender=None, age_min=0, age_max=100):
+        return BaseAnswer.results.all(question=self, gender=gender, age_min=age_min, age_max=age_max )
 
 
     

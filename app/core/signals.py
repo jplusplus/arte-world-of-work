@@ -66,7 +66,6 @@ def create_generic_element(sender, **kwargs):
 def assign_content_object(sender, **kwargs):
     # pre save creation of instance.content_object. Designed to ease downcasting
     # for questions, answers and feedbacks
-    # import pdb; pdb.set_trace()
     instance = kwargs.get('instance', None)
     instance.content_type =  ContentType.objects.get_for_model(instance)
     
