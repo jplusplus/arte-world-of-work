@@ -51,6 +51,9 @@ arteww = angular
                             category: 'results'
                             controller: 'ResultsCtrl'
                             templateUrl: '/partial/results.html'
+                    .when '/results/:id/embedded',
+                            controller: 'ResultsCtrl'
+                            templateUrl: '/partial/results.embedded.html'
                     .when '/about',
                         templateUrl: '/partial/about.html'
     ])
