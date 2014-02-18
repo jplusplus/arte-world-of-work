@@ -34,11 +34,9 @@ urlpatterns = patterns('',
     (r'^i18n/', include('django.conf.urls.i18n')),
     
 )
-
-if settings.DEBUG:
-    import debug_toolbar
+# settings.LOCAL_SETTINGS are set to false when on heroku
+if settings.DEBUG and not settings.LOCAL_SETTINGS:
     urlpatterns += patterns('',
         (r'^public/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-        url(r'^__debug__/', include(debug_toolbar.urls)),
     )
 

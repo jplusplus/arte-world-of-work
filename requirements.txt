@@ -2,7 +2,6 @@ argparse==1.2.1
 dj-database-url==0.2.1
 django-compressor==1.3
 boto==2.9.6
-git+https://github.com/django-debug-toolbar/django-debug-toolbar.git#egg=django-debug-toolbar
 django-filter==0.6
 django-countries==2.0b4
 django-registration==1.0

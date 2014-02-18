@@ -181,16 +181,10 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'sorl.thumbnail',
     'south',    
-    'debug_toolbar',
     # ------------------------ internal dependencies ------------------------ # 
     'app.core',
     'app.translations',
 )
-
-DEBUG_TOOLBAR_PATCH_SETTINGS = True
-DEBUG_TOOLBAR_CONFIG = {
-    'ENABLE_STACKTRACES': False
-}
 
 AUTH_USER_MODEL = 'authentication.WWUser'
 # A sample logging configuration. The only tangible logging
@@ -225,3 +219,5 @@ LOGGING = {
 SOUTH_TESTS_MIGRATE = False
 
 TRANSLATION_STRINGS_FILE = here('i18n_strings.py')
+
+LOCAL_SETTINGS = True
