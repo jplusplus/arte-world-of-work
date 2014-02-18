@@ -181,9 +181,6 @@ class Thematic(models.Model):
             final_elements.append(final_element)
         return final_elements
 
-    # def results(self): 
-    #     # return results aggregations for this thematic elements 
-
 # -----------------------------------------------------------------------------
 # 
 #     Feedbacks
@@ -240,12 +237,39 @@ class AnswerManager(models.Manager):
         answer.save()
         return answer
 
+
+
+class ResultManager(models.Manager):
+
+    def all(self, question=None, gender=None, age_min=None, age_max=None):
+        qs = self.get_queryset(question=question, gender=gender, age_min=age_min, age_max=age_max)
+        return qs
+
+    def get_queryset(self, question=None, gender=None, age_min=None, age_max=None):
+        assert question != None, "ResultManager need a question to get your results"
+        qs = super(ResultManager, self).get_queryset().filter(question=question)
+        if gender != None:
+            assert gender in map(lambda x:x[0], GENDER_TYPES), ("The given gender ",
+                "({gender}) is not recognized as a valid gender.".format(gender=gender))
+
+            qs = qs.filter(user__profile__gender=gender)
+
+        if age_min and age_max:
+            qs = qs.filter(user__profile__age__lte=age_max, user__profile__age__gte=age_min)
+        return qs
+
+
 class BaseAnswer(models.Model):
     content_type = models.ForeignKey(ContentType, editable=False)
     content_object = generic.GenericForeignKey('content_type', 'pk')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     question = models.ForeignKey('BaseQuestion')
     objects = AnswerManager()
+    results = ResultManager()
+
+
+
+
 
 class TypedNumberAnswer(BaseAnswer):
     value = models.IntegerField()
@@ -335,6 +359,10 @@ class BaseQuestion(ThematicElementMixin):
     def as_final(self):
         final_klass = self.content_type.model_class()
         return final_klass.objects.get(id=self.pk)
+
+    @property
+    def results(self, gender=None, age_min=0, age_max=100):
+        return BaseAnswer.results.all(question=self, gender=gender, age_min=age_min, age_max=age_max )
 
 
     
