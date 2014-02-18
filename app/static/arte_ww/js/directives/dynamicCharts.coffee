@@ -11,7 +11,7 @@ class Chart
         do @setSize
 
     computeResults: =>
-        # Compute the result into something usable by the pie layout
+        # Compute the result into something usable by the layout
         @results = []
         _.forEach (_.keys @scope.data.results), (key) =>
             percent = parseInt (@scope.data.results[key] * 100 / @scope.data.total_answers + 0.5)
@@ -75,7 +75,7 @@ class PieChart extends Chart
 
 class BarChart extends Chart
     constructor: (@scope, @element) ->
-        @margin =
+        @margin = @margin or
             top : 20
             right : 10
             bottom : 20
@@ -129,6 +129,12 @@ class BarChart extends Chart
 
 class HBarChart extends BarChart
     constructor: (@scope, @element) ->
+        @margin =
+            top : 10
+            right : 10
+            bottom : 10
+            left : 10
+
         super @scope, @element
 
         @type = 'hbar'
@@ -153,10 +159,23 @@ class HBarChart extends BarChart
 
 class Histogram extends BarChart
     constructor: (@scope, @element) ->
+        @margin =
+            top : 20
+            right : 20
+            bottom : 20
+            left : 20
+
         super @scope, @element
 
+    update: =>
+        super ''
+
+        ((((d3.select @element[0]).selectAll 'svg').append 'g').attr
+            class : 'x axis'
+            transform : "translate(#{@margin.left}, #{@size.height - @margin.bottom})"
+        ).call @xAxis
+
     computeResults: =>
-        # Compute the result into something usable by the pie layout
         @results = []
         _.forEach (_.keys @scope.data.results), (key) =>
             percent = parseInt (@scope.data.results[key] * 100 / @scope.data.total_answers + 0.5)
@@ -167,6 +186,10 @@ class Histogram extends BarChart
         @y = (do d3.scale.linear).range [@_size.height, 0]
         @x.domain [0, (_.max @results, (elem) -> elem[1])[1]]
         @y.domain [0, @scope.data.total_answers]
+
+        tickValues = [0].concat _.pluck @results, 1
+        @xAxis = (((do d3.svg.axis).scale @x).orient 'bottom').tickValues tickValues
+        @xAxis.tickFormat (d3.format 'f')
 
     getTextAttrs: =>
         display: 'none'
