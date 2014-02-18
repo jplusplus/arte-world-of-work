@@ -85,8 +85,8 @@ class ThematicElement(models.Model):
     class Meta:
         ordering= ['position']
 
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
+    content_type   = models.ForeignKey(ContentType)
+    object_id      = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     
     thematic = models.ForeignKey('Thematic', null=True, blank=True)
@@ -107,7 +107,7 @@ class ThematicElement(models.Model):
     def __unicode__(self):
         return u"{type} - {title}".format(
             type=self.content_type,
-            title=self.content_object.__unicode__()
+            title=str(self.content_object)
         )
 
 class ThematicElementMixin(models.Model):

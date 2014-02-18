@@ -5,6 +5,11 @@
     height:@header-height;  
     color:#bebebe;   
 
+    a:hover, a:active, a:focus {
+        text-decoration: none;
+        color: darken(#999999, 20);
+    }
+
     
     &__nav {
 
@@ -30,11 +35,6 @@
             font-size:12px;
 
             .box-shadow( 4px 4px 0 0 fade(@navbar-default-bg, 10%) );
-
-            &:hover, &:active, &:focus {
-                text-decoration: none;
-                color: darken(#999999, 20);
-            }
 
             h2 {
                 .hide-text();

@@ -70,20 +70,20 @@ class ContentTypeMixin(serializers.ModelSerializer):
                 return ctype_mapping[model_klass]
 
     def get_generic(self, value):
-        ctype   = getattr(value, 'content_type',   None)
-        obj_id  = getattr(value, 'object_id',      None)
+        ctype   = getattr(value, 'content_type',   None)        
+        obj_id  = getattr(value, 'object_id',      None)        
         # first try to resolve content object 
         cobject = getattr(value, 'content_object', None) 
         assert ctype != None
         # if doesn't have a local content_object then we assign it here
         if cobject is None:
-            cobject = ctype.model_class().objects.get(pk=obj_id or value.pk)
+            cobject = ctype.model_class().objects.get(id=obj_id or value.pk)            
         return (ctype, cobject)
 
     def get_mapping(self):
         return self.ctype_mapping
 
-    def to_native(self, value):
+    def to_native(self, value):        
         ctype, cobject = self.get_generic(value)
         base_data = super(ContentTypeMixin, self).to_native(value)
         ctype_serializer = self.get_ctype_serializer(value)
