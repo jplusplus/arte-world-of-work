@@ -19,6 +19,11 @@ def home(request):
     response = render_to_response('home.dj.html')
     return response
 
+def embedded(request):
+    # Render template without any argument
+    response = render_to_response('embedded.dj.html')
+    return response
+
 def directive_partial(request, partial_name=None):
     template_name = 'partials/directives/' + partial_name + '.dj.html'
     try:
