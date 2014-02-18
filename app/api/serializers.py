@@ -15,7 +15,7 @@ class ChoiceField(mixins.ContentTypeMixin):
     ctype_mapping = {
         MediaChoiceField: MediaChoiceFieldSerializer
     }
-    
+
     class Meta:
         model = BaseChoiceField
         exclude = ('question', )
@@ -59,15 +59,17 @@ class UserAgeQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAgeQuestion
 
+question_mapping = {
+    UserAgeQuestion:         UserAgeQuestionSerializer,
+    BooleanQuestion:         BooleanQuestionSerializer,
+    TypedNumberQuestion:     TypedNumberQuestionSerializer,
+    UserGenderQuestion:      MultipleChoicesSerializer,
+    RadioQuestionMixin:      MultipleChoicesSerializer,
+    SelectionQuestionMixin:  MultipleChoicesSerializer
+}
+
 class QuestionSerializer(mixins.InheritedModelMixin):
-    model_mapping = {
-        UserAgeQuestion:         UserAgeQuestionSerializer,
-        BooleanQuestion:         BooleanQuestionSerializer,
-        TypedNumberQuestion:     TypedNumberQuestionSerializer,
-        UserGenderQuestion:      MultipleChoicesSerializer,
-        RadioQuestionMixin:      MultipleChoicesSerializer,
-        SelectionQuestionMixin:  MultipleChoicesSerializer
-    }
+    model_mapping = question_mapping 
     # we have to explicitly declare this field because it's a model property
     typology = serializers.Field() 
     class Meta:
@@ -77,21 +79,16 @@ class QuestionSerializer(mixins.InheritedModelMixin):
         exclude = ('content_type',)
 
 
-class QuestionResultsSerializer(mixins.ContentTypeMixin):
-    ctype_mapping = {
-        UserAgeQuestion:         UserAgeQuestionSerializer,
-        BooleanQuestion:         BooleanQuestionSerializer,
-        TypedNumberQuestion:     TypedNumberQuestionSerializer,
-        UserGenderQuestion:      MultipleChoicesSerializer,
-        RadioQuestionMixin:      MultipleChoicesSerializer,
-        SelectionQuestionMixin:  MultipleChoicesSerializer
-    }
+class QuestionResultsSerializer(QuestionSerializer):
+    model_mapping = question_mapping
+    results  = serializers.Field()
     typology = serializers.Field()
     class Meta:
         model  = BaseQuestion
         exclude = ('content_type',)
-        depth  = 1 
-        # fields = ('results',)
+        depth  = 1
+
+   
 
 # -----------------------------------------------------------------------------
 # 

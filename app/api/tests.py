@@ -239,8 +239,18 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
     def test_thematic_results_list(self):
         url = reverse('thematic-results-list')
         response = self.authed_client.get(url)
+        self.assertEqual(response.status_code, 200)
         thematics = response.data
         self.assertLenIs(thematics, 2)
+
+
+    def test_thematic_results_detail(self):
+        url = reverse('thematic-results-detail', kwargs={'pk': self.thematic1.pk })
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        thematic = response.data
+        self.assertIsNotNone(thematic)
+
 
 class UserTestCase(APITestCase, TestCaseMixin):
     def setUp(self):
