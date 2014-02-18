@@ -169,12 +169,13 @@ class Histogram extends BarChart
         @y.domain [0, @scope.data.total_answers]
 
     getTextAttrs: =>
+        display: 'none'
 
     getRectAttrs: =>
         x : (d) => (@x d[0])
         y : (d) => (@y d[2])
         width : (d) => (@x d[1]) - (@x d[0])
-        height : (d) => @_size.height - @y(d[1])
+        height : (d) => @_size.height - @y(d[2])
 
 
 angular.module('arte-ww').directive 'dynamicChart', ['$window', ($window) ->
