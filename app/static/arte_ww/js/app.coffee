@@ -11,7 +11,8 @@ arteww = angular
         'ui.bootstrap',
         'ngCookies',
         'ngRoute',
-        'ngResource'
+        'ngResource',
+        'nouislider'
     ])
     .run([
             '$rootScope'
