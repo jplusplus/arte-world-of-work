@@ -26,6 +26,12 @@ API -> API:
 API -> front-end (HTTP): 
     take this serialized results (JSON)
 """
+class CHART_TYPES:
+    HISTOGRAMME = 'histogramme'
+    PIE = 'pie'
+    HORIZONTAL_BAR = 'horizontal_bar'
+    VERTICAL_BAR = 'veritical_bar'
+
 
 class ResultObject(object):
     def __init__(self, question, queryset):
@@ -53,11 +59,11 @@ class ResultObject(object):
 
 
 class Histogramme(ResultObject):
+    chart_type = CHART_TYPES.HISTOGRAMME
     def __init__(self, question, queryset, sets=5):
         self.mininum = question.min_number
         self.maximum = question.max_number
         self.set_number = sets
-        self.chart_type = 'histogramme'
         super(Histogramme, self).__init__(question, queryset)
 
     def create_sets(self):
@@ -102,13 +108,13 @@ class BarChart(ResultObject):
         self.results[choice.id] = value
 
 class HorizontalBarChart(BarChart):
-    chart_type = 'horizontal_bar'
+    chart_type = CHART_TYPES.HORIZONTAL_BAR
     
 class VerticalBarChart(BarChart):
-    chart_type = 'horizontal_bar'
+    chart_type = CHART_TYPES.VERTICAL_BAR
 
 class PieChart(BarChart):
-    chart_type = 'pie'
+    chart_type = CHART_TYPES.PIE
 
 
 

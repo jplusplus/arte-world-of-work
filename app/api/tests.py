@@ -7,6 +7,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase, APIClient
 
+from app.core import transport
 from app.core.models import *
 from app.utils import TestCaseMixin
 from app.api import mixins 
@@ -252,9 +253,10 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         thematic = response.data
         self.assertIsNotNone(thematic)
 
-class ResultsTestCase(APITestCase, TestCaseMixin):
+class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
     def setUp(self):
         self.do_create_answers = False
+        self.answers = {}
         init(self) 
         # clean existing answers (just in case)
         [ans.delete() for ans in BaseAnswer.objects.all()]
@@ -274,11 +276,49 @@ class ResultsTestCase(APITestCase, TestCaseMixin):
         self.add_answer(q1, 70)
         self.add_answer(q1, 75)
 
-
     def add_answer(self, question, value, user=None):
         if user == None:
             user = User.objects.create()
-        self.answers[answer.question.id] = question.create_answer(user=user, value=value)
+        self.answers[question.id] = question.create_answer(user=user, value=value)
+
+    def test_results_not_found(self):
+        url = reverse('question-results', kwargs={ 'pk': 99 })
+        response = self.client.get(url) 
+        self.assertEqual(response.status_code, 404)
+        
+        
+    def test_typed_number_question_results(self):
+        url = reverse('question-results', kwargs={ 'pk': self.question1.pk })
+        response = self.client.get(url) 
+        question = response.data
+        results  = question.get('results')
+
+        self.assertEqual(results.get('chart_type'), transport.CHART_TYPES.HISTOGRAMME)
+        sets = results.get('sets')
+        self.assertEqual( sets[1]['min'], 0 )
+        self.assertEqual( sets[1]['max'], 20 )
+
+        self.assertEqual( sets[2]['min'], 20 )
+        self.assertEqual( sets[2]['max'], 40 )
+
+        self.assertEqual( sets[3]['min'], 40 )
+        self.assertEqual( sets[3]['max'], 60 )
+
+        self.assertEqual( sets[4]['min'], 60 )
+        self.assertEqual( sets[4]['max'], 80 )
+
+
+        self.assertEqual( sets[5]['min'], 80  )
+        self.assertEqual( sets[5]['max'], 100 )
+
+        results = results['results'] 
+
+        self.assertEqual( results[1], 30 )
+        self.assertEqual( results[2], 20 )
+        self.assertEqual( results[3], 30 )
+        self.assertEqual( results[4], 20 )
+        self.assertEqual( results[5], 0  )
+
 
 class UserTestCase(APITestCase, TestCaseMixin):
     def setUp(self):

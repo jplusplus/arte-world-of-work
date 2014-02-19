@@ -21,13 +21,13 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     @link()
     def results(self, request, pk):
         try:
-            question = self.queryset.get(pk=pk)
+            question = self.queryset.get(pk=pk).as_final()
         except ObjectDoesNotExist:
             err = 'Given question with id `{id}` doesn\'t exist, thus results cannot be calculated'
             message = err.format(id=pk)
             return Response(message, 404)
 
-        serializer = QuestionSerializer(question)
+        serializer = serializers.QuestionResultsSerializer(question)
         return Response(serializer.data)
 
 class NestedThematicViewSet(viewsets.ReadOnlyModelViewSet):

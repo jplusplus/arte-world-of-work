@@ -294,9 +294,6 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         self.add_answer( self.question1, 70)
         self.add_answer( self.question1, 75)
 
-
-
-
         self.question2 = TextSelectionQuestion.objects.create(label='label', hint_text='hint')
         self.question2_choices = (
             TextChoiceField.objects.create(title='choice1', question=self.question2),

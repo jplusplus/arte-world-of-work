@@ -8,7 +8,7 @@ from app.api.viewsets import AnswerViewSet
 from app.api.viewsets import MyAnswerViewSet
 
 router = routers.DefaultRouter()
-router.register(r'questions',        QuestionViewSet)
+router.register(r'questions',        QuestionViewSet, base_name='question')
 router.register(r'thematics',        ThematicViewSet)
 router.register(r'thematics-nested', NestedThematicViewSet,  base_name='thematic-nested')
 router.register(r'thematics-result', ThematicResultsViewSet, base_name='thematic-results')
