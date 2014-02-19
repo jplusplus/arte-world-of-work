@@ -1,6 +1,10 @@
-<div>
+<div class='chart'>
     <svg></svg>
-    <label ng-show="chart">H <input checked type='checkbox' /></label>
-    <label ng-show="chart">F <input checked type='checkbox' /></label>
-    <input type='range' ng-show="chart" />
+    <div class='filters' ng-show='chart'>
+        <div class='btn-group'>
+            <button type="button" class="btn btn-primary" ng-model="filter.h" btn-checkbox>H</button>
+            <button type="button" class="btn btn-primary" ng-model="filter.f" btn-checkbox>F</button>
+        </div>
+        <div slider ng-from='filter.from' ng-to='filter.to' start='0' end='100'></div>
+    </div>
 </div>
