@@ -13,11 +13,7 @@ class InheritedModelMixin(serializers.ModelSerializer):
     def to_native(self, value):
         if not value:
             return None
-        try:
-            base_data  = super(InheritedModelMixin, self).to_native(value)
-        except Exception as e:
-            import pdb; pdb.set_trace()
-
+        base_data  = super(InheritedModelMixin, self).to_native(value)
         serializer = self.get_final_serializer(value)
         if serializer:
             base_data.update(serializer(value).data)
