@@ -6,6 +6,11 @@ from rest_framework.serializers import ValidationError
 from app.core.models import *
 from app.api import mixins
 
+
+class ResultsSerializer(serializers.RelatedField):
+    def to_native(self, value):
+        return value.as_dict()
+
 class MediaChoiceFieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = MediaChoiceField
@@ -79,16 +84,16 @@ class QuestionSerializer(mixins.InheritedModelMixin):
         exclude = ('content_type',)
 
 
-class QuestionResultsSerializer(QuestionSerializer):
-    model_mapping = question_mapping
-    results  = serializers.Field()
+class QuestionResultsSerializer(mixins.InheritedModelMixin):
+    model_mapping = question_mapping 
+    results  = ResultsSerializer()
     typology = serializers.Field()
+
     class Meta:
         model  = BaseQuestion
         exclude = ('content_type',)
         depth  = 1
 
-   
 
 # -----------------------------------------------------------------------------
 # 

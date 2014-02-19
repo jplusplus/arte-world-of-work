@@ -55,8 +55,9 @@ def init(instance):
     instance.question5.set_thematic(instance.thematic2, 1)
 
     # answers creation
-    instance.answer1 = instance.question1.create_answer(user=instance.user, value=2)
-    instance.answer2 = instance.question2.create_answer(user=instance.user, value=instance.question2.choices()[0])
+    if getattr(instance, 'do_create_answers', None) != False:
+        instance.answer1 = instance.question1.create_answer(user=instance.user, value=2)
+        instance.answer2 = instance.question2.create_answer(user=instance.user, value=instance.question2.choices()[0])
 
 
 class TestUtils(object):
@@ -251,6 +252,33 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         thematic = response.data
         self.assertIsNotNone(thematic)
 
+class ResultsTestCase(APITestCase, TestCaseMixin):
+    def setUp(self):
+        self.do_create_answers = False
+        init(self) 
+        # clean existing answers (just in case)
+        [ans.delete() for ans in BaseAnswer.objects.all()]
+        # special answers for this API test case 
+        self.create_answers()
+
+    def create_answers(self):
+        q1 = self.question1
+        self.add_answer(q1, 15)
+        self.add_answer(q1, 18)
+        self.add_answer(q1, 19)
+        self.add_answer(q1, 20)
+        self.add_answer(q1, 21)
+        self.add_answer(q1, 45)
+        self.add_answer(q1, 45)
+        self.add_answer(q1, 45)
+        self.add_answer(q1, 70)
+        self.add_answer(q1, 75)
+
+
+    def add_answer(self, question, value, user=None):
+        if user == None:
+            user = User.objects.create()
+        self.answers[answer.question.id] = question.create_answer(user=user, value=value)
 
 class UserTestCase(APITestCase, TestCaseMixin):
     def setUp(self):
@@ -275,7 +303,7 @@ class UserTestCase(APITestCase, TestCaseMixin):
         result = self.client.get(url)
         self.assertIsNotNone(result)
 
-
+# these are test serializer
 class TypedNumberSerializer(ModelSerializer):
     class Meta:
         model = TypedNumberQuestion
@@ -318,3 +346,6 @@ class MixinsTestCase(TestCase, TestCaseMixin, TestUtils):
         self.assertAttrNotNone(data, 'min_number')
         self.assertAttrNotNone(data, 'max_number')
         self.assertAttrNotNone(data, 'unit')
+
+
+
