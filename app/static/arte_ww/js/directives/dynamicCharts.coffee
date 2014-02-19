@@ -1,7 +1,7 @@
 class Chart
     constructor: (@scope, @element) ->
         # Create the svg element
-        @svg = (d3.select @element[0]).append 'svg'
+        @svg = (d3.select @element[0]).selectAll 'svg'
 
         # Create a color range
         @color = (do d3.scale.category20)
@@ -20,7 +20,7 @@ class Chart
     setSize: =>
         @size =
             width : do @element.width
-            height : do @element.height
+            height : (do @element.height) - 40
 
         ((d3.select @element[0]).selectAll 'svg').attr
             width : @size.width
@@ -30,7 +30,7 @@ class Chart
         do @computeResults
 
     delete: =>
-        do ((d3.select @element[0]).selectAll 'svg').remove
+        do (((d3.select @element[0]).selectAll 'svg').selectAll '*').remove
 
 class PieChart extends Chart
     constructor: (@scope, @element) ->
@@ -203,7 +203,7 @@ class Histogram extends BarChart
 
 angular.module('arte-ww').directive 'dynamicChart', ['$window', ($window) ->
     directive =
-        template : '<div></div>'
+        templateUrl : 'partial/directives/chart.html'
         replace : yes
         restrict : 'E'
         scope :
@@ -233,6 +233,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', ($window) ->
             scope.$watch 'data', (newValues, oldValues) =>
                 if scope.chart? and scope.chart.type isnt (do scope.data.chart_type.toLowerCase)
                     do scope.chart.delete
+                    scope.chart = undefined
                     do newChart
                 do scope.chart.update
             , yes
