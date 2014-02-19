@@ -14,13 +14,14 @@
 # all core related tests should go here
 from app                         import utils   
 from app.core.models             import * 
-from app.utils                   import get_fields_names
 from django_countries.fields     import CountryField
 from django.core.exceptions      import ValidationError
 from django.test                 import TestCase
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
+from random import randint
 
 class CoreTestCase(TestCase):
     def setUp(self):
@@ -275,8 +276,40 @@ class CoreTestCase(TestCase):
         self.assertEqual( text_radio_question.typology,       'text_radio')
         self.assertEqual( media_radio_question.typology,      'media_radio')
 
+class ResultsTestCase(TestCase, utils.TestCaseMixin):
+    def setUp(self):
+        self.users = []
+        self.answers = {}
+        for i in range(0,30):
+            user = User.objects.create()
+            profile = user.userprofile 
+            profile.gender = GENDER_TYPES[randint(0,1)]
+            profile.age = randint(0, 99)
+            profile.save()
+            self.users.append(user)
+
+        self.question1 = TypedNumberQuestion.objects.create(label='label', hint_text='hint')
+        call_value = lambda q: randint(q.min_number, q.max_number)
+
+        self.create_nrand_answer(self.question1, 200, call_value)
+
+    def create_nrand_answer(self, question, amount, call_value):
+        self.answers[question.id] = []
+        for i in range(0, amount):
+            user = self.random_user()
+            value = call_value(question)
+            self.answers[question.id].append(question.create_answer(value=value, 
+                user=user))
 
 
+    def random_user(self):
+        return self.users[randint(0, len(self.users) - 1)]
+
+    def test_typed_number_question_results(self):
+        results = self.question1.results()
+        self.assertIsNotNone(results)
+        self.assertAttrNotNone(results, 'sets')
+        self.assertAttrNotNone(results, 'results')
 
 
 class UtilsTestCase(TestCase):
@@ -289,3 +322,5 @@ class UtilsTestCase(TestCase):
 
     def test_camel_to_underscore(self):
         self.assertEqual(utils.camel_to_underscore("CamelCaseToUnderscore"), "camel_case_to_underscore")
+
+
