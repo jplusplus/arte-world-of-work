@@ -201,7 +201,7 @@ class Histogram extends BarChart
         height : (d) => @_size.height - @y(d[2])
 
 
-angular.module('arte-ww').directive 'dynamicChart', ['$window', ($window) ->
+angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($window, $Result) ->
     directive =
         templateUrl : 'partial/directives/chart.html'
         replace : yes
@@ -211,7 +211,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', ($window) ->
         controller : ['$scope', (scope) ->
             scope.filter =
                 from : 0
-                to : 0
+                to : 99
                 h : yes
                 f : yes
         ]
@@ -224,6 +224,20 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', ($window) ->
                     when 'hbar' then new HBarChart scope, elem
                     when 'histo' then new Histogram scope, elem
                     else throw "Chart type '#{scope.data.chart_type}' does not exist."
+
+            update = =>
+                filters =
+                    age_min : scope.filter.from
+                    age_max : scope.filter.to
+
+                if (scope.filter.h isnt scope.filter.f)
+                    filters.gender = 'male' if scope.filter.h
+                    filters.gender = 'female' if scope.filter.f
+                else if scope.filter.h is false
+                    scope.filter.h = scope.filter.f = true
+
+                $Result.get { id : 80 , filters : filters }, (data) =>
+                    scope.data = data
 
             window.onresize = =>
                 do scope.$apply
@@ -251,8 +265,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', ($window) ->
 
             # Watch changes in the filters
             scope.$watch 'filter', (newValues, oldValues) =>
-                console.debug 'filter changed'
+                do update
             , yes
-
 
 ]
