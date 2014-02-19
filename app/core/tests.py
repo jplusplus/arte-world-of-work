@@ -13,6 +13,7 @@
 
 # all core related tests should go here
 from app                         import utils   
+from app.core                    import transport   
 from app.core.models             import * 
 from django_countries.fields     import CountryField
 from django.core.exceptions      import ValidationError
@@ -171,7 +172,7 @@ class CoreTestCase(TestCase):
 
 
     def test_multiple_answer(self): 
-        # test that we can actually create multiple answer for a given question 
+        # test that we can't create more than one answer on a given question
         iterations = 0
         question   = self.question3
         while iterations < 20:
@@ -181,7 +182,7 @@ class CoreTestCase(TestCase):
             iterations += 1 
 
         answers = BaseQuestion.objects.get(pk=self.question3.id).baseanswer_set.all()
-        self.assertEqual(len(answers), iterations)
+        self.assertEqual(len(answers), 1)
 
 
     def test_create_boolean_question(self):
@@ -280,6 +281,16 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
     def setUp(self):
         self.users = []
         self.answers = {}
+
+        self.question1 = TypedNumberQuestion.objects.create(label='label', hint_text='hint')
+        self.question2 = TextSelectionQuestion.objects.create(label='label', hint_text='hint')
+        self.question2_choices = (
+            TextChoiceField.objects.create(title='choice1', question=self.question2),
+            TextChoiceField.objects.create(title='choice2', question=self.question2),
+            TextChoiceField.objects.create(title='choice3', question=self.question2),
+        )
+        self.question3 = BooleanQuestion.objects.create(label='label', hint_text='hint')
+        
         for i in range(0,30):
             user = User.objects.create()
             profile = user.userprofile 
@@ -288,29 +299,44 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
             profile.save()
             self.users.append(user)
 
-        self.question1 = TypedNumberQuestion.objects.create(label='label', hint_text='hint')
-        call_value = lambda q: randint(q.min_number, q.max_number)
+        call_number_value    = lambda q: randint(q.min_number, q.max_number)
+        call_selection_value = lambda q: q.choices()[randint(0, q.choices().count() - 1)]
 
-        self.create_nrand_answer(self.question1, 200, call_value)
+        self.create_answers(self.question1, call_number_value)
+        self.create_answers(self.question2, call_selection_value)
+        self.create_answers(self.question3, call_selection_value)
 
-    def create_nrand_answer(self, question, amount, call_value):
+    def create_answers(self, question, call_value):
         self.answers[question.id] = []
-        for i in range(0, amount):
-            user = self.random_user()
-            value = call_value(question)
-            self.answers[question.id].append(question.create_answer(value=value, 
-                user=user))
+        for user in self.users:
+            self.answers[question.id] = question.create_answer(
+                value=call_value(question), 
+                user=user
+            )
 
-
-    def random_user(self):
-        return self.users[randint(0, len(self.users) - 1)]
+    def check_results(self, results):
+        results_dict = results.as_dict()
+        self.assertIsNotNone(results)
+        self.assertIsNotNone(results_dict)
+        self.assertTrue(isinstance(results_dict, dict))
+        self.assertAttrNotNone(results, 'sets')
+        self.assertAttrNotNone(results_dict, 'sets')
+        self.assertAttrNotNone(results, 'results')
+        self.assertAttrNotNone(results_dict, 'results')
 
     def test_typed_number_question_results(self):
         results = self.question1.results()
-        self.assertIsNotNone(results)
-        self.assertAttrNotNone(results, 'sets')
-        self.assertAttrNotNone(results, 'results')
+        self.assertTrue(isinstance(results, transport.Histogramme))
+        self.check_results(results)
 
+    def test_selection_question_results(self):
+        results = self.question2.results()
+        self.assertTrue(isinstance(results, transport.HorizontalBarChart))
+        self.check_results(results)
+
+    def test_boolean_question_results(self):
+        results = self.question3.results()
+        self.assertTrue(isinstance(results, transport.PieChart))
 
 class UtilsTestCase(TestCase):
 

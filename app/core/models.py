@@ -13,7 +13,7 @@
 
 from django.contrib.contenttypes import generic 
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.conf import settings
 from django.db import models
 from django.db.models.fields import FieldDoesNotExist
@@ -209,8 +209,6 @@ class StaticFeedback(BaseFeedback, ThematicElementMixin, PictureMixin):
     def __unicode__(self):
         return 'StaticFeedback: %s' % self.html_sentence[:60]
 
-
-
 # -----------------------------------------------------------------------------
 # 
 #     Answer types
@@ -219,7 +217,10 @@ class StaticFeedback(BaseFeedback, ThematicElementMixin, PictureMixin):
 class AnswerManager(models.Manager):
     def create_answer(self, question, user, value):
         answer_type =  question.answer_type
-        answer = answer_type(question=question, user=user)
+        try:
+            answer = BaseAnswer.objects.get(question=question, user=user).as_final()
+        except ObjectDoesNotExist:
+            answer = answer_type(question=question, user=user)
         field  = answer._meta.get_field('value')
         # check if value field is ManyToMany, ForeignKey or other
         if isinstance(field, models.ManyToManyField):
@@ -247,6 +248,10 @@ class BaseAnswer(models.Model):
     objects = AnswerManager()
     results = PassThroughManager.for_queryset_class(querysets.ResultsQuerySet)()
 
+    def as_final(self):
+        return self.content_object
+
+
 class TypedNumberAnswer(BaseAnswer):
     value = models.IntegerField()
     results = PassThroughManager.for_queryset_class(querysets.HistogrammeQuerySet)() 
@@ -261,11 +266,15 @@ class TypedNumberAnswer(BaseAnswer):
 
 class SelectionAnswer(BaseAnswer):
     value = models.ManyToManyField('BaseChoiceField')
-    results = PassThroughManager.for_queryset_class(querysets.BarChartQuerySet)() 
+    results = PassThroughManager.for_queryset_class(querysets.HorizontalBarChartQuerySet)() 
 
 class RadioAnswer(BaseAnswer):
     value = models.ForeignKey('BaseChoiceField')
-    results = PassThroughManager.for_queryset_class(querysets.BarChartQuerySet)() 
+    results = PassThroughManager.for_queryset_class(querysets.HorizontalBarChartQuerySet)() 
+
+class BooleanAnswer(BaseAnswer):
+    value = models.ForeignKey('BaseChoiceField')
+    results = PassThroughManager.for_queryset_class(querysets.PieChartQuerySet)()
 
 class UserProfileAnswer(BaseAnswer):
     """
@@ -392,7 +401,7 @@ class TextRadioQuestion(RadioQuestionMixin):
 
 class BooleanQuestion(RadioQuestionMixin):
     """ yes or no question - single answer """
-    pass
+    answer_type = BooleanAnswer
 
 class MediaTypeMixin(models.Model):
     """ 

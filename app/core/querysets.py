@@ -1,5 +1,5 @@
 from django.db.models import query 
-from app.core.transport import Histogramme, BarChart
+from app.core.transport import Histogramme, HorizontalBarChart, VerticalBarChart, PieChart
 
 class ResultsQuerySet(query.QuerySet):
     def in_age(self, age_min=None, age_max=None):
@@ -17,11 +17,16 @@ class ResultsQuerySet(query.QuerySet):
 
     def get_transport_object(self, question=None):
         qs = self.filter(question=question)
-        return self.transport_class(question, qs)
+        return self.__class__.transport_class(question, qs) 
 
 class HistogrammeQuerySet(ResultsQuerySet):
     transport_class = Histogramme
 
+class HorizontalBarChartQuerySet(ResultsQuerySet):
+    transport_class = HorizontalBarChart
 
-class BarChartQuerySet(ResultsQuerySet):
-    transport_class = BarChart
+class VerticalBarChartQuerySet(ResultsQuerySet):
+    transport_class = VerticalBarChart
+
+class PieChartQuerySet(ResultsQuerySet):
+    transport_class = PieChart

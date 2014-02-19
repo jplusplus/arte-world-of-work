@@ -27,18 +27,39 @@ API -> front-end (HTTP):
     take this serialized results (JSON)
 """
 
-class Histogramme(object):
-    def __init__(self, question, queryset, sets=5):
-        super(Histogramme, self).__init__()
-        self.mininum = question.min_number
-        self.maximum = question.max_number
-        self.max_id = 0
+class ResultObject(object):
+    def __init__(self, question, queryset):
+        self.question = question
         self.queryset = queryset
         self.total_answers = float(queryset.count())
-        self.set_number = sets
+        self.max_id = 0
         self.sets = {}
         self.results = {}
         self.create_sets()
+
+    def create_sets(self):
+        self_klass = self.__class__.__name__
+        raise NotImplementedError(
+            '{klass} must implement `create_sets` method'.format(
+                klass=self_klass)
+        )
+
+    def as_dict(self):
+        return {
+            'question': self.question,
+            'sets':     self.sets,
+            'results':  self.results,
+            'chart_type': self.chart_type
+        }
+
+
+class Histogramme(ResultObject):
+    def __init__(self, question, queryset, sets=5):
+        self.mininum = question.min_number
+        self.maximum = question.max_number
+        self.set_number = sets
+        self.chart_type = 'histogramme'
+        super(Histogramme, self).__init__(question, queryset)
 
     def create_sets(self):
         gap = self.maximum - self.mininum
@@ -69,9 +90,26 @@ class Histogramme(object):
             self.max_id = max(self.max_id, int(set_id)) 
         return self.max_id + 1
 
+class BarChart(ResultObject):
+    def create_sets(self):
+        for choice in self.question.choices():
+            answers = self.queryset.filter(value=choice).count()
+            self.add_set(choice, answers)
 
-class BarChart(object):
-    def __init__(self, question, queryset):
-        pass
+    def add_set(self, choice, value): 
+        self.sets[choice.id] = {
+            'name': choice.title
+        }
+        self.results[choice.id] = value
+
+class HorizontalBarChart(BarChart):
+    chart_type = 'horizontal_bar'
     
+class VerticalBarChart(BarChart):
+    chart_type = 'horizontal_bar'
+
+class PieChart(BarChart):
+    chart_type = 'pie'
+
+
 
