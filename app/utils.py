@@ -87,7 +87,11 @@ class TestCaseMixin():
         self.assertIsNotNone(self.findElement(enum, model_instance.pk))
 
     def assertAttrNotNone(self, elem, attr):
-        self.assertIsNotNone(elem.get(attr, None))
+        if isinstance(elem, dict):
+            elem_attr = elem.get(attr, None)
+        else:
+            elem_attr = getattr(elem, attr, None)
+        self.assertIsNotNone(elem_attr)
 
     def debug(self, msg):
         print "\n[DBG - {time}] {msg}".format(time=datetime.now(), msg=msg)
