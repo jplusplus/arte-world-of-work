@@ -345,8 +345,9 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
     def test_typed_number_question_results(self):
         results = self.question1.results()
-        self.assertIsInstance(results, transport.Histogramme)
         self.check_results(results)
+        self.assertEqual(results.chart_type, 'histogramme')
+        self.assertIsInstance(results, transport.Histogramme)
 
         sets = results.sets
         self.assertEqual( sets[1]['min'], 0 )
@@ -378,11 +379,13 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
     def test_selection_question_results(self):
         results = self.question2.results()
         self.assertIsInstance(results, transport.HorizontalBarChart)
+        self.assertEqual(results.chart_type, 'horizontal_bar')
         self.check_results(results)
 
     def test_boolean_question_results(self):
         results = self.question3.results()
         self.assertIsInstance(results, transport.PieChart)
+        self.assertEqual(results.chart_type, 'pie')
 
 class UtilsTestCase(TestCase):
 
