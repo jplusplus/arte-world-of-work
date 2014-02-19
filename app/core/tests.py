@@ -283,6 +283,20 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         self.answers = {}
 
         self.question1 = TypedNumberQuestion.objects.create(label='label', hint_text='hint')
+        self.add_answer( self.question1, 15)
+        self.add_answer( self.question1, 18)
+        self.add_answer( self.question1, 19)
+        self.add_answer( self.question1, 20)
+        self.add_answer( self.question1, 21)
+        self.add_answer( self.question1, 45)
+        self.add_answer( self.question1, 45)
+        self.add_answer( self.question1, 45)
+        self.add_answer( self.question1, 70)
+        self.add_answer( self.question1, 75)
+
+
+
+
         self.question2 = TextSelectionQuestion.objects.create(label='label', hint_text='hint')
         self.question2_choices = (
             TextChoiceField.objects.create(title='choice1', question=self.question2),
@@ -302,9 +316,14 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         call_number_value    = lambda q: randint(q.min_number, q.max_number)
         call_selection_value = lambda q: q.choices()[randint(0, q.choices().count() - 1)]
 
-        self.create_answers(self.question1, call_number_value)
+
         self.create_answers(self.question2, call_selection_value)
         self.create_answers(self.question3, call_selection_value)
+
+    def add_answer(self, question, value, user=None):
+        if user == None:
+            user = User.objects.create()
+        self.answers[question.id] = question.create_answer(user=user, value=value)
 
     def create_answers(self, question, call_value):
         self.answers[question.id] = []
@@ -326,17 +345,44 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
     def test_typed_number_question_results(self):
         results = self.question1.results()
-        self.assertTrue(isinstance(results, transport.Histogramme))
+        self.assertIsInstance(results, transport.Histogramme)
         self.check_results(results)
+
+        sets = results.sets
+        self.assertEqual( sets[1]['min'], 0 )
+        self.assertEqual( sets[1]['max'], 20 )
+
+        self.assertEqual( sets[2]['min'], 20 )
+        self.assertEqual( sets[2]['max'], 40 )
+
+        self.assertEqual( sets[3]['min'], 40 )
+        self.assertEqual( sets[3]['max'], 60 )
+
+        self.assertEqual( sets[4]['min'], 60 )
+        self.assertEqual( sets[4]['max'], 80 )
+
+
+        self.assertEqual( sets[5]['min'], 80  )
+        self.assertEqual( sets[5]['max'], 100 )
+
+        results = results.results 
+
+        self.assertEqual( results[1], 30 )
+        self.assertEqual( results[2], 20 )
+        self.assertEqual( results[3], 30 )
+        self.assertEqual( results[4], 20 )
+        self.assertEqual( results[5], 0  )
+
+
 
     def test_selection_question_results(self):
         results = self.question2.results()
-        self.assertTrue(isinstance(results, transport.HorizontalBarChart))
+        self.assertIsInstance(results, transport.HorizontalBarChart)
         self.check_results(results)
 
     def test_boolean_question_results(self):
         results = self.question3.results()
-        self.assertTrue(isinstance(results, transport.PieChart))
+        self.assertIsInstance(results, transport.PieChart)
 
 class UtilsTestCase(TestCase):
 

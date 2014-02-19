@@ -46,7 +46,6 @@ class ResultObject(object):
 
     def as_dict(self):
         return {
-            'question': self.question,
             'sets':     self.sets,
             'results':  self.results,
             'chart_type': self.chart_type
