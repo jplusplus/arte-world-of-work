@@ -207,7 +207,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
         replace : yes
         restrict : 'E'
         scope :
-            data : '='
+            id : '='
         controller : ['$scope', (scope) ->
             scope.filter =
                 from : 0
@@ -236,7 +236,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                 else if scope.filter.h is false
                     scope.filter.h = scope.filter.f = true
 
-                $Result.get { id : 80 , filters : filters }, (data) =>
+                $Result.get { id : scope.id , filters : filters }, (data) =>
                     scope.data = data
 
             window.onresize = =>
@@ -254,13 +254,14 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
 
             # Watch changes in the data
             scope.$watch 'data', (newValues, oldValues) =>
-                if scope.chart? and scope.chart.type isnt (do scope.data.chart_type.toLowerCase)
-                    do scope.chart.delete
-                    scope.chart = undefined
-                    do newChart
-                else if not scope.chart?
-                    do newChart
-                do scope.chart.update
+                if scope.data?
+                    if scope.chart? and scope.chart.type isnt (do scope.data.chart_type.toLowerCase)
+                        do scope.chart.delete
+                        scope.chart = undefined
+                        do newChart
+                    else if not scope.chart?
+                        do newChart
+                    do scope.chart.update
             , yes
 
             # Watch changes in the filters
