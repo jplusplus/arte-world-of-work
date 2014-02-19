@@ -26,10 +26,12 @@
 
     {% compress js %}
         <script type="text/coffeescript">
-            angular.module 'arte-ww', []
+            angular.module 'arte-ww.services', []
+            angular.module 'arte-ww', ['arte-ww.services']
         </script>
 
         <script type="text/coffeescript" src="{% static 'arte_ww/js/controllers/ResultsCtrl.coffee' %}"></script>
+        <script type="text/coffeescript" src="{% static 'arte_ww/js/services/Result.coffee' %}"></script>
         <script type="text/coffeescript" src="{% static 'arte_ww/js/directives/dynamicCharts.coffee' %}"></script>
     {% endcompress %}
 
@@ -37,6 +39,6 @@
 
 {% block content %}
     <div ng-controller="ResultsCtrl">
-        <dynamic-chart data="graphdata" style="height:100%; width:100%;"></dynamic-chart>
+        <dynamic-chart id="80" style="height:100%; width:100%;"></dynamic-chart>
     </div>
 {% endblock %}
