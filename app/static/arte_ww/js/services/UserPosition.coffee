@@ -1,11 +1,20 @@
+class PositionsObject
+    constructor: (elements)->
+        @elements  =  _.sortBy elements, (el)-> el.position
+        @positions =  _.map(@elements, (el)-> el.position )
+
+    positionAt: (i)=> @positions[i]
+
+    getAt: (i)=> _.findWhere @elements, position: @positionAt(i)
+
+    count: => @elements.length 
+
+
 # TODO: handle user position saving and loading/intialization
 class UserPositionService
-
     positions:
-        thematicPosition: 1
-        elementPosition: 1
-
-
+        thematicPosition: 0
+        elementPosition: 0
 
     thematicPosition: (position)=> 
         if position?
@@ -18,16 +27,18 @@ class UserPositionService
         @positions.elementPosition
 
     nextThematic: =>
-        @thematicPosition(@thematicPosition()+1)
+        @positions.thematicPosition += 1
 
     previousThematic: =>
-        @thematicPosition(@thematicPosition()-1)
+        @positions.thematicPosition -= 1
 
     nextElement: =>
-        @elementPosition(@elementPosition()+1)
+        @positions.elementPosition += 1
 
     previousElement: => 
-        @elementPosition(@elementPosition()-1)
+        @positions.elementPosition -= 1
+
+    createWrapper: (elements)-> return new PositionsObject(elements)
 
 
 angular.module('arte-ww.services').service 'UserPosition', UserPositionService

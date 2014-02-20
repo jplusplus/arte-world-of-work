@@ -1,12 +1,10 @@
 class Utils
-    ###
-    Utility service for front-end application
-    
-    attributes:
-        - states: common state name / value shared accross components
-    
-    ###
-
+    # -------------------------------------------------------------------------
+    # Utility service for front-end application
+    #
+    # attributes:
+    #    - states: common state name / value shared accross components
+    # -------------------------------------------------------------------------
     states: 
         survey:
             INTRO: 0
@@ -16,6 +14,5 @@ class Utils
             INTRO: 0
             ELEMENTS: 1
             OUTRO: 2
-
 
 angular.module('arte-ww.utils').service('utils', Utils)

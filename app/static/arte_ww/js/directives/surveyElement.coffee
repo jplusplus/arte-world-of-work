@@ -5,6 +5,9 @@ angular.module('arte-ww').directive 'surveyElement', [
             replace: yes
             templateUrl: "partial/directives/survey-element.html"
             link: (scope, elem, attrs)->
-                scope.element = scope.$eval(attrs.surveyElement)
+                scope.$watch -> 
+                        scope.$eval(attrs.surveyElement)
+                    , (element)->
+                        scope.element = element
 
 ]
