@@ -348,8 +348,12 @@ class BaseQuestion(ThematicElementMixin):
         final_klass = self.content_type.model_class()
         return final_klass.objects.get(id=self.pk)
 
-    def results(self):
+    def results(self, age_min=None, age_max=None, gender=None):
         qs = self.__class__.answer_type.results.get_queryset()
+        if age_min and age_max:
+            qs = qs.in_age(age_min, age_max)
+        if gender:
+            qs = qs.with_gender(gender)
         return qs.compute(question=self)
     
 class TypedNumberQuestion(BaseQuestion, ValidateButtonMixin):

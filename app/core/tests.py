@@ -310,9 +310,7 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
             profile.save()
             self.users.append(user)
 
-        call_number_value    = lambda q: randint(q.min_number, q.max_number)
         call_selection_value = lambda q: q.choices()[randint(0, q.choices().count() - 1)]
-
 
         self.create_answers(self.question2, call_selection_value)
         self.create_answers(self.question3, call_selection_value)
@@ -370,7 +368,6 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         self.assertEqual( results[3], 30 )
         self.assertEqual( results[4], 20 )
         self.assertEqual( results[5], 0  )
-
 
 
     def test_selection_question_results(self):

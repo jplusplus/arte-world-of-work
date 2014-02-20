@@ -387,7 +387,6 @@ class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual(response.status_code, 200)
         question_json = response.data
         results_object = question_json.get('results')
-
         results        = results_object.get('results')
         sets           = results_object.get('sets')
 
@@ -436,7 +435,7 @@ class TypedNumberSerializer(ModelSerializer):
     class Meta:
         model = TypedNumberQuestion
 
-class TestSerializer(mixins.ContentTypeMixin, ModelSerializer):
+class TestSerializer(mixins.GenericModelMixin, ModelSerializer):
     ctype_mapping = {
         TypedNumberQuestion: TypedNumberSerializer,
     }

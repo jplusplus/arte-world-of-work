@@ -27,7 +27,7 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
             message = err.format(id=pk)
             return Response(message, 404)
 
-        serializer = serializers.QuestionResultsSerializer(question)
+        serializer = serializers.QuestionResultsSerializer(question, context={'request': request})
         return Response(serializer.data)
 
 class NestedThematicViewSet(viewsets.ReadOnlyModelViewSet):
@@ -50,6 +50,11 @@ class NestedThematicViewSet(viewsets.ReadOnlyModelViewSet):
 class ThematicResultsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Thematic.objects.all()
     serializer_class = serializers.ThematicResultsSerializer
+    def list(self, request):
+        qs = self.get_queryset()
+        serializer = self.serializer_class(qs, many=True, 
+            context={'request': request})
+        return Response(serializer.data)
 
 # /survey/
 class ThematicViewSet(viewsets.ReadOnlyModelViewSet):
