@@ -276,6 +276,37 @@ class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.add_answer(q1, 70)
         self.add_answer(q1, 75)
 
+        q2 = self.question2 
+        yes_q2 = q2.choices().filter(title='yes')[0]
+        no_q2 = q2.choices().filter(title='no')[0]
+
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        
+        self.add_answer(q2, no_q2)
+        self.add_answer(q2, no_q2)
+        self.add_answer(q2, no_q2)
+
+        q3 = self.question3 
+        q3_c1, q3_c2, q3_c3 = q3.choices()
+        self.add_answer(q3, q3_c1)
+        self.add_answer(q3, q3_c1)
+        self.add_answer(q3, q3_c1)
+
+        self.add_answer(q3, q3_c2)
+        self.add_answer(q3, q3_c2)
+        
+        self.add_answer(q3, q3_c3)
+        self.add_answer(q3, q3_c3)
+        self.add_answer(q3, q3_c3)
+        self.add_answer(q3, q3_c3)
+        self.add_answer(q3, q3_c3)
+
     def add_answer(self, question, value, user=None):
         if user == None:
             user = User.objects.create()
@@ -290,10 +321,12 @@ class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
     def test_typed_number_question_results(self):
         url = reverse('question-results', kwargs={ 'pk': self.question1.pk })
         response = self.client.get(url) 
+        self.assertEqual(response.status_code, 200)
         question = response.data
         results  = question.get('results')
 
         self.assertEqual(results.get('chart_type'), transport.CHART_TYPES.HISTOGRAMME)
+        self.assertEqual(results.get('total_answers'), 10)
         sets = results.get('sets')
         self.assertEqual( sets[1]['min'], 0 )
         self.assertEqual( sets[1]['max'], 20 )
@@ -318,6 +351,61 @@ class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual( results[3], 30 )
         self.assertEqual( results[4], 20 )
         self.assertEqual( results[5], 0  )
+
+    def test_boolean_question_results(self):
+        question   = self.question2
+        yes_choice = question.choices().filter(title='yes')[0]
+        no_choice  = question.choices().filter(title='no' )[0]
+
+        url = reverse('question-results', kwargs={ 'pk': question.pk })
+        response        = self.client.get(url) 
+        self.assertEqual(response.status_code, 200)
+        question        = response.data
+        results_object  = question.get('results')
+
+        results = results_object.get('results')
+        sets    = results_object.get('sets')
+
+        self.assertEqual(results_object.get('chart_type'), transport.CHART_TYPES.PIE)
+        self.assertEqual(results_object.get('total_answers'), 10)
+        self.assertIsNotNone( sets[ yes_choice.pk ] )
+        self.assertEqual( sets[ yes_choice.pk ]['title'], yes_choice.title )
+        self.assertEqual( results[ yes_choice.pk ], 70)
+
+        self.assertIsNotNone( sets[ no_choice.pk ] )
+        self.assertEqual( sets[ no_choice.pk ]['title'], no_choice.title )
+        self.assertEqual( results[ no_choice.pk ], 30)
+
+    def test_selection_question_results(self):
+        question   = self.question3 
+        choice1    = self.question3_choice1
+        choice2    = self.question3_choice2
+        choice3    = self.question3_choice3
+        
+        url = reverse('question-results', kwargs={ 'pk': question.pk })
+        response        = self.client.get(url) 
+        self.assertEqual(response.status_code, 200)
+        question_json = response.data
+        results_object = question_json.get('results')
+
+        results        = results_object.get('results')
+        sets           = results_object.get('sets')
+
+        self.assertEqual(results_object.get('chart_type'), transport.CHART_TYPES.HORIZONTAL_BAR)
+        self.assertEqual(results_object.get('total_answers'), 10)
+
+        self.assertIsNotNone( sets[choice1.pk] )
+        self.assertEqual(     sets[choice1.pk]['title'], choice1.title )
+        self.assertEqual(     results[choice1.pk], 30)
+
+        self.assertIsNotNone( sets[ choice2.pk ] )
+        self.assertEqual( sets[ choice2.pk ]['title'], choice2.title )
+        self.assertEqual( results[ choice2.pk ], 20)
+
+        self.assertIsNotNone( sets[ choice3.pk ] )
+        self.assertEqual( sets[ choice3.pk ]['title'], choice3.title )
+        self.assertEqual( results[ choice3.pk ], 50)
+
 
 
 class UserTestCase(APITestCase, TestCaseMixin):

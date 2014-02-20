@@ -52,9 +52,10 @@ class ResultObject(object):
 
     def as_dict(self):
         return {
-            'sets':     self.sets,
-            'results':  self.results,
-            'chart_type': self.chart_type
+            'sets':          self.sets,
+            'results':       self.results,
+            'chart_type':    self.chart_type,
+            'total_answers': int(self.total_answers)
         }
 
 
@@ -74,10 +75,9 @@ class Histogramme(ResultObject):
                 int_min = gap * i
                 int_max = gap * (i+1)
 
-                qs = self.queryset.filter(value__gte=int_min, value__lt=int_max) 
-                answers = float(qs.count())
-                percentage =  answers / self.total_answers 
-                percentage *= 100
+                answers = self.queryset.filter(value__gte=int_min, value__lt=int_max).count()
+                percentage =  answers * 100.0 / self.total_answers
+                percentage = int(percentage)
                 self.add_set(mininum=int_min, maximum=int_max, percentage=percentage)
 
 
@@ -97,13 +97,16 @@ class Histogramme(ResultObject):
 
 class BarChart(ResultObject):
     def create_sets(self):
-        for choice in self.question.choices():
-            answers = self.queryset.filter(value=choice).count()
-            self.add_set(choice, answers)
+        if int(self.total_answers) > 0:
+            for choice in self.question.choices():
+                answers = self.queryset.filter(value=choice).count()
+                percentage = answers * 100.0 / self.total_answers
+                percentage = int(percentage)
+                self.add_set(choice, percentage)
 
     def add_set(self, choice, value): 
         self.sets[choice.id] = {
-            'name': choice.title
+            'title': choice.title
         }
         self.results[choice.id] = value
 
