@@ -39,8 +39,8 @@ class ThematicService
 
     get: (params, cb)=>
         @nestedThematics.get params, (thematic)=>
-            @loadedThematics[thematic.id] = thematic
-            cb(thematic)
+            @currentThematic = thematic.id
+            @loadedThematics[thematic.id] = thematic            
 
     getAt: (position, cb)=>
         return unless @list
@@ -50,6 +50,8 @@ class ThematicService
             cb(thematic)
         else
             @get(id: id, cb)
+
+    current: => @loadedThematics[ @currentThematic ]
 
 angular.module('arte-ww.services').service 'Thematic', ThematicService
         

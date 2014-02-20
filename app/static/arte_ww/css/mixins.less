@@ -1,0 +1,22 @@
+.thematic(@slug; @brand:@brand-primary; @bg:@body-bg) {	
+	
+	.thematic-@{slug} {
+		background-image:url("../img/bg/@{slug}.png");
+		background-color: @bg;
+		
+		#content {
+
+			a {
+				color: @brand;
+				&:hover {
+					color: lighten(@brand, 10);
+				}
+			}
+
+			.btn-primary {
+	  			.button-variant(#fff; @brand; @brand);
+			}
+		}		
+	}
+
+}

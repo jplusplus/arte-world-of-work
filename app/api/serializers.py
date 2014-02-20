@@ -143,7 +143,7 @@ class ThematicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thematic
         fields = ('id', 'title',  'intro_description', 'intro_button_label', 
-            'elements')
+            'elements', 'slug')
         depth = 1
 
 class NestedThematicSerializer(ThematicSerializer):
