@@ -1,6 +1,6 @@
-angular.module('arte-ww.filters', [])
-angular.module('arte-ww.services', [])
-angular.module('arte-ww.utils', [])
+angular.module('arte-ww.services', ['ngCookies'])
+angular.module('arte-ww.filters',  [])
+angular.module('arte-ww.utils',    [])
 
 arteww = angular
     .module('arte-ww', [
@@ -33,13 +33,11 @@ arteww = angular
             '$locationProvider'
             '$httpProvider'
             '$cookiesProvider'
-            ($interpolateProvider, $routeProvider, $locationProvider, $http, $cookies)->
+            ($interpolateProvider, $routeProvider, $locationProvider)->
                 # Avoid a conflict with Django Template's tags
                 $interpolateProvider.startSymbol '[['
                 $interpolateProvider.endSymbol   ']]'
                 $locationProvider.html5Mode true
-                # Add CSRF token to headers
-                $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken   
 
                 # Bind routes to the controllers
                 $routeProvider

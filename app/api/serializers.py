@@ -6,12 +6,17 @@ from rest_framework.serializers import ValidationError
 from app.core.models import *
 from app.api import mixins
 
+
+class ResultsSerializer(serializers.Serializer):
+    def to_native(self, value):
+        return value.as_dict()
+
 class MediaChoiceFieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = MediaChoiceField
         fields = ('picture',)
 
-class ChoiceField(mixins.ContentTypeMixin):
+class ChoiceField(mixins.GenericModelMixin):
     ctype_mapping = {
         MediaChoiceField: MediaChoiceFieldSerializer
     }
@@ -79,23 +84,35 @@ class QuestionSerializer(mixins.InheritedModelMixin):
         exclude = ('content_type',)
 
 
-class QuestionResultsSerializer(QuestionSerializer):
-    model_mapping = question_mapping
-    results  = serializers.Field()
+class QuestionResultsSerializer(mixins.InheritedModelMixin):
+    model_mapping = question_mapping 
     typology = serializers.Field()
+    results  = serializers.SerializerMethodField('get_results')
+
     class Meta:
         model  = BaseQuestion
         exclude = ('content_type',)
         depth  = 1
 
-   
+
+    def get_results(self, question):
+        request = self.context['request']
+        params  = request.QUERY_PARAMS
+        filters = {}
+        filters['age_min'] = params.get('age_min', None)
+        filters['age_max'] = params.get('age_max', None)
+        filters['gender']  = params.get('gender', None)
+        serializer = ResultsSerializer(question.results(**filters)) 
+        return serializer.data
+
+
 
 # -----------------------------------------------------------------------------
 # 
 #   Generic thematic elements
 #
 # -----------------------------------------------------------------------------
-class ThematicElementSerializer(mixins.ContentTypeMixin):
+class ThematicElementSerializer(mixins.GenericModelMixin):
     type = serializers.Field()
     ctype_mapping = {
         BaseFeedback: FeedbackSerializer,
@@ -109,9 +126,11 @@ class ThematicElementSerializer(mixins.ContentTypeMixin):
         depth = 0
 
 class ThematicElementResultsSerializer(ThematicElementSerializer):
+    # same as ThematicElementSerializer but instead of using a QuestionSerializer
+    # we use a QuestionResultsSerializer 
     ctype_mapping = {
         BaseFeedback: FeedbackSerializer,
-        BaseQuestion: QuestionResultsSerializer
+        BaseQuestion: QuestionResultsSerializer 
     }
 
 # -----------------------------------------------------------------------------
@@ -124,7 +143,7 @@ class ThematicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thematic
         fields = ('id', 'title',  'intro_description', 'intro_button_label', 
-            'elements')
+            'elements', 'slug')
         depth = 1
 
 class NestedThematicSerializer(ThematicSerializer):

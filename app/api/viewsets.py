@@ -3,16 +3,32 @@ from rest_framework import status
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.decorators import action
+from rest_framework.decorators import action, link
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
 
 from app.api import serializers, mixins
 from app.api.permissions import IsOwner
-from app.core.models import Thematic, UserPosition, BaseAnswer
+from app.core.models import Thematic, UserPosition, BaseAnswer, BaseQuestion
 
 # bind this `User` to current used User model (see `settings.AUTH_USER_MODEL`)
 User = get_user_model()
 
+class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = BaseQuestion.objects.all()
+    serializer_class = serializers.QuestionSerializer
+
+    @link()
+    def results(self, request, pk):
+        try:
+            question = self.queryset.get(pk=pk).as_final()
+        except ObjectDoesNotExist:
+            err = 'Given question with id `{id}` doesn\'t exist, thus results cannot be calculated'
+            message = err.format(id=pk)
+            return Response(message, 404)
+
+        serializer = serializers.QuestionResultsSerializer(question, context={'request': request})
+        return Response(serializer.data)
 
 class NestedThematicViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -34,6 +50,11 @@ class NestedThematicViewSet(viewsets.ReadOnlyModelViewSet):
 class ThematicResultsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Thematic.objects.all()
     serializer_class = serializers.ThematicResultsSerializer
+    def list(self, request):
+        qs = self.get_queryset()
+        serializer = self.serializer_class(qs, many=True, 
+            context={'request': request})
+        return Response(serializer.data)
 
 # /survey/
 class ThematicViewSet(viewsets.ReadOnlyModelViewSet):

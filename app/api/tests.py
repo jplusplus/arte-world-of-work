@@ -7,6 +7,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase, APIClient
 
+from app.core import transport
 from app.core.models import *
 from app.utils import TestCaseMixin
 from app.api import mixins 
@@ -55,8 +56,9 @@ def init(instance):
     instance.question5.set_thematic(instance.thematic2, 1)
 
     # answers creation
-    instance.answer1 = instance.question1.create_answer(user=instance.user, value=2)
-    instance.answer2 = instance.question2.create_answer(user=instance.user, value=instance.question2.choices()[0])
+    if getattr(instance, 'do_create_answers', None) != False:
+        instance.answer1 = instance.question1.create_answer(user=instance.user, value=2)
+        instance.answer2 = instance.question2.create_answer(user=instance.user, value=instance.question2.choices()[0])
 
 
 class TestUtils(object):
@@ -251,6 +253,159 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         thematic = response.data
         self.assertIsNotNone(thematic)
 
+class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
+    def setUp(self):
+        self.do_create_answers = False
+        self.answers = {}
+        init(self) 
+        # clean existing answers (just in case)
+        [ans.delete() for ans in BaseAnswer.objects.all()]
+        # special answers for this API test case 
+        self.create_answers()
+
+    def create_answers(self):
+        q1 = self.question1
+        self.add_answer(q1, 15)
+        self.add_answer(q1, 18)
+        self.add_answer(q1, 19)
+        self.add_answer(q1, 20)
+        self.add_answer(q1, 21)
+        self.add_answer(q1, 45)
+        self.add_answer(q1, 45)
+        self.add_answer(q1, 45)
+        self.add_answer(q1, 70)
+        self.add_answer(q1, 75)
+
+        q2 = self.question2 
+        yes_q2 = q2.choices().filter(title='yes')[0]
+        no_q2 = q2.choices().filter(title='no')[0]
+
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        self.add_answer(q2, yes_q2)
+        
+        self.add_answer(q2, no_q2)
+        self.add_answer(q2, no_q2)
+        self.add_answer(q2, no_q2)
+
+        q3 = self.question3 
+        q3_c1, q3_c2, q3_c3 = q3.choices()
+        self.add_answer(q3, q3_c1)
+        self.add_answer(q3, q3_c1)
+        self.add_answer(q3, q3_c1)
+
+        self.add_answer(q3, q3_c2)
+        self.add_answer(q3, q3_c2)
+        
+        self.add_answer(q3, q3_c3)
+        self.add_answer(q3, q3_c3)
+        self.add_answer(q3, q3_c3)
+        self.add_answer(q3, q3_c3)
+        self.add_answer(q3, q3_c3)
+
+    def add_answer(self, question, value, user=None):
+        if user == None:
+            user = User.objects.create()
+        self.answers[question.id] = question.create_answer(user=user, value=value)
+
+    def test_results_not_found(self):
+        url = reverse('question-results', kwargs={ 'pk': 99 })
+        response = self.client.get(url) 
+        self.assertEqual(response.status_code, 404)
+        
+        
+    def test_typed_number_question_results(self):
+        url = reverse('question-results', kwargs={ 'pk': self.question1.pk })
+        response = self.client.get(url) 
+        self.assertEqual(response.status_code, 200)
+        question = response.data
+        results  = question.get('results')
+
+        self.assertEqual(results.get('chart_type'), transport.CHART_TYPES.HISTOGRAMME)
+        self.assertEqual(results.get('total_answers'), 10)
+        sets = results.get('sets')
+        self.assertEqual( sets[1]['min'], 0 )
+        self.assertEqual( sets[1]['max'], 20 )
+
+        self.assertEqual( sets[2]['min'], 20 )
+        self.assertEqual( sets[2]['max'], 40 )
+
+        self.assertEqual( sets[3]['min'], 40 )
+        self.assertEqual( sets[3]['max'], 60 )
+
+        self.assertEqual( sets[4]['min'], 60 )
+        self.assertEqual( sets[4]['max'], 80 )
+
+
+        self.assertEqual( sets[5]['min'], 80  )
+        self.assertEqual( sets[5]['max'], 100 )
+
+        results = results['results'] 
+
+        self.assertEqual( results[1], 30 )
+        self.assertEqual( results[2], 20 )
+        self.assertEqual( results[3], 30 )
+        self.assertEqual( results[4], 20 )
+        self.assertEqual( results[5], 0  )
+
+    def test_boolean_question_results(self):
+        question   = self.question2
+        yes_choice = question.choices().filter(title='yes')[0]
+        no_choice  = question.choices().filter(title='no' )[0]
+
+        url = reverse('question-results', kwargs={ 'pk': question.pk })
+        response        = self.client.get(url) 
+        self.assertEqual(response.status_code, 200)
+        question        = response.data
+        results_object  = question.get('results')
+
+        results = results_object.get('results')
+        sets    = results_object.get('sets')
+
+        self.assertEqual(results_object.get('chart_type'), transport.CHART_TYPES.PIE)
+        self.assertEqual(results_object.get('total_answers'), 10)
+        self.assertIsNotNone( sets[ yes_choice.pk ] )
+        self.assertEqual( sets[ yes_choice.pk ]['title'], yes_choice.title )
+        self.assertEqual( results[ yes_choice.pk ], 70)
+
+        self.assertIsNotNone( sets[ no_choice.pk ] )
+        self.assertEqual( sets[ no_choice.pk ]['title'], no_choice.title )
+        self.assertEqual( results[ no_choice.pk ], 30)
+
+    def test_selection_question_results(self):
+        question   = self.question3 
+        choice1    = self.question3_choice1
+        choice2    = self.question3_choice2
+        choice3    = self.question3_choice3
+        
+        url = reverse('question-results', kwargs={ 'pk': question.pk })
+        response        = self.client.get(url) 
+        self.assertEqual(response.status_code, 200)
+        question_json = response.data
+        results_object = question_json.get('results')
+        results        = results_object.get('results')
+        sets           = results_object.get('sets')
+
+        self.assertEqual(results_object.get('chart_type'), transport.CHART_TYPES.HORIZONTAL_BAR)
+        self.assertEqual(results_object.get('total_answers'), 10)
+
+        self.assertIsNotNone( sets[choice1.pk] )
+        self.assertEqual(     sets[choice1.pk]['title'], choice1.title )
+        self.assertEqual(     results[choice1.pk], 30)
+
+        self.assertIsNotNone( sets[ choice2.pk ] )
+        self.assertEqual( sets[ choice2.pk ]['title'], choice2.title )
+        self.assertEqual( results[ choice2.pk ], 20)
+
+        self.assertIsNotNone( sets[ choice3.pk ] )
+        self.assertEqual( sets[ choice3.pk ]['title'], choice3.title )
+        self.assertEqual( results[ choice3.pk ], 50)
+
+
 
 class UserTestCase(APITestCase, TestCaseMixin):
     def setUp(self):
@@ -275,12 +430,12 @@ class UserTestCase(APITestCase, TestCaseMixin):
         result = self.client.get(url)
         self.assertIsNotNone(result)
 
-
+# these are test serializer
 class TypedNumberSerializer(ModelSerializer):
     class Meta:
         model = TypedNumberQuestion
 
-class TestSerializer(mixins.ContentTypeMixin, ModelSerializer):
+class TestSerializer(mixins.GenericModelMixin, ModelSerializer):
     ctype_mapping = {
         TypedNumberQuestion: TypedNumberSerializer,
     }
@@ -318,3 +473,6 @@ class MixinsTestCase(TestCase, TestCaseMixin, TestUtils):
         self.assertAttrNotNone(data, 'min_number')
         self.assertAttrNotNone(data, 'max_number')
         self.assertAttrNotNone(data, 'unit')
+
+
+

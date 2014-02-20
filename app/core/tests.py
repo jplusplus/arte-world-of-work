@@ -13,14 +13,16 @@
 
 # all core related tests should go here
 from app                         import utils   
+from app.core                    import transport   
 from app.core.models             import * 
-from app.utils                   import get_fields_names
 from django_countries.fields     import CountryField
 from django.core.exceptions      import ValidationError
 from django.test                 import TestCase
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
+from random import randint
 
 class CoreTestCase(TestCase):
     def setUp(self):
@@ -170,7 +172,7 @@ class CoreTestCase(TestCase):
 
 
     def test_multiple_answer(self): 
-        # test that we can actually create multiple answer for a given question 
+        # test that we can't create more than one answer on a given question
         iterations = 0
         question   = self.question3
         while iterations < 20:
@@ -180,7 +182,7 @@ class CoreTestCase(TestCase):
             iterations += 1 
 
         answers = BaseQuestion.objects.get(pk=self.question3.id).baseanswer_set.all()
-        self.assertEqual(len(answers), iterations)
+        self.assertEqual(len(answers), 1)
 
 
     def test_create_boolean_question(self):
@@ -275,9 +277,109 @@ class CoreTestCase(TestCase):
         self.assertEqual( text_radio_question.typology,       'text_radio')
         self.assertEqual( media_radio_question.typology,      'media_radio')
 
+class ResultsTestCase(TestCase, utils.TestCaseMixin):
+    def setUp(self):
+        self.users = []
+        self.answers = {}
+
+        self.question1 = TypedNumberQuestion.objects.create(label='label', hint_text='hint')
+        self.add_answer( self.question1, 15)
+        self.add_answer( self.question1, 18)
+        self.add_answer( self.question1, 19)
+        self.add_answer( self.question1, 20)
+        self.add_answer( self.question1, 21)
+        self.add_answer( self.question1, 45)
+        self.add_answer( self.question1, 45)
+        self.add_answer( self.question1, 45)
+        self.add_answer( self.question1, 70)
+        self.add_answer( self.question1, 75)
+
+        self.question2 = TextSelectionQuestion.objects.create(label='label', hint_text='hint')
+        self.question2_choices = (
+            TextChoiceField.objects.create(title='choice1', question=self.question2),
+            TextChoiceField.objects.create(title='choice2', question=self.question2),
+            TextChoiceField.objects.create(title='choice3', question=self.question2),
+        )
+        self.question3 = BooleanQuestion.objects.create(label='label', hint_text='hint')
+        
+        for i in range(0,30):
+            user = User.objects.create()
+            profile = user.userprofile 
+            profile.gender = GENDER_TYPES[randint(0,1)]
+            profile.age = randint(0, 99)
+            profile.save()
+            self.users.append(user)
+
+        call_selection_value = lambda q: q.choices()[randint(0, q.choices().count() - 1)]
+
+        self.create_answers(self.question2, call_selection_value)
+        self.create_answers(self.question3, call_selection_value)
+
+    def add_answer(self, question, value, user=None):
+        if user == None:
+            user = User.objects.create()
+        self.answers[question.id] = question.create_answer(user=user, value=value)
+
+    def create_answers(self, question, call_value):
+        self.answers[question.id] = []
+        for user in self.users:
+            self.answers[question.id] = question.create_answer(
+                value=call_value(question), 
+                user=user
+            )
+
+    def check_results(self, results):
+        results_dict = results.as_dict()
+        self.assertIsNotNone(results)
+        self.assertIsNotNone(results_dict)
+        self.assertTrue(isinstance(results_dict, dict))
+        self.assertAttrNotNone(results, 'sets')
+        self.assertAttrNotNone(results_dict, 'sets')
+        self.assertAttrNotNone(results, 'results')
+        self.assertAttrNotNone(results_dict, 'results')
+
+    def test_typed_number_question_results(self):
+        results = self.question1.results()
+        self.check_results(results)
+        self.assertEqual(results.chart_type, 'histogramme')
+        self.assertIsInstance(results, transport.Histogramme)
+
+        sets = results.sets
+        self.assertEqual( sets[1]['min'], 0 )
+        self.assertEqual( sets[1]['max'], 20 )
+
+        self.assertEqual( sets[2]['min'], 20 )
+        self.assertEqual( sets[2]['max'], 40 )
+
+        self.assertEqual( sets[3]['min'], 40 )
+        self.assertEqual( sets[3]['max'], 60 )
+
+        self.assertEqual( sets[4]['min'], 60 )
+        self.assertEqual( sets[4]['max'], 80 )
 
 
+        self.assertEqual( sets[5]['min'], 80  )
+        self.assertEqual( sets[5]['max'], 100 )
 
+        results = results.results 
+
+        self.assertEqual( results[1], 30 )
+        self.assertEqual( results[2], 20 )
+        self.assertEqual( results[3], 30 )
+        self.assertEqual( results[4], 20 )
+        self.assertEqual( results[5], 0  )
+
+
+    def test_selection_question_results(self):
+        results = self.question2.results()
+        self.assertIsInstance(results, transport.HorizontalBarChart)
+        self.assertEqual(results.chart_type, 'horizontal_bar')
+        self.check_results(results)
+
+    def test_boolean_question_results(self):
+        results = self.question3.results()
+        self.assertIsInstance(results, transport.PieChart)
+        self.assertEqual(results.chart_type, 'pie')
 
 class UtilsTestCase(TestCase):
 
@@ -289,3 +391,5 @@ class UtilsTestCase(TestCase):
 
     def test_camel_to_underscore(self):
         self.assertEqual(utils.camel_to_underscore("CamelCaseToUnderscore"), "camel_case_to_underscore")
+
+

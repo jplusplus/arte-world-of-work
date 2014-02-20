@@ -13,14 +13,16 @@
 
 from django.contrib.contenttypes import generic 
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.conf import settings
 from django.db import models
 from django.db.models.fields import FieldDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
+from model_utils.managers import PassThroughManager
 from sorl.thumbnail import ImageField
 from app import utils 
+from app.core import querysets
 
 # -----------------------------------------------------------------------------
 #
@@ -85,8 +87,8 @@ class ThematicElement(models.Model):
     class Meta:
         ordering= ['position']
 
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
+    content_type   = models.ForeignKey(ContentType)
+    object_id      = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     
     thematic = models.ForeignKey('Thematic', null=True, blank=True)
@@ -107,7 +109,7 @@ class ThematicElement(models.Model):
     def __unicode__(self):
         return u"{type} - {title}".format(
             type=self.content_type,
-            title=self.content_object.__unicode__()
+            title=str(self.content_object)
         )
 
 class ThematicElementMixin(models.Model):
@@ -148,9 +150,10 @@ class Thematic(models.Model):
         ordering = ('position',)
 
     position = models.PositiveIntegerField(default=0)
-    title = models.CharField(_('Thematic title'), max_length=120)
+    title    = models.CharField(_('Thematic title'), max_length=120)
     elements = generic.GenericRelation(ThematicElement)
-    objects = ThematicManager()
+    objects  = ThematicManager()
+    slug     = models.SlugField(max_length=250, unique=True, null=True, blank=True)
 
     intro_description = models.TextField(_('Introduction description'))
     intro_button_label = models.CharField(_('Introduction button label'), 
@@ -181,6 +184,7 @@ class Thematic(models.Model):
             final_elements.append(final_element)
         return final_elements
 
+
 # -----------------------------------------------------------------------------
 # 
 #     Feedbacks
@@ -207,8 +211,6 @@ class StaticFeedback(BaseFeedback, ThematicElementMixin, PictureMixin):
     def __unicode__(self):
         return 'StaticFeedback: %s' % self.html_sentence[:60]
 
-
-
 # -----------------------------------------------------------------------------
 # 
 #     Answer types
@@ -217,7 +219,10 @@ class StaticFeedback(BaseFeedback, ThematicElementMixin, PictureMixin):
 class AnswerManager(models.Manager):
     def create_answer(self, question, user, value):
         answer_type =  question.answer_type
-        answer = answer_type(question=question, user=user)
+        try:
+            answer = BaseAnswer.objects.get(question=question, user=user).as_final()
+        except ObjectDoesNotExist:
+            answer = answer_type(question=question, user=user)
         field  = answer._meta.get_field('value')
         # check if value field is ManyToMany, ForeignKey or other
         if isinstance(field, models.ManyToManyField):
@@ -232,32 +237,10 @@ class AnswerManager(models.Manager):
             if isinstance(value, UserChoiceField):
                 # if answered value is an User choice we need to check for its 
                 # inner value attribute or its title if value is `None`
-                value = value.value or value.title 
+                value = value.value or value.title
             answer.value = value
         answer.save()
         return answer
-
-
-
-class ResultManager(models.Manager):
-
-    def all(self, question=None, gender=None, age_min=None, age_max=None):
-        qs = self.get_queryset(question=question, gender=gender, age_min=age_min, age_max=age_max)
-        return qs
-
-    def get_queryset(self, question=None, gender=None, age_min=None, age_max=None):
-        assert question != None, "ResultManager need a question to get your results"
-        qs = super(ResultManager, self).get_queryset().filter(question=question)
-        if gender != None:
-            assert gender in map(lambda x:x[0], GENDER_TYPES), ("The given gender ",
-                "({gender}) is not recognized as a valid gender.".format(gender=gender))
-
-            qs = qs.filter(user__profile__gender=gender)
-
-        if age_min and age_max:
-            qs = qs.filter(user__profile__age__lte=age_max, user__profile__age__gte=age_min)
-        return qs
-
 
 class BaseAnswer(models.Model):
     content_type = models.ForeignKey(ContentType, editable=False)
@@ -265,14 +248,15 @@ class BaseAnswer(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     question = models.ForeignKey('BaseQuestion')
     objects = AnswerManager()
-    results = ResultManager()
+    results = PassThroughManager.for_queryset_class(querysets.ResultsQuerySet)()
 
-
-
+    def as_final(self):
+        return self.content_object
 
 
 class TypedNumberAnswer(BaseAnswer):
     value = models.IntegerField()
+    results = PassThroughManager.for_queryset_class(querysets.HistogrammeQuerySet)() 
 
     def clean(self, *args, **kwargs):
         question = TypedNumberQuestion.objects.get(pk=self.question.pk)
@@ -284,9 +268,15 @@ class TypedNumberAnswer(BaseAnswer):
 
 class SelectionAnswer(BaseAnswer):
     value = models.ManyToManyField('BaseChoiceField')
+    results = PassThroughManager.for_queryset_class(querysets.HorizontalBarChartQuerySet)() 
 
 class RadioAnswer(BaseAnswer):
     value = models.ForeignKey('BaseChoiceField')
+    results = PassThroughManager.for_queryset_class(querysets.HorizontalBarChartQuerySet)() 
+
+class BooleanAnswer(BaseAnswer):
+    value = models.ForeignKey('BaseChoiceField')
+    results = PassThroughManager.for_queryset_class(querysets.PieChartQuerySet)()
 
 class UserProfileAnswer(BaseAnswer):
     """
@@ -360,11 +350,13 @@ class BaseQuestion(ThematicElementMixin):
         final_klass = self.content_type.model_class()
         return final_klass.objects.get(id=self.pk)
 
-    @property
-    def results(self, gender=None, age_min=0, age_max=100):
-        return BaseAnswer.results.all(question=self, gender=gender, age_min=age_min, age_max=age_max )
-
-
+    def results(self, age_min=None, age_max=None, gender=None):
+        qs = self.__class__.answer_type.results.get_queryset()
+        if age_min and age_max:
+            qs = qs.in_age(age_min, age_max)
+        if gender:
+            qs = qs.with_gender(gender)
+        return qs.compute(question=self)
     
 class TypedNumberQuestion(BaseQuestion, ValidateButtonMixin):
     """
@@ -415,7 +407,7 @@ class TextRadioQuestion(RadioQuestionMixin):
 
 class BooleanQuestion(RadioQuestionMixin):
     """ yes or no question - single answer """
-    pass
+    answer_type = BooleanAnswer
 
 class MediaTypeMixin(models.Model):
     """ 
