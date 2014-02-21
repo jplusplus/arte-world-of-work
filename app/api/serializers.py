@@ -190,15 +190,15 @@ class RadioSerializer(serializers.ModelSerializer):
         exclude = ('content_type',)
 
     def validate_value(self, attrs, source):
-        # super(SelectionSerializer, self).validate(attrs)
         value = attrs.get('value')
         question = attrs.get('question').as_final()
-        if len(value) > 0:
-            for choice in value:
-                if choice.question.pk != question.pk:
-                    raise ValidationError(_('This choice {c} is not related to the answered question').format(c=choice))
-        else:
+
+        out_of_choices = question.choices().filter(id=value.pk).count() == 0
+
+        if value == None:
             raise ValidationError(_('You have to select at least one choice'))
+        elif out_of_choices:
+            raise ValidationError(_('This choice {c} is not related to the answered question').format(c=choice))
         return attrs
 
 class SelectionSerializer(serializers.ModelSerializer): 
@@ -207,7 +207,6 @@ class SelectionSerializer(serializers.ModelSerializer):
         exclude = ('content_type',)
 
     def validate_value(self, attrs, source):
-        # super(SelectionSerializer, self).validate(attrs)
         value = attrs.get('value')
         question = attrs.get('question').as_final()
         if len(value) > 0:
