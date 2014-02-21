@@ -4,23 +4,25 @@ angular.module('arte-ww').directive 'questionSelection', [
             restrict: "AE"
             templateUrl: "partial/directives/question-selection.html"
             link: (scope, elem, attrs)->
-                scope.answer = 
-                    choices: []
+                
+                _isSelected = (choice)->
+                    return choice.id in scope.answer 
 
+                _toggleChoice = (choice)->
+                    if _isSelected(choice)
+                        scope.answer = _.without(scope.answer)
+                    else
+                        scope.answer.push choice.id 
+
+                # -------------------------------------------------------------
+                # Scope variables binding 
+                # -------------------------------------------------------------
+                scope.answer = []
                 scope.question = scope.$parent.element
 
-                scope.addChoice = _addChoice
-                scope.removeChoice = _removeChoice
-
-                _addChoice = (choice)->
-                    # console.log '_addChoice'
-                    $scope.answer.choices.append choice
-
-                _removeChoice = (choice)->
-                    # console.log '_removeChoice'
-                    $scope.answer.choices = _.reject($scope.answer.choices, (el)-> el.id == choice.id)
-
-
-                
-
+                # -------------------------------------------------------------
+                # Scope functions binding 
+                # -------------------------------------------------------------
+                scope.isSelected   = _isSelected
+                scope.toggleChoice = _toggleChoice
 ]

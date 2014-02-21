@@ -18,7 +18,10 @@ arteww = angular
             '$rootScope'
             '$location'
             '$route'
-            ($rootScope, $location, $route)->
+            '$http'
+            ($rootScope, $location, $route, $http)->
+                $http.defaults.headers.common.Authorization = "Token 96a1673e2097f4807af8ae06ca9b8a915051a7cb"
+                
                 $rootScope.location = $location
                 $rootScope.currentCategory = -> 
                     # get the current category thanks to current root

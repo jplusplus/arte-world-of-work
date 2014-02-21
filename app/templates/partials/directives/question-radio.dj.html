@@ -5,7 +5,7 @@
      ng-class='question.media_type'>
 
     <div ng-repeat='choice in question.choices'
-         ng-click='toggleChoice(choice)'
+         ng-click='submitAnswer(choice.value || choice.id)'
          class="question-choice">
         <span>[[ choice.title ]]</span>
         <img ng-if='question.media_type' ng-attr-src='choice.picture'></img>

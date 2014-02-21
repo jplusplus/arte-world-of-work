@@ -10,4 +10,6 @@ class ResultService
             params : params.filters
         (@$http request).success cb
 
+    
+
 (angular.module 'arte-ww.services').service 'Result', ResultService
