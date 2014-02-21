@@ -20,14 +20,9 @@ def init(instance):
     token, created = Token.objects.get_or_create(user=instance.user)
     instance.authed_client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
-    # user questions
-    instance.user_age_question = instance.createQuestion(UserAgeQuestion)
-    instance.user_native_country_question = instance.createQuestion(UserCountryQuestion, **{ 'profile_attribute': 'native_country' })
-    instance.user_living_country_question = instance.createQuestion(UserCountryQuestion, **{ 'profile_attribute': 'living_country' })
-
     # thematics 
-    instance.thematic1 = Thematic.objects.create(position=1, title='You')
-    instance.thematic2 = Thematic.objects.create(position=2, title='Your Work')
+    instance.thematic1     = Thematic.objects.create(position=1, title='You')
+    instance.thematic2     = Thematic.objects.create(position=2, title='Your Work')
 
     # thematic1 question and feedback 
     instance.question1 = instance.createQuestion(TypedNumberQuestion, **{'unit': '%'})
@@ -64,6 +59,20 @@ def init(instance):
     if getattr(instance, 'do_create_answers', None) != False:
         instance.answer1 = instance.question1.create_answer(user=instance.user, value=2)
         instance.answer2 = instance.question2.create_answer(user=instance.user, value=instance.question2.choices()[0])
+
+
+     # user thematic & user questions
+    instance.user_thematic = Thematic.objects.create(position=3, title='You BIS')
+
+    instance.user_age_question            = instance.createQuestion(UserAgeQuestion)
+    instance.user_gender_question         = instance.createQuestion(UserGenderQuestion)
+    instance.user_native_country_question = instance.createQuestion(UserCountryQuestion, **{ 'profile_attribute': 'native_country' })
+    instance.user_living_country_question = instance.createQuestion(UserCountryQuestion, **{ 'profile_attribute': 'living_country' })
+
+    instance.user_age_question.set_thematic(instance.user_thematic, 1)
+    instance.user_gender_question.set_thematic(instance.user_thematic, 2)
+    instance.user_native_country_question.set_thematic(instance.user_thematic, 3)
+    instance.user_living_country_question.set_thematic(instance.user_thematic, 4)
 
 
 class TestUtils(object):
@@ -169,6 +178,24 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
             self.assertAttrNotNone(choice, 'title')
             self.assertAttrNotNone(choice, 'picture')
 
+    def test_thematic_nested_user_questions(self):
+        url = reverse('thematic-nested-detail', kwargs={ 'pk': self.user_thematic.pk})
+        response = self.client.get(url)
+        thematic = response.data
+        sub_elements = thematic.get('elements')
+        
+
+        user_age_question = sub_elements[0]
+        user_gender_question = sub_elements[1]
+        user_native_country_question = sub_elements[2]
+        user_living_country_question = sub_elements[3]
+
+        genders = user_gender_question['choices']
+        male    = filter( lambda g: g['value'] == 'male', genders  )[0]
+        female  = filter( lambda g: g['value'] == 'female', genders)[0]
+        self.assertIsNotNone( male   )    
+        self.assertIsNotNone( female )
+
 
 class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
     def setUp(self):
@@ -253,7 +280,18 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         profile  = UserProfile.objects.get(user=self.user) 
         self.assertEqual(response.status_code, 201)
         self.assertEqual(profile.age, 24)
-        
+
+    def test_create_user_gender_answer(self):
+        url = reverse('answer-list')
+        data = {
+            'value': 'female',
+            'question': self.user_gender_question.pk
+        }
+        response = self.authed_client.post(url, data, format='json')
+        profile  = UserProfile.objects.get(user=self.user) 
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(profile.gender, 'female')
+
 
     def test_create_user_living_country(self):
         url = reverse('answer-list')
@@ -282,7 +320,7 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         response = self.authed_client.get(url)
         self.assertEqual(response.status_code, 200)
         thematics = response.data
-        self.assertLenIs(thematics, 2)
+        self.assertLenIs(thematics, 3)
 
 
     def test_thematic_results_detail(self):
@@ -291,8 +329,6 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual(response.status_code, 200)
         thematic = response.data
         self.assertIsNotNone(thematic)
-
-
 
 class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
     def setUp(self):

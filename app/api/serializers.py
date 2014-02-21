@@ -16,9 +16,16 @@ class MediaChoiceFieldSerializer(serializers.ModelSerializer):
         model = MediaChoiceField
         fields = ('picture',)
 
+class UserChoiceFieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserChoiceField
+        fields = ('value',)
+
+
 class ChoiceField(mixins.GenericModelMixin):
     ctype_mapping = {
-        MediaChoiceField: MediaChoiceFieldSerializer
+        MediaChoiceField: MediaChoiceFieldSerializer,
+        UserChoiceField: UserChoiceFieldSerializer
     }
 
     class Meta:
@@ -104,9 +111,10 @@ class QuestionResultsSerializer(mixins.InheritedModelMixin):
         filters['age_min'] = params.get('age_min', None)
         filters['age_max'] = params.get('age_max', None)
         filters['gender']  = params.get('gender', None)
-        serializer = ResultsSerializer(question.results(**filters)) 
-        return serializer.data
-
+        if not issubclass(question.content_type.model_class(), UserProfileQuestion):
+            serializer = ResultsSerializer(question.results(**filters)) 
+            return serializer.data
+        return None
 
 
 # -----------------------------------------------------------------------------
@@ -181,6 +189,18 @@ class RadioSerializer(serializers.ModelSerializer):
         model = RadioAnswer        
         exclude = ('content_type',)
 
+    def validate_value(self, attrs, source):
+        # super(SelectionSerializer, self).validate(attrs)
+        value = attrs.get('value')
+        question = attrs.get('question').as_final()
+        if len(value) > 0:
+            for choice in value:
+                if choice.question.pk != question.pk:
+                    raise ValidationError(_('This choice {c} is not related to the answered question').format(c=choice))
+        else:
+            raise ValidationError(_('You have to select at least one choice'))
+        return attrs
+
 class SelectionSerializer(serializers.ModelSerializer): 
     class Meta: 
         model = SelectionAnswer
@@ -213,6 +233,11 @@ class UserCountrySerializer(serializers.ModelSerializer):
         model = UserCountryAnswer
         exclude = ('content_type',)
 
+class UserGenderSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = UserGenderAnswer
+        exclude = ('content_type',)
+
 class AnswerSerializer(mixins.InheritedModelMixin):
     class Meta:
         model = BaseAnswer
@@ -222,10 +247,12 @@ class AnswerSerializer(mixins.InheritedModelMixin):
         SelectionAnswer:   SelectionSerializer,
         TypedNumberAnswer: TypedNumberSerializer,
         UserAgeAnswer:     UserAgeSerializer, 
+        UserGenderAnswer:  UserGenderSerializer, 
         UserCountryAnswer: UserCountrySerializer, 
     }
 
     def as_final_serializer(self, data, files):
         final_question = BaseQuestion.objects.get_final_question(pk=data.get('question'))
-        return self.get_final_serializer(final_question.answer_type())(data=data, files=files)
+        serializer     = self.get_final_serializer(final_question.answer_type())
+        return serializer(data=data, files=files)
 
