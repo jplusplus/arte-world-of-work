@@ -20,6 +20,11 @@ def init(instance):
     token, created = Token.objects.get_or_create(user=instance.user)
     instance.authed_client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
+    # user questions
+    instance.user_age_question = instance.createQuestion(UserAgeQuestion)
+    instance.user_native_country_question = instance.createQuestion(UserCountryQuestion, **{ 'profile_attribute': 'native_country' })
+    instance.user_living_country_question = instance.createQuestion(UserCountryQuestion, **{ 'profile_attribute': 'living_country' })
+
     # thematics 
     instance.thematic1 = Thematic.objects.create(position=1, title='You')
     instance.thematic2 = Thematic.objects.create(position=2, title='Your Work')
@@ -238,6 +243,40 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         response = self.authed_client.post(url, data, format='json')
         self.assertEqual(response.status_code, 400)
 
+    def test_create_user_age_answer(self):
+        url = reverse('answer-list')
+        data = {
+            'value': 24,
+            'question': self.user_age_question.pk
+        }
+        response = self.authed_client.post(url, data, format='json')
+        profile  = UserProfile.objects.get(user=self.user) 
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(profile.age, 24)
+        
+
+    def test_create_user_living_country(self):
+        url = reverse('answer-list')
+        data = {
+            'value': 'BE',
+            'question': self.user_living_country_question.pk
+        }
+        response = self.authed_client.post(url, data, format='json')
+        profile  = UserProfile.objects.get(user=self.user) 
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(profile.living_country, 'BE')
+
+    def test_create_user_native_country(self):
+        url = reverse('answer-list')
+        data = {
+            'value': 'DE',
+            'question': self.user_native_country_question.pk
+        }
+        response = self.authed_client.post(url, data, format='json')
+        profile  = UserProfile.objects.get(user=self.user) 
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(profile.native_country, 'DE')
+
     def test_thematic_results_list(self):
         url = reverse('thematic-results-list')
         response = self.authed_client.get(url)
@@ -252,6 +291,8 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual(response.status_code, 200)
         thematic = response.data
         self.assertIsNotNone(thematic)
+
+
 
 class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
     def setUp(self):

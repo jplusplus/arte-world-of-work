@@ -56,16 +56,18 @@ class TypedNumberQuestionSerializer(serializers.ModelSerializer):
         model = TypedNumberQuestion
 
 class BooleanQuestionSerializer(MultipleChoicesSerializer):
-    choices = ChoiceField(source='basechoicefield_set', many=True)
     class Meta: 
         model = BooleanQuestion
 
-class UserAgeQuestionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserAgeQuestion
+class UserAgeQuestionSerializer(serializers.ModelSerializer): 
+    class Meta: model = UserAgeQuestion
+
+class UserCountryQuestionSerializer(serializers.ModelSerializer):
+    class Meta: model = UserCountryQuestion
 
 question_mapping = {
     UserAgeQuestion:         UserAgeQuestionSerializer,
+    UserCountryQuestion:     UserCountryQuestionSerializer,
     BooleanQuestion:         BooleanQuestionSerializer,
     TypedNumberQuestion:     TypedNumberQuestionSerializer,
     UserGenderQuestion:      MultipleChoicesSerializer,
@@ -152,6 +154,13 @@ class NestedThematicSerializer(ThematicSerializer):
 class ThematicResultsSerializer(ThematicSerializer):
     elements = ThematicElementResultsSerializer(many=True, source='thematicelement_set')
 
+
+# -----------------------------------------------------------------------------
+#
+#  User related serializers (+ auth ?)
+#
+# -----------------------------------------------------------------------------
+
 class UserSerializer(serializers.ModelSerializer):
     profile = serializers.RelatedField(source='userprofile', many=False)
     class Meta:
@@ -161,14 +170,15 @@ class UserPositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPosition
 
+
+# -----------------------------------------------------------------------------
+#
+# Answer serializers 
+#
+# -----------------------------------------------------------------------------
 class RadioSerializer(serializers.ModelSerializer): 
     class Meta: 
         model = RadioAnswer        
-        exclude = ('content_type',)
-
-class TypedNumberSerializer(serializers.ModelSerializer):
-    class Meta: 
-        model = TypedNumberAnswer
         exclude = ('content_type',)
 
 class SelectionSerializer(serializers.ModelSerializer): 
@@ -188,14 +198,31 @@ class SelectionSerializer(serializers.ModelSerializer):
             raise ValidationError(_('You have to select at least one choice'))
         return attrs
 
+class TypedNumberSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = TypedNumberAnswer
+        exclude = ('content_type',)
+
+class UserAgeSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = UserAgeAnswer
+        exclude = ('content_type',)
+
+class UserCountrySerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = UserCountryAnswer
+        exclude = ('content_type',)
+
 class AnswerSerializer(mixins.InheritedModelMixin):
     class Meta:
         model = BaseAnswer
 
     model_mapping = {
+        RadioAnswer:       RadioSerializer,
+        SelectionAnswer:   SelectionSerializer,
         TypedNumberAnswer: TypedNumberSerializer,
-        SelectionAnswer: SelectionSerializer,
-        RadioAnswer: RadioSerializer,
+        UserAgeAnswer:     UserAgeSerializer, 
+        UserCountryAnswer: UserCountrySerializer, 
     }
 
     def as_final_serializer(self, data, files):

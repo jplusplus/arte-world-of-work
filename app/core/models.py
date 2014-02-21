@@ -285,10 +285,11 @@ class UserProfileAnswer(BaseAnswer):
     """
     def get_profile_attribute(self): 
         # try to get field from meta // dynamic value
+        question = self.question.as_final()
         try:
-            profile_attribute = self.question.profile_attribute
+            profile_attribute = question.profile_attribute
         except FieldDoesNotExist:
-            profile_attribute = self.question.__class__.profile_attribute
+            profile_attribute = question.__class__.profile_attribute
         return profile_attribute
 
     def save(self, *args, **kwargs):
