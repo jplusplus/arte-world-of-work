@@ -149,6 +149,7 @@ class Migration(SchemaMigration):
             'intro_button_label': ('django.db.models.fields.CharField', [], {'default': "u'See the data'", 'max_length': '120', 'null': 'True', 'blank': 'True'}),
             'intro_description': ('django.db.models.fields.TextField', [], {}),
             'position': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '250', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '120'})
         },
         u'core.thematicelement': {
