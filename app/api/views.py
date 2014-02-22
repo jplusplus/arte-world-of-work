@@ -1,3 +1,4 @@
+from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
@@ -7,9 +8,9 @@ from rest_framework.decorators import action, link
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 
+from app.core.models import Thematic, UserPosition, BaseAnswer, BaseQuestion
 from app.api import serializers, mixins
 from app.api.permissions import IsOwner
-from app.core.models import Thematic, UserPosition, BaseAnswer, BaseQuestion
 
 # bind this `User` to current used User model (see `settings.AUTH_USER_MODEL`)
 User = get_user_model()
@@ -110,9 +111,12 @@ class UserViewSet(viewsets.ViewSet):
         serializer = serializers.UserSerializer(user)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
-    @action(methods=['GET', 'PUT'])
-    def mypostion(self, request, pk):
-        position = UserPosition.objects.get(user=pk)
-        serializer = serializers.UserPositionSerializer(position)
-        return Response(data=serializer.data)
 
+class MyPositionView(generics.RetrieveUpdateAPIView):
+    model = models.UserPosition
+    serializer_class = serializers.UserPositionSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user.userposition

@@ -503,9 +503,12 @@ class UserTestCase(APITestCase, TestCaseMixin):
         # url = reverse('user-auth')
 
     def test_user_mypostion(self):
-        url = reverse('user-mypostion', kwargs={'pk': self.user.pk})
-        result = self.client.get(url)
-        self.assertIsNotNone(result)
+        url = reverse('my-position')
+        response = self.client.get(url)
+        position = response.data
+        self.assertEqual(response.status_code, 200)
+        self.assertAttrNotNone(position, 'thematic_position')
+        self.assertAttrNotNone(position, 'element_position')
 
 # these are test serializer
 class TypedNumberSerializer(ModelSerializer):
