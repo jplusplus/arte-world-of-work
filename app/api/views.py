@@ -113,7 +113,7 @@ class UserViewSet(viewsets.ViewSet):
 
 
 class MyPositionView(generics.RetrieveUpdateAPIView):
-    model = models.UserPosition
+    model = UserPosition
     serializer_class = serializers.UserPositionSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)

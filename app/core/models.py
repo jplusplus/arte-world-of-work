@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 # Project : Arte - WoW
 # -----------------------------------------------------------------------------
-# Author : Edouard Richard                                  <edou4rd@gmail.com>
+# Author : Bellon Pierre                              <bellon.pierre@gmail.com>
 # -----------------------------------------------------------------------------
 # License : proprietary journalism++
 # -----------------------------------------------------------------------------
@@ -11,17 +11,18 @@
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
 
-from django.contrib.contenttypes import generic 
+from django.conf import settings
+from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.conf import settings
 from django.db import models
 from django.db.models.fields import FieldDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from model_utils.managers import PassThroughManager
-from sorl.thumbnail import ImageField
+
 from app import utils 
+from app.core import mixins 
 from app.core import querysets
 
 # -----------------------------------------------------------------------------
@@ -39,7 +40,11 @@ GENDER_TYPES = (
     ('female', _('Female')),
 )
 
-# User profile 
+# -----------------------------------------------------------------------------
+#
+#   User profile & position 
+#
+# -----------------------------------------------------------------------------
 class UserProfile(models.Model):
     user           = models.OneToOneField(settings.AUTH_USER_MODEL, unique=True)
     age            = models.PositiveIntegerField(null=True)
@@ -53,33 +58,16 @@ class UserPosition(models.Model):
     thematic_position = models.PositiveIntegerField(default=0, null=True, blank=True)
     element_position  = models.PositiveIntegerField(default=0, null=True, blank=True)
 
-# -----------------------------------------------------------------------------
-# 
-#     Pictures & Inherithed models 
-# 
-# -----------------------------------------------------------------------------
-class PictureMixin(models.Model):
-    """
-    Generic model for attached pictures (to question, choice or feedback)
-    """
-    class Meta:
-        abstract = True
-    picture = ImageField(upload_to='uploaded', null=True, blank=True)
 
-class QuestionMediaAttachement(PictureMixin):
+class QuestionMediaAttachement(mixins.PictureMixin):
     """
     Attached picture for a question
     """
     question = models.OneToOneField('BaseQuestion')
 
-class ValidateButtonMixin(models.Model):
-    class Meta:
-        abstract = True
-    validate_button_label = models.CharField(_('Validate button (label)'), default=_('Done'), max_length=120)
-
 # -----------------------------------------------------------------------------
 # 
-#     Thematics
+#   Thematics
 # 
 # -----------------------------------------------------------------------------
 # generic element for thematic, shall be questions or feedback
@@ -112,29 +100,6 @@ class ThematicElement(models.Model):
             title=str(self.content_object)
         )
 
-class ThematicElementMixin(models.Model):
-    """
-    Inject generic_element to a model that has a representative ThematicElement
-    """
-    class Meta:
-        abstract = True
-
-    generic_element = generic.GenericRelation(ThematicElement)
-        
-    def as_element(self):
-        ctype = ContentType.objects.get_for_model(self)
-        elements = self.generic_element.filter(content_type=ctype, object_id=self.pk)
-        if len(elements) > 0:
-            return elements[0]
-        else: 
-            return None
-
-    def set_thematic(self, thematic, position=None):
-        element = self.as_element()
-        element.thematic = thematic
-        if position != None:
-            element.position = position
-        element.save()
 
 class ThematicManager(models.Manager):
     def all_elements(self):
@@ -163,7 +128,7 @@ class Thematic(models.Model):
     def add_element(self, instance, position=None):
         # Add an element to a thematic object 
         # will convert passed concrete model `instance`, if instance doe
-        assert issubclass(instance.__class__, ThematicElementMixin)
+        assert issubclass(instance.__class__, mixins.ThematicElementMixin)
         element = instance.as_element() # can raise NotImplementedError 
         element.thematic = self
         if position != None:
@@ -190,8 +155,7 @@ class Thematic(models.Model):
 #     Feedbacks
 # 
 # -----------------------------------------------------------------------------
-class BaseFeedback(ValidateButtonMixin):
-    content_type  = models.ForeignKey(ContentType, editable=False)
+class BaseFeedback(mixins.ValidateButtonMixin, mixins.AsFinalMixin):
     html_sentence = models.CharField(_('Feedbacks sentence'), max_length=120, 
         help_text=_('Sentence (as html content): "Hey did you knew .. ?"')
     )
@@ -205,7 +169,9 @@ class BaseFeedback(ValidateButtonMixin):
     def __unicode__(self):
         return 'Feedback: %s' % self.html_sentence[:60]
 
-class StaticFeedback(BaseFeedback, ThematicElementMixin, PictureMixin):
+class StaticFeedback( BaseFeedback, 
+                      mixins.ThematicElementMixin, 
+                      mixins.PictureMixin ):
     source_url = models.URLField()
     source_title = models.CharField(max_length=120)
     def __unicode__(self):
@@ -242,17 +208,11 @@ class AnswerManager(models.Manager):
         answer.save()
         return answer
 
-class BaseAnswer(models.Model):
-    content_type = models.ForeignKey(ContentType, editable=False)
-    content_object = generic.GenericForeignKey('content_type', 'pk')
+class BaseAnswer(mixins.AsFinalMixin, models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     question = models.ForeignKey('BaseQuestion')
     objects = AnswerManager()
     results = PassThroughManager.for_queryset_class(querysets.ResultsQuerySet)()
-
-    def as_final(self):
-        return self.content_object
-
 
 class TypedNumberAnswer(BaseAnswer):
     value = models.IntegerField()
@@ -318,14 +278,13 @@ class QuestionManager(models.Manager):
         base_question = self.get(id=pk)
         return base_question.as_final()
 
-class BaseQuestion(ThematicElementMixin):
+class BaseQuestion(mixins.ThematicElementMixin, mixins.AsFinalMixin):
     """
     Base class for question, will be inherited by concrete question typologies
     """
     answer_type       = None
     label             = models.CharField(_('Question label')    , max_length=220)
     hint_text         = models.CharField(_('Question hint text'), max_length=120)
-    content_type      = models.ForeignKey(ContentType, editable=False)
     skip_button_label = models.CharField(_('Skip button (label)'), default=_('Skip this question'),max_length=120)
     objects = QuestionManager()
     # properties 
@@ -359,7 +318,7 @@ class BaseQuestion(ThematicElementMixin):
             qs = qs.with_gender(gender)
         return qs.compute(question=self)
     
-class TypedNumberQuestion(BaseQuestion, ValidateButtonMixin):
+class TypedNumberQuestion(BaseQuestion, mixins.ValidateButtonMixin):
     """
     TypedNumber question are questions where we ask user to select a number
     defined insided an interval.
@@ -377,7 +336,7 @@ class TypedNumberQuestion(BaseQuestion, ValidateButtonMixin):
 #   Single (radio) & multiple (selection) possible answer questions  
 #
 # -----------------------------------------------------------------------------
-class RadioQuestionMixin(BaseQuestion):
+class BaseRadioQuestion(BaseQuestion):
     """
     Mixin for radio question (one single answer)
     """ 
@@ -385,7 +344,7 @@ class RadioQuestionMixin(BaseQuestion):
         abstract = True
     answer_type = RadioAnswer
 
-class SelectionQuestionMixin(BaseQuestion, ValidateButtonMixin):
+class BaseSelectionQuestion(BaseQuestion, mixins.ValidateButtonMixin):
     """ 
     Mixin for selection question (one on more answer)
     """
@@ -393,20 +352,19 @@ class SelectionQuestionMixin(BaseQuestion, ValidateButtonMixin):
         abstract = True
     answer_type = SelectionAnswer
 
-
-class TextSelectionQuestion(SelectionQuestionMixin):
+class TextSelectionQuestion(BaseSelectionQuestion):
     """ Multiple Choices (text) question - one or more answer """
     class Meta:
         verbose_name = _('Text (multiple choices) question')
         verbose_name_plural = _('Text (multiple choices) questions')
 
-class TextRadioQuestion(RadioQuestionMixin):
+class TextRadioQuestion(BaseRadioQuestion):
     """ Multiple Choice (text) question - single answer """
     class Meta:
         verbose_name = _('Text (single choice) question')
         verbose_name_plural = _('Text (single choice) questions')
 
-class BooleanQuestion(RadioQuestionMixin):
+class BooleanQuestion(BaseRadioQuestion):
     """ yes or no question - single answer """
     answer_type = BooleanAnswer
 
@@ -420,7 +378,7 @@ class MediaTypeMixin(models.Model):
     media_type = models.CharField(_('Choice\'s media type'), max_length=15, \
                     choices=MEDIA_TYPES)
 
-class MediaRadioQuestion(RadioQuestionMixin, MediaTypeMixin):
+class MediaRadioQuestion(BaseRadioQuestion, MediaTypeMixin):
     """ 
     Multiple Choice (image or icon) question - single answer. 
 
@@ -431,7 +389,7 @@ class MediaRadioQuestion(RadioQuestionMixin, MediaTypeMixin):
         verbose_name = _('Media (single choice) question')
         verbose_name_plural = _('Media (single choice) questions')
 
-class MediaSelectionQuestion(SelectionQuestionMixin, MediaTypeMixin):
+class MediaSelectionQuestion(BaseSelectionQuestion, MediaTypeMixin):
     """ 
     Multiple Choice (image or icon) question - multiple answer. 
 
@@ -451,7 +409,7 @@ class UserProfileQuestion(BaseQuestion):
     profile_attribute = None
     answer_type       = UserProfileAnswer
 
-class UserAgeQuestion(UserProfileQuestion, ValidateButtonMixin):
+class UserAgeQuestion(UserProfileQuestion, mixins.ValidateButtonMixin):
     profile_attribute = 'age'
     answer_type       = UserAgeAnswer
 
@@ -484,7 +442,7 @@ class BaseChoiceField(models.Model):
 class TextChoiceField(BaseChoiceField):
     pass
 
-class MediaChoiceField(BaseChoiceField, PictureMixin):
+class MediaChoiceField(BaseChoiceField, mixins.PictureMixin):
     pass
 
 class UserChoiceField(BaseChoiceField):

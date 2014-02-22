@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
 
+from app.core import mixins as core_mixins 
 from app.core.models import *
 from app.api import mixins
 
@@ -54,7 +55,7 @@ class MultipleChoicesSerializer(serializers.ModelSerializer):
 
     def to_native(self, value): 
         base_data = super(MultipleChoicesSerializer, self).to_native(value)
-        if isinstance(value, ValidateButtonMixin):
+        if isinstance(value, core_mixins.ValidateButtonMixin):
             base_data['validate_button_label'] = value.validate_button_label
         return base_data
 
@@ -78,8 +79,8 @@ question_mapping = {
     BooleanQuestion:         BooleanQuestionSerializer,
     TypedNumberQuestion:     TypedNumberQuestionSerializer,
     UserGenderQuestion:      MultipleChoicesSerializer,
-    RadioQuestionMixin:      MultipleChoicesSerializer,
-    SelectionQuestionMixin:  MultipleChoicesSerializer
+    BaseRadioQuestion:       MultipleChoicesSerializer,
+    BaseSelectionQuestion:   MultipleChoicesSerializer
 }
 
 class QuestionSerializer(mixins.InheritedModelMixin):
@@ -242,6 +243,7 @@ class AnswerSerializer(mixins.InheritedModelMixin):
         model = BaseAnswer
 
     model_mapping = {
+        BooleanAnswer:     RadioSerializer,
         RadioAnswer:       RadioSerializer,
         SelectionAnswer:   SelectionSerializer,
         TypedNumberAnswer: TypedNumberSerializer,
