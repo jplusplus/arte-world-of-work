@@ -1,3 +1,15 @@
+TYPOLOGIES =
+    USER:
+        GENDER: 'user_gender'
+        AGE: 'user_age'
+        COUNTRY: 'user_country'
+    TYPED_NUMBER: 'typed_number'
+    RADIO_TYPES: ['boolean', 'text_radio', 'media_radio']
+    SELECTION_TYPES: ['text_selection', 'media_selection']
+
+
+
+
 angular.module('arte-ww').directive 'surveyElement', [
     ()->
         directive = 
@@ -20,6 +32,8 @@ angular.module('arte-ww').directive 'surveyElement', [
             ]
 
             link: (scope, elem, attrs)->
+                # let the template use choices typologies for sub-directive selection
+                scope.TYPOLOGIES = TYPOLOGIES
                 scope.$watch -> 
                         scope.$eval(attrs.surveyElement)
                     , (element)->
