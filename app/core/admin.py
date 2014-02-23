@@ -62,6 +62,10 @@ class InlineThematicElement(admin.TabularInline):
     extra = 0
     max_num = 0
 
+# answers inlines 
+
+
+
 # -----------------------------------------------------------------------------
 #
 #    Question
@@ -98,6 +102,10 @@ class FeedbackAdmin(admin.ModelAdmin):
         GenericInlineThematicElement,
     )
 
+class AnswerAdmin(admin.ModelAdmin): 
+    readonly_fields = ('content_type',)
+
+
 # -----------------------------------------------------------------------------
 #
 #    Register your models here
@@ -118,5 +126,11 @@ admin.site.register(models.UserGenderQuestion    , QuestionAdmin)
 admin.site.register(models.Thematic              , ThematicAdmin)
 
 admin.site.register(models.StaticFeedback        , FeedbackAdmin)
+
+
+admin.site.register(models.TypedNumberAnswer     , AnswerAdmin)
+admin.site.register(models.SelectionAnswer       , AnswerAdmin)
+admin.site.register(models.RadioAnswer           , AnswerAdmin)
+admin.site.register(models.BooleanAnswer         , AnswerAdmin)
 
 # EOF
