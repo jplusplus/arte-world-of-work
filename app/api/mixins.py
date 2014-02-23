@@ -10,33 +10,24 @@ from app.core.mixins import AsFinalMixin
 class SerializerNotFoundError(Exception):
     pass
 
-class InheritedModelCreateMixin(mixins.CreateModelMixin):
-    # If you want to have only one serializer for a BaseClass and all its inherithed
-    # classes then you should use this mixin
-    # 
-    # This mixin is heavily inspired from rest_framework.mixins.CreateModelMixin
-    def create(self, request, *args, **kwargs):
-        # only variation: we don't use directly self.get_serializer but we want
-        # the final serializer: i.e. the appropriated serializer for the given 
-        # request DATA. 
-        serializer = self.get_final_serializer(data=request.DATA, files=request.FILES)
-        if not serializer: 
-            raise TypeError('Could not find the final serializer')
-        if serializer.is_valid():
-            self.pre_save(serializer.object)
-            self.object = serializer.save(force_insert=True)
-            self.post_save(self.object, created=True)
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED,
-                            headers=headers)
+class PatchGenericAPIViewMixin(object):
+    # Monkey patching of `rest_framework.generics.GenericAPIView.get_serializer`
+    def get_serializer(self, instance=None, data=None,
+                       files=None, many=False, partial=False):
+        serializer = super(PatchGenericAPIViewMixin, self).get_serializer(instance=instance, 
+            data=data, files=files, many=many, partial=partial)
+        assert isinstance(serializer, InheritedModelMixin) 
+        return serializer.as_final_serializer(data=data, files=files)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class UpdateInheritedModelMixin(PatchGenericAPIViewMixin, mixins.UpdateModelMixin):
+    # Monkey patching for CreateModelMixin which provides a `create` method that
+    # will use the `get_serializer` method inherited from PatchGenericAPIViewMixin 
+    pass
 
-    def get_final_serializer(self, data, files):
-        base_serializer = self.get_serializer(data=data, files=files)
-        assert isinstance(base_serializer, InheritedModelMixin) 
-        return base_serializer.as_final_serializer(data=data, files=files)
-
+class CreateInheritedModelMixin(PatchGenericAPIViewMixin, mixins.CreateModelMixin):
+    # Monkey patching for CreateModelMixin which provides a `create` method that
+    # will use the `get_serializer` method inherited from PatchGenericAPIViewMixin 
+    pass
 
 class InheritedModelMixin(serializers.ModelSerializer):
         

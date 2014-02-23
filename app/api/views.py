@@ -90,7 +90,9 @@ class MyAnswerViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         return super(MyAnswerViewSet, self).get_queryset().filter(user=self.request.user.pk)
 
-class AnswerViewSet(viewsets.ModelViewSet, mixins.InheritedModelCreateMixin):
+class AnswerViewSet(viewsets.ModelViewSet, 
+                    mixins.CreateInheritedModelMixin,
+                    mixins.UpdateInheritedModelMixin):
     """
     Endpoint for every answer actions
     @list():
@@ -101,9 +103,16 @@ class AnswerViewSet(viewsets.ModelViewSet, mixins.InheritedModelCreateMixin):
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
 
-    def create(self, request, *args, **kwargs):
+    def update_request(self, request):
         request.DATA.update({'user': request.user.pk})
+
+    def create(self, request, *args, **kwargs):
+        self.update_request(request)
         return super(AnswerViewSet, self).create(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        self.update_request(request)
+        return super(AnswerViewSet, self).update(request, *args, **kwargs)
 
 class UserViewSet(viewsets.ViewSet):
     def create(self, request):

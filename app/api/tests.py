@@ -198,6 +198,25 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
 
 
 class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
+    # utility method for user answers, keeping it DRY
+    def run_update_user_answer(self, question_klass, attr_name, values, **kwargs):
+        question_kwargs = kwargs.get('question_init', {})
+        user = User.objects.create()
+        client = self.setupClient(user)
+        question = self.createQuestion(question_klass, **question_kwargs)
+        answer = question.create_answer(user=user,value=values[0])
+        profile = UserProfile.objects.get(user=user)
+        self.assertAttrEqual(profile, attr_name, values[0]) # security check
+        url = reverse('answer-detail', kwargs={'pk': answer.pk})
+        data = {
+            'question': question.id,
+            'value': values[1]
+        }
+        response = client.put(url, data, format='json')
+        profile = UserProfile.objects.get(user=user)
+        self.assertEqual(response.status_code, 200)
+        self.assertAttrEqual(profile, attr_name, values[1]) # security check
+
     def setUp(self):
         init(self)
 
@@ -281,6 +300,11 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(profile.age, 24)
 
+    def test_update_user_age_answer(self):
+        self.run_update_user_answer(question_klass=UserAgeQuestion, 
+                                    values=(20, 24),
+                                    attr_name='age')
+
     def test_create_user_gender_answer(self):
         url = reverse('answer-list')
         data = {
@@ -292,6 +316,10 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(profile.gender, 'female')
 
+    def test_update_user_gender_answer(self):
+        self.run_update_user_answer(question_klass=UserGenderQuestion, 
+                                    values=('male', 'female'),
+                                    attr_name='gender')
 
     def test_create_user_living_country(self):
         url = reverse('answer-list')
@@ -304,6 +332,14 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(profile.living_country, 'BE')
 
+    def test_update_user_living_country(self):
+        self.run_update_user_answer(question_klass=UserCountryQuestion, 
+                                    question_init={
+                                        'profile_attribute': 'living_country'},
+                                    values=('FR', 'BE'),
+                                    attr_name='living_country')
+
+
     def test_create_user_native_country(self):
         url = reverse('answer-list')
         data = {
@@ -314,6 +350,13 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
         profile  = UserProfile.objects.get(user=self.user) 
         self.assertEqual(response.status_code, 201)
         self.assertEqual(profile.native_country, 'DE')
+
+    def test_update_user_native_country(self):
+        self.run_update_user_answer(question_klass=UserCountryQuestion,
+                                    question_init={
+                                        'profile_attribute': 'native_country'},
+                                    values=('DE', 'RU'),
+                                    attr_name='native_country')
 
     def test_thematic_results_list(self):
         url = reverse('thematic-results-list')
