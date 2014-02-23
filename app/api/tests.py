@@ -183,7 +183,6 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
         response = self.client.get(url)
         thematic = response.data
         sub_elements = thematic.get('elements')
-        
 
         user_age_question = sub_elements[0]
         user_gender_question = sub_elements[1]
@@ -195,6 +194,8 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
         female  = filter( lambda g: g['value'] == 'female', genders)[0]
         self.assertIsNotNone( male   )    
         self.assertIsNotNone( female )
+
+
 
 
 class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):

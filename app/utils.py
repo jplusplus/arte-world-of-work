@@ -1,4 +1,9 @@
+from rest_framework.test import APIClient
+from rest_framework.authtoken.models import Token
+
+from datetime import datetime
 import re
+
 
 def find(iterator, iterable):
     """
@@ -88,10 +93,17 @@ class TestCaseMixin():
 
     def assertAttrNotNone(self, elem, attr):
         if isinstance(elem, dict):
-            elem_attr = elem.get(attr, None)
+            attr_value = elem.get(attr, None)
         else:
-            elem_attr = getattr(elem, attr, None)
-        self.assertIsNotNone(elem_attr)
+            attr_value = getattr(elem, attr, None)
+        self.assertIsNotNone(attr_value)
+
+    def assertAttrEqual(self, elem, attr, value):
+        if isinstance(elem, dict):
+            attr_value = elem.get(attr, None)
+        else:
+            attr_value = getattr(elem, attr, None)
+        self.assertEqual(attr_value, value)
 
     def debug(self, msg):
         print "\n[DBG - {time}] {msg}".format(time=datetime.now(), msg=msg)
@@ -100,3 +112,10 @@ class TestCaseMixin():
         elem = klass.objects.create(**kwargs)
         elem.save()
         return elem
+
+    def setupClient(self, user):
+        client = APIClient()
+        token, created = Token.objects.get_or_create(user=user)
+        client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        return client
+

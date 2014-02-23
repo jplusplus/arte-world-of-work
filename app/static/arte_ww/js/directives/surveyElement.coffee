@@ -22,13 +22,11 @@ angular.module('arte-ww').directive 'surveyElement', [
                         question: scope.element.id 
                         value: answer
 
-                    answerService.post(answerParams)
-                        .success(->
+                    answerService.answer answerParams,
+                        success: ->
                             scope.next()
-                        )
-                        .error((msg)->
+                        error: (msg)->
                             console.error(msg)
-                        )
             ]
 
             link: (scope, elem, attrs)->

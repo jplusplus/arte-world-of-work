@@ -2,19 +2,70 @@ class AnswerService
     @$inject: ['$http']
 
     constructor: (@$http) ->
+        @answers = []
+        @listMyAnswers (answer_list)=>
+            _.each answer_list, @addAnswer
 
-    get: (params, cb) =>
+    addAnswer: (answer)=>
+        @answers[answer.question] = answer
+
+    getAnswerForQuestion: (question_id)=>
+        return @answers[ question_id ]
+
+    listMyAnswers: (cb)=>
         request =
             method : 'GET'
             url : "/api/my-answers/"
         (@$http request).success cb
 
-    post: (params, cb) =>
+    answer: (params, cb)=>
+        ###
+        Main method of this service, used to answer a specific question. If 
+        answer already exist then we update it.
+
+        Arguments:
+
+            - params{Object} – Request parameters
+                + question{Number} – The question id to answer
+                + value{Array|Number} – The answer value
+              
+            - cb{Object} – Request callback            
+                + succes{Function} – function called on success   
+                + error{Function}  – function called on error
+        ### 
+        previousAnswer = @getAnswerForQuestion( params.question )
+        if previousAnswer
+            promise = @update previousAnswer, params
+        else
+            promise = @post params 
+
+        promise.success (data)=>
+            @addAnswer(data)
+            cb.success(data)
+
+        promise.error (data)=>
+            @onAnswerError(data)
+            cb.error(data)
+
+        return promise
+
+    post: (params) =>
         request =
             method: 'POST'
             url : '/api/answers/'
             data: params
-        (@$http request).success cb
-            
+
+        @$http request
+
+        
+    update: (answer, params)=>
+
+        request =
+            method: 'PUT'
+            url : "/api/answers/#{answer.id}/"
+            data: params
+
+        @$http request
+
 
 (angular.module 'arte-ww.services').service 'Answer', AnswerService

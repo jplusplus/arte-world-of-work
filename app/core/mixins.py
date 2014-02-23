@@ -51,6 +51,7 @@ class AsFinalMixin(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'pk')
     
     def as_final(self):
+        
         return self.content_object
 
 

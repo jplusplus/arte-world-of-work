@@ -10,6 +10,11 @@ class ResultService
             params : params.filters
         (@$http request).success cb
 
-    
+    post: (params, cb) =>
+        request =
+            method: 'POST'
+            url : '/api/answers/#{params.question.id}'
+            data: params.value
+            
 
 (angular.module 'arte-ww.services').service 'Result', ResultService
