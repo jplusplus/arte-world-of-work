@@ -1,7 +1,7 @@
 {% extends "partials/directives/question-base.dj.html" %}
 
 {% block form %}
-<input type="number" ng-init="survey.answer=0" ng-model="survey.answer" ng-change="log('I CHANGED !', survey)" ng-maxlength="15" 
+<input type="number" ng-model="answer" 
         min="question.min_number" max="question.max_number"/>
 <p>
 <strong>Min_number: [[ question.min_number ]]</strong></br>
@@ -14,5 +14,5 @@
 {% endblock %}
 
 {% block actions %}
-    <a class="btn btn-primary" ng-click="submitAnswer(survey.answer)">[[ question.validate_button_label ]]</a>
+    <a class="btn btn-primary" ng-click="submitAnswer(answer)">[[ question.validate_button_label ]]</a>
 {% endblock %}

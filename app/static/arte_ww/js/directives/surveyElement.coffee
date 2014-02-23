@@ -19,7 +19,7 @@ angular.module('arte-ww').directive 'surveyElement', [
             templateUrl: "partial/directives/survey-element.html"
             controller: ['$scope', 'Answer', (scope, answerService) ->
                 scope.submitAnswer = (answer)->
-                    answer = answer ? scope.survey.answer
+                    answer = answer ? scope.answer
                     answerParams = 
                         question: scope.element.id 
                         value: answer
