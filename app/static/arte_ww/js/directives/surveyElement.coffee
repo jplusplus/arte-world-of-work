@@ -11,13 +11,15 @@ TYPOLOGIES =
 
 
 angular.module('arte-ww').directive 'surveyElement', [
-    ()->
+    'Answer'
+    (answerService)->
         directive = 
             restrict: "AE"
             replace: yes
             templateUrl: "partial/directives/survey-element.html"
             controller: ['$scope', 'Answer', (scope, answerService) ->
                 scope.submitAnswer = (answer)->
+                    answer = answer ? scope.survey.answer
                     answerParams = 
                         question: scope.element.id 
                         value: answer
@@ -30,11 +32,17 @@ angular.module('arte-ww').directive 'surveyElement', [
             ]
 
             link: (scope, elem, attrs)->
+                scope.survey = 
+                    answer: undefined
                 # let the template use choices typologies for sub-directive selection
                 scope.TYPOLOGIES = TYPOLOGIES
                 scope.$watch -> 
                         scope.$eval(attrs.surveyElement)
                     , (element)->
                         scope.element = element
+                        if element.type == 'question'
+                            previousAnswer = answerService.getAnswerForQuestion element.id 
+                            scope.survey.answer = previousAnswer.value if previousAnswer
+                             
 
 ]

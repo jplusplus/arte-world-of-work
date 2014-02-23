@@ -6,4 +6,6 @@ angular.module('arte-ww').directive 'questionTypedNumber', [
             templateUrl: "partial/directives/question-typed-number.html"
             link: (scope, elem, attrs)->
                 scope.question = scope.$parent.element
+                scope.log=(msg, obj)-> console.log msg, obj
+                scope.survey = scope.$parent.survey
 ]
