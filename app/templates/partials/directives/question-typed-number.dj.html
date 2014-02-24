@@ -1,12 +1,11 @@
 {% extends "partials/directives/question-base.dj.html" %}
 
 {% block form %}
-<input type="number" ng-model="answer" 
-        min="question.min_number" max="question.max_number"/>
+<input type="number" ng-model="answer"/>
 <p>
-<strong>Min_number: [[ question.min_number ]]</strong></br>
-<strong>Max_number: [[ question.max_number ]]</strong></br>
-<strong>Unit: [[ question.unit ]]</strong></br>
+    <strong>Min_number: [[ question.min_number ]]</strong></br>
+    <strong>Max_number: [[ question.max_number ]]</strong></br>
+    <strong>Unit: [[ question.unit ]]</strong></br>
 </p>
 
 <!-- <number-slider ng-model='answer' min-number='question.min_number' max-number='question.min_number'
