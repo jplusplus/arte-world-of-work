@@ -32,17 +32,20 @@ angular.module('arte-ww').directive 'surveyElement', [
             ]
 
             link: (scope, elem, attrs)->
-                scope.survey = 
-                    answer: undefined
                 # let the template use choices typologies for sub-directive selection
                 scope.TYPOLOGIES = TYPOLOGIES
                 scope.$watch -> 
                         scope.$eval(attrs.surveyElement)
                     , (element)->
                         scope.element = element
-                        if element.type == 'question'
-                            previousAnswer = answerService.getAnswerForQuestion element.id 
-                            scope.survey.answer = previousAnswer.value if previousAnswer
+                
+
+                scope.$watch ->
+                        return unless scope.element
+                        answerService.getAnswerForQuestion scope.element.id 
+                    , (previousAnswer)->
+                        return unless previousAnswer
+                        scope.answer = previousAnswer.value
                              
 
 ]

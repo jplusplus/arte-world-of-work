@@ -1,6 +1,6 @@
 {% extends "partials/directives/question-base.dj.html" %}
 
 {% block form %}
-<select ng-model='answer' ng-options='country.name for country in countries.list'>
+<select ng-model='answer' ng-options='c.iso_code as c.name for c in countries.list'>
 </select>
 {% endblock %}
