@@ -98,13 +98,12 @@ class AnswerViewSet(viewsets.ModelViewSet,
     @list():
         return all current user answers (can be saw as its parcour) 
     """
+
     queryset = BaseAnswer.objects.all()
     serializer_class = serializers.AnswerSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
-    permission_classes = (IsAuthenticated,)
- 
-    read_only_fields = ('user',)
-    exclude = ('content_type')
+    permission_classes = (IsAuthenticated, IsOwner)
+
     def update_request(self, request):
         request.DATA.update({'user': request.user.pk})
 
@@ -131,3 +130,5 @@ class MyPositionView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user.userposition
+
+

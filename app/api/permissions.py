@@ -6,5 +6,5 @@ class IsOwner(permissions.BasePermission):
         owner = getattr(obj, 'user', None) or getattr(obj, 'owner', None)
         if owner is None:
             raise TypeError("Given object is not related to user model")
-        return request.user.pk == owner.pk
+        return request.user == owner
 
