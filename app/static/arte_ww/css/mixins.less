@@ -25,6 +25,16 @@
 					background-image: url("../img/ui/pic_@{slug}.png"); 
 				}
 			}
+
+			.question-choice:before {
+				border-color: lighten(@brand, 5%);
+			}
+
+			.question-choice:hover:before {
+				border-width:3px;
+				border-color:@brand;
+				background-image: url("../img/ui/minipic-valider_@{slug}.png");
+			}
 		}		
 	}
 
