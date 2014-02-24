@@ -102,7 +102,9 @@ class AnswerViewSet(viewsets.ModelViewSet,
     serializer_class = serializers.AnswerSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
-
+ 
+    read_only_fields = ('user',)
+    exclude = ('content_type')
     def update_request(self, request):
         request.DATA.update({'user': request.user.pk})
 

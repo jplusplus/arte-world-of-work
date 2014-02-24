@@ -196,8 +196,6 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
         self.assertIsNotNone( female )
 
 
-
-
 class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
     # utility method for user answers, keeping it DRY
     def run_update_user_answer(self, question_klass, attr_name, values, **kwargs):
@@ -543,7 +541,6 @@ class UserTestCase(APITestCase, TestCaseMixin):
         data = result.data
         self.assertAttrNotNone(data, 'profile')
         self.assertAttrNotNone(data, 'token')
-        import pdb; pdb.set_trace()
 
     # def test_user_auth():
         # url = reverse('user-auth')
