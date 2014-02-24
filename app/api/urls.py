@@ -17,6 +17,7 @@ router.register(r'answers',          views.AnswerViewSet,          base_name='an
 
 urlpatterns = patterns('',
     url(r'^my-position/', views.MyPositionView.as_view(), name='my-position'),
+    url(r'^verify-token/', 'app.api.views.verify_auth_token')
 )
 urlpatterns += router.urls
 
