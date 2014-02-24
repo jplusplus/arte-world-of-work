@@ -1,18 +1,40 @@
 class Utils
+    @$inject: ['$http', '$cookies', 'User']
+
+    constructor: (@$http, @$cookies, @User) ->
+
     # -------------------------------------------------------------------------
     # Utility service for front-end application
     #
     # attributes:
     #    - states: common state name / value shared accross components
     # -------------------------------------------------------------------------
-    states: 
+    states:
         survey:
             INTRO: 0
             DOING: 1
             OUTRO: 2
-        thematic: 
+        thematic:
             INTRO: 0
             ELEMENTS: 1
             OUTRO: 2
+
+    authenticate: (callback) =>
+        createNewUser = =>
+            (do @User.post).success (data) =>
+                @$cookies['apitoken'] = data.token
+                do callback
+        if not @$cookies['apitoken']?
+            do createNewUser
+        else
+            request =
+                method : 'POST'
+                url : '/api/verify-token/'
+            ((@$http request).success =>
+                do callback
+            ).error (error, status) =>
+                if status is 401
+                    do createNewUser
+
 
 angular.module('arte-ww.utils').service('utils', Utils)
