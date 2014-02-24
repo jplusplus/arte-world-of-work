@@ -4,7 +4,8 @@ class CountryService
     constructor: (@$http) ->
         @list = []
         @listCountries (countries)=>
-            @list = countries
+            @list = _.sortBy countries, (el)-> el.name 
+
 
     listCountries: (cb)=>
         request =
