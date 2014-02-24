@@ -122,9 +122,7 @@ class TestCaseMixin():
         print "\n[DBG - {time}] {msg}".format(time=datetime.now(), msg=msg)
 
     def createModelInstance(self, klass, **kwargs):
-        elem = klass.objects.create(**kwargs)
-        elem.save()
-        return elem
+        return klass.objects.create(**kwargs)
 
     def setupClient(self, user):
         client = APIClient()
