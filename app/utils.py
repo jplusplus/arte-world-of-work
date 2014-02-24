@@ -9,7 +9,7 @@ def om_getattr(obj, attr, attr_val=None):
     if isinstance(obj, dict):
         attr_value = obj.get(attr, attr_val)
     else:
-        attr_value = getattr(obj, attr, attr_value)
+        attr_value = getattr(obj, attr, attr_val)
     return attr_value
 
 def find(iterator, iterable):
