@@ -1,6 +1,7 @@
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -137,4 +138,11 @@ class MyPositionView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user.userposition
 
+class VerifyToken(APIView):
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
 
+    def post(self, request):
+        return Response(status=status.HTTP_200_OK)
+
+verify_auth_token = VerifyToken.as_view()
