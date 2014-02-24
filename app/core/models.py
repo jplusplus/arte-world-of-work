@@ -97,7 +97,7 @@ class ThematicElement(models.Model):
     def __unicode__(self):
         return u"{type} - {title}".format(
             type=self.content_type,
-            title=str(self.content_object)
+            title=unicode(self.content_object)
         )
 
 

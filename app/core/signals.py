@@ -102,8 +102,8 @@ def create_user_informations(sender, **kwargs):
         token.save()
 
 def bind():
-    pre_save.connect(set_element_position, sender=ThematicElement)
-    pre_save.connect(set_thematic_position, sender=Thematic)
+    pre_save.connect(set_element_position, sender=ThematicElement)    
+    # pre_save.connect(set_thematic_position, sender=Thematic)
     
     # will trigger `create_boolean` after every boolean question creation
     post_save.connect(create_boolean_choices, sender=BooleanQuestion)

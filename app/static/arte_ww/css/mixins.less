@@ -1,3 +1,4 @@
+
 .thematic(@slug; @brand:@brand-primary; @bg:@body-bg) {	
 	
 	.thematic-@{slug} {
@@ -16,7 +17,21 @@
 			.btn-primary {
 	  			.button-variant(#fff; @brand; @brand);
 			}
+
+			.thematic {
+
+				&__title {
+					color:@brand;
+					background-image: url("../img/ui/pic_@{slug}.png"); 
+				}
+			}
 		}		
 	}
 
+}
+
+.transform(@transform) {	
+    -webkit-transform: @transform; // iOS <4.3 & Android <4.1
+       -moz-transform: @transform; // Firefox
+            transform: @transform;
 }

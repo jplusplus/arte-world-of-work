@@ -1,46 +1,87 @@
 .survey-navigator {
-    background:white;
+    position:relative;
     margin:auto;    
     margin-top:15px;
-    padding:5px;
+    padding:0;
     width: 435px;
-    height:298px;
-    .box-shadow( 4px 4px 0 0 fade(@navbar-default-bg, 10%) );
-}
+    max-height:298px;
+    margin-bottom:10px;
 
-
-.survey-element__nav {
-    background-color: #bbb;
-    display: block;
-    color: grey;
-    list-style: none;
-    ul {
-        margin: 0;
-        padding: 0;
-        li {
-            display: inline-block;
-        }
-        &:after {
-            display: block;
-            clear: both;
-            content: " ";
-            height: 0;
-        }
+    &:before {
+        z-index:-1;
+        content:"";
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        background:fade(white, 90);
+        .transform( skewY(-0.5deg) );
+        .box-shadow( 5px 5px 0 0  fade(@navbar-default-bg, 10%) );
     }
-
 }
+
+
 
 .survey-element {
-    background: #bbb;
+
+    &--visible {
+
+    }
+
+    &__nav {
+
+        display: block;
+        color: grey;
+        list-style: none;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            li {
+                display: inline-block;
+            }
+            &:after {
+                display: block;
+                clear: both;
+                content: " ";
+                height: 0;
+            }
+        }
+
+
+        &__previous {
+            float: left;
+        }
+
+        &__next {
+            float: right;
+        }
+
+    }
+
+    &__label {
+        color: @text-color;
+        font-family: @font-family-base;        
+        font-weight:600;
+        font-size: 16px;
+        text-align:center;
+        padding-bottom:10px;
+        margin-bottom:20px;
+        position:relative;
+
+        &:after {
+            content:"";
+            height:2px;
+            width:150px;
+            background:#a0a0a0;
+            position:absolute;
+            left:50%;
+            top:100%;
+            margin-left:-150px/2px;
+        }
+    }
 }
 
-.survey-element--visible {
-    background: pink;
-}
-.survey-element__nav__previous {
-    float: left;
-}
 
-.survey-element__nav__next {
-    float: right;
-}
+
