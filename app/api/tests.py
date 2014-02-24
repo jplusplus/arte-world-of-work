@@ -542,6 +542,8 @@ class UserTestCase(APITestCase, TestCaseMixin):
 
         data = result.data
         self.assertAttrNotNone(data, 'profile')
+        self.assertAttrNotNone(data, 'token')
+        import pdb; pdb.set_trace()
 
     # def test_user_auth():
         # url = reverse('user-auth')

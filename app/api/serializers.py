@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 from rest_framework.serializers import ValidationError
 
 from app.core import mixins as core_mixins 
@@ -172,8 +173,12 @@ class ThematicResultsSerializer(ThematicSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     profile = serializers.RelatedField(source='userprofile', many=False)
+    token   = serializers.SerializerMethodField('get_token')
     class Meta:
         model = get_user_model()
+
+    def get_token(self, user):
+        return Token.objects.get(user=user)
 
 class UserPositionSerializer(serializers.ModelSerializer):
     class Meta:
