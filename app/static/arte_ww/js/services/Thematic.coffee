@@ -56,7 +56,7 @@ class ThematicService
             @currentThematic = thematic
 
 
-    current: => @loadedThematics[ @currentThematic ]
+    current: => @currentThematic
 
 
 
