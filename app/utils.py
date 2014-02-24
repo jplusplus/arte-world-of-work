@@ -40,10 +40,6 @@ def find_where(iterable, dict):
         if match:
             return el
 
-
-
-
-
 def db_table_exists(table_name):
     # took from https://gist.github.com/rctay/527113#comment-337110
     from django.db import connection
@@ -115,17 +111,11 @@ class TestCaseMixin():
         self.assertIsNotNone(self.findElement(enum, model_instance.pk))
 
     def assertAttrNotNone(self, elem, attr):
-        if isinstance(elem, dict):
-            attr_value = elem.get(attr, None)
-        else:
-            attr_value = getattr(elem, attr, None)
+        attr_value = om_getattr(elem, attr)
         self.assertIsNotNone(attr_value)
 
     def assertAttrEqual(self, elem, attr, value):
-        if isinstance(elem, dict):
-            attr_value = elem.get(attr, None)
-        else:
-            attr_value = getattr(elem, attr, None)
+        attr_value = om_getattr(elem, attr)
         self.assertEqual(attr_value, value)
 
     def debug(self, msg):

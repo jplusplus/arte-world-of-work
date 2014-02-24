@@ -93,7 +93,6 @@ class CoreTestCase(TestCase):
         self.assertIsNotNone(answer)
         self.assertEqual(getattr(user_profile, answer_field).code, country)
 
-
     def test_answer_user_question_age(self):
         # check if AnswerManager's `create_answer` has the expected behavior
         age = 20 
@@ -420,7 +419,6 @@ class UtilsTestCase(TestCase, utils.TestCaseMixin):
         self.assertIsNotNone(res)
         self.assertEqual(res['name'], '0')
 
-
     def test_find_where_multiple(self):
         arr = (
             {'id': 0, 'name':'1', 'other': 2 },
@@ -445,7 +443,6 @@ class UtilsTestCase(TestCase, utils.TestCaseMixin):
             self.assertAttrNotNone(test_element, 'not_none_attr')
         except AssertionError as e:
             self.fail( 'assertAttrNotNone raised an error: {e}'.format(e=e))
-
 
     def test_assert_attr_not_none_object(self):
         class Test:
