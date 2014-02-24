@@ -5,7 +5,7 @@ VIRTUALENV = venv/
 run:
 	. $(VIRTUALENV)bin/activate ; export PYTHONPATH=`pwd`/app/:$(PYTHONPATH) ; python -W ignore::DeprecationWarning manage.py runserver
 
-install: create_virtualenv pip_install setup_db setup_selenium
+install: create_virtualenv pip_install setup_db setup_statics setup_selenium	
 
 create_virtualenv:
 	# if venv folder is not created yet we do it
@@ -13,6 +13,10 @@ create_virtualenv:
 
 createsuperuser:
 	. $(VIRTUALENV)bin/activate; python manage.py createsuperuser --username root
+
+setup_statics:
+	. $(VIRTUALENV)bin/activate; python manage.py compress --force
+	ln -sfT `pwd`/app/static/arte_ww/img/ ./app/staticfiles/CACHE/img
 
 setup_db:
 	# setup database
