@@ -93,7 +93,6 @@ class CoreTestCase(TestCase):
         self.assertIsNotNone(answer)
         self.assertEqual(getattr(user_profile, answer_field).code, country)
 
-
     def test_answer_user_question_age(self):
         # check if AnswerManager's `create_answer` has the expected behavior
         age = 20 
@@ -381,7 +380,7 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         self.assertIsInstance(results, transport.PieChart)
         self.assertEqual(results.chart_type, 'pie')
 
-class UtilsTestCase(TestCase):
+class UtilsTestCase(TestCase, utils.TestCaseMixin):
 
     def test_get_field_names(self):
         # unit test for utils.get_fields_names function
@@ -392,4 +391,90 @@ class UtilsTestCase(TestCase):
     def test_camel_to_underscore(self):
         self.assertEqual(utils.camel_to_underscore("CamelCaseToUnderscore"), "camel_case_to_underscore")
 
+    def test_om_getattr_dict(self):
+        element = {
+            'one': 1,
+            'none': None
+        }
+        self.assertEqual(utils.om_getattr(element, 'one'),  element['one'])
+        self.assertEqual(utils.om_getattr(element, 'none'), element['none'])
 
+    def test_om_getattr_object(self):
+        class Test:
+            def __init__(self):
+                self.one = 1
+                self.none = None
+
+        element = Test()
+        self.assertEqual(utils.om_getattr(element, 'one'),  element.one)
+        self.assertEqual(utils.om_getattr(element, 'none'), element.none)
+
+    def test_find_where_simple(self):
+        arr = (
+            {'id': 0, 'name':'0'},
+            {'id': 1, 'name':'1'},
+            {'id': 2, 'name':'2'}
+        )
+        res = utils.find_where(arr, {'id': 0})
+        self.assertIsNotNone(res)
+        self.assertEqual(res['name'], '0')
+
+    def test_find_where_multiple(self):
+        arr = (
+            {'id': 0, 'name':'1', 'other': 2 },
+            {'id': 1, 'name':'1', 'other': 5 }, 
+            {'id': 2, 'name':'2', 'other': 7 }
+        )
+        res = utils.find_where(arr, {'name': '1', 'id': 1})
+        self.assertIsNotNone(res)
+        self.assertEqual(res['other'], 5)
+
+    def test_assert_attr_not_none_dict(self):
+        test_element = {
+            'not_none_attr': 'not None',
+            'none_attr': None
+        }
+        with self.assertRaises(AssertionError):
+            self.assertAttrNotNone(test_element, 'none_attr')
+        with self.assertRaises(AssertionError): 
+            self.assertAttrNotNone(test_element, 'not_existing')
+
+        try:
+            self.assertAttrNotNone(test_element, 'not_none_attr')
+        except AssertionError as e:
+            self.fail( 'assertAttrNotNone raised an error: {e}'.format(e=e))
+
+    def test_assert_attr_not_none_object(self):
+        class Test:
+            def __init__(self):
+                self.not_none_attr = 'not none'
+                self.none_attr = None
+
+        test_element = Test()
+
+        with self.assertRaises(AssertionError):
+            self.assertAttrNotNone(test_element, 'none_attr')
+        with self.assertRaises(AssertionError): 
+            self.assertAttrNotNone(test_element, 'not_existing')
+
+        try:
+            self.assertAttrNotNone(test_element, 'not_none_attr')
+        except AssertionError as e:
+            self.fail( 'assertAttrNotNone failed where it shouldn\'t: {e}'.format(e=e))
+
+
+    def test_assert_attr_equal_obj(self):
+        class Test:
+            def __init__(self):
+                self.one = 1
+                self.none = None
+
+        test_element = Test()
+
+        with self.assertRaises(AssertionError):
+            self.assertAttrEqual(test_element, 'one', 2)
+        try:
+            self.assertAttrEqual(test_element, 'one', 1)
+            self.assertAttrEqual(test_element, 'none', None)
+        except AssertionError as e:
+            self.fail( 'assertAttrEqual failed where it shouldn\'t: {e}'.format(e=e))

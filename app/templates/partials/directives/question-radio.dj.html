@@ -6,6 +6,7 @@
 
     <div ng-repeat='choice in question.choices'
          ng-click='submitAnswer(choice.value || choice.id)'
+         ng-class='{"question-choice--selected": (choice.value || choice.id) == answer}'
          class="question-choice">
         <span>[[ choice.title ]]</span>
         <img ng-if='question.media_type' ng-attr-src='choice.picture'></img>

@@ -25,7 +25,8 @@ class ThematicCtrl
         _.extend @scope, 
             next: @skipElement,
             previous: @previousElement
-            start: @startThematic
+            start: =>
+                @utils.authenticate @startThematic
 
         # ---------------------------------------------------------------------
         # watches 

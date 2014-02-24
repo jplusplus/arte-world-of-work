@@ -6,6 +6,9 @@ class AnswerService
         @listMyAnswers (answer_list)=>
             _.each answer_list, @addAnswer
 
+    onAnswerError: (error)=>
+        console.log "[arte_ww.services.Answer] Error happened while answering" ,error
+
     addAnswer: (answer)=>
         @answers[answer.question] = answer
 

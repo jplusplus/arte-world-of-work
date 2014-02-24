@@ -140,31 +140,31 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
         feedback1_elem = sub_elements[4]
         feedback2_elem = sub_elements[5]
 
-        self.assertEqual(question1_elem.get('type'), 'question')
-        self.assertEqual(question1_elem.get('typology'), 'typed_number')
-        self.assertEqual(question1_elem.get('object_id'), self.question1.id)
+        self.assertAttrEqual(question1_elem, 'type',      'question')
+        self.assertAttrEqual(question1_elem, 'typology',  'typed_number')
+        self.assertAttrEqual(question1_elem, 'object_id', self.question1.id)
 
-        self.assertEqual(question2_elem.get('type'), 'question')
-        self.assertEqual(question2_elem.get('typology'), 'boolean')
-        self.assertEqual(question2_elem.get('object_id'), self.question2.id)
+        self.assertAttrEqual(question2_elem, 'type',      'question')
+        self.assertAttrEqual(question2_elem, 'typology',  'boolean')
+        self.assertAttrEqual(question2_elem, 'object_id', self.question2.id)
 
-        self.assertEqual(question3_elem.get('type'), 'question')
-        self.assertEqual(question3_elem.get('typology'), 'text_selection')
-        self.assertEqual(question3_elem.get('object_id'), self.question3.id)
+        self.assertAttrEqual(question3_elem, 'type',      'question')
+        self.assertAttrEqual(question3_elem, 'typology',  'text_selection')
+        self.assertAttrEqual(question3_elem, 'object_id', self.question3.id)
+
         self.assertAttrNotNone(question3_elem, 'validate_button_label')
 
-
-        self.assertEqual(question4_elem.get('type'), 'question')
-        self.assertEqual(question4_elem.get('typology'), 'typed_number')
-        self.assertEqual(question4_elem.get('object_id'), self.question4.id)
+        self.assertAttrEqual(question4_elem, 'type',      'question')
+        self.assertAttrEqual(question4_elem, 'typology',  'typed_number')
+        self.assertAttrEqual(question4_elem, 'object_id', self.question4.id)
         
-        self.assertEqual(feedback1_elem.get('type'), 'feedback')
-        self.assertEqual(feedback1_elem.get('sub_type'), 'static')
-        self.assertEqual(feedback1_elem.get('object_id'), self.feedback1.id)
+        self.assertAttrEqual(feedback1_elem, 'type',      'feedback')
+        self.assertAttrEqual(feedback1_elem, 'sub_type',  'static')
+        self.assertAttrEqual(feedback1_elem, 'object_id', self.feedback1.id)
         
-        self.assertEqual(feedback2_elem.get('type'), 'feedback')
-        self.assertEqual(feedback2_elem.get('sub_type'), 'static')
-        self.assertEqual(feedback2_elem.get('object_id'), self.feedback2.id)
+        self.assertAttrEqual(feedback2_elem, 'type',      'feedback')
+        self.assertAttrEqual(feedback2_elem, 'sub_type',  'static')
+        self.assertAttrEqual(feedback2_elem, 'object_id', self.feedback2.id)
 
     def test_thematic_nested_detail_with_pictures(self):
         url = reverse('thematic-nested-detail', kwargs={ 'pk': self.thematic2.pk})
@@ -485,8 +485,8 @@ class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
         results = results_object.get('results')
         sets    = results_object.get('sets')
 
-        self.assertEqual(results_object.get('chart_type'), transport.CHART_TYPES.PIE)
-        self.assertEqual(results_object.get('total_answers'), 10)
+        self.assertAttrEqual(results_object, 'chart_type', transport.CHART_TYPES.PIE)
+        self.assertAttrEqual(results_object, 'total_answers', 10)
         self.assertIsNotNone( sets[ yes_choice.pk ] )
         self.assertEqual( sets[ yes_choice.pk ]['title'], yes_choice.title )
         self.assertEqual( results[ yes_choice.pk ], 70)
@@ -509,8 +509,8 @@ class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
         results        = results_object.get('results')
         sets           = results_object.get('sets')
 
-        self.assertEqual(results_object.get('chart_type'), transport.CHART_TYPES.HORIZONTAL_BAR)
-        self.assertEqual(results_object.get('total_answers'), 10)
+        self.assertAttrEqual(results_object, 'chart_type', transport.CHART_TYPES.HORIZONTAL_BAR)
+        self.assertAttrEqual(results_object, 'total_answers', 10)
 
         self.assertIsNotNone( sets[choice1.pk] )
         self.assertEqual(     sets[choice1.pk]['title'], choice1.title )
@@ -524,6 +524,15 @@ class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual( sets[ choice3.pk ]['title'], choice3.title )
         self.assertEqual( results[ choice3.pk ], 50)
 
+
+class CountriesTestCase(APITestCase, TestCaseMixin):
+    def test_list_countries(self):
+        url = reverse('country-list')
+        response = self.client.get(url)
+        countries = response.data
+        self.assertTrue(len(countries) > 0)
+        for country in countries:
+            self.assertEqual(type(country['name']), type(u''))
 
 
 class UserTestCase(APITestCase, TestCaseMixin):
@@ -542,9 +551,6 @@ class UserTestCase(APITestCase, TestCaseMixin):
         self.assertAttrNotNone(data, 'profile')
         self.assertAttrNotNone(data, 'token')
 
-    # def test_user_auth():
-        # url = reverse('user-auth')
-
     def test_user_mypostion(self):
         url = reverse('my-position')
         response = self.client.get(url)
@@ -552,6 +558,36 @@ class UserTestCase(APITestCase, TestCaseMixin):
         self.assertEqual(response.status_code, 200)
         self.assertAttrNotNone(position, 'thematic_position')
         self.assertAttrNotNone(position, 'element_position')
+
+class AuthTestCase(APITestCase, TestCaseMixin):
+    def setUp(self):
+        self.user = User.objects.create()
+        self.client = APIClient()
+        token, created = Token.objects.get_or_create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        self.notAuthClient = APIClient()
+
+        self.fakeAuthClient = APIClient()
+        self.fakeAuthClient.credentials(HTTP_AUTHORIZATION='Token justAFakeToken123')
+
+    def test_auth(self):
+        url = reverse('verify-token')
+        result = self.client.post(url)
+
+        self.assertEqual(result.status_code, 200)
+
+    def test_no_auth(self):
+        url = reverse('verify-token')
+        result = self.notAuthClient.post(url)
+
+        self.assertEqual(result.status_code, 401)
+
+    def test_fake_auth(self):
+        url = reverse('verify-token')
+        result = self.fakeAuthClient.post(url)
+
+        self.assertEqual(result.status_code, 401)
 
 # these are test serializer
 class TypedNumberSerializer(ModelSerializer):
@@ -596,6 +632,8 @@ class MixinsTestCase(TestCase, TestCaseMixin, TestUtils):
         self.assertAttrNotNone(data, 'min_number')
         self.assertAttrNotNone(data, 'max_number')
         self.assertAttrNotNone(data, 'unit')
+
+
 
 
 

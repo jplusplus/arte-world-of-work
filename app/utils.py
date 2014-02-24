@@ -4,6 +4,13 @@ from rest_framework.authtoken.models import Token
 from datetime import datetime
 import re
 
+def om_getattr(obj, attr, attr_val=None):
+    # utility method to get an attribute on object or on a dict 
+    if isinstance(obj, dict):
+        attr_value = obj.get(attr, attr_val)
+    else:
+        attr_value = getattr(obj, attr, attr_val)
+    return attr_value
 
 def find(iterator, iterable):
     """
@@ -20,6 +27,18 @@ def find_modelinstance(obj, iterable):
     _l = lambda e: obj.id == e.id
     return find(_l, iterable)
 
+
+def find_where(iterable, dict):
+    for el in iterable:
+        match = True
+        for cond_key in dict.keys():
+            cond_val = dict[cond_key]
+            if om_getattr(el, cond_key) != cond_val:
+                match = False
+        # if match is True at this point it means the current element respect 
+        # all rules and should be returned as a valid result.
+        if match:
+            return el
 
 def db_table_exists(table_name):
     # took from https://gist.github.com/rctay/527113#comment-337110
@@ -92,26 +111,18 @@ class TestCaseMixin():
         self.assertIsNotNone(self.findElement(enum, model_instance.pk))
 
     def assertAttrNotNone(self, elem, attr):
-        if isinstance(elem, dict):
-            attr_value = elem.get(attr, None)
-        else:
-            attr_value = getattr(elem, attr, None)
+        attr_value = om_getattr(elem, attr)
         self.assertIsNotNone(attr_value)
 
     def assertAttrEqual(self, elem, attr, value):
-        if isinstance(elem, dict):
-            attr_value = elem.get(attr, None)
-        else:
-            attr_value = getattr(elem, attr, None)
+        attr_value = om_getattr(elem, attr)
         self.assertEqual(attr_value, value)
 
     def debug(self, msg):
         print "\n[DBG - {time}] {msg}".format(time=datetime.now(), msg=msg)
 
     def createModelInstance(self, klass, **kwargs):
-        elem = klass.objects.create(**kwargs)
-        elem.save()
-        return elem
+        return klass.objects.create(**kwargs)
 
     def setupClient(self, user):
         client = APIClient()

@@ -10,14 +10,13 @@ angular.module('arte-ww').directive 'questionSelection', [
 
                 _toggleChoice = (choice)->
                     if _isSelected(choice)
-                        scope.answer = _.without(scope.answer)
+                        scope.answer = _.without(scope.answer, choice.id)
                     else
                         scope.answer.push choice.id 
 
                 # -------------------------------------------------------------
                 # Scope variables binding 
                 # -------------------------------------------------------------
-                scope.answer = []
                 scope.question = scope.$parent.element
 
                 # -------------------------------------------------------------

@@ -1,13 +1,14 @@
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action, link
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-
+from django_countries import countries as django_countries
 from app.core.models import Thematic, UserPosition, BaseAnswer, BaseQuestion
 from app.api import serializers, mixins
 from app.api.permissions import IsOwner
@@ -98,13 +99,12 @@ class AnswerViewSet(viewsets.ModelViewSet,
     @list():
         return all current user answers (can be saw as its parcour) 
     """
+
     queryset = BaseAnswer.objects.all()
     serializer_class = serializers.AnswerSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
-    permission_classes = (IsAuthenticated,)
- 
-    read_only_fields = ('user',)
-    exclude = ('content_type')
+    permission_classes = (IsAuthenticated, IsOwner)
+
     def update_request(self, request):
         request.DATA.update({'user': request.user.pk})
 
@@ -115,6 +115,12 @@ class AnswerViewSet(viewsets.ModelViewSet,
     def update(self, request, *args, **kwargs):
         self.update_request(request)
         return super(AnswerViewSet, self).update(request, *args, **kwargs)
+
+class CountryViewSet(viewsets.ViewSet):
+    def list(self, request):
+        qs = django_countries.countries
+        serializer = serializers.CountrySerializer(qs, many=True)
+        return Response(serializer.data)
 
 class UserViewSet(viewsets.ViewSet):
     def create(self, request):
@@ -131,3 +137,12 @@ class MyPositionView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user.userposition
+
+class VerifyToken(APIView):
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        return Response(status=status.HTTP_200_OK)
+
+verify_auth_token = VerifyToken.as_view()
