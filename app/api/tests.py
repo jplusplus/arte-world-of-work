@@ -550,9 +550,6 @@ class UserTestCase(APITestCase, TestCaseMixin):
         self.assertAttrNotNone(data, 'profile')
         self.assertAttrNotNone(data, 'token')
 
-    # def test_user_auth():
-        # url = reverse('user-auth')
-
     def test_user_mypostion(self):
         url = reverse('my-position')
         response = self.client.get(url)
@@ -560,6 +557,36 @@ class UserTestCase(APITestCase, TestCaseMixin):
         self.assertEqual(response.status_code, 200)
         self.assertAttrNotNone(position, 'thematic_position')
         self.assertAttrNotNone(position, 'element_position')
+
+class AuthTestCase(APITestCase, TestCaseMixin):
+    def setUp(self):
+        self.user = User.objects.create()
+        self.client = APIClient()
+        token, created = Token.objects.get_or_create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        self.notAuthClient = APIClient()
+
+        self.fakeAuthClient = APIClient()
+        self.fakeAuthClient.credentials(HTTP_AUTHORIZATION='Token justAFakeToken123')
+
+    def test_auth(self):
+        url = reverse('verify-token')
+        result = self.client.post(url)
+
+        self.assertEqual(result.status_code, 200)
+
+    def test_no_auth(self):
+        url = reverse('verify-token')
+        result = self.notAuthClient.post(url)
+
+        self.assertEqual(result.status_code, 401)
+
+    def test_fake_auth(self):
+        url = reverse('verify-token')
+        result = self.fakeAuthClient.post(url)
+
+        self.assertEqual(result.status_code, 401)
 
 # these are test serializer
 class TypedNumberSerializer(ModelSerializer):
