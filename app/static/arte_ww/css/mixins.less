@@ -30,8 +30,8 @@
 
 }
 
-.transform(@transform) {	
-    -webkit-transform: @transform; // iOS <4.3 & Android <4.1
-       -moz-transform: @transform; // Firefox
-            transform: @transform;
+.transform(@transform...) {	
+    -webkit-transform: @arguments; // iOS <4.3 & Android <4.1
+       -moz-transform: @arguments; // Firefox
+            transform: @arguments;
 }
