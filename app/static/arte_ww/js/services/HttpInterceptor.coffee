@@ -1,4 +1,4 @@
-angular.module('arte-ww.services').factory('AuthHttpInterceptor', [ '$q', '$cookies', ($q, $cookies)->
+angular.module('arte-ww.services').factory('HttpInterceptor', [ '$q', '$cookies', ($q, $cookies)->
     request: (config)->
         config = config or $q.when(config)
         # Add CSRF Token for post request
