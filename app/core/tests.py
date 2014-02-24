@@ -393,3 +393,24 @@ class UtilsTestCase(TestCase):
         self.assertEqual(utils.camel_to_underscore("CamelCaseToUnderscore"), "camel_case_to_underscore")
 
 
+    def test_find_where_simple(self):
+        arr = (
+            {'id': 0, 'name':'0'},
+            {'id': 1, 'name':'1'},
+            {'id': 2, 'name':'2'}
+        )
+        res = utils.find_where(arr, {'id': 0})
+        self.assertIsNotNone(res)
+        self.assertEqual(res['name'], '0')
+
+
+    def test_find_where_multiple(self):
+        arr = (
+            {'id': 0, 'name':'1', 'other': 2 },
+            {'id': 1, 'name':'1', 'other': 5 }, 
+            {'id': 2, 'name':'2', 'other': 7 }
+        )
+        res = utils.find_where(arr, {'name': '1', 'id': 1})
+        self.assertIsNotNone(res)
+        self.assertEqual(res['other'], 5)
+

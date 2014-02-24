@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action, link
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-
+from django_countries import countries as django_countries
 from app.core.models import Thematic, UserPosition, BaseAnswer, BaseQuestion
 from app.api import serializers, mixins
 from app.api.permissions import IsOwner
@@ -114,6 +114,12 @@ class AnswerViewSet(viewsets.ModelViewSet,
     def update(self, request, *args, **kwargs):
         self.update_request(request)
         return super(AnswerViewSet, self).update(request, *args, **kwargs)
+
+class CountryViewSet(viewsets.ViewSet):
+    def list(self, request):
+        qs = django_countries.countries
+        serializer = serializers.CountrySerializer(qs, many=True)
+        return Response(serializer.data)
 
 class UserViewSet(viewsets.ViewSet):
     def create(self, request):

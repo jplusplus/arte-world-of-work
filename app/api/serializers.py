@@ -262,3 +262,15 @@ class AnswerSerializer(mixins.InheritedModelMixin):
         serializer     = self.get_final_serializer(final_question.answer_type())
         return serializer(data=data, files=files)
 
+class CountrySerializer(serializers.Serializer):
+    iso_code = serializers.CharField(max_length=2)
+    name = serializers.CharField(max_length=120)
+
+    def to_native(self, value):
+        return {
+            'iso_code': value[0],
+            'name': unicode(value[1])
+        }
+
+
+

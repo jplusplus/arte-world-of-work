@@ -524,6 +524,14 @@ class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertEqual( sets[ choice3.pk ]['title'], choice3.title )
         self.assertEqual( results[ choice3.pk ], 50)
 
+class CountriesTestCase(APITestCase, TestCaseMixin):
+    def test_list_countries(self):
+        url = reverse('country-list')
+        response = self.client.get(url)
+        countries = response.data
+        self.assertTrue(len(countries) > 0)
+        for country in countries:
+            self.assertEqual(type(country['name']), type(u''))
 
 
 class UserTestCase(APITestCase, TestCaseMixin):
@@ -596,6 +604,8 @@ class MixinsTestCase(TestCase, TestCaseMixin, TestUtils):
         self.assertAttrNotNone(data, 'min_number')
         self.assertAttrNotNone(data, 'max_number')
         self.assertAttrNotNone(data, 'unit')
+
+
 
 
 
