@@ -441,7 +441,6 @@ class UtilsTestCase(TestCase, utils.TestCaseMixin):
         with self.assertRaises(AssertionError): 
             self.assertAttrNotNone(test_element, 'not_existing')
 
-        success = False
         try:
             self.assertAttrNotNone(test_element, 'not_none_attr')
         except AssertionError as e:
