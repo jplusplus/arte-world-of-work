@@ -391,6 +391,10 @@ class UtilsTestCase(TestCase, utils.TestCaseMixin):
     def test_camel_to_underscore(self):
         self.assertEqual(utils.camel_to_underscore("CamelCaseToUnderscore"), "camel_case_to_underscore")
 
+    def test_without(self):
+        arr = ('a', 'b', 'c')
+        self.assertEqual(utils.without(arr, 'b'), ('a', 'c'))
+
     def test_om_getattr_dict(self):
         element = {
             'one': 1,

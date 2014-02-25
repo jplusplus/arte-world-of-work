@@ -4,6 +4,10 @@ from rest_framework.authtoken.models import Token
 from datetime import datetime
 import re
 
+def without(iterable, value):
+    _l =  lambda el: el != value
+    return filter(_l, iterable)
+
 def om_getattr(obj, attr, attr_val=None):
     # utility method to get an attribute on object or on a dict 
     if isinstance(obj, dict):
@@ -21,7 +25,6 @@ def find(iterator, iterable):
         if iterator(el):
             return el
     return None
-
 
 def find_modelinstance(obj, iterable):
     _l = lambda e: obj.id == e.id
@@ -130,3 +133,4 @@ class TestCaseMixin():
         client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         return client
 
+here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
