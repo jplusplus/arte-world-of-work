@@ -1,5 +1,9 @@
 from .models import TestModel, InheritedTestModel
-from app.translations.translator import translator, TranslationOptions
+from django.conf import settings
+if getattr(settings, 'IS_LOCAL', False):
+    from translations.translator import translator, TranslationOptions
+else:
+    from app.translations.translator import translator, TranslationOptions
 
 class TestTranslationOpts(TranslationOptions):
     fields = ('title',)

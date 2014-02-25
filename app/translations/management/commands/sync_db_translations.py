@@ -16,7 +16,7 @@ from django.utils import translation
 from django.core.management.base import BaseCommand
 from django.template import Context, Template
 
-from app.translations.translator import translator
+from translations.translator import translator
 import os
 import codecs
 

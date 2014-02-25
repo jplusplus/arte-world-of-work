@@ -129,6 +129,7 @@ class GettextFieldDescriptor(object):
     def __get__(self, instance, owner):
         if instance is None:
             return self
+
         val = getattr(instance, '_%s' % self.field.name, None)
         if val is not None:
             return _(val)
