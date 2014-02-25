@@ -1,5 +1,5 @@
-angular.module('arte-ww').directive 'progressbar', ['UserPosition', 'Thematic',
-    (UserPosition, Thematic) ->
+angular.module('arte-ww').directive 'progressbar', ['UserPosition', 'Thematic', 'utils',
+    (UserPosition, Thematic, utils) ->
         directive =
             restrict: "A"
             link: (scope, elem) ->
@@ -18,6 +18,14 @@ angular.module('arte-ww').directive 'progressbar', ['UserPosition', 'Thematic',
                         updateBarWidth position
                     else
                         elem[0].style.width = 0
+
+                scope.$watch (=>
+                    do UserPosition.currentState
+                ), (state) =>
+                    if state is utils.states.thematic.OUTRO
+                        updateBarWidth elements
+                    else
+                        updateBarWidth do UserPosition.elementPosition
 
                 scope.$watch Thematic.current, (thematic) ->
                     if thematic?

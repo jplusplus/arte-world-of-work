@@ -15,6 +15,12 @@ class UserPositionService
     positions:
         thematicPosition: 0
         elementPosition: 0
+    state: undefined
+
+    currentState: (state) =>
+        if state?
+            @state = state
+        @state
 
     thematicPosition: (position)=> 
         if position?
