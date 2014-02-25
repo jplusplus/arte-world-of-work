@@ -40,6 +40,7 @@ class ThematicCtrl
     currentState: (state)=>
         if state?
             @scope.state = state
+            @userPosition.currentState @scope.state
         @scope.state
 
     startThematic: =>
