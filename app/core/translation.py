@@ -1,6 +1,7 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from app.core import models
+from app.core.models import *
 from app.translations.translator import translator, TranslationOptions
 
 # question translation
@@ -22,9 +23,9 @@ class FeedbackTransOpts(TranslationOptions):
 class StaticFeedbackTransOpts(TranslationOptions):
     fields = ('source_title', )
 
-translator.register(models.BaseQuestion,        QuestionTransOpts)
-translator.register(models.TypedNumberQuestion, TypedNumberQuestionTransOpts)
-translator.register(models.BaseChoiceField,     ChoiceFieldTransOpts)
-translator.register(models.Thematic,            ThematicTransOpts)
-translator.register(models.BaseFeedback,        FeedbackTransOpts)
-translator.register(models.StaticFeedback,      StaticFeedbackTransOpts)
+translator.register(BaseQuestion,        QuestionTransOpts)
+translator.register(TypedNumberQuestion, TypedNumberQuestionTransOpts)
+translator.register(BaseChoiceField,     ChoiceFieldTransOpts)
+translator.register(Thematic,            ThematicTransOpts)
+translator.register(BaseFeedback,        FeedbackTransOpts)
+translator.register(StaticFeedback,      StaticFeedbackTransOpts)
