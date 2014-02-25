@@ -45,9 +45,11 @@
             <!-- step 3 -> thematic outro we're starting this thematic question -->
             <div class="thematic-outro" ng-if='state == states.OUTRO'>
                 <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
-                <p>outro</p>
-                <a ng-click='previous()'>Previous</a>
-                <a ng-click='next()'> Go to next thematic</a>
+                <div class="thematic-outro__content">
+                    <p>Laborum American Apparel fanny pack, flexitarian raw denim scenester Wes Anderson.</p>
+                    <p>Velit sustainable aesthetic nostrud. Assumenda Wes Anderson flexitarian, nihil exercitation Portland narwhal seitan mustache labore sriracha street art accusamus. Minim selvage vero placeat Shoreditch.</p>
+                <a class="thematic-outro__previous" ng-click='previous()'>Previous</a>
+                <a class="thematic-outro__next"     ng-click='next()'> Go to next thematic</a>
             </div>
         </div>
     </div>

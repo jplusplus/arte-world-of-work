@@ -46,7 +46,7 @@ class ThematicCtrl
     startThematic: =>
         @currentState(@states.ELEMENTS)
 
-    skipElement: =>
+    skipElement: =>        
         if @hasNextElement()
             @userPosition.nextElement()
         else if @isOutro()
@@ -74,9 +74,9 @@ class ThematicCtrl
         element = @elements.getAt(@userPosition.elementPosition() - 1)
         if element then true else false
 
-    isIntro: => @currentState() == @states.INTRO
-
-    isOutro: => @currentState() == @states.OUTRO
+    isLanding: => @currentState() == @states.LANDING
+    isIntro  : => @currentState() == @states.INTRO
+    isOutro  : => @currentState() == @states.OUTRO
   
     onThematicChanged: (thematic, old_thematic)=>
         return unless thematic?
@@ -84,11 +84,10 @@ class ThematicCtrl
         shouldSetOutro = old_thematic? and thematic.position < old_thematic.position
 
         @currentState(if shouldSetOutro then @states.OUTRO else @states.LANDING)
-        if @isIntro()
+        if @isIntro() or @isLanding()
             elementPosition = 0
         else
             elementPosition = @elements.count() - 1
-
         @userPosition.elementPosition(elementPosition)
 
     onElementPositionChanged: (position)=>
