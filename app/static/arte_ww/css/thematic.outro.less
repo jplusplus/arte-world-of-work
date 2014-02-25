@@ -1,0 +1,50 @@
+.thematic-outro {
+	.white-panel();
+
+	padding-bottom:30px;
+
+	&__content {
+		padding:10px;
+	}
+	
+
+    &__previous, &__next {
+        display: inline-block;
+        position: absolute;  
+        font-size:12px;
+        padding:0 15px;
+
+        color: @text-color;
+        display:block;
+        cursor:pointer; 
+        text-transform: lowercase;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    &__previous {
+        font-weight:300;
+        left:10px;
+        bottom:15px;
+        height:25px;
+        line-height:25px;
+        background:url("../img/ui/previous.png") left bottom no-repeat;
+        &:hover {
+            background-position: left top;
+        }
+    }
+
+    &__next {
+        font-weight:600;
+        right:10px;
+        bottom:10px;
+        height:35px;
+        line-height:35px;
+        background:url("../img/ui/next.png") right bottom no-repeat;
+        &:hover {
+            background-position: right top;
+        }
+    }
+}
