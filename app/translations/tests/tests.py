@@ -16,14 +16,12 @@ class TranslationsLocalesTestCase(TestCase):
         activate('fr')
         obj = TestModel.objects.get(pk=1)
         self.assertEqual(obj.title, 'mon titre')
-
         activate('en')
         self.assertEqual(obj.title, 'my title')
 
     def test_inherited_translated_field_values(self):
         activate('fr')
         obj = InheritedTestModel.objects.get(pk=3)
-        import pdb; pdb.set_trace()
         self.assertEqual(obj.other, 'une autre traduction')
         self.assertEqual(obj.title, 'mon superbe titre')
 
@@ -39,7 +37,7 @@ class SyncFromDB(TestCase, utils.TestCaseMixin):
         strings_path = settings.TRANSLATION_STRINGS_FILE
         execfile(strings_path)
         _locals = locals()
-        self.assertEqual(len(_locals['STRINGS']), 4)
+        self.assertEqual(len(_locals['STRINGS']), 5)
             
 
     def test_translation_options(self):
@@ -47,3 +45,4 @@ class SyncFromDB(TestCase, utils.TestCaseMixin):
         self.assertLenIs(opts.fields, 2)
         self.assertIsNotNone(opts.fields['title'])
         self.assertIsNotNone(opts.fields['other'])
+    

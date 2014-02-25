@@ -29,7 +29,11 @@ TRANSLATION_STRINGS_FILE = here('i18n_strings.py')
 DATABASES = {
     'default' : {
         'ENGINE':'django.db.backends.sqlite3',
-        'NAME': ':memory:'
+        'NAME': 'dev.db'
 
     }
 }
+INSTALLED_APPS = (
+    'app.translations',
+    'app.translations.tests',
+)

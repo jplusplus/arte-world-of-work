@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-25 05:48-0600\n"
+"POT-Creation-Date: 2014-02-25 09:14-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,28 +18,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: tests/i18n_strings.py:3
-#, fuzzy
-msgid "an other translation"
-msgstr "une autre traduction"
+#: i18n_strings.py:3
+msgid "my title"
+msgstr "mon titre"
 
-#: tests/i18n_strings.py:3
+#: i18n_strings.py:3
+msgid "an other title"
+msgstr "un autre titre"
+
+#: i18n_strings.py:3
 #, fuzzy
 msgid "my awesome title"
 msgstr "mon superbe titre"
 
-#: tests/i18n_strings.py:3
-msgid "my title"
-msgstr "mon titre"
+#: i18n_strings.py:3
+#, fuzzy
+msgid "inherited title"
+msgstr "titre hérité"
 
-#: tests/i18n_strings.py:3
-msgid "an other title"
-msgstr "un autre titre"
+#: i18n_strings.py:3
+#, fuzzy
+msgid "an other translation"
+msgstr "une autre traduction"
 
 #: tests/models.py:6
 msgid "Title"
 msgstr "Titre"
 
-#: tests/models.py:9
+#: tests/models.py:10
 msgid "Other"
 msgstr "Autre"

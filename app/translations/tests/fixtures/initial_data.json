@@ -21,10 +21,22 @@
     }
   },
   {
+    "model": "tests.testmodel",
+    "pk": 4,
+    "fields": {
+      "title": "inherited title"
+    }
+  },
+  {
     "model": "tests.inheritedtestmodel",
     "pk": 3,
     "fields": {
       "other": "an other translation"
     }
+  },
+  {
+    "model": "tests.otherinheritedtestmodel",
+    "pk": 4,
+    "fields": {}
   }
 ]
