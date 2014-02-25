@@ -49,6 +49,29 @@
 
 }
 
+.white-panel() {
+    position:relative;
+    margin:auto;    
+    margin-top:15px;
+    padding:0;
+    width: 435px;
+    max-height:298px;
+    margin-bottom:10px;
+    
+    &:before {
+        z-index:-1;
+        content:"";
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        background:fade(white, 90);
+        .transform( skewY(-0.5deg) );
+        .box-shadow( 5px 5px 0 0  fade(@navbar-default-bg, 10%) );
+    }
+}
+
 .transform(@transform...) {	
     -webkit-transform: @arguments; // iOS <4.3 & Android <4.1
        -moz-transform: @arguments; // Firefox
