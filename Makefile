@@ -11,6 +11,14 @@ create_virtualenv:
 	# if venv folder is not created yet we do it
 	if [ ! -d venv ]; then virtualenv venv --no-site-packages --distribute --prompt=Arte-WoW; fi
 
+messages: sync_db_translations makemessages
+
+sync_db_translations:
+	. $(VIRTUALENV)bin/activate; django-admin.py sync_db_translations 
+
+makemessages:
+	. $(VIRTUALENV)bin/activate; cd app; django-admin.py makemessages -a --settings=settings
+
 createsuperuser:
 	. $(VIRTUALENV)bin/activate; python manage.py createsuperuser --username root
 
@@ -35,6 +43,6 @@ test: test_django_app
 test_django_app: . $(VIRTUALENV)bin/activate; python manage.py test app.core app.api app.authentication --settings=app.settings_tests
 
 test_translations:
-	. $(VIRTUALENV)bin/activate; python manage.py test app.translations.tests --settings=app.translations.tests.settings_tests
+	. $(VIRTUALENV)bin/activate; django-admin.py test app.translations.tests --settings=app.translations.settings
 
 # EOF

@@ -80,8 +80,10 @@ question_mapping = {
     BooleanQuestion:         BooleanQuestionSerializer,
     TypedNumberQuestion:     TypedNumberQuestionSerializer,
     UserGenderQuestion:      MultipleChoicesSerializer,
-    BaseRadioQuestion:       MultipleChoicesSerializer,
-    BaseSelectionQuestion:   MultipleChoicesSerializer
+    TextSelectionQuestion:   MultipleChoicesSerializer,
+    TextRadioQuestion:       MultipleChoicesSerializer,
+    MediaRadioQuestion:      MultipleChoicesSerializer,
+    MediaSelectionQuestion:  MultipleChoicesSerializer,
 }
 
 class QuestionSerializer(mixins.InheritedModelMixin):

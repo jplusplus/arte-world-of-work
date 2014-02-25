@@ -2,26 +2,16 @@
 """
 Settings overrided for test time
 """
-from app.settings import *
-import os 
-here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
+import os
+# from app.settings import *
 
-USE_I18N = True
-LANGUAGES = (('fr', 'French'),
-             ('en', 'English'))
+# def remove_apps(apps):
+#     apps = filter(
+#         lambda x: 'app.translations' in x,
+#         apps
+#     )
+#     return apps
 
 
-LANGUAGE_CODE = 'en'
+# INSTALLED_APPS = remove_apps(INSTALLED_APPS)
 
-TRANSLATION_STRINGS_FILE = here('i18n_strings.py')
-
-def except_south(iterable):
-    result = []
-    for el in iterable:
-        if el != 'south':
-            result.append(el)
-    return result
-
-INSTALLED_APPS = tuple(except_south(INSTALLED_APPS)) + (
-    'app.translations.tests',
-)
