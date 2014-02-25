@@ -3,9 +3,13 @@
 	
 	.thematic-@{slug} {
 		background-image:url("../img/bg/@{slug}.png");
-		background-color: @bg;
-		
-		#content {
+		background-color: @bg;		
+
+		.btn-primary {
+  			.button-variant(#fff; @brand; @brand);
+		}
+
+		.thematic {
 
 			a {
 				color: @brand;
@@ -14,18 +18,22 @@
 				}
 			}
 
-			.btn-primary {
-	  			.button-variant(#fff; @brand; @brand);
+			&__title {
+				color:@brand;
+				background-image: url("../img/ui/pic_@{slug}.png"); 
 			}
+		}
 
-			.thematic {
+		.question-choice:before {
+			border-color: lighten(@brand, 5%);
+		}
 
-				&__title {
-					color:@brand;
-					background-image: url("../img/ui/pic_@{slug}.png"); 
-				}
-			}
-		}		
+		.question-choice:hover:before {
+			border-width:3px;
+			border-color:@brand;
+			background-image: url("../img/ui/minipic-valider_@{slug}.png");
+		}
+	
 	}
 
 }
