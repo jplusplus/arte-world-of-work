@@ -46,8 +46,6 @@ def bind_translation_fields(model, opts):
         model.add_to_class(ref_field_name, ref_field)
         opts.add_translation_field(field_name, ref_field)
 
-
-
 def delete_mt_init(sender, instance, **kwargs):
     if hasattr(instance, '_mt_init'):
         del instance._mt_init
@@ -99,6 +97,18 @@ def patch_metaclass(model):
     # Assign to __metaclass__ wouldn't work, since metaclass search algorithm check for __class__.
     # http://docs.python.org/2/reference/datamodel.html#__metaclass__
     model.__class__ = translation_deferred_mcs
+
+
+def delete_cache_fields(model):
+    opts = model._meta
+    cached_attrs = ('_field_cache', '_field_name_cache', '_name_map', 'fields', 'concrete_fields',
+                    'local_concrete_fields')
+    for attr in cached_attrs:
+        try:
+            delattr(opts, attr)
+        except AttributeError:
+            pass
+
 
 # inspired from modeltranslations.fields.TranslationFieldDescriptor
 class OriginalFieldDescriptor(object):
@@ -303,9 +313,9 @@ class Translator(object):
         semantic of throwing exception for models not directly registered.
         """
         opts = self._get_options_for_model(model)
-        if not opts.registered and not opts.related:
+        if not getattr(opts, 'registered', False) and not getattr(opts, 'related', False):
             raise NotRegistered('The model "%s" is not registered for '
-                                'translation' % model.__name__)
-        return opt
+                                'translation' % model.__class__.__name__)
+        return opts
 
 translator = Translator()

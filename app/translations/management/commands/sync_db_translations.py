@@ -16,6 +16,7 @@ from django.core.management.base import BaseCommand
 from django.template import Context, Template
 
 from app.translations.translator import translator
+import os
 
 TRANSLATION_DEFAULT_LANGUAGE = getattr(settings, 'TRANSLATION_DEFAULT_LANGUAGE', 'en')
 
@@ -28,9 +29,9 @@ def extract_strings_from_db(verbosity=1):
         # loop over model instances
         for instance in model.objects.all():
             for field_name in opts.fields:
-                original_string = getattr(instance, '_%s' % field_name, None)
-                if original_string is not None:
-                    strings.append(original_string)
+                src_string = getattr(instance, '_%s' % field_name, None)
+                if src_string is not None and src_string not in strings:
+                    strings.append(src_string)
     return strings
 
 def write_strings(strings=(), verbosity=1):
@@ -42,7 +43,13 @@ STRINGS = ({% for str in strings %}_("{{ str }}"),{% endfor %})''')
     context = Context({'strings': strings})
     output = template.render(context)
 
-    f = open(settings.TRANSLATION_STRINGS_FILE, 'w+')
+    path = settings.TRANSLATION_STRINGS_FILE
+    if os.access(path, os.F_OK):
+        os.remove(path)
+    if os.access(path + 'c', os.F_OK):
+        os.remove(path + 'c')
+        
+    f = open(path, 'w+')
     f.write(output)
 
     if verbosity > 2:

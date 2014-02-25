@@ -12,5 +12,19 @@
     "fields": {
       "title": "an other title"
     }
+  },
+  {
+    "model": "tests.testmodel",
+    "pk": 3,
+    "fields": {
+      "title": "my awesome title"
+    }
+  },
+  {
+    "model": "tests.inheritedtestmodel",
+    "pk": 3,
+    "fields": {
+      "other": "an other translation"
+    }
   }
 ]

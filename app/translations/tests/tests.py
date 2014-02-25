@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
-from django.test import TestCase
+from django.conf import settings 
 from django.core.management import call_command
+from django.test import TestCase
 from django.utils.translation import activate
 
-from .models import TestModel
+from app import utils
+from app.translations.translator import translator
+from app.translations.tests.models import TestModel, InheritedTestModel
 
 class TranslationsLocalesTestCase(TestCase):
     fixtures = ['/app/translations/tests/fixtures/initial_data.json',]
-    def setUp(self):
-        pass
+    
 
     def test_translated_field_values(self):
         activate('fr')
@@ -18,14 +20,30 @@ class TranslationsLocalesTestCase(TestCase):
         activate('en')
         self.assertEqual(obj.title, 'my title')
 
+    def test_inherited_translated_field_values(self):
+        activate('fr')
+        obj = InheritedTestModel.objects.get(pk=3)
+        import pdb; pdb.set_trace()
+        self.assertEqual(obj.other, 'une autre traduction')
+        self.assertEqual(obj.title, 'mon superbe titre')
 
-class SyncFromDB(TestCase):
+        activate('en')
+        self.assertEqual(obj.other, 'an other translation')
+        self.assertEqual(obj.title, 'my awesome title')
+
+class SyncFromDB(TestCase, utils.TestCaseMixin):
 
     def test_created_strings(self):
-
         call_command('sync_db_translations', verbosity=1)
         # we import created python file
-        from app.i18n_strings import STRINGS
-        self.assertEqual(len(STRINGS), 2)
+        strings_path = settings.TRANSLATION_STRINGS_FILE
+        execfile(strings_path)
+        _locals = locals()
+        self.assertEqual(len(_locals['STRINGS']), 4)
             
 
+    def test_translation_options(self):
+        opts = translator.get_options_for_model(InheritedTestModel)
+        self.assertLenIs(opts.fields, 2)
+        self.assertIsNotNone(opts.fields['title'])
+        self.assertIsNotNone(opts.fields['other'])
