@@ -29,11 +29,11 @@
                 <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
                 <p class="thematic-intro__description">[[ thematic.currentThematic.intro_description ]]</p>
 
-                <a class="thematic-intro__button" ng-if="thematic.currentThematic.intro_button_label">
+                <a class="thematic-intro__results" ng-if="thematic.currentThematic.intro_button_label">
                     [[ thematic.currentThematic.intro_button_label ]]
                 </a>
 
-                <a ng-click="start()" class="btn btn-primary" ng-translate>Let's go</a>
+                <a ng-click="start()" class="thematic-intro__let-go" ng-translate>Let's go</a>
             </div>
 
             <!-- step 2 -> we're starting this thematic question -->
