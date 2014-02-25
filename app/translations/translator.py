@@ -280,7 +280,7 @@ class Translator(object):
         registered models.
         """
         return [(model, opts) for (model, opts) in self._registry.items()
-                if opts.registered and (not model._meta.abstract or abstract)]
+                if getattr(opts, 'registered', False) and (not model._meta.abstract or abstract)]
 
     def _get_options_for_model(self, model, opts_class=None, **options):
         """

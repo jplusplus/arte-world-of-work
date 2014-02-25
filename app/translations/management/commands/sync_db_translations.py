@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # Encoding: utf-8
 # -----------------------------------------------------------------------------
 # Project : Arte - Wow
@@ -17,6 +18,7 @@ from django.template import Context, Template
 
 from app.translations.translator import translator
 import os
+import codecs
 
 TRANSLATION_DEFAULT_LANGUAGE = getattr(settings, 'TRANSLATION_DEFAULT_LANGUAGE', 'en')
 
@@ -49,7 +51,7 @@ STRINGS = ({% for str in strings %}_("{{ str }}"),{% endfor %})''')
     if os.access(path + 'c', os.F_OK):
         os.remove(path + 'c')
         
-    f = open(path, 'w+')
+    f = codecs.open(path, 'w+', 'utf-8')
     f.write(output)
 
     if verbosity > 2:
@@ -67,6 +69,6 @@ class Command(BaseCommand):
     def handle(self, *args, **opts):
         current_language = translation.get_language()
         translation.activate(TRANSLATION_DEFAULT_LANGUAGE)
-        verbosity = opts.get('verbosity', 1)
+        verbosity = int(opts.get('verbosity', 1))
         sync_strings(verbosity)
         translation.activate(current_language)
