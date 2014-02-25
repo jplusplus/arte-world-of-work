@@ -15,7 +15,7 @@ class ThematicCtrl
         # Scope variables bindings
         # ---------------------------------------------------------------------
         _.extend @scope, 
-            state: @states.INTRO,
+            state: @states.LANDING,
             states: @states,
             thematic: @thematicService 
 
@@ -25,6 +25,7 @@ class ThematicCtrl
         _.extend @scope, 
             next: @skipElement,
             previous: @previousElement
+            currentState: @currentState
             start: =>
                 @utils.authenticate @startThematic
 
@@ -45,7 +46,7 @@ class ThematicCtrl
     startThematic: =>
         @currentState(@states.ELEMENTS)
 
-    skipElement: =>
+    skipElement: =>        
         if @hasNextElement()
             @userPosition.nextElement()
         else if @isOutro()
@@ -73,21 +74,20 @@ class ThematicCtrl
         element = @elements.getAt(@userPosition.elementPosition() - 1)
         if element then true else false
 
-    isIntro: => @currentState() == @states.INTRO
-
-    isOutro: => @currentState() == @states.OUTRO
+    isLanding: => @currentState() == @states.LANDING
+    isIntro  : => @currentState() == @states.INTRO
+    isOutro  : => @currentState() == @states.OUTRO
   
     onThematicChanged: (thematic, old_thematic)=>
         return unless thematic?
         @elements = @userPosition.createWrapper thematic.elements
         shouldSetOutro = old_thematic? and thematic.position < old_thematic.position
 
-        @currentState(if shouldSetOutro then @states.OUTRO else @states.INTRO)
-        if @isIntro()
+        @currentState(if shouldSetOutro then @states.OUTRO else @states.LANDING)
+        if @isIntro() or @isLanding()
             elementPosition = 0
         else
             elementPosition = @elements.count() - 1
-
         @userPosition.elementPosition(elementPosition)
 
     onElementPositionChanged: (position)=>

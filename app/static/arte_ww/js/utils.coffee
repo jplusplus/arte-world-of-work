@@ -15,9 +15,10 @@ class Utils
             DOING: 1
             OUTRO: 2
         thematic:
-            INTRO: 0
-            ELEMENTS: 1
-            OUTRO: 2
+            LANDING : 0
+            INTRO   : 1
+            ELEMENTS: 2
+            OUTRO   : 3
 
     authenticate: (callback) =>
         createNewUser = =>

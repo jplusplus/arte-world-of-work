@@ -1,5 +1,6 @@
 {% load staticfiles %}
 
+
 <div class="survey-navigator" ng-switch on='survey.state'>
 
     <!-- step 0 -> Introduction of the survey, first step  -->
@@ -9,7 +10,7 @@
         <p ng-translate>If you're under 30, you know that's not how it is.</p>
         <p ng-translate>Temporary employment, internships, volunteering, informal jobs, self-learning, emigration… Thatʼs what we do to make a living. Neither good nor bad, itʼs our world.</p>
         <p ng-translate>Explore the questions to know what it means to work today, in Europe, when you're under 30.</p>
-        <a class="btn btn-primary" ng-click="survey.state=survey.states.DOING">Start the survey</a>
+        <a class="btn btn-primary" ng-click="survey.state = survey.states.DOING">Start the survey</a>
     </div>
 
     <!-- step 1 -> we start the first thematic and going on until the end --> 
@@ -17,33 +18,38 @@
 
         <div ng-controller='ThematicCtrl'>
 
-            <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
+            <!-- step 0 -> thematic landing -->
+            <div class="thematic-landing" ng-if='state == states.LANDING'>
+                <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>                
+                <a ng-click="currentState(states.INTRO)" class="thematic-landing__let-go" ng-translate>Let's go</a>
+            </div>
 
-            <!-- step 0 -> thematic intro, displaying all info we need about this thematic -->
+            <!-- step 1 -> thematic intro, displaying all info we need about this thematic -->
             <div class="thematic-intro" ng-if='state == states.INTRO'>
+                <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
                 <p class="thematic-intro__description">[[ thematic.currentThematic.intro_description ]]</p>
 
-                <a class="thematic-intro__button" ng-if="thematic.currentThematic.intro_button_label">
+                <a class="thematic-intro__results" ng-if="thematic.currentThematic.intro_button_label">
                     [[ thematic.currentThematic.intro_button_label ]]
                 </a>
 
-                <a ng-click="start()" class="btn btn-primary" ng-translate>Let's go</a>
+                <a ng-click="start()" class="thematic-intro__let-go" ng-translate>Let's go</a>
             </div>
 
-            <!-- step 1 -> we're starting this thematic question -->
-            <div class="survey-element" ng-if='state == states.ELEMENTS'>
-                <div survey-element="currentElement"></div>
-                <!-- <div ng-repeat='element in currentThematic.elements' 
-                     ng-class="positions.elementPosition == element.position ? 'visible' : 'hidden'">
-                    <div survey-element="element"></div>
-                </div> -->
+            <!-- step 2 -> we're starting this thematic question -->
+            <div class="thematic-elements" ng-if='state == states.ELEMENTS'>
+                <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
+                <div survey-element="currentElement" class="survey-element"></div>
             </div>
 
-            <!-- step 2 -> thematic outro we're starting this thematic question -->
+            <!-- step 3 -> thematic outro we're starting this thematic question -->
             <div class="thematic-outro" ng-if='state == states.OUTRO'>
-                <h3> OUTRO </h3>
-                <a ng-href="" ng-click='previous()'>Previous</a>
-                <a ng-href="" ng-click='next()'> Go to next thematic</a>
+                <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
+                <div class="thematic-outro__content">
+                    <p>Laborum American Apparel fanny pack, flexitarian raw denim scenester Wes Anderson.</p>
+                    <p>Velit sustainable aesthetic nostrud. Assumenda Wes Anderson flexitarian, nihil exercitation Portland narwhal seitan mustache labore sriracha street art accusamus. Minim selvage vero placeat Shoreditch.</p>
+                <a class="thematic-outro__previous" ng-click='previous()'>Previous</a>
+                <a class="thematic-outro__next"     ng-click='next()'> Go to next thematic</a>
             </div>
         </div>
     </div>

@@ -1,40 +1,43 @@
-.thematic-intro { 
-    
-    .white-panel();
-	padding-bottom:40px;
+.thematic-outro {
+	.white-panel();
 
-	&__description {
-		padding:5px 10px;		
+	padding-bottom:30px;
+
+	&__content {
+		padding:10px;
 	}
+	
 
-
-    &__results, &__let-go {
+    &__previous, &__next {
         display: inline-block;
         position: absolute;  
         font-size:12px;
+        padding:0 15px;
+
         color: @text-color;
         display:block;
         cursor:pointer; 
-        font-weight:600;
+        text-transform: lowercase;
 
         &:hover {
             text-decoration: none;
         }
     }
 
-    &__results {
+    &__previous {
+        font-weight:300;
         left:10px;
         bottom:15px;
         height:25px;
         line-height:25px;
+        background:url("../img/ui/previous.png") left bottom no-repeat;
         &:hover {
             background-position: left top;
         }
     }
 
-    &__let-go {
-        text-transform: lowercase;
-        padding:0 15px;
+    &__next {
+        font-weight:600;
         right:10px;
         bottom:10px;
         height:35px;

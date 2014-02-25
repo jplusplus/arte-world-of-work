@@ -1,0 +1,52 @@
+
+
+.thematic-landing {
+	text-align: center;
+	
+	.thematic__title {
+		font-size: 30px;
+		font-weight: 600;
+		background-position: left center;
+		padding: 20px 20px 20px 45px ;
+		display: inline-block;
+		text-align: center;
+		.clearfix();
+	}
+
+	&__let-go {
+		margin:auto;
+		display: block;
+		color:white;
+		width:  100px;				
+		margin-top:50px;
+		padding:0 10px;
+		position:relative;
+		text-transform: uppercase;
+		font-weight: 600;
+		cursor:pointer;
+
+		&:hover {
+			text-decoration: none;
+			color: white;			
+			&:after {				
+				background:@brand-primary;
+				border-width: 5px;
+			}
+		}
+
+		&:after {
+			content:"";
+			position:absolute;
+			top:50%;
+			left:50%;
+			.transform( translate(-50%, -50%) );
+			width:  100px;				
+			height: 100px;				
+			display:block;
+			z-index:-1;
+			border: 0px solid lighten(@brand-primary, 10);
+			border-radius: 50px;
+			.transition(0.8s);
+		}
+	}
+}
