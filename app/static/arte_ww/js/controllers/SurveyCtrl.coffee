@@ -8,6 +8,9 @@ class SurveyCtrl
         @scope.survey =  
             state: 0
             states: @states
+        # Returns the classes of the given questions
+        @scope.getQuestionClasses = (question)-> 
+            'question-choices--with-columns': question.choices.length >= 4
 
 angular.module('arte-ww').controller 'SurveyCtrl', SurveyCtrl
 

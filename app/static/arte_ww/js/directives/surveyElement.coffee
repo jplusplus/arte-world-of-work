@@ -4,7 +4,8 @@ TYPOLOGIES =
         AGE: 'user_age'
         COUNTRY: 'user_country'
     TYPED_NUMBER: 'typed_number'
-    RADIO_TYPES: ['boolean', 'text_radio', 'media_radio']
+    BOOLEAN: 'boolean'
+    RADIO_TYPES: ['text_radio', 'media_radio']
     SELECTION_TYPES: ['text_selection', 'media_selection']
 
 

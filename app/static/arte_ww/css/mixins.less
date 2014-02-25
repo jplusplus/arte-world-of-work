@@ -13,6 +13,7 @@
 
 			a {
 				color: @brand;
+
 				&:hover {
 					color: lighten(@brand, 10);
 				}
@@ -36,9 +37,23 @@
 		}
 
 		.question-choice:hover:before {
-			border-width:3px;
+			border-left-width:3px;
+			border-right-width:3px;
 			border-color:@brand;
 			background-image: url("../img/ui/minipic-valider_@{slug}.png");
+		}
+		
+		.question-choices--boolean .question-choices--boolean__choice:before {
+			color:white;			
+			background:@brand;
+			border-color:fade(@brand, 90);
+		}
+
+		.question-choices--boolean .question-choices--boolean__choice:hover {
+			color:@brand;
+			&:before {
+				background:white;
+			}
 		}
 	
 	}

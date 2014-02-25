@@ -1,6 +1,6 @@
 .question-choices {
 
-    padding-left:125px;
+    padding-left:100px;
     text-align:left;
 
     &.icon {
@@ -15,27 +15,88 @@
         }
 
     }
-}
 
-.question-choice {
+    &--unique {
+        
+        .question-choice {
 
-    position:relative;
-    padding-left: 7px;
-    margin-bottom: 10px;
-    cursor:pointer;
+            &:before {
+                border-radius:20px;
+            }
 
-    &:before {
-        content:"";
-        position:absolute;
-        right:100%;
-        top:50%;                
-        height:20px;
-        width:20px;
-        border:5px solid @text-color;
-        border-radius:20px;
-        background: no-repeat center center;
-        .transform( translateY(-50%) );
+        }
     }
 
-    &--selected { }
+    &--with-columns {
+
+        width:80%;
+        padding-left:25px;
+
+        .question-choice {
+            width:50%;
+            float:left;
+        }
+
+    }
+
+    &--boolean {
+
+        padding:0;
+        text-align: center;
+        height:100px;
+        line-height:100px;
+        margin:20px 0;
+        margin-bottom:30px;
+
+        &__choice {
+            display:inline-block;
+            width:100px;
+            text-align:center;
+            margin:10px;
+            position:relative;
+            cursor:pointer;
+            font-weight: 600;
+            color:white;
+            .transition(0.8s);
+
+            &:before {
+                z-index:-1;
+                height:100px;
+                width:100px;
+                border:5px solid transparent;
+                border-radius:50px;
+                content:"";
+                position:absolute;
+                top:50%;
+                left:50%;
+                .transform( translate(-50%, -50%) );            
+                .transition(0.8s);  
+            }
+        }
+    }
+
+    .question-choice {
+
+        position:relative;        
+        padding-left:25px;
+        margin-bottom: 10px;
+        cursor:pointer;
+        font-size:14px;
+        color:#000;
+
+        &:before {
+            content:"";
+            position:absolute;
+            left:0;
+            top:50%;                
+            height:20px;
+            width:20px;
+            border:5px solid @text-color;        
+            background: no-repeat center center;
+            .transform( translateY(-50%) );
+        }
+
+    }
+
 }
+

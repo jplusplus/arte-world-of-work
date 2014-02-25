@@ -1,8 +1,8 @@
 {% extends "partials/directives/question-base.dj.html" %}
 
 {% block form %}
-<div class='question-choices'
-     ng-class='question.media_type'>
+<div class='question-choices question-choices--multiple'
+     ng-class='getQuestionClasses(question)'>
     <div ng-repeat='choice in question.choices'
          ng-click='toggleChoice(choice)'
          ng-class='{"question-choice--selected": isSelected(choice)}'
@@ -11,8 +11,4 @@
         <img ng-if='question.media_type' ng-attr-src='choice.picture'></img>
     </div>
 </div>
-{% endblock %}
-
-{% block actions %}
-    <a class="btn btn-primary" ng-click='submitAnswer(answer)'>[[ question.validate_button_label ]]</a>
 {% endblock %}
