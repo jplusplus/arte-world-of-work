@@ -15,7 +15,7 @@ class ThematicCtrl
         # Scope variables bindings
         # ---------------------------------------------------------------------
         _.extend @scope, 
-            state: @states.INTRO,
+            state: @states.LANDING,
             states: @states,
             thematic: @thematicService 
 
@@ -25,6 +25,7 @@ class ThematicCtrl
         _.extend @scope, 
             next: @skipElement,
             previous: @previousElement
+            currentState: @currentState
             start: =>
                 @utils.authenticate @startThematic
 
@@ -82,7 +83,7 @@ class ThematicCtrl
         @elements = @userPosition.createWrapper thematic.elements
         shouldSetOutro = old_thematic? and thematic.position < old_thematic.position
 
-        @currentState(if shouldSetOutro then @states.OUTRO else @states.INTRO)
+        @currentState(if shouldSetOutro then @states.OUTRO else @states.LANDING)
         if @isIntro()
             elementPosition = 0
         else

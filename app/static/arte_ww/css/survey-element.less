@@ -1,11 +1,4 @@
-.survey-navigator {
-    position:relative;
-    margin:auto;    
-    margin-top:15px;
-    padding:0;
-    width: 435px;
-    max-height:298px;
-    margin-bottom:10px;
+.survey-element {
 
     &:before {
         z-index:-1;
@@ -18,15 +11,6 @@
         background:fade(white, 90);
         .transform( skewY(-0.5deg) );
         .box-shadow( 5px 5px 0 0  fade(@navbar-default-bg, 10%) );
-    }
-}
-
-
-
-.survey-element {
-
-    &--visible {
-
     }
 
     &__nav {
@@ -119,7 +103,5 @@
         font-weight:400;
         font-size: 11px;
     }
+
 }
-
-
-

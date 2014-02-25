@@ -22,6 +22,17 @@
 				color:@brand;
 				background-image: url("../img/ui/pic_@{slug}.png"); 
 			}
+
+			&-landing {
+
+				&__let-go:after {
+					background:@brand;
+				}
+
+				&__let-go:hover:after {
+					background:lighten(@brand, 5);
+				}
+			}
 		}
 
 		.question-choice:before {
