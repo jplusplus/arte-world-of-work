@@ -13,10 +13,18 @@ class ResultsSerializer(serializers.Serializer):
     def to_native(self, value):
         return value.as_dict()
 
-class MediaChoiceFieldSerializer(serializers.ModelSerializer):
+class QuestionMediaSerializer(serializers.ModelSerializer):
+    picture = serializers.SerializerMethodField('get_picture')
+    class Meta:
+        model = QuestionMediaAttachement
+        exclude = ('question',)
+
+    def get_picture(self, obj):
+        return obj.picture.url 
+
+class MediaChoiceFieldSerializer(QuestionMediaSerializer):
     class Meta:
         model = MediaChoiceField
-        fields = ('picture',)
 
 class UserChoiceFieldSerializer(serializers.ModelSerializer):
     class Meta:
@@ -89,7 +97,8 @@ question_mapping = {
 class QuestionSerializer(mixins.InheritedModelMixin):
     model_mapping = question_mapping 
     # we have to explicitly declare this field because it's a model property
-    typology = serializers.Field() 
+    typology = serializers.Field()
+    media    = QuestionMediaSerializer(source='questionmediaattachement')
     class Meta:
         model = BaseQuestion
         # fields = ('id', 'label', 'skip_button_label', 'typology')
@@ -101,7 +110,6 @@ class QuestionResultsSerializer(mixins.InheritedModelMixin):
     model_mapping = question_mapping 
     typology = serializers.Field()
     results  = serializers.SerializerMethodField('get_results')
-
     class Meta:
         model  = BaseQuestion
         exclude = ('content_type',)
