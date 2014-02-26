@@ -144,6 +144,8 @@ class GettextFieldDescriptor(object):
             return self
 
         val = getattr(instance, '_%s' % self.field.name, None)
+        if val == '':
+            return '' # if we return _('') it will display all package informations
         if val is not None:
             return _(val)
         return None
