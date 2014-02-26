@@ -113,7 +113,7 @@ class BarChart extends Chart
         @x = (do d3.scale.ordinal).rangeRoundBands([0, @_size.width], 0.2);
         @y = (do d3.scale.linear).range [@_size.height, 0]
         @x.domain _.map @results, (d) -> d[0]
-        @y.domain [0, @scope.data.total_answers]
+        @y.domain [0, _.max _.values @scope.data.results]
 
     getRectAttrs: =>
         x : (d) => @x(d[0])
@@ -142,7 +142,7 @@ class HBarChart extends BarChart
     defineXY: =>
         @x = (do d3.scale.linear).range [0, @_size.width]
         @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.2);
-        @x.domain [0, @scope.data.total_answers]
+        @x.domain [0, _.max _.values @scope.data.results]
         @y.domain _.map @results, (d) -> d[0]
 
     getRectAttrs: =>
@@ -233,14 +233,14 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                 scope.data =
                     chart_type : 'bar'
                     results :
-                        1 : 200
-                        2 : 500
-                    total_answers : 700
+                        1 : 58
+                        2 : 27
+                        3 : 15
+                    total_answers : 100
                     sets :
-                        1 :
-                            name : "yes"
-                        2 :
-                            name : "no"
+                        1 : name : "Un iPad"
+                        2 : name : "Le fixie du patron"
+                        3 : name : "Un DVD"
 
             window.onresize = =>
                 do scope.$apply
