@@ -8,15 +8,15 @@
             <ul class="header__nav__links list-inline">
                 <li class="header__nav__links__element" 
                     ng-class="{ 'header__nav__links__element--active': currentCategory() == 'survey' }">
-                    <a ng-href="{% url 'survey' %}">Survey</a>
+                    <a ng-href="{% url 'survey' %}" translate>Survey</a>
                 </li>
                 <li class="header__nav__links__element" 
                     ng-class="{ 'header__nav__links__element--active': currentCategory() == 'results' }">
-                    <a ng-href="{% url 'results' %}">Results</a>
+                    <a ng-href="{% url 'results' %}" translate>Results</a>
                 </li>
             </ul>
             <div class="header__nav__back-to-beginning" ng-if="currentCategory() == 'survey' ">   
-                <a href="{% url 'survey' %}">[[ "Back to the beginning" | translate ]]</a>         
+                <a href="{% url 'survey' %}" translate>Back to the beginning</a>         
             </div>
             <div class="header__nav__progress">
                 <div class="header__nav__progress__container progress">
@@ -26,7 +26,11 @@
                 </div>
             </div>  
         </nav>
+
         <ul class="header__social list-inline">
+            <li ng-click="setLang('fr')">FR</li>
+            <li ng-click="setLang('de')">DE</li>
+            <li ng-click="setLang('en')">EN</li>
             <li>
                 <a href="" target="_blank"  class="header__social__link header__social__link--googleplus">
                     12k

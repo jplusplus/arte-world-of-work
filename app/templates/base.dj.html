@@ -18,6 +18,9 @@
               type='text/css'>
         {% block extracss %}{% endblock %}
         <base href="{% url 'home' %}" />
+        <script type="text/javascript">
+            var STATIC_URL = window.STATIC_URL = window.STATIC_URL || "{% static '' %}";
+        </script>
     </head>
     <body ng-cloak track-thematic>
         {% block content %}{% endblock %}
