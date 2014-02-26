@@ -12,25 +12,8 @@
 # -----------------------------------------------------------------------------
 from settings import *
 
-INSTALLED_APPS = (
-    # ------------------------ django dependencies -------------------------- # 
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.admin',
-    'django.contrib.admindocs',
-    # ------------------------ external dependencies ------------------------ #
-    'compressor',
-    'django_countries',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'sorl.thumbnail',
-    # ------------------------ internal dependencies ------------------------ # 
-    'app.authentication',
-    'app.core',
-    'app.translations',
+def without(iter, el): return filter(lambda x: x!=el, iter)
+
+INSTALLED_APPS = without(INSTALLED_APPS, 'south') + (
     'app.translations.tests',
 )

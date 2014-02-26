@@ -12,9 +12,10 @@
 # -----------------------------------------------------------------------------
 
 # all core related tests should go here
-from app                         import utils   
+from app                         import utils
 from app.core                    import transport   
 from app.core.models             import * 
+from app.translations.translator import translator
 from django_countries.fields     import CountryField
 from django.core.exceptions      import ValidationError
 from django.test                 import TestCase
@@ -482,3 +483,13 @@ class UtilsTestCase(TestCase, utils.TestCaseMixin):
             self.assertAttrEqual(test_element, 'none', None)
         except AssertionError as e:
             self.fail( 'assertAttrEqual failed where it shouldn\'t: {e}'.format(e=e))
+
+
+
+class ModelTranslationTestCase(TestCase, utils.TestCaseMixin):
+    def test_question_opts(self):
+        opts = translator.get_options_for_model(BaseQuestion)
+        fields = opts.fields
+        self.assertAttrNotNone(fields, 'label')
+        self.assertAttrNotNone(fields, 'hint_text')
+        self.assertAttrNotNone(fields, 'skip_button_label')

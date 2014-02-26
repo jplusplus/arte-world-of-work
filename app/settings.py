@@ -47,18 +47,18 @@ TIME_ZONE = 'Europe/Paris'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en'
 
 LANGUAGES = (
-    (_('English'), 'en'),
-    (_('French'), 'fr'),
+    ('en', _('English')),
+    ('fr', _('French') ),
 )
+
+LANGUAGE_CODE = 'en'
 
 LOCALE_PATHS = (
     here('locale/'),
+    here('translations/locale/')
 )
-
-# SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.

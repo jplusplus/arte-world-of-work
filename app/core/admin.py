@@ -11,6 +11,7 @@
 # Creation : 14-Jan-2014
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.contenttypes import generic
 from sorl.thumbnail.admin import AdminImageMixin
@@ -61,10 +62,6 @@ class InlineThematicElement(admin.TabularInline):
     readonly_fields = 'content_type', 'object_id'
     extra = 0
     max_num = 0
-
-# answers inlines 
-
-
 
 # -----------------------------------------------------------------------------
 #
@@ -127,10 +124,10 @@ admin.site.register(models.Thematic              , ThematicAdmin)
 
 admin.site.register(models.StaticFeedback        , FeedbackAdmin)
 
-
-admin.site.register(models.TypedNumberAnswer     , AnswerAdmin)
-admin.site.register(models.SelectionAnswer       , AnswerAdmin)
-admin.site.register(models.RadioAnswer           , AnswerAdmin)
-admin.site.register(models.BooleanAnswer         , AnswerAdmin)
+if settings.DEBUG:
+    admin.site.register(models.TypedNumberAnswer     , AnswerAdmin)
+    admin.site.register(models.SelectionAnswer       , AnswerAdmin)
+    admin.site.register(models.RadioAnswer           , AnswerAdmin)
+    admin.site.register(models.BooleanAnswer         , AnswerAdmin)
 
 # EOF
