@@ -1,7 +1,7 @@
 class ResultsCtrl
-    @$inject: ['$scope', '$location', 'Thematic']
+    @$inject: ['$scope', '$location', 'Thematic', '$http']
 
-    constructor: ($scope, $location, Thematic) ->
+    constructor: ($scope, $location, Thematic, $http) ->
         # Update URL when the user changes filters
         $scope.$watch 'filters', (=>
             f = angular.copy $scope.filters
@@ -13,6 +13,13 @@ class ResultsCtrl
             $location.search 'age_max', f.age_max
         ), yes
 
+        request =
+            url : '/api/questions/11'
+            method : 'GET'
+        $http(request).success (data) =>
+            $scope.current = data
+
+        # List all thematics
         $scope.thematics = []
         $scope.$watch (=>
             Thematic.positionList

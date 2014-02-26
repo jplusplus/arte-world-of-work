@@ -14,8 +14,7 @@ class Chart
         # Compute the result into something usable by the layout
         @results = []
         _.forEach (_.keys @scope.data.results), (key) =>
-            percent = parseInt (@scope.data.results[key] * 100 / @scope.data.total_answers + 0.5)
-            @results.push [@scope.data.sets[key].name, @scope.data.results[key], percent]
+            @results.push [@scope.data.sets[key].title, @scope.data.results[key]]
 
     setSize: =>
         @size =
@@ -70,7 +69,7 @@ class PieChart extends Chart
                 transform : (d) => "translate(#{@arc.centroid d})"
             .style
                 'text-anchor' : 'middle'
-            .text (d) -> "#{d.data[0]} - #{d.data[2]}%"
+            .text (d) -> "#{d.data[0]} - #{d.data[1]}%"
 
 
 class BarChart extends Chart
@@ -107,7 +106,7 @@ class BarChart extends Chart
         g = (entered.append 'g').attr 'class', 'bar'
         (g.append 'rect').attr do @getRectAttrs
         ((g.append 'text').attr do @getTextAttrs)
-            .text (d) -> "#{d[2]}%"
+            .text (d) -> "#{d[1]}%"
 
     defineXY: =>
         @x = (do d3.scale.ordinal).rangeRoundBands([0, @_size.width], 0.2);
@@ -130,7 +129,7 @@ class BarChart extends Chart
 class HBarChart extends BarChart
     constructor: (@scope, @element) ->
         @margin =
-            top : 10
+            top : 0
             right : 10
             bottom : 10
             left : 10
@@ -207,7 +206,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
         replace : yes
         restrict : 'E'
         scope :
-            id : '='
+            id : '@'
             filters : '='
         controller : ['$scope', (scope) ->
             scope.filter =
@@ -222,25 +221,25 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                 scope.chart = switch (do scope.data.chart_type.toLowerCase)
                     when 'pie' then new PieChart scope, elem
                     when 'bar' then new BarChart scope, elem
-                    when 'hbar' then new HBarChart scope, elem
+                    when 'horizontal_bar' then new HBarChart scope, elem
                     when 'histo' then new Histogram scope, elem
                     else throw "Chart type '#{scope.data.chart_type}' does not exist."
 
             update = =>
-                $Result.get { id : scope.id , filters : scope.filters }, (data) =>
-                    scope.data = data
-                # Fake data
-                scope.data =
-                    chart_type : 'bar'
-                    results :
-                        1 : 58
-                        2 : 27
-                        3 : 15
-                    total_answers : 100
-                    sets :
-                        1 : name : "Un iPad"
-                        2 : name : "Le fixie du patron"
-                        3 : name : "Un DVD"
+                return if not scope.id? or scope.id is ""
+
+                filters = angular.copy scope.filters
+                if filters.male isnt filters.female
+                    filters.gender = 'male' if filters.male
+                    filters.gender = 'female' if filters.female
+                delete filters.male
+                delete filters.female
+
+                promise = $Result.get
+                    id : scope.id
+                    filters : filters
+                promise.success (data) =>
+                    scope.data = data.results
 
             window.onresize = =>
                 do scope.$apply
@@ -269,6 +268,10 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
 
             # Watch changes in the filters
             scope.$watch 'filters', (newValues, oldValues) =>
+                do update
+            , yes
+
+            scope.$watch 'id', =>
                 do update
             , yes
 
