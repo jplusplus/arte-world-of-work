@@ -19,7 +19,9 @@
 
 <div class="answer-thematics">
     <ul>
-        <li class="answer-thematics__thematic" ng-repeat="thematic in thematics" ng-class="thematic.slug">[[thematic.title]]</li>
+        <li class="answer-thematics__thematic" ng-repeat="thematic in thematics" ng-class="thematic.slug">
+            <a>[[thematic.title]]</a>
+        </li>
     </ul>
 </div>
 
