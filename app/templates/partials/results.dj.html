@@ -17,6 +17,12 @@
     </nav>
 </div>
 
+<div class="answer-thematics">
+    <ul>
+        <li class="answer-thematics__thematic" ng-repeat="thematic in thematics" ng-class="thematic.slug">[[thematic.title]]</li>
+    </ul>
+</div>
+
 <div class="answer-filters">
     <span class="answer-filters__title">Filtres :</span>
     <div class="answer-filters__gender">

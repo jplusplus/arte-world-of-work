@@ -20,7 +20,7 @@ class Chart
     setSize: =>
         @size =
             width : do @element.width
-            height : (do @element.height) - 40
+            height : do @element.height
 
         ((d3.select @element[0]).selectAll 'svg').attr
             width : @size.width
@@ -76,10 +76,10 @@ class PieChart extends Chart
 class BarChart extends Chart
     constructor: (@scope, @element) ->
         @margin = @margin or
-            top : 20
-            right : 10
+            top : 0
+            right : 0
             bottom : 20
-            left : 10
+            left : 0
 
         super @scope, @element
 
