@@ -1,10 +1,12 @@
 module.exports = (grunt)->
     angular_files = [
-        'app/arte_ww/static/js/*.coffee',  # our scripts 
-        'app/arte_ww/static/js/**/*.coffee',  # our scripts 
-        'app/templates/*.html', # our templates     
-        'app/templates/partials/*.html' # our templates     
-        'app/templates/partials/**/*.html' # our templates     
+        # our scripts 
+        'app/arte_ww/static/js/*.coffee'
+        'app/arte_ww/static/js/**/*.coffee'
+        # our templates      
+        'app/templates/*.html'
+        'app/templates/partials/*.html'
+        'app/templates/partials/**/*.html'
     ]
 
     # Project configuration.
