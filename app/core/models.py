@@ -63,6 +63,7 @@ class QuestionMediaAttachement(mixins.PictureMixin):
     """
     Attached picture for a question
     """
+    vine_url = models.URLField(_('Add a vine to this question'), null=True, blank=True)
     question = models.OneToOneField('BaseQuestion')
 
 # -----------------------------------------------------------------------------
