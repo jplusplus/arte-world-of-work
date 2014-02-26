@@ -6,7 +6,7 @@ class ResultService
     get: (params, cb) =>
         request =
             method : 'GET'
-            url : "/api/questions/#{params.id}/result"
+            url : "/api/questions/#{params.id}/results"
             params : params.filters
         (@$http request).success cb
 
