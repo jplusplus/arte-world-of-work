@@ -1,8 +1,7 @@
 {% extends "partials/directives/question-base.dj.html" %}
 
 {% block form %}
-<div class='question-choices question-choices--unique' 
-     ng-class='getQuestionClasses(question)'>
+<div class='question-choices question-choices--unique'>
     <div ng-repeat='choice in question.choices'
          ng-click='submitAnswer(choice.value || choice.id)'
          ng-class='{"question-choice--selected": (choice.value || choice.id) == answer}'
