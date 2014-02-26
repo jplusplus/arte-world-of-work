@@ -1,11 +1,15 @@
-<h1 ng-bind-html='html_sentence'></h1>
+<div class="feedback">
 
-{% block content %}
-{% endblock %}
+	<h4 class="feedback__title" ng-bind-html='html_sentence'></h4>
+	<div class="feedback__content">
+		{% block content %}
+		{% endblock %}
+	</div>
+	<nav class="survey-element__nav">
+	    <ul>
+	        <li class="survey-element__nav__previous"><a ng-href="" ng-click="previous()">Previous</a></li>
+	        <li class="survey-element__nav__next"><a ng-href="" ng-click="next()">[[ feedback.validate_button_label ]]</a></li>
+	    </ul>
+	</nav>
 
-<nav class="survey-element__nav">
-    <ul>
-        <li class="survey-element__nav__previous"><a ng-href="" ng-click="previous()">Previous</a></li>
-        <li class="survey-element__nav__next"><a ng-href="" ng-click="next()">[[ feedback.validate_button_label ]]</a></li>
-    </ul>
-</nav>
+</div>

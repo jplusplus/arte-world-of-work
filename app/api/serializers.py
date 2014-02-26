@@ -43,8 +43,11 @@ class ChoiceField(mixins.GenericModelMixin):
         exclude = ('question', )
 
 class StaticFeedbackSerializer(serializers.ModelSerializer):
+    picture = serializers.SerializerMethodField('get_picture')
     class Meta:
         model = StaticFeedback
+    def get_picture(self, obj):
+        return obj.picture.url if obj.picture else None
 
 class FeedbackSerializer(mixins.InheritedModelMixin):
     model_mapping = {

@@ -1,7 +1,10 @@
 <div ng-switch='element.type'>
     <div ng-switch-when='feedback'>
         <!-- static feedback -->
-        <div feedback-static ng-if="element.sub_type == 'static'"></div>
+        <div class="survey-element__feedback" feedback-static ng-if="element.sub_type == 'static'"></div>
+        <div class="survey-element__position">
+            <strong>[[elementPosition()]]</strong>/[[elementsCount()]]
+        </div>
     </div>
 
     <div ng-switch-when='question' ng-class='getQuestionClasses(element)'>        

@@ -65,7 +65,7 @@ def create_thematic_element(sender, **kwargs):
         filters  = dict(content_type=instance.content_type, object_id=instance.object_id)
         excludes = dict(id=instance.id, thematic=None)
         te       = ThematicElement.objects.filter(**filters).exclude(**excludes)
-        # Remove this instance if the thematic element is already set        
+        # Remove this instance if the thematic element is already        
         if len(te) and te[0].id != instance.id: instance.delete()
     except ThematicElement.DoesNotExist:
         pass
