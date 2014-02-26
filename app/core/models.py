@@ -287,7 +287,6 @@ class BaseQuestion(mixins.ThematicElementMixin, mixins.AsFinalMixin):
     label             = models.CharField(_('Question label')    ,  max_length=220)
     hint_text         = models.CharField(_('Question hint text'),  max_length=120)
     skip_button_label = models.CharField(_('Skip button (label)'), default=_('Skip this question'),max_length=120)
-    vine_url          = models.URLField(_('Add a vine to this question'), null=True, blank=True)
     objects           = QuestionManager()
     # properties 
     @property

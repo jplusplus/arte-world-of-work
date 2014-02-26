@@ -1,11 +1,14 @@
 .answer-navigator {
     .white-panel();
 
+    max-height: none;
+
     &__nav {
         display: block;
         color: grey;
         list-style: none;
         height: 30px;
+        position: relative;
 
         ul {
             margin: 0;
@@ -90,6 +93,7 @@
 
         .chart {
             width: 50%;
+            height: 160px;
         }
 
         .answer-description {
@@ -98,6 +102,28 @@
             right: 0;
             bottom: 0;
             left: 50%;
+        }
+    }
+}
+
+.answer-thematics {
+    .white-panel(150px);
+
+    position: absolute;
+    left: 0;
+    top: 110px;
+
+    ul {
+        padding: 10px 20px;
+    }
+
+    &__thematic {
+        list-style-type: none;
+        font-family: @headings-font-family;
+        color: #a9a9a9;
+        text-transform: uppercase;
+
+        &.active {
         }
     }
 }
