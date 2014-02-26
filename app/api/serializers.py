@@ -20,7 +20,7 @@ class QuestionMediaSerializer(serializers.ModelSerializer):
         exclude = ('question',)
 
     def get_picture(self, obj):
-        return obj.picture.url 
+        return obj.picture.url if obj.picture else None
 
 class MediaChoiceFieldSerializer(QuestionMediaSerializer):
     class Meta:
