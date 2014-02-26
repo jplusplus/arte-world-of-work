@@ -9,7 +9,7 @@
     "angular-mocks": "1.2.9",
     "angular-sanitize": "1.2.9",
     "angular-translate": "~2.0.1",
-    "angular-translate-loader-url": "~2.0.0",
+    "angular-translate-loader-static-files": "~2.0.0",
     "angular-ui-bootstrap-bower": "0.6.0",
     "bootstrap": "3.0.2",
     "jquery": "1.9.1",
