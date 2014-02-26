@@ -3,8 +3,6 @@
     padding-left:100px;
     text-align:left;
 
-    #no-ui > .horizontal(50px);
-
     &.icon {
         img {
             max-height: 40px; 
@@ -43,6 +41,21 @@
             }
         }
 
+    }
+
+    &--typed-number {
+        padding:40px 40px 0px 40px;
+
+        &__output {
+            font-weight:600;            
+            font-size:20px;
+            display: block;
+            margin:30px auto 10px;
+            width: 100px;    
+            color:@brand-primary;    
+            text-align: center;    
+            border-bottom:2px dashed @gray-light;
+        }
     }
 
 

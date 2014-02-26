@@ -15,7 +15,7 @@ class SurveyCtrl
 
         # Returns the classes of the given questions
         @scope.getQuestionClasses = (question)->             
-            'survey-element--with-columns': question.choices.length >= 4
+            'survey-element--with-columns': question.choices && question.choices.length >= 4
             'survey-element--with-media'  : question.media isnt null
             
 
