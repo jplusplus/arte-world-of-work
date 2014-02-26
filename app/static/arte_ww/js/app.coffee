@@ -53,6 +53,7 @@ arteww = angular
                             category: 'results'
                             controller: 'ResultsCtrl'
                             templateUrl: '/partial/results.html'
+                            reloadOnSearch: no
                     .when '/results/:id/embedded',
                             controller: 'ResultsCtrl'
                             templateUrl: '/partial/results.embedded.html'
