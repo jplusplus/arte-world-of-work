@@ -53,9 +53,22 @@ def set_thematic_position(sender, **kwargs):
 def create_generic_element(sender, **kwargs):
     # create a generic element appropriated for feedbacks and questions 
     instance = kwargs.get('instance', None)
-    ctype    = ContentType.objects.get_for_model(instance)
+    ctype    = ContentType.objects.get_for_model(instance)    
     element  = ThematicElement.objects.get_or_create(content_type=ctype, object_id=instance.pk)[0]
     element.save()
+
+
+@receiver_subclasses(post_save, ThematicElement, "thematicelement_post_save")
+def create_thematic_element(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    try: 
+        filters  = dict(content_type=instance.content_type, object_id=instance.object_id)
+        excludes = dict(id=instance.id, thematic=None)
+        te       = ThematicElement.objects.filter(**filters).exclude(**excludes)
+        # Remove this instance if the thematic element is already set        
+        if len(te) and te[0].id != instance.id: instance.delete()
+    except ThematicElement.DoesNotExist:
+        pass
 
 
 @receiver_subclasses(pre_save, BaseFeedback, "basefeedback_pre_save")
