@@ -185,47 +185,6 @@
 
     }
 
-    // Slider style
-    .noUi-horizontal {
-        height: 6px;
 
-        &, .noUi-origin {
-            background-color: #cacaca;
-            box-shadow: none;
-        }
-
-        .noUi-connect {
-            background-color: @progress-bar-bg;
-            box-shadow: none;
-            border: 1px solid @progress-bar-bg;
-        }
-
-        .noUi-handle {
-            border-radius: 1em;
-            background-color: @progress-bar-bg;
-            box-shadow: none;
-            border: none;
-            width: 30px;
-            left: -15px;
-            top: -11px;
-            cursor: pointer;
-
-            &:before {
-                display: none;
-            }
-
-            &:after {
-                background-color: lighten(@progress-bar-bg, 15%);
-                width: 10px;
-                height: 10px;
-                border-radius: 1em;
-                top: 50%;
-                left: 50%;
-                margin-top: -5px;
-                margin-left: -5px;
-                .box-shadow(inset 0 0 1px white);
-            }
-        }
-
-    }
+    #no-ui > .horizontal();
 }
