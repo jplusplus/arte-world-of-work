@@ -1,0 +1,205 @@
+.answer-navigator {
+    .white-panel();
+
+    &__nav {
+        display: block;
+        color: grey;
+        list-style: none;
+        height: 30px;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        &__previous, &__next {
+            display: inline-block;
+            position: absolute;
+            font-size: 12px;
+            padding: 0 15px;
+
+            a {
+                color: @text-color;
+                display: block;
+                cursor: pointer;
+                text-transform: lowercase;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        &__previous {
+            font-weight: 300;
+            left: 10px;
+            bottom: 15px;
+            height: 25px;
+            line-height: 25px;
+            background: url(../img/ui/previous.png) left bottom no-repeat;
+
+            &:hover {
+                background-position: left top;
+            }
+        }
+
+        &__next {
+            font-weight: 600;
+            right: 10px;
+            bottom: 35px;
+            height: 35px;
+            line-height: 35px;
+            background: url(../img/ui/next.png) right bottom no-repeat;
+
+            &:hover {
+                background-position: right top;
+            }
+        }
+    }
+
+    h4.answer-title {
+        text-align: center;
+        padding: 20px;
+        position: relative;
+        top: 0;
+        left: 0;
+        color: white;
+        margin-bottom: 30px;
+
+        &:before {
+            background-color: #777;
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: -1;
+            .transform( skewY(-0.5deg) );
+        }
+    }
+
+    .answer-content {
+        position: relative;
+        top: 0;
+        left: 0;
+
+        .chart {
+            width: 50%;
+        }
+
+        .answer-description {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 50%;
+        }
+    }
+}
+
+.answer-filters {
+    .white-panel(150px);
+
+    padding: 10px 20px 20px 20px;
+    position: absolute;
+    right: 0;
+    top: @header-height;
+
+    &__title {
+        font-family: @font-family-sans-serif;
+        font-size: 12px;
+        display: block;
+        margin-bottom: 10px;
+        color: #a9a9a9;
+    }
+
+    &__gender {
+        position: relative;
+        margin-bottom: 22px;
+
+        &:after {
+            content: "";
+            height: 2px;
+            width: 100%;
+            background: #a0a0a0;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin: 10px 0;
+        }
+
+        button {
+            width: 52px;
+            height: 52px;
+            border-radius: 2em;
+            border: 5px solid #a6a6a6;
+            background-color: #a6a6a6;
+
+            &.active {
+                background-color: white;
+            }
+        }
+    }
+
+    &__age {
+
+        p {
+            text-align: center;
+
+            strong {
+                font-family: @headings-font-family;
+                font-size: 24px;
+            }
+        }
+
+    }
+
+    // Slider style
+    .noUi-horizontal {
+        height: 6px;
+
+        &, .noUi-origin {
+            background-color: #cacaca;
+            box-shadow: none;
+        }
+
+        .noUi-connect {
+            background-color: @progress-bar-bg;
+            box-shadow: none;
+            border: 1px solid @progress-bar-bg;
+        }
+
+        .noUi-handle {
+            border-radius: 1em;
+            background-color: @progress-bar-bg;
+            box-shadow: none;
+            border: none;
+            width: 30px;
+            left: -15px;
+            top: -11px;
+            cursor: pointer;
+
+            &:before {
+                display: none;
+            }
+
+            &:after {
+                background-color: lighten(@progress-bar-bg, 15%);
+                width: 10px;
+                height: 10px;
+                border-radius: 1em;
+                top: 50%;
+                left: 50%;
+                margin-top: -5px;
+                margin-left: -5px;
+                .box-shadow(inset 0 0 1px white);
+            }
+        }
+
+    }
+}

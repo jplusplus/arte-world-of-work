@@ -9,10 +9,9 @@
         <div question-user-gender  ng-if="element.typology == TYPOLOGIES.USER.GENDER"></div>
         <div question-user-country ng-if="element.typology == TYPOLOGIES.USER.COUNTRY"></div>
         <div question-user-age     ng-if="element.typology == TYPOLOGIES.USER.AGE"></div>
-
         <!-- all `regular` question --> 
         <div question-typed-number ng-if="element.typology == TYPOLOGIES.TYPED_NUMBER"></div>
-
+        <div question-boolean      ng-if="element.typology == TYPOLOGIES.BOOLEAN"></div>
         <div question-radio        ng-if="TYPOLOGIES.RADIO_TYPES.indexOf(element.typology)     != -1"></div>
         <div question-selection    ng-if="TYPOLOGIES.SELECTION_TYPES.indexOf(element.typology) != -1"></div>
     </div>

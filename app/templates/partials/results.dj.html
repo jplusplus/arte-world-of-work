@@ -1,10 +1,31 @@
-<h1>Result</h1>
-
-<div ng-repeat="thematic in thematics">
-    <h1>[[ thematic.title ]]</h1>
-    <p>[[ thematic.intro_description ]]</p>
+<div class="answer-navigator">
+    <div class="answer">
+        <h4 class="answer-title">Tard au bureau, personne ne te regarde, tu peux voler ce que tu veux et personne n'en saura rien, tu prend quoi ?</h4>
+        <div class="answer-content">
+            <dynamic-chart id="80"></dynamic-chart>
+            <div class="answer-description">
+                <p><strong>Le vol au travail n'a rien à voir avec la criminalité.</strong></p>
+                <p>Ceux qui volent le plus sont souvent ceux qui travaillent le plus. Ils ne se sentent pas assez payés.</p>
+            </div>
+        </div>
+    </div>
+    <nav class="answer-navigator__nav">
+        <ul>
+            <li class="answer-navigator__nav__previous"><a ng-href="" ng-click="previous()">Précédent</a></li>
+            <li class="answer-navigator__nav__next"><a ng-href="" ng-click="next()">Passer</a></li>
+        </ul>
+    </nav>
 </div>
 
-<dynamic-chart id="80" style="width: 300px; height: 200px;"></dynamic-chart>
-<dynamic-chart id="80" style="width: 300px; height: 200px;"></dynamic-chart>
-<dynamic-chart id="80" style="width: 300px; height: 200px;"></dynamic-chart>
+<div class="answer-filters">
+    <span class="answer-filters__title">Filtres :</span>
+    <div class="answer-filters__gender">
+        <button ng-class="{active:filters.male}" ng-click="filters.male=!filters.male"></button>
+        <button ng-class="{active:filters.female}" ng-click="filters.female=!filters.female"></button>
+    </div>
+    <div class="answer-filters__age">
+        <p ng-if="filters.age_min !== filters.age_max"><strong>[[filters.age_min]]</strong> à <strong>[[filters.age_max]]</strong> ans</p>
+        <p ng-if="filters.age_min === filters.age_max"><strong>[[filters.age_min]]</strong> ans</p>
+        <div slider ng-from='filters.age_min' ng-to='filters.age_max' start='0' end='99'></div>
+    </div>
+</div>
