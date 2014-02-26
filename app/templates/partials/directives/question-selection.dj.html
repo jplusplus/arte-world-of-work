@@ -1,8 +1,7 @@
 {% extends "partials/directives/question-base.dj.html" %}
 
 {% block form %}
-<div class='question-choices question-choices--multiple'
-     ng-class='getQuestionClasses(question)'>
+<div class='question-choices question-choices--multiple'>
     <div ng-repeat='choice in question.choices'
          ng-click='toggleChoice(choice)'
          ng-class='{"question-choice--selected": isSelected(choice)}'

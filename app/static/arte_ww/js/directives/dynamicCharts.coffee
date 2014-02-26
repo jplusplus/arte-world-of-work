@@ -20,7 +20,7 @@ class Chart
     setSize: =>
         @size =
             width : do @element.width
-            height : (do @element.height) - 40
+            height : do @element.height
 
         ((d3.select @element[0]).selectAll 'svg').attr
             width : @size.width
@@ -76,10 +76,10 @@ class PieChart extends Chart
 class BarChart extends Chart
     constructor: (@scope, @element) ->
         @margin = @margin or
-            top : 20
-            right : 10
+            top : 0
+            right : 0
             bottom : 20
-            left : 10
+            left : 0
 
         super @scope, @element
 
@@ -107,13 +107,13 @@ class BarChart extends Chart
         g = (entered.append 'g').attr 'class', 'bar'
         (g.append 'rect').attr do @getRectAttrs
         ((g.append 'text').attr do @getTextAttrs)
-            .text (d) -> "#{d[0]} - #{d[2]}%"
+            .text (d) -> "#{d[2]}%"
 
     defineXY: =>
         @x = (do d3.scale.ordinal).rangeRoundBands([0, @_size.width], 0.2);
         @y = (do d3.scale.linear).range [@_size.height, 0]
         @x.domain _.map @results, (d) -> d[0]
-        @y.domain [0, @scope.data.total_answers]
+        @y.domain [0, _.max _.values @scope.data.results]
 
     getRectAttrs: =>
         x : (d) => @x(d[0])
@@ -123,7 +123,7 @@ class BarChart extends Chart
 
     getTextAttrs: =>
         x : (d) => @x(d[0]) + (do @x.rangeBand) / 2
-        y : @_size.height - 30
+        y : @_size.height - 10
         'text-anchor' : 'middle'
 
 
@@ -142,7 +142,7 @@ class HBarChart extends BarChart
     defineXY: =>
         @x = (do d3.scale.linear).range [0, @_size.width]
         @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.2);
-        @x.domain [0, @scope.data.total_answers]
+        @x.domain [0, _.max _.values @scope.data.results]
         @y.domain _.map @results, (d) -> d[0]
 
     getRectAttrs: =>
@@ -208,6 +208,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
         restrict : 'E'
         scope :
             id : '='
+            filters : '='
         controller : ['$scope', (scope) ->
             scope.filter =
                 from : 0
@@ -226,18 +227,20 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     else throw "Chart type '#{scope.data.chart_type}' does not exist."
 
             update = =>
-                filters =
-                    age_min : scope.filter.from
-                    age_max : scope.filter.to
-
-                if (scope.filter.h isnt scope.filter.f)
-                    filters.gender = 'male' if scope.filter.h
-                    filters.gender = 'female' if scope.filter.f
-                else if scope.filter.h is false
-                    scope.filter.h = scope.filter.f = true
-
-                $Result.get { id : scope.id , filters : filters }, (data) =>
+                $Result.get { id : scope.id , filters : scope.filters }, (data) =>
                     scope.data = data
+                # Fake data
+                scope.data =
+                    chart_type : 'bar'
+                    results :
+                        1 : 58
+                        2 : 27
+                        3 : 15
+                    total_answers : 100
+                    sets :
+                        1 : name : "Un iPad"
+                        2 : name : "Le fixie du patron"
+                        3 : name : "Un DVD"
 
             window.onresize = =>
                 do scope.$apply
@@ -265,7 +268,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
             , yes
 
             # Watch changes in the filters
-            scope.$watch 'filter', (newValues, oldValues) =>
+            scope.$watch 'filters', (newValues, oldValues) =>
                 do update
             , yes
 

@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     
 )
 # settings.LOCAL_SETTINGS are set to false when on heroku
-if settings.DEBUG and not settings.LOCAL_SETTINGS:
+if settings.DEBUG and settings.LOCAL_SETTINGS:
     urlpatterns += patterns('',
         (r'^public/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     )

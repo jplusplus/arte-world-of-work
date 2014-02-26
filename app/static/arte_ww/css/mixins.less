@@ -32,34 +32,62 @@
 			}
 		}
 
-		.question-choice:before {
-			border-color: lighten(@brand, 5%);
-		}
 
-		.question-choice:hover:before {
-			border-left-width:3px;
-			border-right-width:3px;
-			border-color:@brand;
-			background-image: url("../img/ui/minipic-valider_@{slug}.png");
-		}
-		
-		.question-choices--boolean .question-choices--boolean__choice:before {
-			color:white;			
-			background:@brand;
-			border-color:fade(@brand, 90);
-		}
+	    .survey-element {
 
-		.question-choices--boolean .question-choices--boolean__choice:hover {
-			color:@brand;
-			&:before {
-				background:white;
-			}
-		}
+            &__media {
+    	    	border-color:@brand;
+    	    }
+
+    	    &__position {
+    	    	color:@brand;
+    	    }
+
+        }
+
+        .question-choice {
+
+    		&:before {
+    			border-color: lighten(@brand, 5%);
+    		}
+
+
+    		&:hover:before {
+    			border-left-width:3px;
+    			border-right-width:3px;
+    			border-color:@brand;
+    			background-image: url("../img/ui/minipic-valider_@{slug}.png");
+    		}
+        }
+
+        .question-choices {
+
+            &--boolean__choice:before {
+                color:white;            
+                background:@brand;
+                border-color:fade(@brand, 90);
+            }
+
+            &--boolean__choice:hover {
+                color:@brand;
+                &:before {
+                    background:white;
+                }
+            }
+        }
 
         .answer-navigator h4.answer-title:before {
             background-color: @brand;
         }
-	
+
+        svg .bar rect {
+            fill: @brand;
+        }
+
+        .answer-thematics__thematic.@{slug} {
+            color: @brand;
+        }
+
 	}
 
 }

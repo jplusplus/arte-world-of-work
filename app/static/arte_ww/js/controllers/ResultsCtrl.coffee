@@ -1,7 +1,7 @@
 class ResultsCtrl
-    @$inject: ['$scope','$location']
+    @$inject: ['$scope', '$location', 'Thematic']
 
-    constructor: ($scope, $location) ->
+    constructor: ($scope, $location, Thematic) ->
         # Update URL when the user changes filters
         $scope.$watch 'filters', (=>
             f = angular.copy $scope.filters
@@ -12,6 +12,15 @@ class ResultsCtrl
             $location.search 'age_min', f.age_min
             $location.search 'age_max', f.age_max
         ), yes
+
+        $scope.thematics = []
+        $scope.$watch (=>
+            Thematic.positionList
+        ), =>
+            if Thematic.positionList?
+                $scope.thematics = _.map Thematic.positionList.elements, (thematic) =>
+                    slug : thematic.slug
+                    title : thematic.title
 
         # Initialize filters (fron URL or default values)
         urlFilters = do $location.search

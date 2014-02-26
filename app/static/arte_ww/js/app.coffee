@@ -39,7 +39,9 @@ arteww = angular
             '$locationProvider'
             '$translateProvider'
             '$httpProvider'
-            ($interpolateProvider, $routeProvider, $locationProvider, $translateProvider, $httpProvider)->
+            '$sceDelegateProvider'
+            ($interpolateProvider, $routeProvider, $locationProvider, $translateProvider, $httpProvider, $sceDelegateProvider)->
+                $sceDelegateProvider.resourceUrlWhitelist ['self', 'http://vine.co', 'https://vine.co']
                 # Intercepts HTTP request to add cache for anonymous user
                 # and to set the right csrf token from the cookies
                 $httpProvider.interceptors.push 'HttpInterceptor'

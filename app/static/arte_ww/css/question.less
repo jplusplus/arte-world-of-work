@@ -27,7 +27,7 @@
         }
     }
 
-    &--with-columns {
+    .survey-element--with-columns & {
 
         width:80%;
         padding-left:25px;
@@ -35,9 +35,14 @@
         .question-choice {
             width:50%;
             float:left;
+
+            &:nth-child(odd) {
+                clear:left;
+            }
         }
 
     }
+
 
     &--boolean {
 
@@ -47,6 +52,7 @@
         line-height:100px;
         margin:20px 0;
         margin-bottom:30px;
+        white-space: nowrap;
 
         &__choice {
             display:inline-block;
@@ -72,6 +78,26 @@
                 .transform( translate(-50%, -50%) );            
                 .transition(0.8s);  
             }
+
+        }
+
+        .survey-element--with-media & {
+            
+            height:60px;
+            line-height:60px;
+            margin:10px 0;
+
+            &__separator {
+                display:none;
+            }
+
+            &__choice {
+                width:60px;
+                &:before {
+                    width:60px;
+                    height:60px;
+                }
+            }
         }
     }
 
@@ -88,12 +114,11 @@
             content:"";
             position:absolute;
             left:0;
-            top:50%;                
+            top:0;                
             height:20px;
             width:20px;
             border:5px solid @text-color;        
             background: no-repeat center center;
-            .transform( translateY(-50%) );
         }
 
     }
