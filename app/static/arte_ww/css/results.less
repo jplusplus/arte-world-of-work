@@ -107,24 +107,40 @@
 }
 
 .answer-thematics {
-    .white-panel(150px);
+    .white-panel(160px);
 
     position: absolute;
     left: 0;
     top: 110px;
 
     ul {
-        padding: 10px 20px;
+        padding: 10px 0 10px 20px;
     }
 
     &__thematic {
+        padding-top: 2px;
         list-style-type: none;
         font-family: @headings-font-family;
-        color: #a9a9a9;
-        text-transform: uppercase;
 
-        &.active {
+        a {
+            color: #a9a9a9;
+            text-decoration: none;
         }
+
+        text-transform: uppercase;
+        font-weight: 600;
+        height: 25px;
+        text-indent: 30px;
+        margin-top: 5px;
+
+        &.argent       { background: url("../img/ui/pic_argent.png")       no-repeat; }
+        &.avenir       { background: url("../img/ui/pic_avenir.png")       no-repeat; }
+        &.education    { background: url("../img/ui/pic_education.png")    no-repeat; }
+        &.gouvernement { background: url("../img/ui/pic_gouvernement.png") no-repeat; }
+        &.toi          { background: url("../img/ui/pic_toi.png")          no-repeat; }
+        &.travail      { background: url("../img/ui/pic_travail.png")      no-repeat; }
+
+        -webkit-filter: grayscale(1);
     }
 }
 

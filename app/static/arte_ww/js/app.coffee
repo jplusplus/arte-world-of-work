@@ -19,7 +19,12 @@ arteww = angular
             '$location'
             '$route'
             '$http'
-            ($rootScope, $location, $route, $http)->
+            '$translate'
+            ($rootScope, $location, $route, $http, $translate)->
+
+                $rootScope.setLang = (lang)->
+                    $translate.use lang
+
                 $rootScope.location = $location
                 $rootScope.currentCategory = ->
                     # get the current category thanks to current root
@@ -32,17 +37,25 @@ arteww = angular
             '$interpolateProvider'
             '$routeProvider'
             '$locationProvider'
+            '$translateProvider'
             '$httpProvider'
             '$sceDelegateProvider'
-            ($interpolateProvider, $routeProvider, $locationProvider, $httpProvider, $sceDelegateProvider)->
+            ($interpolateProvider, $routeProvider, $locationProvider, $translateProvider, $httpProvider, $sceDelegateProvider)->
                 $sceDelegateProvider.resourceUrlWhitelist ['self', 'http://vine.co', 'https://vine.co']
                 # Intercepts HTTP request to add cache for anonymous user
                 # and to set the right csrf token from the cookies
-                $httpProvider.interceptors.push('HttpInterceptor');
+                $httpProvider.interceptors.push 'HttpInterceptor'
                 # Avoid a conflict with Django Template's tags
                 $interpolateProvider.startSymbol '[['
                 $interpolateProvider.endSymbol   ']]'
+                # such html5 mode.
                 $locationProvider.html5Mode true
+                # translation configuration 
+                $translateProvider.useStaticFilesLoader
+                    prefix: STATIC_URL + 'locale/'
+                    suffix: '.json'
+
+                $translateProvider.preferredLanguage 'en' 
                 # Bind routes to the controllers
                 $routeProvider
                     .when('/', redirectTo: '/survey')

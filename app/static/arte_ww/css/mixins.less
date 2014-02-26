@@ -82,10 +82,17 @@
 
         svg .bar rect {
             fill: @brand;
+
+            &:hover {
+                fill: darken(@brand, 10%)
+            }
         }
 
         .answer-thematics__thematic.@{slug} {
-            color: @brand;
+            a { color: @brand; }
+
+            background: url("../img/ui/pic_@{slug}.png") no-repeat;
+            -webkit-filter: none !important;
         }
 
         .feedback__title {            

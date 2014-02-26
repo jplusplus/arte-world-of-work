@@ -1,0 +1,19 @@
+{
+  "name": "arte-world-of-work",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "1.2.9",
+    "angular-cookies": "1.2.9",
+    "angular-resource": "1.2.9",
+    "angular-route": "1.2.9",
+    "angular-mocks": "1.2.9",
+    "angular-sanitize": "1.2.9",
+    "angular-translate": "~2.0.1",
+    "angular-translate-loader-static-files": "~2.0.0",
+    "angular-ui-bootstrap-bower": "0.6.0",
+    "bootstrap": "3.0.2",
+    "jquery": "1.9.1",
+    "typeahead.js": "0.9.3",
+    "underscore": "1.5.2"
+  }
+}
