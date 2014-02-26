@@ -6,17 +6,18 @@
 
     <div ng-switch-when='question' ng-class='getQuestionClasses(element)'>        
         <!-- user specific question -->
-        <div question-user-gender  ng-if="element.typology == TYPOLOGIES.USER.GENDER"></div>
-        <div question-user-country ng-if="element.typology == TYPOLOGIES.USER.COUNTRY"></div>
-        <div question-user-age     ng-if="element.typology == TYPOLOGIES.USER.AGE"></div>
+        <div class="survey-element__question" question-user-gender  ng-if="element.typology == TYPOLOGIES.USER.GENDER"></div>
+        <div class="survey-element__question" question-user-country ng-if="element.typology == TYPOLOGIES.USER.COUNTRY"></div>
+        <div class="survey-element__question" question-user-age     ng-if="element.typology == TYPOLOGIES.USER.AGE"></div>
         <!-- all `regular` question --> 
-        <div question-typed-number ng-if="element.typology == TYPOLOGIES.TYPED_NUMBER"></div>
-        <div question-boolean      ng-if="element.typology == TYPOLOGIES.BOOLEAN"></div>
-        <div question-radio        ng-if="TYPOLOGIES.RADIO_TYPES.indexOf(element.typology)     != -1"></div>
-        <div question-selection    ng-if="TYPOLOGIES.SELECTION_TYPES.indexOf(element.typology) != -1"></div>
+        <div class="survey-element__question" question-typed-number ng-if="element.typology == TYPOLOGIES.TYPED_NUMBER"></div>
+        <div class="survey-element__question" question-boolean      ng-if="element.typology == TYPOLOGIES.BOOLEAN"></div>
+        <div class="survey-element__question" question-radio        ng-if="TYPOLOGIES.RADIO_TYPES.indexOf(element.typology)     != -1"></div>
+        <div class="survey-element__question" question-selection    ng-if="TYPOLOGIES.SELECTION_TYPES.indexOf(element.typology) != -1"></div>
         <!-- Question featured media -->
         <div ng-if="element.media" class="survey-element__media">
-            <img ng-if="element.media.picture" ng-src="[[element.media.picture]]"  />
+            <img    ng-if="element.media.picture"  ng-src="[[element.media.picture]]" />
+            <iframe ng-if="element.media.vine_url" ng-src="[[prepareVineUrl(element.media.vine_url)]]" frameborder="0"></iframe>
         </div>
         <div class="survey-element__position">
             <strong>[[elementPosition()]]</strong>/[[elementsCount()]]

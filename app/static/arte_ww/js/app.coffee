@@ -33,7 +33,9 @@ arteww = angular
             '$routeProvider'
             '$locationProvider'
             '$httpProvider'
-            ($interpolateProvider, $routeProvider, $locationProvider, $httpProvider)->
+            '$sceDelegateProvider'
+            ($interpolateProvider, $routeProvider, $locationProvider, $httpProvider, $sceDelegateProvider)->
+                $sceDelegateProvider.resourceUrlWhitelist ['self', 'http://vine.co', 'https://vine.co']
                 # Intercepts HTTP request to add cache for anonymous user
                 # and to set the right csrf token from the cookies
                 $httpProvider.interceptors.push('HttpInterceptor');
@@ -41,7 +43,6 @@ arteww = angular
                 $interpolateProvider.startSymbol '[['
                 $interpolateProvider.endSymbol   ']]'
                 $locationProvider.html5Mode true
-
                 # Bind routes to the controllers
                 $routeProvider
                     .when('/', redirectTo: '/survey')
