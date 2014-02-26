@@ -82,6 +82,10 @@
 
         svg .bar rect {
             fill: @brand;
+
+            &:hover {
+                fill: darken(@brand, 10%)
+            }
         }
 
         .answer-thematics__thematic.@{slug} {
