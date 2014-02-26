@@ -33,33 +33,48 @@
 		}
 
 
-	    .survey-element__media {
-	    	border-color:@brand;
-	    }
-	    
-		.question-choice:before {
-			border-color: lighten(@brand, 5%);
-		}
+	    .survey-element {
 
-		.question-choice:hover:before {
-			border-left-width:3px;
-			border-right-width:3px;
-			border-color:@brand;
-			background-image: url("../img/ui/minipic-valider_@{slug}.png");
-		}
-		
-		.question-choices--boolean .question-choices--boolean__choice:before {
-			color:white;			
-			background:@brand;
-			border-color:fade(@brand, 90);
-		}
+            &__media {
+    	    	border-color:@brand;
+    	    }
 
-		.question-choices--boolean .question-choices--boolean__choice:hover {
-			color:@brand;
-			&:before {
-				background:white;
-			}
-		}
+    	    &__position {
+    	    	color:@brand;
+    	    }
+
+        }
+
+        .question-choice {
+
+    		&:before {
+    			border-color: lighten(@brand, 5%);
+    		}
+
+
+    		&:hover:before {
+    			border-left-width:3px;
+    			border-right-width:3px;
+    			border-color:@brand;
+    			background-image: url("../img/ui/minipic-valider_@{slug}.png");
+    		}
+        }
+
+        .question-choices {
+
+            &--boolean__choice:before {
+                color:white;            
+                background:@brand;
+                border-color:fade(@brand, 90);
+            }
+
+            &--boolean__choice:hover {
+                color:@brand;
+                &:before {
+                    background:white;
+                }
+            }
+        }
 
         .answer-navigator h4.answer-title:before {
             background-color: @brand;

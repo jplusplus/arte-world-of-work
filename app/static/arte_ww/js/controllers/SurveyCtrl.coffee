@@ -6,8 +6,11 @@ class SurveyCtrl
         # Scope variables bindings
         # ---------------------------------------------------------------------
         @scope.survey =  
-            state: 0
-            states: @states
+            state   : 0
+            states  : @states
+        # User's position functions
+        @scope.elementPosition = => @userPosition.elementPosition() + 1
+        @scope.elementsCount   = => @thematicService.current().elements.length
         # Returns the classes of the given questions
         @scope.getQuestionClasses = (question)->             
             'survey-element--with-columns': question.choices.length >= 4
