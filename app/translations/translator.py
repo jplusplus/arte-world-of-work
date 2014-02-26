@@ -1,4 +1,17 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# Encoding: utf-8
+# -----------------------------------------------------------------------------
+# Project : Arte - WoW
+# -----------------------------------------------------------------------------
+# Author : Bellon Pierre                              <bellon.pierre@gmail.com>
+# -----------------------------------------------------------------------------
+# License : proprietary journalism++
+# -----------------------------------------------------------------------------
+# Creation : 14-Jan-2014
+# Last mod : 26-Feb-2014
+# -----------------------------------------------------------------------------
+
 from django.db.models.base import ModelBase
 from django.utils.six import with_metaclass
 from django.db.models import fields

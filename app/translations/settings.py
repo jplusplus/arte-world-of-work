@@ -2,12 +2,12 @@
 """
 Settings overrided for test time
 """
-from django.conf import settings
 import os 
 
 here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
 
 USE_I18N = True
+
 LANGUAGES = (('fr', 'French'),
              ('en', 'English'))
 
@@ -35,5 +35,6 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
+    'app.translations',
     'app.translations.tests',
 )
