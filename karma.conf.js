@@ -22,6 +22,7 @@ module.exports = function(config) {
       'app/static/arte_ww/vendor/angular-cookies/angular-cookies.js',
       'app/static/arte_ww/vendor/angular-mocks/angular-mocks.js',
       'app/static/arte_ww/vendor/angular-translate/angular-translate.js',
+      'app/static/arte_ww/vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
       'app/static/arte_ww/vendor/angular-ui-bootstrap-bower/ui-bootstrap.js',
       'app/static/arte_ww/vendor/angular-route/angular-route.js',
       'app/static/arte_ww/vendor/nouislider/jquery.nouislider.js',

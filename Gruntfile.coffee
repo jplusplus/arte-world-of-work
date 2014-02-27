@@ -18,7 +18,7 @@ module.exports = (grunt)->
                 lang: [ 'en', 'fr', 'de' ]
                 src: angular_files
                 suffix: ".json"
-                dest: "app/static/locale"
+                dest: "app/static/arte_ww/locale"
                 interpolation: 
                     startDelimiter: '[['
                     endDelimiter: ']]'
