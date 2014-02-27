@@ -12,11 +12,11 @@
 # -----------------------------------------------------------------------------
 from django.shortcuts import render_to_response, redirect
 from django.http      import Http404
-from django.template  import TemplateDoesNotExist
+from django.template  import TemplateDoesNotExist, RequestContext
 
 def home(request):
     # Render template without any argument
-    response = render_to_response('home.dj.html')
+    response = render_to_response('home.dj.html', context_instance=RequestContext(request))
     return response
 
 def embedded(request):
