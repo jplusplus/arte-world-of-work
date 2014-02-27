@@ -38,8 +38,12 @@
 
             <!-- step 2 -> we're starting this thematic question -->
             <div class="thematic-elements" ng-if='state == states.ELEMENTS'>
-                <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
-                <div survey-element="currentElement" class="survey-element"></div>
+                <div ng-repeat="element in thematicWrapper.elements">
+                    <div class="thematic-elements__element" ng-if="currentElement.id == element.id">
+                        <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
+                        <div survey-element="element" class="survey-element"></div>
+                    </div>
+                </div>
             </div>
 
             <!-- step 3 -> thematic outro we're starting this thematic question -->
@@ -48,8 +52,9 @@
                 <div class="thematic-outro__content">
                     <p>Laborum American Apparel fanny pack, flexitarian raw denim scenester Wes Anderson.</p>
                     <p>Velit sustainable aesthetic nostrud. Assumenda Wes Anderson flexitarian, nihil exercitation Portland narwhal seitan mustache labore sriracha street art accusamus. Minim selvage vero placeat Shoreditch.</p>
-                <a class="thematic-outro__previous" ng-click='previous()'>Previous</a>
-                <a class="thematic-outro__next"     ng-click='next()'> Go to next thematic</a>
+                    <a class="thematic-outro__previous" ng-click='previous()'>Previous</a>
+                    <a class="thematic-outro__next"     ng-click='next()'> Go to next thematic</a>
+                </div>
             </div>
         </div>
     </div>
