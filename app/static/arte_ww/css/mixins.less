@@ -180,7 +180,7 @@
 
     &.ng-enter {
         .transition(0.5s);
-        .translate(600px, 0);
+        .translate(0, -600px);
         opacity: 0;
         
         &-active {
@@ -191,11 +191,11 @@
 
     &.ng-leave {
         .transition(0.5s);
-        .translate(0, 0);
+        .scale(0);
         opacity: 1;
         
         &-active {
-            .translate(-600px, 0);
+            .translate(0, -600px);
             opacity: 0;
         }
     }
