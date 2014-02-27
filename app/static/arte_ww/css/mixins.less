@@ -174,7 +174,20 @@
         .transform( skewY(-0.5deg) );
         .box-shadow( 5px 5px 0 0  fade(@navbar-default-bg, 10%) );
     }
+
+    &.ng-enter {
+        .transition(0.5s);
+        .translate(600px, 0);
+        opacity: 0;
+        
+        &-active {
+            .translate(0, 0);
+            opacity: 1;
+        }
+    }
 }
+
+
 
 .transform(@transform...) {	
     -webkit-transform: @arguments; // iOS <4.3 & Android <4.1
