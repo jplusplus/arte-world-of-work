@@ -361,6 +361,10 @@ class BaseSelectionQuestion(BaseQuestion, mixins.ValidateButtonMixin):
     class Meta:
         abstract = True
     answer_type = SelectionAnswer
+    
+    @property
+    def has_medias(self):
+        return any( getattr(c.as_final(), 'picture', None) is not None for c in self.choices() )
 
 class TextSelectionQuestion(BaseSelectionQuestion):
     """ Multiple Choices (text) question - one or more answer """

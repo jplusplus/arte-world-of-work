@@ -51,6 +51,26 @@
     	    	color:@brand;
     	    }
 
+            &--choice-media {
+
+                & .question-choice {
+
+                    &:hover {
+                        background:lighten(@brand, 30);
+                    }
+
+                    &--selected {
+
+                        background:lighten(@brand, 50);
+                        
+                        &, &:after {
+                            border-bottom-color:@brand;
+                        }
+                    }
+                }
+            }
+
+
         }
 
         .question-choice {

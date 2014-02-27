@@ -17,6 +17,8 @@ class SurveyCtrl
         @scope.getQuestionClasses = (question)->             
             'survey-element--with-columns': question.choices && question.choices.length >= 4
             'survey-element--with-media'  : question.media isnt null
+            'survey-element--choice-media': question.has_medias
+            'survey-element--icon-mode'   : (question.has_medias && question.choices.length > 3) || (question.media_type and question.media_type == "icon")
             
 
 

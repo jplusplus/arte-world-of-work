@@ -7,13 +7,13 @@
          ng-click='toggleChoice(choice)'
          ng-class='{"question-choice--selected": isSelected(choice)}'
          class="question-choice">
+        <img ng-if='choice.picture' class="thumbnail" ng-src='[[choice.picture]]' />
         <span>[[ choice.title ]]</span>
-        <img ng-if='question.media_type' ng-attr-src='choice.picture'></img>
     </div>
 
-	<button class="question-choices--multiple__validate" ng-class="{ 'question-choices--multiple__validate--disable': answer.length == 0 }" ng-click="answer.length && submitAnswer(answer)">
-		[[ question.validate_button_label ]]
-	</button>
+    <button class="question-choices--multiple__validate" ng-class="{ 'question-choices--multiple__validate--disable': answer.length == 0 }" ng-click="answer.length && submitAnswer(answer)">
+        [[ question.validate_button_label ]]
+    </button>
 
 </div>
 {% endblock %}
