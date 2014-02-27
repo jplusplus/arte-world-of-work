@@ -16,7 +16,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from sorl.thumbnail import ImageField
-
+from app.core import types
 
 class ThematicElementMixin(models.Model):
     """
@@ -73,3 +73,14 @@ class ValidateButtonMixin(models.Model):
     class Meta:
         abstract = True
     validate_button_label = models.CharField(_('Validate button (label)'), default=_('Done'), max_length=120)
+
+
+class MediaTypeMixin(models.Model):
+    """ 
+    Special model mixin for MediaChoices (radio and selection)
+    Will include media_type field to inherited classes
+    """ 
+    class Meta:
+        abstract = True
+    media_type = models.CharField(_('Choice\'s media type'), max_length=15, \
+                    choices=types.MEDIA_TYPES, blank=True, null=True)
