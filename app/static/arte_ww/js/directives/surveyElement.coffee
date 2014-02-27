@@ -21,6 +21,7 @@ angular.module('arte-ww').directive 'surveyElement', [
             controller: ['$scope', 'Answer', (scope, answerService) ->
                 scope.submitAnswer = (answer)->
                     answer = answer ? scope.answer
+                    console.log answer
                     answerParams = 
                         question: scope.element.id 
                         value: answer

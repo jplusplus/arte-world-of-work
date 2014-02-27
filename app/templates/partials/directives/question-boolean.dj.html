@@ -5,7 +5,7 @@
 
     <span ng-repeat='choice in question.choices'>
     	<span ng-click='submitAnswer(choice.value || choice.id)'
-             ng-class='{"question-choice--selected": (choice.value || choice.id) == answer}'
+              ng-class='{"question-choices--boolean__choice--selected": (choice.value || choice.id) == answer}'
          	class="question-choices--boolean__choice">
         	[[ choice.title ]]
         </span>
