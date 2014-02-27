@@ -47,7 +47,7 @@ class AsFinalMixin(models.Model):
     class Meta:
         abstract = True
 
-    content_type = models.ForeignKey(ContentType, editable=False)
+    content_type = models.ForeignKey(ContentType)
     content_object = generic.GenericForeignKey('content_type', 'pk')
     
     def as_final(self):

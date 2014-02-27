@@ -387,8 +387,7 @@ class MediaRadioQuestion(BaseRadioQuestion, MediaTypeMixin):
     `media_type` model's field.
     """
     class Meta:
-        verbose_name = _('Media (single choice) question')
-        verbose_name_plural = _('Media (single choice) questions')
+        verbose_name = _('Single choice question')
 
 class MediaSelectionQuestion(BaseSelectionQuestion, MediaTypeMixin):
     """ 
@@ -398,8 +397,7 @@ class MediaSelectionQuestion(BaseSelectionQuestion, MediaTypeMixin):
     `media_type` model's field.
     """
     class Meta:
-        verbose_name = _('Media (multiple choices) question')
-        verbose_name_plural = _('Media (multiple choices) questions')
+        verbose_name = _('Multiple choices question')
 
 # -----------------------------------------------------------------------------
 # 
