@@ -12,6 +12,7 @@ arteww = angular
         'ngCookies',
         'ngRoute',
         'ngResource',
+        'ngAnimate',
         'nouislider'
     ])
     .run([
