@@ -76,9 +76,16 @@
         .question-choice {
 
     		&:before {
-    			border-color: lighten(@brand, 5%);
+    			border-color: lighten(@brand, 5%);                
     		}
 
+            &:hover:before {
+                background-color: lighten(@brand, 30%);
+            }
+
+            &--selected:hover:before {
+                background-color: #fff;
+            }
 
     		&:hover:before, &--selected:before {
     			border-left-width:3px;

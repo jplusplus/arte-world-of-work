@@ -351,7 +351,7 @@ class BaseRadioQuestion(BaseQuestion):
 
     @property
     def has_medias(self):
-        return any( getattr(c.as_final(), 'picture', None) is not None for c in self.choices() )
+        return any( getattr(c.as_final(), 'picture', None) for c in self.choices() )
 
 
 class BaseSelectionQuestion(BaseQuestion, mixins.ValidateButtonMixin):
@@ -364,7 +364,7 @@ class BaseSelectionQuestion(BaseQuestion, mixins.ValidateButtonMixin):
     
     @property
     def has_medias(self):
-        return any( getattr(c.as_final(), 'picture', None) is not None for c in self.choices() )
+        return any( getattr(c.as_final(), 'picture', None) for c in self.choices() )
 
 class TextSelectionQuestion(BaseSelectionQuestion):
     """ Multiple Choices (text) question - one or more answer """
