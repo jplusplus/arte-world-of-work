@@ -295,6 +295,10 @@ class BaseQuestion(mixins.ThematicElementMixin, mixins.AsFinalMixin):
         klass = klass.replace('Question', '') # remove Question from klass name 
         return utils.camel_to_underscore(klass)
 
+    @property
+    def has_medias(self):
+        return False
+
     def __unicode__(self):
         return self.label[:25]
 
@@ -344,6 +348,11 @@ class BaseRadioQuestion(BaseQuestion):
     class Meta:
         abstract = True
     answer_type = RadioAnswer
+
+    @property
+    def has_medias(self):
+        return any( getattr(c.as_final(), 'picture', None) is not None for c in self.choices() )
+
 
 class BaseSelectionQuestion(BaseQuestion, mixins.ValidateButtonMixin):
     """ 
@@ -428,13 +437,11 @@ class UserGenderQuestion(UserProfileQuestion):
 #     Choices field types
 # 
 # -----------------------------------------------------------------------------
-class BaseChoiceField(models.Model):
+class BaseChoiceField(mixins.AsFinalMixin):
     """
     Base class for choices, will be inherited by concrete choices (text and 
     media)
     """
-    content_type = models.ForeignKey(ContentType, editable=False)
-    content_object = generic.GenericForeignKey('content_type', 'pk')
     question = models.ForeignKey('BaseQuestion')
     title = models.CharField(_('Title of this choice'), max_length=120)
 

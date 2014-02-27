@@ -11,14 +11,7 @@ angular.module('arte-ww').directive 'questionBoolean', [
                         question: scope.question.id
                         value: choice.id
 
-                    scope.submitAnswer(answerParams)
-                        .success(->
-                            console.log 'success ! '
-                            scope.next()
-                        )
-                        .error((data)->
-                            console.log 'error !', data
-                        )
+                    scope.submitAnswer(answerParams).success(scope.next)
 ]
 
 

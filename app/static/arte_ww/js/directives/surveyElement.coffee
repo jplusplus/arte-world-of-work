@@ -26,10 +26,7 @@ angular.module('arte-ww').directive 'surveyElement', [
                         value: answer
 
                     answerService.answer answerParams,
-                        success: ->
-                            scope.next()
-                        error: (msg)->
-                            console.error(msg)
+                        success: scope.next
             ]
 
             link: (scope, elem, attrs)->
