@@ -11,6 +11,12 @@
 # Last mod :  2014-01-23 15:03:39
 # -----------------------------------------------------------------------------
 from settings import *
+import dj_database_url
+
+DATABASES = {
+    'default' : dj_database_url.config()
+}
+
 ROOT_URLCONF = 'app.urls'
 
 ALLOWED_HOSTS = ["arte-wow-staging.herokuapp.com", ".herokuapp.com"]
