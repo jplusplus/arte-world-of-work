@@ -21,20 +21,20 @@ def home(request):
 
 def embedded(request):
     # Render template without any argument
-    response = render_to_response('embedded.dj.html')
+    response = render_to_response('embedded.dj.html', context_instance=RequestContext(request))
     return response
 
 def directive_partial(request, partial_name=None):
     template_name = 'partials/directives/' + partial_name + '.dj.html'
     try:
-        return render_to_response(template_name)
+        return render_to_response(template_name, context_instance=RequestContext(request))
     except TemplateDoesNotExist:
         raise Http404
 
 def partial(request, partial_name=None):
     template_name = 'partials/' + partial_name + '.dj.html'
     try:
-        return render_to_response(template_name)
+        return render_to_response(template_name, context_instance=RequestContext(request))
     except TemplateDoesNotExist:
         raise Http404
 
