@@ -378,31 +378,21 @@ class BooleanQuestion(BaseRadioQuestion):
     """ yes or no question - single answer """
     answer_type = BooleanAnswer
 
-class MediaTypeMixin(models.Model):
-    """ 
-    Special model mixin for MediaChoices (radio and selection)
-    Will include media_type field to inherited classes
-    """ 
-    class Meta:
-        abstract = True
-    media_type = models.CharField(_('Choice\'s media type'), max_length=15, \
-                    choices=MEDIA_TYPES)
-
-class MediaRadioQuestion(BaseRadioQuestion, MediaTypeMixin):
+class MediaRadioQuestion(BaseRadioQuestion, mixins.MediaTypeMixin):
     """ 
     Multiple Choice (image or icon) question - single answer. 
 
-    Inherit from :model:`app.core.models.MediaTypeMixin`, thus inherit from its 
+    Inherit from :model:`app.core.mixins.MediaTypeMixin`, thus inherit from its 
     `media_type` model's field.
     """
     class Meta:
         verbose_name = _('Single choice question')
 
-class MediaSelectionQuestion(BaseSelectionQuestion, MediaTypeMixin):
+class MediaSelectionQuestion(BaseSelectionQuestion, mixins.MediaTypeMixin):
     """ 
     Multiple Choice (image or icon) question - multiple answer. 
 
-    Inherit from :model:`app.core.models.MediaTypeMixin`, thus inherit from its 
+    Inherit from :model:`app.core.models.mixins.MediaTypeMixin`, thus inherit from its 
     `media_type` model's field.
     """
     class Meta:
