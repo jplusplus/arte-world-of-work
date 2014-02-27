@@ -176,37 +176,51 @@
     }
 }
 
+.keyframes-sliding() {
+    from { .translate(0, -600px); }
+    to   { .translate(0, 0); }
+}
+
+@keyframes sliding{ .keyframes-sliding(); }
+@-webkit-keyframes sliding{ .keyframes-sliding(); }
+@-moz-keyframes sliding{ .keyframes-sliding(); }
+
+
 .do-sliding() {
+
+    .animation(sliding 0.5s);
 
     &.ng-enter {
         .transition(0.5s);
         .translate(0, -600px);
-        opacity: 0;
         
         &-active  {
             .translate(0, 0);
-            opacity: 1;
         }
     }
 
     &.ng-leave {
         .transition(0.5s);
         .scale(0);
-        opacity: 1;
         
         &-active {
             .translate(0, -600px);
-            opacity: 0;
         }
     }
 }
 
 
 
-.transform(@transform...) {	
+.transform(@transform...) { 
     -webkit-transform: @arguments; // iOS <4.3 & Android <4.1
        -moz-transform: @arguments; // Firefox
             transform: @arguments;
+}
+
+.animation(@animation...) { 
+    -webkit-animation: @arguments; // iOS <4.3 & Android <4.1
+       -moz-animation: @arguments; // Firefox
+            animation: @arguments;
 }
 
 
