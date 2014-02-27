@@ -4,7 +4,7 @@ angular.module('arte-ww').directive 'questionSelection', [
             restrict: "AE"
             templateUrl: "partial/directives/question-selection.html"
             link: (scope, elem, attrs)->
-                scope.answer = []
+                scope.answer = scope.answer or []
                 _isSelected = (choice)->
                     return choice.id in scope.answer 
 
@@ -12,7 +12,7 @@ angular.module('arte-ww').directive 'questionSelection', [
                     if _isSelected(choice)
                         scope.answer = _.without(scope.answer, choice.id)
                     else
-                        scope.answer.push choice.id 
+                        scope.answer.push choice.id
 
                 # -------------------------------------------------------------
                 # Scope variables binding 
