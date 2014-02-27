@@ -122,7 +122,8 @@ admin.site.register(models.Thematic              , ThematicAdmin)
 
 admin.site.register(models.StaticFeedback        , FeedbackAdmin)
 
-if settings.DEBUG:
+# Disabled (for now)
+if settings.DEBUG and False:
     admin.site.register(models.TypedNumberAnswer     , AnswerAdmin)
     admin.site.register(models.SelectionAnswer       , AnswerAdmin)
     admin.site.register(models.RadioAnswer           , AnswerAdmin)

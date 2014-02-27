@@ -71,7 +71,7 @@ class MultipleChoicesSerializer(serializers.ModelSerializer):
         base_data = super(MultipleChoicesSerializer, self).to_native(value)
         if isinstance(value, core_mixins.ValidateButtonMixin):
             base_data['validate_button_label'] = value.validate_button_label
-        if isinstance(value, MediaTypeMixin):            
+        if isinstance(value, core_mixins.MediaTypeMixin):            
             base_data['media_type'] = value.media_type
         return base_data
 
