@@ -1,5 +1,0 @@
-less@1.6.1
-coffee-script@1.7.1
-karma@0.10.9
-karma-jasmine@0.1.5
-grunt-angular-translate@0.2.6
