@@ -27,7 +27,6 @@ module.exports = function(config) {
       'app/static/arte_ww/vendor/angular-route/angular-route.js',
       'app/static/arte_ww/vendor/nouislider/jquery.nouislider.js',
       'app/static/arte_ww/vendor/angular-nouislider/nouislider.min.js',
-      'app/static/arte_ww/locale/*.json',
       'app/static/arte_ww/js/*',
       'app/static/arte_ww/js/*/*',
       'app/static/arte_ww/tests/*.coffee',
