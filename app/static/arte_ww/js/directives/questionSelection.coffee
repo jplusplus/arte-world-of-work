@@ -4,7 +4,7 @@ angular.module('arte-ww').directive 'questionSelection', [
             restrict: "AE"
             templateUrl: "partial/directives/question-selection.html"
             link: (scope, elem, attrs)->
-                scope.answer = scope.answer or []
+                scope.answer = if angular.isArray(scope.answer) then scope.answer else [] 
                 _isSelected = (choice)->
                     return choice.id in scope.answer 
 

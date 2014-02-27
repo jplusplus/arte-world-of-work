@@ -16,17 +16,6 @@
 
     }
 
-    &--unique {
-        
-        .question-choice {
-
-            &:before {
-                border-radius:20px;
-            }
-
-        }
-    }
-
     .survey-element--with-columns & {
 
         width:80%;
@@ -41,6 +30,48 @@
             }
         }
 
+    }
+
+    &--unique {
+        
+        .question-choice {
+
+            &:before {
+                border-radius:20px;
+            }
+
+        }
+    }
+
+    &--multiple {
+
+        position:relative;
+        .clearfix();
+
+        &__validate {
+            .hide-text();            
+            border:0;
+            height:50px;
+            width:50px;
+            display:inline-block;
+            color:white;
+            border-radius:50%;
+            background:no-repeat center top;
+            background-size:100% auto; 
+            position:absolute;
+
+            top:50%;
+            left:100%;
+            .translate(0, -50%);
+
+            &:hover {
+                background-position: center bottom;
+            }
+
+            &--disable, &--disable:hover {
+                background-position: center center;                
+            }
+        }
     }
 
     &--typed-number {
@@ -151,7 +182,7 @@
 
         position:relative;        
         padding-left:25px;
-        margin-bottom: 10px;
+        margin: 5px 0;
         cursor:pointer;
         font-size:14px;
         color:#000;
