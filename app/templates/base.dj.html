@@ -10,7 +10,7 @@
         <title ng-bind="Page.title() + ' - World of Work'">Arte # World Of Work</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <link rel="icon" type="image/png" href="{% static '/img/favicon.ico' %}">
+        <link rel="icon" type="image/png" href="{{STATIC_URL}}/img/favicon.ico">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700|Roboto:400,700,500' 
@@ -19,7 +19,7 @@
         {% block extracss %}{% endblock %}
         <base href="{% url 'home' %}" />
         <script type="text/javascript">
-            var STATIC_URL = window.STATIC_URL = window.STATIC_URL || "{% static '' %}";
+            var STATIC_URL = window.STATIC_URL = window.STATIC_URL || "{{STATIC_URL}}";
         </script>
     </head>
     <body ng-cloak track-thematic>
