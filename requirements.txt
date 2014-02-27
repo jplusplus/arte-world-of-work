@@ -1,7 +1,7 @@
 argparse==1.2.1
 boto==2.9.6
 dj-database-url==0.2.1
-git+https://github.com/django-compressor/django-compressor.git
+django-compressor==1.3
 django-countries==2.0b4
 django-filter==0.6
 django-model-utils==2.0.1
