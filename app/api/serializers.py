@@ -61,7 +61,9 @@ class FeedbackSerializer(mixins.InheritedModelMixin):
 
 
 class MultipleChoicesSerializer(serializers.ModelSerializer):
-    choices = ChoiceField(source='basechoicefield_set', many=True)
+    choices    = ChoiceField(source='basechoicefield_set', many=True)    
+    has_medias = serializers.Field(source='has_medias')
+
     class Meta:
         model = BaseQuestion
 
