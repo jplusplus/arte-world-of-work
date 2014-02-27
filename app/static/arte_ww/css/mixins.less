@@ -8,6 +8,14 @@
 		.btn-primary {
   			.button-variant(#fff; @brand; @brand);
 		}
+        
+        .noUi-horizontal .noUi-handle {
+            background-color:@brand;
+
+            &:after {
+                background-color:lighten(@brand, 40);
+            }                    
+        }
 
 		.thematic {
 
@@ -72,6 +80,17 @@
                 color:@brand;
                 &:before {
                     background:white;
+                }
+            }
+
+            &--typed-number {                
+
+                &__output {
+                    color:@brand;
+                }
+
+                &__validate {
+                    background-image:url("../img/ui/validate_@{slug}.png");    
                 }
             }
         }

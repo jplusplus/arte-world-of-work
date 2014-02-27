@@ -7,12 +7,14 @@
 			 start='[[question.min_number]]' 
 			 end='[[question.max_number]]' 
 			 ng-model="question.answer"></div>	
+		<span class="question-choices--typed-number__min" ng-tranlsate>min</span>
+		<span class="question-choices--typed-number__max" ng-tranlsate>max</span>
 		<p class="question-choices--typed-number__output">
 			[[question.answer]] [[ question.unit ]]
 		</p>
-	</div>
-{% endblock %}
+    	<button class="question-choices--typed-number__validate" ng-click="submitAnswer(question.answer)">
+    		[[ question.validate_button_label ]]
+    	</button>
 
-{% block actions %}
-    <a class="btn btn-primary" ng-click="submitAnswer(question.answer)">[[ question.validate_button_label ]]</a>
+	</div>
 {% endblock %}
