@@ -295,6 +295,10 @@ class BaseQuestion(mixins.ThematicElementMixin, mixins.AsFinalMixin):
         klass = klass.replace('Question', '') # remove Question from klass name 
         return utils.camel_to_underscore(klass)
 
+    @property
+    def has_medias(self):
+        return False
+
     def __unicode__(self):
         return self.label[:25]
 
@@ -345,6 +349,11 @@ class BaseRadioQuestion(BaseQuestion):
         abstract = True
     answer_type = RadioAnswer
 
+    @property
+    def has_medias(self):
+        return any( getattr(c.as_final(), 'picture', None) is not None for c in self.choices() )
+
+
 class BaseSelectionQuestion(BaseQuestion, mixins.ValidateButtonMixin):
     """ 
     Mixin for selection question (one on more answer)
@@ -389,6 +398,7 @@ class MediaRadioQuestion(BaseRadioQuestion, MediaTypeMixin):
     class Meta:
         verbose_name = _('Media (single choice) question')
         verbose_name_plural = _('Media (single choice) questions')
+        
 
 class MediaSelectionQuestion(BaseSelectionQuestion, MediaTypeMixin):
     """ 
@@ -396,7 +406,7 @@ class MediaSelectionQuestion(BaseSelectionQuestion, MediaTypeMixin):
 
     Inherit from :model:`app.core.models.MediaTypeMixin`, thus inherit from its 
     `media_type` model's field.
-    """
+    """    
     class Meta:
         verbose_name = _('Media (multiple choices) question')
         verbose_name_plural = _('Media (multiple choices) questions')
@@ -430,13 +440,11 @@ class UserGenderQuestion(UserProfileQuestion):
 #     Choices field types
 # 
 # -----------------------------------------------------------------------------
-class BaseChoiceField(models.Model):
+class BaseChoiceField(mixins.AsFinalMixin):
     """
     Base class for choices, will be inherited by concrete choices (text and 
     media)
     """
-    content_type = models.ForeignKey(ContentType, editable=False)
-    content_object = generic.GenericForeignKey('content_type', 'pk')
     question = models.ForeignKey('BaseQuestion')
     title = models.CharField(_('Title of this choice'), max_length=120)
 
