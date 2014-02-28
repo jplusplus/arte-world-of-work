@@ -200,20 +200,20 @@
 
 
 .keyframes-sliding() {
-    from { .translate(0, -600px); }
-    to   { .translate(0, 0); }
+    from { top: -600px; }
+    to   { top: 0; }
 }
 
-@keyframes sliding{ .keyframes-sliding(); }
-@-webkit-keyframes sliding{ .keyframes-sliding(); }
-@-moz-keyframes sliding{ .keyframes-sliding(); }
+@keyframes sliding-translate{ .keyframes-sliding(); }
+@-webkit-keyframes sliding-translate{ .keyframes-sliding(); }
+@-moz-keyframes sliding-translate{ .keyframes-sliding(); }
 
-.do-sliding() {
+.do-sliding(@speed: 0.5s) {
 
-    .animation(sliding 0.5s);
+    .animation(sliding-translate @speed);
 
     &.ng-enter {
-        .transition(0.5s);
+        .transition(@speed);
         .translate(0, -600px);
         
         &-active  {
@@ -222,7 +222,7 @@
     }
 
     &.ng-leave {
-        .transition(0.5s);
+        .transition(@speed);
         .translate(0, 0);
         
         &-active {
