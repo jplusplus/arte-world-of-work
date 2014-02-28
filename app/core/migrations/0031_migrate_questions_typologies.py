@@ -30,7 +30,6 @@ class Migration(SchemaMigration):
             DestModel = mapping[FromModel] 
 
             for question in FromModel.objects.all():
-                choices = []
                 basequestion = question.basequestion_ptr
                 src_ctype = basequestion.content_type
 
@@ -44,13 +43,16 @@ class Migration(SchemaMigration):
                 basequestion.content_type = dest_ctype
                 dest_question.content_type = dest_ctype
 
-                basequestion.save()
-                dest_question.save()
                 # we udate the related ThematicElement 
-                element = ThematicElement.objects.get(object_id=basequestion.pk,
-                    content_type=src_ctype)
+                element = ThematicElement.objects.filter(
+                    content_type=src_ctype,
+                    object_id=question.pk)[0]
                 element.content_type = dest_ctype
                 element.save()
+
+                basequestion.save()
+                dest_question.save()
+                
                 # we update related choice
                 for choice in TextChoice.objects.filter(question__pk=question.pk):
                     basechoice   = choice.basechoicefield_ptr
@@ -62,6 +64,7 @@ class Migration(SchemaMigration):
                     basechoice.save()
                     dest_choice.content_type = dest_ctype
                     choice.delete()
+
                     dest_choice.save()
 
                 question.delete()

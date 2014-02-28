@@ -50,12 +50,14 @@ def set_thematic_position(sender, **kwargs):
 
 @receiver_subclasses(post_save, BaseQuestion, "basequestion_post_save")
 @receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
-def create_generic_element(sender, **kwargs):
+def create_or_update_generic_element(sender, **kwargs):
     # create a generic element appropriated for feedbacks and questions 
     instance = kwargs.get('instance', None)
-    ctype    = ContentType.objects.get_for_model(instance)    
-    element  = ThematicElement.objects.get_or_create(content_type=ctype, object_id=instance.pk)[0]
-    element.save()
+    ctype    = ContentType.objects.get_for_model(instance)
+    try:
+        element = ThematicElement.objects.get(content_type=ctype, object_id=instance.pk)
+    except ThematicElement.DoesNotExist:
+        ThematicElement.objects.create(content_object=instance)
 
 
 @receiver_subclasses(post_save, ThematicElement, "thematicelement_post_save")
