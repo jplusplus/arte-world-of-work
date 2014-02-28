@@ -13,7 +13,7 @@ angular.module('arte-ww').directive 'questionSelection', [
                         scope.answer = _.without(scope.answer, choice.id)
                     else
                         scope.answer.push choice.id
-
+                    
                 # -------------------------------------------------------------
                 # Scope variables binding 
                 # -------------------------------------------------------------
