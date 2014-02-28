@@ -52,7 +52,7 @@ arteww = angular
                 # such html5 mode.
                 $locationProvider.html5Mode true
                 # translation configuration 
-                STATIC_URL = STATIC_URL or "http://localhost:9876/static/"
+                STATIC_URL = window.STATIC_URL or "http://localhost:9876/static/"
                 $translateProvider.useStaticFilesLoader
                     prefix: STATIC_URL + 'arte_ww/locale/'
                     suffix: '.json'
