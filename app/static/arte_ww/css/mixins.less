@@ -185,16 +185,15 @@
 
     .white-panel(@width:435px);   
 
-    @media (max-width: @screen-xs-min) {                
+    @media (max-width: @screen-xs-min) {    
+        overflow: auto;            
         margin:0;
         width:100%;
         left:0;
         height: ~"calc(100% - @{header-height})";
 
         &:before {
-            background:white; 
-            .transform(none);
-            .box-shadow(none);
+            display: none;
         }
     }    
 }
