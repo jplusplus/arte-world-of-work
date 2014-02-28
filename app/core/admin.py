@@ -110,6 +110,10 @@ class AnswerAdmin(admin.ModelAdmin):
 # -----------------------------------------------------------------------------
 # all questions models 
 admin.site.register(models.TypedNumberQuestion   , QuestionAdmin)
+
+admin.site.register(models.TextRadioQuestion    , QuestionAdmin)
+admin.site.register(models.TextSelectionQuestion, QuestionAdmin)
+
 admin.site.register(models.MediaRadioQuestion    , QuestionAdmin)
 admin.site.register(models.MediaSelectionQuestion, QuestionAdmin)
 admin.site.register(models.BooleanQuestion       , QuestionAdmin)

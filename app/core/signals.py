@@ -50,33 +50,42 @@ def set_thematic_position(sender, **kwargs):
 
 @receiver_subclasses(post_save, BaseQuestion, "basequestion_post_save")
 @receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
-def create_or_update_generic_element(sender, **kwargs):
-    # create a generic element appropriated for feedbacks and questions 
+def create_generic_element(sender, **kwargs):
     instance = kwargs.get('instance', None)
-    ctype    = ContentType.objects.get_for_model(instance)
+    ctype = ContentType.objects.get_for_model(instance)
     try:
         element = ThematicElement.objects.get(content_type=ctype, object_id=instance.pk)
     except ThematicElement.DoesNotExist:
-        ThematicElement.objects.create(content_object=instance)
+        element = ThematicElement(content_object=instance)
+
+    element.content_type = instance.content_type
+    element.save()
 
 
 @receiver_subclasses(post_save, ThematicElement, "thematicelement_post_save")
 def create_thematic_element(sender, **kwargs):
     instance = kwargs.get('instance', None)
-    try: 
+    try:
         filters  = dict(content_type=instance.content_type, object_id=instance.object_id)
-        excludes = dict(id=instance.id, thematic=None)
+        excludes = dict(id=instance.id)
+
         te       = ThematicElement.objects.filter(**filters).exclude(**excludes)
+
         # Remove this instance if the thematic element is already        
-        if len(te) and te[0].id != instance.id: instance.delete()
+        if len(te):
+            prev_el = te[0]
+            if prev_el.thematic and not instance.thematic:
+                instance.delete()
+            else:
+                prev_el.delete()
     except ThematicElement.DoesNotExist:
         pass
 
 
-@receiver_subclasses(pre_save, BaseFeedback, "basefeedback_pre_save")
+@receiver_subclasses(pre_save, BaseFeedback,    "basefeedback_pre_save")
 @receiver_subclasses(pre_save, BaseChoiceField, "basechoicefield_pre_save")
-@receiver_subclasses(pre_save, BaseQuestion, "basequestion_pre_save")
-@receiver_subclasses(pre_save, BaseAnswer,   "baseanswer_pre_save")
+@receiver_subclasses(pre_save, BaseQuestion,    "basequestion_pre_save")
+@receiver_subclasses(pre_save, BaseAnswer,      "baseanswer_pre_save")
 def assign_content_object(sender, **kwargs):
     # pre save creation of instance.content_object. Designed to ease downcasting
     # for questions, answers and feedbacks

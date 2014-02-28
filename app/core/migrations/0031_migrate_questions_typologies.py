@@ -30,44 +30,36 @@ class Migration(SchemaMigration):
             DestModel = mapping[FromModel] 
 
             for question in FromModel.objects.all():
-                basequestion = question.basequestion_ptr
-                src_ctype = basequestion.content_type
-
+                base_question = question.basequestion_ptr
+                src_ctype     = base_question.content_type
                 dest_question = DestModel(media_type='image')
-                dest_question.basequestion_ptr = basequestion
+                dest_question.basequestion_ptr = base_question
                 if 'validate_button_label' in dest_question._meta.get_all_field_names():
                     dest_question.validate_button_label = question.validate_button_label
-
+                dest_question.save()
                 dest_ctype = ContentType.objects.get(model=model_name(dest_question))
-
-                basequestion.content_type = dest_ctype
-                dest_question.content_type = dest_ctype
-
-                # we udate the related ThematicElement 
-                element = ThematicElement.objects.filter(
-                    content_type=src_ctype,
-                    object_id=question.pk)[0]
+                # update base question content type
+                base_question.content_type = dest_ctype
+                base_question.save()
+                # update related ThematicElement 
+                element = ThematicElement.objects.filter(object_id=question.pk,
+                    content_type=src_ctype)[0]
                 element.content_type = dest_ctype
                 element.save()
+                # we update related choices (we need to transform them from)
+                for src_choice in TextChoice.objects.filter(question__pk=question.pk):
+                    base_choice = src_choice.basechoicefield_ptr
 
-                basequestion.save()
-                dest_question.save()
-                
-                # we update related choice
-                for choice in TextChoice.objects.filter(question__pk=question.pk):
-                    basechoice   = choice.basechoicefield_ptr
-                    dest_choice  = MediaChoice( question=basequestion ) 
-                    dest_choice.title = choice.title
-                    dest_choice.basechoicefield_ptr = basechoice
-                    dest_ctype   = ContentType.objects.get(model=model_name(dest_choice))
-                    basechoice.content_type = dest_ctype
-                    basechoice.save()
+                    dest_choice = MediaChoice.objects.create( title=base_choice.title, question=base_question, basechoicefield_ptr=base_choice, content_type=base_choice.content_type )
+                    dest_ctype = ContentType.objects.get(model=model_name(dest_choice))
                     dest_choice.content_type = dest_ctype
-                    choice.delete()
-
+                    src_choice.delete()
+                    
                     dest_choice.save()
 
+
                 question.delete()
+                dest_question.save()
 
 
 
