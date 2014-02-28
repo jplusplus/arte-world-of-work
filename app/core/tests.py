@@ -383,6 +383,10 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
 class UtilsTestCase(TestCase, utils.TestCaseMixin):
 
+    def test_fileexists(self):
+        self.assertTrue(utils.fileexists('.'))
+        self.assertFalse(utils.fileexists('I_DO_NOT_EXISTS.such.file'))
+
     def test_get_field_names(self):
         # unit test for utils.get_fields_names function
         names = utils.get_fields_names(UserProfile, CountryField)

@@ -3,6 +3,10 @@ from rest_framework.authtoken.models import Token
 
 from datetime import datetime
 import re
+import os
+
+def fileexists(path): 
+    return os.access(path, os.F_OK)
 
 def without(iterable, value):
     _l =  lambda el: el != value
