@@ -1,14 +1,12 @@
 TYPOLOGIES =
-    USER:
-        GENDER: 'user_gender'
-        AGE: 'user_age'
+    BOOLEAN       : 'boolean'
+    RADIO_TYPE    : 'media_radio'
+    SELECTION_TYPE: 'media_selection'
+    TYPED_NUMBER  : 'typed_number'
+    USER          :
+        AGE    : 'user_age'
         COUNTRY: 'user_country'
-    TYPED_NUMBER: 'typed_number'
-    BOOLEAN: 'boolean'
-    RADIO_TYPES: ['text_radio', 'media_radio']
-    SELECTION_TYPES: ['text_selection', 'media_selection']
-
-
+        GENDER : 'user_gender'
 
 
 angular.module('arte-ww').directive 'surveyElement', [

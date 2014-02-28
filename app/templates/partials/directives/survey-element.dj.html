@@ -15,8 +15,8 @@
         <!-- all `regular` question --> 
         <div class="survey-element__question" question-typed-number ng-if="element.typology == TYPOLOGIES.TYPED_NUMBER"></div>
         <div class="survey-element__question" question-boolean      ng-if="element.typology == TYPOLOGIES.BOOLEAN"></div>
-        <div class="survey-element__question" question-radio        ng-if="TYPOLOGIES.RADIO_TYPES.indexOf(element.typology)     != -1"></div>
-        <div class="survey-element__question" question-selection    ng-if="TYPOLOGIES.SELECTION_TYPES.indexOf(element.typology) != -1"></div>
+        <div class="survey-element__question" question-radio        ng-if="element.typology == TYPOLOGIES.RADIO_TYPE"></div>
+        <div class="survey-element__question" question-selection    ng-if="element.typology == TYPOLOGIES.SELECTION_TYPE"></div>
         <!-- Question featured media -->
         <div ng-if="element.media" class="survey-element__media">
             <img    ng-if="element.media.picture"  ng-src="[[element.media.picture]]" />
