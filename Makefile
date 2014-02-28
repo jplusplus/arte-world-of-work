@@ -3,7 +3,7 @@
 VIRTUALENV = venv/
 
 run:
-	. $(VIRTUALENV)bin/activate ; export PYTHONPATH=`pwd`/app/:$(PYTHONPATH) ; python -W ignore::DeprecationWarning manage.py runserver
+	. $(VIRTUALENV)bin/activate ; export PYTHONPATH=`pwd`/app/:$(PYTHONPATH) ; python -W ignore::DeprecationWarning manage.py runserver 0.0.0.0:8000
 
 install: create_virtualenv pip_install setup_db setup_statics setup_selenium	
 

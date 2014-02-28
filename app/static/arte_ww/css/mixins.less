@@ -174,7 +174,7 @@
         bottom:0;
         left:0;
         right:0;
-        background:fade(white, 90);
+        background:fade(white, 90%);
         .transform( skewY(-0.5deg) );
         .box-shadow( 5px 5px 0 0  fade(@navbar-default-bg, 10%) );
     }
@@ -186,13 +186,13 @@
     .white-panel(@width:435px);   
 
     @media (max-width: @screen-xs-min) {                
-        background:fade(white, 80); 
         margin:0;
         width:100%;
         left:0;
         height: ~"calc(100% - @{header-height})";
 
         &:before {
+            background:fade(white, 80%); 
             .transform(none);
             .box-shadow(none);
         }
