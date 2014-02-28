@@ -1,0 +1,34 @@
+.question-choices {
+	
+    &--multiple {
+
+        position:relative;
+        .clearfix();
+
+        &__validate {
+            .hide-text();            
+            border:0;
+            height:50px;
+            width:50px;
+            display:inline-block;
+            color:white;
+            border-radius:50%;
+            background:no-repeat center top;
+            background-size:100% auto; 
+            position:absolute;
+
+            top:50%;
+            left:100%;
+            .translate(0, -50%);
+
+            &:hover {
+                background-position: center bottom;
+            }
+
+            &--disable, &--disable:hover {
+                background-position: center center;                
+            }
+        }
+    }
+
+}
