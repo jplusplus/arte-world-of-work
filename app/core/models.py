@@ -137,7 +137,8 @@ class Thematic(models.Model):
         element.save()
 
     def __unicode__(self):
-        return u"{id} - {title}".format(id=self.pk, title=self.title)
+        position = self.position or _('No position')
+        return u"{pos} - {title}".format(pos=position, title=self.title)
 
     def all_elements(self):
         # list all elements (feedback + question) of a thematic object
