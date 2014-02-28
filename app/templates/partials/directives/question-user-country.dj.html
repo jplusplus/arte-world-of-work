@@ -1,7 +1,7 @@
 {% extends "partials/directives/question-base.dj.html" %}
 
 {% block form %}
-	<div class="question-choices question-choices--user-age">
+	<div class="question-choices question-choices--user-country">
 		<select ng-model='answer' ng-options='c.iso_code as c.name for c in countries.list'></select>
 	</div>
 {% endblock %}

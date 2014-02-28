@@ -120,6 +120,10 @@
                     background-image:url("../img/ui/validate_@{slug}.png");                        
                 }
             }
+
+            select {
+                color:@brand;
+            }
         }
 
         .answer-navigator h4.answer-title:before {
@@ -221,6 +225,14 @@
     -webkit-animation: @arguments; // iOS <4.3 & Android <4.1
        -moz-animation: @arguments; // Firefox
             animation: @arguments;
+}
+
+.apperance(@apperance...) {    
+    -webkit-appearance: @arguments;
+    -moz-appearance: @arguments;
+    -ms-appearance: @arguments;
+    -o-appearance: @arguments;
+    appearance: @arguments;
 }
 
 

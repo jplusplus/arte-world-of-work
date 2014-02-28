@@ -1,3 +1,36 @@
 .question-choices {
 
+	&--user-country  {
+		padding:25px;
+		text-align:center;
+
+		select {
+
+			.apperance(none);
+
+			max-width: 80%;
+			background: transparent;
+			padding:5px;
+			border:0;
+            border-bottom:2px dashed @gray-light;
+            color:@brand-primary;    
+            display: inline-block;
+            font-size:18px;            
+            font-weight:600;      
+            padding:0 5px;
+            text-align: center;    
+            white-space:nowrap;
+            
+
+            option {
+            	color:#000;
+            	background:#fff;
+            }
+
+            &, &:focus {
+            	outline:none;
+            }
+		}
+	}
+
 }
