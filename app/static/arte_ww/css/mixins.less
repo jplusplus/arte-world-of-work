@@ -201,7 +201,7 @@
 
 .keyframes-sliding() {
     from { top: -600px; }
-    to   { top: 0; }
+    to   { top: @header-height; }
 }
 
 @keyframes sliding-translate{ .keyframes-sliding(); }
@@ -224,7 +224,7 @@
     &.ng-leave {
         .transition(@speed);
         .translate(0, 0);
-        
+
         &-active {
             .translate(0, -600px);
         }
