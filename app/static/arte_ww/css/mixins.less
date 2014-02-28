@@ -192,7 +192,7 @@
         height: ~"calc(100% - @{header-height})";
 
         &:before {
-            background:fade(white, 80%); 
+            background:white; 
             .transform(none);
             .box-shadow(none);
         }
@@ -209,7 +209,6 @@
 @-webkit-keyframes sliding{ .keyframes-sliding(); }
 @-moz-keyframes sliding{ .keyframes-sliding(); }
 
-
 .do-sliding() {
 
     .animation(sliding 0.5s);
@@ -225,7 +224,7 @@
 
     &.ng-leave {
         .transition(0.5s);
-        .scale(0);
+        .translate(0, 0);
         
         &-active {
             .translate(0, -600px);
