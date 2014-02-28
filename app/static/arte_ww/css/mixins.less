@@ -180,6 +180,26 @@
     }
 }
 
+
+.white-panel(responsive; @width:435px) {
+
+    .white-panel(@width:435px);   
+
+    @media (max-width: @screen-xs-min) {                
+        background:fade(white, 80); 
+        margin:0;
+        width:100%;
+        left:0;
+        height: ~"calc(100% - @{header-height})";
+
+        &:before {
+            .transform(none);
+            .box-shadow(none);
+        }
+    }    
+}
+
+
 .keyframes-sliding() {
     from { .translate(0, -600px); }
     to   { .translate(0, 0); }
