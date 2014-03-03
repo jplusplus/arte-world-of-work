@@ -5,6 +5,16 @@
 		background-image:url("../img/bg/@{slug}.png");
 		background-color: @bg;		
 
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image:url("../img/bg/@{slug}-x2.png");
+        }
+        
+        @media (min-width: @screen-lg-min)  {
+            background-image:url("../img/bg/@{slug}-x2.png");
+        }
+
+        
+
 		.btn-primary {
   			.button-variant(#fff; @brand; @brand);
 		}
@@ -201,7 +211,7 @@
 
 .keyframes-sliding() {
     from { top: -600px; }
-    to   { top: 0; }
+    to   { top: @header-height; }
 }
 
 @keyframes sliding-translate{ .keyframes-sliding(); }
@@ -224,7 +234,7 @@
     &.ng-leave {
         .transition(@speed);
         .translate(0, 0);
-        
+
         &-active {
             .translate(0, -600px);
         }
