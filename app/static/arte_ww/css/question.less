@@ -3,6 +3,11 @@
     padding-left:100px;
     text-align:left;
 
+
+    @media (max-width: @screen-xs-min) {
+        padding:0 10px;
+    }
+
     &.icon {
         img {
             max-height: 40px; 
@@ -18,39 +23,42 @@
 
     .survey-element--with-columns & {
 
-        width:85%;
-        padding-left:20px;
+        @media (min-width: @screen-xs-min) {    
+            width:85%;
+            padding-left:20px;
 
-        .question-choice {
-            width:50%;
-            float:left;
+            .question-choice {
+                width:50%;
+                float:left;
 
-            &:nth-child(odd) {
-                clear:left;
+                &:nth-child(odd) {
+                    clear:left;
+                }
             }
         }
-
 
     }
 
     .survey-element--icon-mode.survey-element--choice-media & {
 
-        &--multiple {
+        @media (min-width: @screen-xs-min) {   
+            &--multiple {
 
-            width:90%;
-         
-            &__validate {
-                height:30px;
-                width:30px;
+                width:90%;
+             
+                &__validate {
+                    height:30px;
+                    width:30px;
+                }
             }
-        }
-        
-        .question-choice {
-            width:15.5%;
-            padding:5px;  
-            font-size:10px;     
-            .thumbnail {
-                padding:0;
+            
+            .question-choice {
+                width:15.5%;
+                padding:5px;  
+                font-size:10px;     
+                .thumbnail {
+                    padding:0;
+                }
             }
         }
 

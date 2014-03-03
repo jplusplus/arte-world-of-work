@@ -7,6 +7,7 @@
         list-style: none;
         height:30px;
 
+
         ul {
             margin: 0;
             padding: 0;
@@ -14,6 +15,17 @@
             bottom:0;
             left:0;
             right:0;
+
+            @media (max-width: @screen-xs-min) {                    
+                height:50px;
+                background:fade(white, 80);
+                position:fixed;
+
+                .ng-enter & {
+                    position:absolute;
+                }
+            }
+
         }
 
         &__previous, &__next {
@@ -100,7 +112,15 @@
             min-height:200px;
             width:160px;
             margin-left:30px;
-            float:left;            
+            float:left;      
+
+            @media (max-width: @screen-xs-min) {    
+                width:100%;
+                margin:0;
+                padding:0 10px;
+                float:none;
+                min-height:none;
+            }      
         }
 
         .survey-element__label {
@@ -110,7 +130,7 @@
 
     &__media {
         float:right;
-        margin:-20px 40px 50px 0;
+        margin:-20px 40px 40px 0;
         border:3px solid @brand-primary;
         width: 180px+(3px*2px);
 
@@ -123,11 +143,23 @@
             height:180px;
             float:left;
         }
+
+
+        @media (max-width: @screen-xs-min) {    
+            float:none;
+            margin:-30px auto 100px;
+
+            iframe {
+                float:none;
+                display: block;
+            }
+        }
     }
 
     &__position {
+        z-index: 20;
         position:absolute;
-        top:20px;
+        top:18px;
         right:13px;
         font-family: @headings-font-family;        
         font-size: 14px;

@@ -174,28 +174,46 @@
         bottom:0;
         left:0;
         right:0;
-        background:fade(white, 90);
+        background:fade(white, 90%);
         .transform( skewY(-0.5deg) );
         .box-shadow( 5px 5px 0 0  fade(@navbar-default-bg, 10%) );
     }
 }
 
-.keyframes-sliding() {
-    from { .translate(0, -600px); }
-    to   { .translate(0, 0); }
+
+.white-panel(responsive; @width:435px) {
+
+    .white-panel(@width:435px);   
+
+    @media (max-width: @screen-xs-min) {    
+        overflow: auto;            
+        margin:0;
+        width:100%;
+        left:0;
+        height: ~"calc(100% - @{header-height})";
+
+        &:before {
+            display: none;
+        }
+    }    
 }
 
-@keyframes sliding{ .keyframes-sliding(); }
-@-webkit-keyframes sliding{ .keyframes-sliding(); }
-@-moz-keyframes sliding{ .keyframes-sliding(); }
 
+.keyframes-sliding() {
+    from { top: -600px; }
+    to   { top: 0; }
+}
 
-.do-sliding() {
+@keyframes sliding-translate{ .keyframes-sliding(); }
+@-webkit-keyframes sliding-translate{ .keyframes-sliding(); }
+@-moz-keyframes sliding-translate{ .keyframes-sliding(); }
 
-    .animation(sliding 0.5s);
+.do-sliding(@speed: 0.5s) {
+
+    .animation(sliding-translate @speed);
 
     &.ng-enter {
-        .transition(0.5s);
+        .transition(@speed);
         .translate(0, -600px);
         
         &-active  {
@@ -204,8 +222,8 @@
     }
 
     &.ng-leave {
-        .transition(0.5s);
-        .scale(0);
+        .transition(@speed);
+        .translate(0, 0);
         
         &-active {
             .translate(0, -600px);

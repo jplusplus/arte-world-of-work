@@ -28,6 +28,14 @@
             &--disable, &--disable:hover {
                 background-position: center center;                
             }
+
+            @media (max-width: @screen-xs-min) {
+                position:static;
+                margin:10px auto;  
+                display:block;
+                clear:both;
+                .translate(0, 0); 
+            }
         }
     }
 
