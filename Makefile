@@ -17,7 +17,7 @@ sync_db_translations:
 	. $(VIRTUALENV)bin/activate; django-admin.py sync_db_translations 
 
 makemessages:
-	. $(VIRTUALENV)bin/activate; cd app; django-admin.py makemessages -a --settings=settings
+	. $(VIRTUALENV)bin/activate; cd app; django-admin.py makemessages -a --settings=settings_i18n
 
 createsuperuser:
 	. $(VIRTUALENV)bin/activate; python manage.py createsuperuser --username root
