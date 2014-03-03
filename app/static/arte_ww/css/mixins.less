@@ -5,6 +5,16 @@
 		background-image:url("../img/bg/@{slug}.png");
 		background-color: @bg;		
 
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image:url("../img/bg/@{slug}-x2.png");
+        }
+        
+        @media (min-width: @screen-lg-min)  {
+            background-image:url("../img/bg/@{slug}-x2.png");
+        }
+
+        
+
 		.btn-primary {
   			.button-variant(#fff; @brand; @brand);
 		}
