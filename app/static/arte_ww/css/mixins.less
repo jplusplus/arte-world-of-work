@@ -2,13 +2,20 @@
 .thematic(@slug; @brand:@brand-primary; @bg:@body-bg) {	
 	
 	.thematic-@{slug} {
+        image-rendering:optimizeSpeed;              /* Legal fallback                 */
+        image-rendering:-moz-crisp-edges;           /* Firefox                        */
+        image-rendering:-o-crisp-edges;             /* Opera                          */
+        image-rendering:-webkit-optimize-contrast;  /* Chrome (and eventually Safari) */
+        image-rendering:crisp-edges;                /* CSS3 Proposed                  */
+        -ms-interpolation-mode:bicubic;             /* IE8+                           */
+
 		background-image:url("../img/bg/@{slug}.png");
 		background-color: @bg;		
 
         @media only screen and (-webkit-min-device-pixel-ratio: 2) {
             background-image:url("../img/bg/@{slug}-x2.png");
         }
-        
+
         @media (min-width: @screen-lg-min)  {
             background-image:url("../img/bg/@{slug}-x2.png");
         }
