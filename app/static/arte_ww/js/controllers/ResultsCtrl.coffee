@@ -3,10 +3,11 @@ class ResultsCtrl
 
     changeQuestion: (id) =>
         request =
-            url : '/api/questions/11'
+            url : "/api/questions/#{id}"
             method : 'GET'
         @$http(request).success (data) =>
-            @$scope.current = data
+            @$scope.currentAnswer = data
+            @$scope.nochart = true
 
     constructor: (@$scope, $location, Thematic, @$http) ->
         # Update URL when the user changes filters
@@ -20,7 +21,9 @@ class ResultsCtrl
             $location.search 'age_max', f.age_max
         ), yes
 
-        @changeQuestion 11
+        @$scope.current =
+            thematic : 0
+            answer : 0
 
         # List all thematics
         @$scope.thematics = []
@@ -28,9 +31,14 @@ class ResultsCtrl
             Thematic.positionList
         ), =>
             if Thematic.positionList?
+                @elements = _.map Thematic.positionList.elements, (thematic) =>
+                    thematic.elements
                 @$scope.thematics = _.map Thematic.positionList.elements, (thematic) =>
                     slug : thematic.slug
                     title : thematic.title
+
+                @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+
 
         # Initialize filters (fron URL or default values)
         urlFilters = do $location.search
@@ -45,6 +53,31 @@ class ResultsCtrl
             @$scope.filters[gender] = not @$scope.filters[gender]
             if @$scope.filters.male is @$scope.filters.female is false
                 @$scope.filters.male = @$scope.filters.female = true
+
+        # Define Previous and Next behavior
+        @$scope.next = =>
+            if @elements[@$scope.current.thematic][@$scope.current.answer + 1]?
+                ++@$scope.current.answer
+            else if @elements[@$scope.current.thematic + 1]?
+                ++@$scope.current.thematic
+                @$scope.current.answer = 0
+            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+
+        @$scope.previous = =>
+            if @elements[@$scope.current.thematic][@$scope.current.answer - 1]?
+                --@$scope.current.answer
+            else if @elements[@$scope.current.thematic - 1]?
+                --@$scope.current.thematic
+                @$scope.current.answer = @elements[@$scope.current.thematic].length - 1
+            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+
+        @$scope.hasNext = =>
+            return no if not @elements? or @elements.length is 0
+            return @elements[@$scope.current.thematic][@$scope.current.answer + 1]? or @elements[@$scope.current.thematic + 1]?
+
+        @$scope.hasPrev = =>
+            return no if not @elements? or @elements.length is 0
+            return @elements[@$scope.current.thematic][@$scope.current.answer - 1]? or @elements[@$scope.current.thematic - 1]?
 
 angular.module('arte-ww')
 .controller('ResultsCtrl', ResultsCtrl)

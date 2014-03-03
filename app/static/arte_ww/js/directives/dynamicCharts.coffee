@@ -208,6 +208,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
         scope :
             id : '@'
             filters : '='
+            hidden : '@'
         controller : ['$scope', (scope) ->
             scope.filter =
                 from : 0
@@ -226,7 +227,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     else throw "Chart type '#{scope.data.chart_type}' does not exist."
 
             update = =>
-                return if not scope.id? or scope.id is ""
+                return if not scope.id? or scope.hidden or scope.id is ""
 
                 filters = angular.copy scope.filters
                 if filters.male isnt filters.female
