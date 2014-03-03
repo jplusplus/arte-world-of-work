@@ -76,7 +76,7 @@ class ThematicElement(models.Model):
     class Meta:
         ordering= ['position']
         unique_together = (
-            ('object_id', 'content_type'),
+            ('object_id', 'content_type', 'thematic'),
         )
 
     content_type   = models.ForeignKey(ContentType)
@@ -106,9 +106,6 @@ class ThematicElement(models.Model):
 
 
 class ThematicManager(models.Manager):
-    def get_by_natural_key(self, title, slug):
-        return self.get(title=title, slug=slug)
-
     def all_elements(self):
         thematics = self.get_queryset()
         elements = []
@@ -120,7 +117,6 @@ class ThematicManager(models.Manager):
 class Thematic(models.Model):
     class Meta:
         ordering = ('position',)
-        unique_together = (('slug', 'title'),)
 
     position = models.PositiveIntegerField(default=0)
     title    = models.CharField(_('Thematic title'), max_length=120)

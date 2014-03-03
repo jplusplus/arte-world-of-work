@@ -52,14 +52,15 @@ def set_thematic_position(sender, **kwargs):
 @receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
 def create_generic_element(sender, **kwargs):
     instance = kwargs.get('instance', None)
-    ctype = ContentType.objects.get_for_model(instance)
-    try:
-        element = ThematicElement.objects.get(content_type=ctype, object_id=instance.pk)
-    except ThematicElement.DoesNotExist:
-        element = ThematicElement(content_object=instance)
+    if not kwargs.get('raw', False):
+        ctype = ContentType.objects.get_for_model(instance)
+        try:
+            element = ThematicElement.objects.get(content_type=ctype, object_id=instance.pk)
+        except ThematicElement.DoesNotExist:
+            element = ThematicElement(content_object=instance)
 
-    element.content_type = instance.content_type
-    element.save()
+        element.content_type = instance.content_type
+        element.save()
 
 
 @receiver_subclasses(post_save, ThematicElement, "thematicelement_post_save")
@@ -90,9 +91,8 @@ def assign_content_object(sender, **kwargs):
     # pre save creation of instance.content_object. Designed to ease downcasting
     # for questions, answers and feedbacks
     instance = kwargs.get('instance', None)
-    instance.content_type =  ContentType.objects.get_for_model(instance)
-    
-
+    if not kwargs.get('raw', False):
+        instance.content_type =  ContentType.objects.get_for_model(instance)
 
 def create_boolean_choices(sender, **kwargs):
     # will create default choice fields for boolean questions ("yes" and "no")
