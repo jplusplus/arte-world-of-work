@@ -3,7 +3,7 @@
 {% block form %}
 	<div class="question-choices question-choices--user-country">
 		<select ng-model='answer' ng-options='c.iso_code as c.name for c in countries.list'>
-			<option value="" ng-translate>Choisissez un pays</option>
+			<option value="" ng-translate>Choose a country</option>
 		</select>
 	</div>
 {% endblock %}
