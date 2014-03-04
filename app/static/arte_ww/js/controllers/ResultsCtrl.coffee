@@ -6,8 +6,8 @@ class ResultsCtrl
             url : "/api/questions/#{id}"
             method : 'GET'
         @$http(request).success (data) =>
+            @$scope.nochart = false
             @$scope.currentAnswer = data
-            @$scope.nochart = true
 
     constructor: (@$scope, $location, Thematic, @$http) ->
         # Update URL when the user changes filters
@@ -27,18 +27,22 @@ class ResultsCtrl
 
         # List all thematics
         @$scope.thematics = []
+        @.elements = []
         @$scope.$watch (=>
             Thematic.positionList
         ), =>
             if Thematic.positionList?
-                @elements = _.map Thematic.positionList.elements, (thematic) =>
-                    thematic.elements
                 @$scope.thematics = _.map Thematic.positionList.elements, (thematic) =>
                     slug : thematic.slug
                     title : thematic.title
 
-                @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
-
+                request =
+                    url : '/api/thematics-result'
+                    method : 'GET'
+                (@$http request).success (data) =>
+                    @.elements = _.map data, (thematic) =>
+                        _.pluck thematic.elements, 'object_id'
+                    @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         # Initialize filters (fron URL or default values)
         urlFilters = do $location.search

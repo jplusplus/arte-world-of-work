@@ -77,7 +77,7 @@ class BarChart extends Chart
         @margin = @margin or
             top : 0
             right : 0
-            bottom : 20
+            bottom : 50
             left : 0
 
         super @scope, @element
@@ -107,6 +107,22 @@ class BarChart extends Chart
         (g.append 'rect').attr do @getRectAttrs
         ((g.append 'text').attr do @getTextAttrs)
             .text (d) -> "#{d[1]}%"
+
+        do @appendLegend
+
+    appendLegend: =>
+        do (@svg.selectAll '.legend').remove
+
+        data = (@svg.selectAll '.legend').data @results
+        entered = do data.enter
+
+        fObject = (entered.append 'foreignObject').attr
+            class : 'legend'
+            width : do @x.rangeBand
+            height : @margin.bottom
+            x : (d) => @x(d[0])
+            y : @size.height - @margin.bottom
+        (fObject.append 'xhtml:body').html (d) => "<p>#{d[0]}</p>"
 
     defineXY: =>
         @x = (do d3.scale.ordinal).rangeRoundBands([0, @_size.width], 0.2);
@@ -155,6 +171,7 @@ class HBarChart extends BarChart
         y : (d) => @y(d[0]) + (do @y.rangeBand) / 2
         'dominant-baseline' : 'central'
 
+    appendLegend: =>
 
 class Histogram extends BarChart
     constructor: (@scope, @element) ->
@@ -199,6 +216,8 @@ class Histogram extends BarChart
         width : (d) => (@x d[1]) - (@x d[0])
         height : (d) => @_size.height - @y(d[2])
 
+    appendLegend: =>
+
 
 angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($window, $Result) ->
     directive =
@@ -208,7 +227,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
         scope :
             id : '@'
             filters : '='
-            hidden : '@'
+            nochart : '@'
         controller : ['$scope', (scope) ->
             scope.filter =
                 from : 0
@@ -227,7 +246,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     else throw "Chart type '#{scope.data.chart_type}' does not exist."
 
             update = =>
-                return if not scope.id? or scope.hidden or scope.id is ""
+                return if (scope.nochart is 'true') or not scope.id? or scope.id is ""
 
                 filters = angular.copy scope.filters
                 if filters.male isnt filters.female
@@ -236,11 +255,22 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                 delete filters.male
                 delete filters.female
 
-                promise = $Result.get
+                request =
                     id : scope.id
                     filters : filters
-                promise.success (data) =>
-                    scope.data = data.results
+                $Result.get request, (data) =>
+                    # scope.data = data.results
+                    # Fake data
+                    scope.data =
+                        chart_type : 'pie'
+                        results :
+                            1 : 58
+                            2 : 27
+                        total_answers : 85
+                        sets :
+                            1 : title : "yes"
+                            2 : title : "no"
+                undefined
 
             window.onresize = =>
                 do scope.$apply

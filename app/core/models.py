@@ -179,6 +179,7 @@ class StaticFeedback( BaseFeedback,
                       mixins.PictureMixin ):
     source_url = models.URLField()
     source_title = models.CharField(max_length=120)
+    question = models.OneToOneField('BaseQuestion', null=True, blank=True, related_name='feedback')
     def __unicode__(self):
         return 'StaticFeedback: %s' % self.html_sentence[:60]
 

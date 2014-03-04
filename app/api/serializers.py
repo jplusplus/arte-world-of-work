@@ -105,6 +105,7 @@ class QuestionSerializer(mixins.InheritedModelMixin):
     model_mapping = question_mapping 
     # we have to explicitly declare this field because it's a model property
     typology = serializers.Field()
+    feedback = StaticFeedbackSerializer()
     media    = QuestionMediaSerializer(source='questionmediaattachement')
     class Meta:
         model = BaseQuestion
