@@ -6,6 +6,7 @@ from rest_framework.serializers import ValidationError
 
 from app.core import mixins as core_mixins 
 from app.core.models import *
+from app.core.transport import DynamicFeedback
 from app.api import mixins
 
 
@@ -109,32 +110,39 @@ class QuestionSerializer(mixins.InheritedModelMixin):
     media    = QuestionMediaSerializer(source='questionmediaattachement')
     class Meta:
         model = BaseQuestion
-        # fields = ('id', 'label', 'skip_button_label', 'typology')
         depth = 1
         exclude = ('content_type',)
 
-
 class QuestionResultsSerializer(mixins.InheritedModelMixin):
-    model_mapping = question_mapping 
-    typology = serializers.Field()
-    results  = serializers.SerializerMethodField('get_results')
+    model_mapping = question_mapping
+    results       = serializers.SerializerMethodField('get_results')
     class Meta:
-        model  = BaseQuestion
+        model = BaseQuestion
+        depth = 1
         exclude = ('content_type',)
-        depth  = 1
 
+    def get_request(self):
+        return self.context['request']
 
     def get_results(self, question):
-        request = self.context['request']
+        request = self.get_request()
         params  = request.QUERY_PARAMS
         filters = {}
         filters['age_min'] = params.get('age_min', None)
         filters['age_max'] = params.get('age_max', None)
-        filters['gender']  = params.get('gender', None)
+        filters['gender']  = params.get('gender',  None)
         if not issubclass(question.content_type.model_class(), UserProfileQuestion):
             serializer = ResultsSerializer(question.results(**filters)) 
             return serializer.data
         return None
+
+class QuestionFeedbackSerializer(QuestionResultsSerializer):
+    html_sentence = serializers.SerializerMethodField('get_html_sentence')
+
+    def get_html_sentence(self, question):
+        user     = self.get_request().user
+        feedback = DynamicFeedback(user, question)
+        return feedback.html_sentence
 
 
 # -----------------------------------------------------------------------------

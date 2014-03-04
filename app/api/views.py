@@ -24,13 +24,30 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     def results(self, request, pk):
         try:
             question = self.queryset.get(pk=pk).as_final()
+            serializer = serializers.QuestionResultsSerializer(question, 
+                context={'request': request})
+            return Response(serializer.data)
+
         except ObjectDoesNotExist:
             err = 'Given question with id `{id}` doesn\'t exist, thus results cannot be calculated'
             message = err.format(id=pk)
             return Response(message, 404)
 
-        serializer = serializers.QuestionResultsSerializer(question, context={'request': request})
-        return Response(serializer.data)
+    @link()
+    def feedback(self, request, pk):
+        try:
+            question = self.queryset.get(pk=pk).as_final()
+            serializer = serializers.QuestionFeedbackSerializer(question, 
+                context={'request': request})
+            return Response(serializer.data)
+
+        except ObjectDoesNotExist:
+            err_msg = (
+                'Given question with id `{id}` doesn\'t exist, thus dynamic '
+                'feedback cannot be calculated'
+            )
+            return Response(err_msg.format(id=pk), 404)
+
 
 class NestedThematicViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -75,12 +92,6 @@ class ThematicViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Thematic.objects.all()
     serializer_class = serializers.ThematicSerializer
 
-class FeedbackViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    API endpoint for dynamic feedback. 
-
-    Generate on demand dynamic feedback objects.
-    """
 
 class MyAnswerViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (IsAuthenticated, IsOwner)

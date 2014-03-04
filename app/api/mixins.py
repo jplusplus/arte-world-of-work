@@ -1,6 +1,4 @@
 from rest_framework import mixins
-from rest_framework.response import Response
-from rest_framework import status
 from rest_framework import serializers
 
 from django.contrib.contenttypes.models import ContentType
@@ -109,5 +107,3 @@ class GenericModelMixin(serializers.ModelSerializer):
         if ctype_serializer:
             base_data.update(ctype_serializer(cobject, context=self.context).data)
         return base_data
-
-

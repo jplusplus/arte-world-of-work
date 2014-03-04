@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 This file include all class definition of transport objects. 
 
@@ -119,5 +121,19 @@ class VerticalBarChart(BarChart):
 class PieChart(BarChart):
     chart_type = CHART_TYPES.PIE
 
+class DynamicFeedback(object):
+    def __init__(self, user, question):
+        self.user     = user
+        self.question = question
+        self.create_html_sentence()
+
+    def create_html_sentence(self):
+        # but: trouver le plus d'utilisateur possible ayant répondu comme nous
+        # parmis les variable du profile
+        # - age
+        # - sex
+        # - pays d'origine/pays d'habitation
+        raise NotImplementedError("DynamicFeedback.create_html_sentence is not implemented yet")
 
 
+# EOF
