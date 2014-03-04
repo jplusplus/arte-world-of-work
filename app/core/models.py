@@ -161,7 +161,7 @@ class Thematic(models.Model):
 # 
 # -----------------------------------------------------------------------------
 class BaseFeedback(mixins.ValidateButtonMixin, mixins.AsFinalMixin):
-    html_sentence = models.CharField(_('Feedbacks sentence'), max_length=120, 
+    html_sentence = models.TextField(_('Feedbacks sentence'), 
         help_text=_('Sentence (as html content): "Hey did you knew .. ?"')
     )
     # properties
