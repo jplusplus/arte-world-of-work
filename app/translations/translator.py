@@ -16,7 +16,7 @@ from django.db.models.base import ModelBase
 from django.utils.six import with_metaclass
 from django.db.models import fields
 from django.db.models.signals import post_init
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from .errors import *
 
 """
