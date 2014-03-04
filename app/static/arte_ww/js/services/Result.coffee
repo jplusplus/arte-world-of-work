@@ -15,6 +15,5 @@ class ResultService
             method: 'POST'
             url : '/api/answers/#{params.question.id}'
             data: params.value
-            
 
 (angular.module 'arte-ww.services').service 'Result', ResultService

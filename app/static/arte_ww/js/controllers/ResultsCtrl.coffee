@@ -6,8 +6,8 @@ class ResultsCtrl
             url : "/api/questions/#{id}"
             method : 'GET'
         @$http(request).success (data) =>
+            @$scope.nochart = false
             @$scope.currentAnswer = data
-            @$scope.nochart = true
 
     constructor: (@$scope, $location, Thematic, @$http) ->
         # Update URL when the user changes filters
