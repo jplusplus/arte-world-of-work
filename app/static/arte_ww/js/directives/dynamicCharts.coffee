@@ -262,14 +262,14 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     # scope.data = data.results
                     # Fake data
                     scope.data =
-                        chart_type : 'pie'
+                        chart_type : 'bar'
                         results :
                             1 : 58
                             2 : 27
                         total_answers : 85
                         sets :
-                            1 : title : "yes"
-                            2 : title : "no"
+                            1 : title : "lorem ipsum dolor"
+                            2 : title : "sit amet"
                 undefined
 
             window.onresize = =>

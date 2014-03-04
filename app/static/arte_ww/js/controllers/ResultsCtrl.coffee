@@ -1,5 +1,5 @@
 class ResultsCtrl
-    @$inject: ['$scope', '$location', 'Thematic', '$http']
+    @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce']
 
     changeQuestion: (id) =>
         request =
@@ -9,7 +9,7 @@ class ResultsCtrl
             @$scope.nochart = false
             @$scope.currentAnswer = data
 
-    constructor: (@$scope, $location, Thematic, @$http) ->
+    constructor: (@$scope, $location, Thematic, @$http, $sce) ->
         # Update URL when the user changes filters
         @$scope.$watch 'filters', (=>
             f = angular.copy $scope.filters
@@ -24,6 +24,10 @@ class ResultsCtrl
         @$scope.current =
             thematic : 0
             answer : 0
+
+        @$scope.getTrustedHTML = =>
+            if @$scope.currentAnswer? and @$scope.currentAnswer.feedback?
+                $sce.trustAsHtml @$scope.currentAnswer.feedback.html_sentence
 
         # List all thematics
         @$scope.thematics = []
@@ -40,8 +44,8 @@ class ResultsCtrl
                     url : '/api/thematics-result'
                     method : 'GET'
                 (@$http request).success (data) =>
-                    @.elements = _.map data, (thematic) =>
-                        _.pluck thematic.elements, 'object_id'
+                    @elements = _.map data, (thematic) =>
+                        _.pluck (_.filter thematic.elements, (t) -> t.type is 'question'), 'object_id'
                     @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         # Initialize filters (fron URL or default values)

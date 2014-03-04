@@ -4,7 +4,7 @@
         <div class="answer-content">
             <dynamic-chart ng-attr-nochart='[[nochart]]' ng-hide="[[nochart]]" ng-attr-id="[[currentAnswer.id]]" filters="filters"></dynamic-chart>
             <div ng-class="{'answer-description--nochart':nochart}" class="answer-description">
-                <p><strong>[[currentAnswer.feedback.html_sentence]]</strong></p>
+                <p ng-bind-html="getTrustedHTML()"></p>
             </div>
         </div>
     </div>

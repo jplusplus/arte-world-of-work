@@ -13,7 +13,8 @@ arteww = angular
         'ngRoute',
         'ngResource',
         'ngAnimate',
-        'nouislider'
+        'nouislider',
+        'ngSanitize'
     ])
     .run([
             '$rootScope'

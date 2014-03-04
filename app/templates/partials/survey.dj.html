@@ -39,7 +39,7 @@
             <!-- step 2 -> we're starting this thematic question -->
             <div class="thematic-elements" ng-if='state == states.ELEMENTS'>
                 <div ng-repeat="element in thematicWrapper.elements">
-                    <div class="thematic-elements__element" ng-if="currentElement.id == element.id">
+                    <div class="thematic-elements__element" ng-if="currentElement.id === element.id && currentElement.type === element.type">
                         <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
                         <div survey-element="element" class="survey-element"></div>
                     </div>
