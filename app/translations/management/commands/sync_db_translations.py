@@ -34,24 +34,33 @@ def extract_strings_from_db(verbosity=1):
                 src_string = getattr(instance, '_%s' % field_name, None)
                 if src_string is not None and src_string not in strings:
                     strings.append(src_string)
+
     return strings
 
 def write_strings(strings=(), verbosity=1):
     if verbosity > 1:
         print "%s strings to write" % len(strings)
-    template = Template(u'''
-_ = lambda s: s
-STRINGS = ({% for str in strings %}_("{{ str }}"),{% endfor %})''')
+    template = Template((
+            'from django.utils.translation import ugettext_noop as _\n'
+            'STRINGS = ('
+                '{% for str in strings %}'
+                    '{% autoescape off %}'
+                    '_("{{ str }}"),'
+                    '{% endautoescape %}'
+                '{% endfor %}'
+            ')'
+        ))
     context = Context({'strings': strings})
     output = template.render(context)
 
     path = settings.TRANSLATION_STRINGS_FILE
     if os.access(path, os.F_OK):
         os.remove(path)
+
     if os.access(path + 'c', os.F_OK):
         os.remove(path + 'c')
         
-    f = codecs.open(path, 'w+', 'utf-8')
+    f = codecs.open(path, 'w', 'utf-8')
     f.write(output)
 
     if verbosity > 2:

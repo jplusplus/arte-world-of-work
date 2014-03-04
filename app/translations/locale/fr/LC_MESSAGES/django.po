@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-04 12:25+0100\n"
+"POT-Creation-Date: 2014-03-04 08:43-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,32 +17,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: i18n_strings.py:3
-#, fuzzy
+#: i18n_strings.py:2
 msgid "an other translation"
 msgstr "une autre traduction"
 
-#: i18n_strings.py:3
-#, fuzzy
+#: i18n_strings.py:2
 msgid "my awesome title"
 msgstr "mon superbe titre"
 
-#: i18n_strings.py:3
+#: i18n_strings.py:2
 msgid "my title"
 msgstr "mon titre"
 
-#: i18n_strings.py:3
+#: i18n_strings.py:2
 msgid "an other title"
 msgstr "un autre titre"
 
-#: i18n_strings.py:3
-#, fuzzy
+#: i18n_strings.py:2
 msgid "inherited title"
 msgstr "titre hérité"
 
-#: i18n_strings.py:3
-msgid "my awesome title &lt;strong&gt;with html&lt;/strong&gt;"
-msgstr "mon superbe titre &lt;strong&gt;avec du html&lt;/strong&gt;"
+#: i18n_strings.py:2
+msgid "my awesome title <strong>with html</strong>"
+msgstr "mon superbe titre <strong>avec du html</strong>"
 
 #: tests/models.py:6
 msgid "Title"

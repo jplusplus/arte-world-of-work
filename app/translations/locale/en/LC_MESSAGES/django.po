@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-25 14:14-0600\n"
+"POT-Creation-Date: 2014-03-04 08:43-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,24 +17,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: i18n_strings.py:3
-msgid "my title"
+#: i18n_strings.py:2
+msgid "an other translation"
 msgstr ""
 
-#: i18n_strings.py:3
-msgid "an other title"
-msgstr ""
-
-#: i18n_strings.py:3
+#: i18n_strings.py:2
 msgid "my awesome title"
 msgstr ""
 
-#: i18n_strings.py:3
+#: i18n_strings.py:2
+msgid "my title"
+msgstr ""
+
+#: i18n_strings.py:2
+msgid "an other title"
+msgstr ""
+
+#: i18n_strings.py:2
 msgid "inherited title"
 msgstr ""
 
-#: i18n_strings.py:3
-msgid "an other translation"
+#: i18n_strings.py:2
+msgid "my awesome title <strong>with html</strong>"
 msgstr ""
 
 #: tests/models.py:6
