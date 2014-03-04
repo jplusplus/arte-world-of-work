@@ -4,8 +4,7 @@
         <div class="answer-content">
             <dynamic-chart ng-attr-nochart='[[nochart]]' ng-hide="[[nochart]]" ng-attr-id="[[currentAnswer.id]]" filters="filters"></dynamic-chart>
             <div ng-class="{'answer-description--nochart':nochart}" class="answer-description">
-                <p><strong>Le vol au travail n'a rien à voir avec la criminalité.</strong></p>
-                <p>Ceux qui volent le plus sont souvent ceux qui travaillent le plus. Ils ne se sentent pas assez payés.</p>
+                <p><strong>[[currentAnswer.feedback.html_sentence]]</strong></p>
             </div>
         </div>
     </div>

@@ -171,6 +171,7 @@ class HBarChart extends BarChart
         y : (d) => @y(d[0]) + (do @y.rangeBand) / 2
         'dominant-baseline' : 'central'
 
+    appendLegend: =>
 
 class Histogram extends BarChart
     constructor: (@scope, @element) ->
@@ -214,6 +215,8 @@ class Histogram extends BarChart
         y : (d) => (@y d[2])
         width : (d) => (@x d[1]) - (@x d[0])
         height : (d) => @_size.height - @y(d[2])
+
+    appendLegend: =>
 
 
 angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($window, $Result) ->
@@ -259,16 +262,14 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     # scope.data = data.results
                     # Fake data
                     scope.data =
-                        chart_type : 'bar'
+                        chart_type : 'pie'
                         results :
                             1 : 58
                             2 : 27
-                            3 : 15
-                        total_answers : 100
+                        total_answers : 85
                         sets :
-                            1 : title : "Un iPad"
-                            2 : title : "Le fixie du patron"
-                            3 : title : "Un DVD"
+                            1 : title : "yes"
+                            2 : title : "no"
                 undefined
 
             window.onresize = =>
