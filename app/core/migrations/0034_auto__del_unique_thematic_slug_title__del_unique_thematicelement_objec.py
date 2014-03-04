@@ -8,9 +8,6 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Removing unique constraint on 'ThematicElement', fields ['object_id', 'content_type']
-        db.delete_unique(u'core_thematicelement', ['object_id', 'content_type_id'])
-
         # Removing unique constraint on 'Thematic', fields ['slug', 'title']
         db.delete_unique(u'core_thematic', ['slug', 'title'])
 
@@ -24,9 +21,6 @@ class Migration(SchemaMigration):
 
         # Adding unique constraint on 'Thematic', fields ['slug', 'title']
         db.create_unique(u'core_thematic', ['slug', 'title'])
-
-        # Adding unique constraint on 'ThematicElement', fields ['object_id', 'content_type']
-        db.create_unique(u'core_thematicelement', ['object_id', 'content_type_id'])
 
 
     models = {

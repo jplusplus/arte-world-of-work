@@ -8,20 +8,10 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding unique constraint on 'Thematic', fields ['slug', 'title']
-        db.create_unique(u'core_thematic', ['slug', 'title'])
-
-        # Adding unique constraint on 'ThematicElement', fields ['object_id', 'content_type']
-        db.create_unique(u'core_thematicelement', ['object_id', 'content_type_id'])
-
+        pass
 
     def backwards(self, orm):
-        # Removing unique constraint on 'ThematicElement', fields ['object_id', 'content_type']
-        db.delete_unique(u'core_thematicelement', ['object_id', 'content_type_id'])
-
-        # Removing unique constraint on 'Thematic', fields ['slug', 'title']
-        db.delete_unique(u'core_thematic', ['slug', 'title'])
-
+        pass
 
     models = {
         u'auth.group': {
@@ -147,7 +137,7 @@ class Migration(SchemaMigration):
             'validate_button_label': ('django.db.models.fields.CharField', [], {'default': "u'Done'", 'max_length': '120'})
         },
         u'core.thematic': {
-            'Meta': {'ordering': "('position',)", 'unique_together': "(('slug', 'title'),)", 'object_name': 'Thematic'},
+            'Meta': {'ordering': "('position',)", 'object_name': 'Thematic'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'intro_button_label': ('django.db.models.fields.CharField', [], {'default': "u'See the data'", 'max_length': '120', 'null': 'True', 'blank': 'True'}),
             'intro_description': ('django.db.models.fields.TextField', [], {}),
@@ -156,7 +146,7 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '120'})
         },
         u'core.thematicelement': {
-            'Meta': {'ordering': "['position']", 'unique_together': "(('object_id', 'content_type'),)", 'object_name': 'ThematicElement'},
+            'Meta': {'ordering': "['position']", 'object_name': 'ThematicElement'},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
