@@ -11,14 +11,17 @@
 # Creation : 14-Jan-2014
 # Last mod : 15-Jan-2014
 # -----------------------------------------------------------------------------
+from django import forms
+from django.db import models as db_models 
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.contenttypes import generic
 from sorl.thumbnail.admin import AdminImageMixin
-from app.core import models
+from tinymce.widgets import TinyMCE
 
 import sys
 
+from app.core import models
 # -----------------------------------------------------------------------------
 #
 #    Inlines
@@ -94,10 +97,19 @@ class ThematicAdmin(admin.ModelAdmin):
         InlineThematicElement,
     )
 
+
 class FeedbackAdmin(admin.ModelAdmin):
     inlines = (
         GenericInlineThematicElement,
     )
+    formfield_overrides = {
+        db_models.TextField: {'widget': TinyMCE},
+    }
+
+    class Admin:
+        js = ('js/tiny_mce/tiny_mce.js',
+            'js/tiny_mce/textareas.js',
+        )
 
 class AnswerAdmin(admin.ModelAdmin): 
     readonly_fields = ('content_type',)
