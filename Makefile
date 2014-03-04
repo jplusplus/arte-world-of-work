@@ -21,6 +21,11 @@ messages:
 	# for angular)
 	. $(VIRTUALENV)bin/activate; cd app; django-admin.py makemessages -a --settings=settings_i18n
 
+compilemessages:
+	# will produce all locale file we need (.po files for django and .json files
+	# for angular)
+	. $(VIRTUALENV)bin/activate; cd app; django-admin.py compilemessages --settings=settings_i18n
+
 full_translations: sync_db_translations makemessages
 
 createsuperuser:
