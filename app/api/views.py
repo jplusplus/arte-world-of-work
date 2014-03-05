@@ -41,13 +41,14 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
                 context={'request': request})
             return Response(serializer.data)
 
-        except ObjectDoesNotExist:
+        except BaseQuestion.DoesNotExist:
             err_msg = (
                 'Given question with id `{id}` doesn\'t exist, thus dynamic '
                 'feedback cannot be calculated'
             )
             return Response(err_msg.format(id=pk), 404)
 
+     
 
 class NestedThematicViewSet(viewsets.ReadOnlyModelViewSet):
     """

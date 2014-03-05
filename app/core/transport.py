@@ -28,6 +28,9 @@ API -> API:
 API -> front-end (HTTP): 
     take this serialized results (JSON)
 """
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
+
 class CHART_TYPES:
     HISTOGRAMME = 'histogramme'
     PIE = 'pie'
@@ -123,17 +126,38 @@ class PieChart(BarChart):
 
 class DynamicFeedback(object):
     def __init__(self, user, question):
-        self.user     = user
-        self.question = question
+        self.html_sentence = None
+        self.profile       = user.userprofile
+        self.question      = question
+
+        # simple wrapper around the answer_type to use 
+        class AnswerType(question.answer_type): 
+            class Meta: 
+                proxy=True
+            pass
+        # make him accessible for this instance    
+        self.AnswerType = AnswerType
         self.create_html_sentence()
 
-    def create_html_sentence(self):
-        # but: trouver le plus d'utilisateur possible ayant répondu comme nous
-        # parmis les variable du profile
-        # - age
-        # - sex
-        # - pays d'origine/pays d'habitation
-        raise NotImplementedError("DynamicFeedback.create_html_sentence is not implemented yet")
+    def base_answer_model(self, AnswerType=None):
+        if AnswerType.__name__ != 'BaseAnswer':
+            return self.base_answer_model(AnswerType.__bases__[0])
+        else:
+            return AnswerType
 
+    def create_html_sentence(self):
+        AnswerType  = self.AnswerType
+        BaseAnswer  = self.base_answer_model(AnswerType)
+
+        try:
+            myanswer    = AnswerType.objects.get(question=self.question, 
+                                             user=self.profile.user)
+            all_answers = AnswerType.objects.filter(question=self.question)\
+                                            .exclude(myanswer)
+        except BaseAnswer.DoesNotExist: 
+            import pdb; pdb.set_trace()
+            pass
+
+            
 
 # EOF
