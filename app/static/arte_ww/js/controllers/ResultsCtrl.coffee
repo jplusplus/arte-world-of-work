@@ -8,6 +8,8 @@ class ResultsCtrl
         @$http(request).success (data) =>
             @$scope.nochart = false
             @$scope.currentAnswer = data
+            @$scope.hasNext = @elements[@$scope.current.thematic][@$scope.current.answer + 1]? or @elements[@$scope.current.thematic + 1]?
+            @$scope.hasPrev = @elements[@$scope.current.thematic][@$scope.current.answer - 1]? or @elements[@$scope.current.thematic - 1]?
 
     constructor: (@$scope, $location, Thematic, @$http, $sce) ->
         # Update URL when the user changes filters
@@ -20,6 +22,9 @@ class ResultsCtrl
             $location.search 'age_min', f.age_min
             $location.search 'age_max', f.age_max
         ), yes
+
+        @$scope.hasNext = no
+        @$scope.hasPrev = no
 
         @$scope.current =
             thematic : 0
@@ -36,9 +41,11 @@ class ResultsCtrl
             Thematic.positionList
         ), =>
             if Thematic.positionList?
-                @$scope.thematics = _.map Thematic.positionList.elements, (thematic) =>
+                @$scope.thematics = _.map Thematic.positionList.elements, (thematic, i) =>
                     slug : thematic.slug
                     title : thematic.title
+                    id : thematic.id
+                    position : i
 
                 request =
                     url : '/api/thematics-result'
@@ -79,13 +86,18 @@ class ResultsCtrl
                 @$scope.current.answer = @elements[@$scope.current.thematic].length - 1
             @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
-        @$scope.hasNext = =>
-            return no if not @elements? or @elements.length is 0
-            return @elements[@$scope.current.thematic][@$scope.current.answer + 1]? or @elements[@$scope.current.thematic + 1]?
+        @$scope.changeThematic = (id) =>
+            for index of @$scope.thematics
+                if @$scope.thematics[index].id is id
+                    @$scope.current.thematic = parseInt index
+                    @$scope.current.answer = 0
+                    @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+                    return
 
-        @$scope.hasPrev = =>
-            return no if not @elements? or @elements.length is 0
-            return @elements[@$scope.current.thematic][@$scope.current.answer - 1]? or @elements[@$scope.current.thematic - 1]?
+        @$scope.$watch 'current.thematic', (newValue, oldValue) =>
+            if @$scope.thematics? and @$scope.thematics[@$scope.current.thematic]?
+                Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
+        , yes
 
 angular.module('arte-ww')
 .controller('ResultsCtrl', ResultsCtrl)

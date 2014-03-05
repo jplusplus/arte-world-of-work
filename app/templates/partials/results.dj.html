@@ -10,8 +10,8 @@
     </div>
     <nav class="answer-navigator__nav">
         <ul>
-            <li class="answer-navigator__nav__previous" ng-show="hasPrev()"><a ng-href="" ng-click="previous()">Précédent</a></li>
-            <li class="answer-navigator__nav__next" ng-show="hasNext()"><a ng-href="" ng-click="next()">Passer</a></li>
+            <li class="answer-navigator__nav__previous" ng-show="hasPrev"><a ng-href="" ng-click="previous()">Précédent</a></li>
+            <li class="answer-navigator__nav__next" ng-show="hasNext"><a ng-href="" ng-click="next()">Passer</a></li>
         </ul>
     </nav>
 </div>
@@ -19,7 +19,7 @@
 <div class="answer-thematics">
     <ul>
         <li class="answer-thematics__thematic" ng-repeat="thematic in thematics" ng-class="thematic.slug">
-            <a>[[thematic.title]]</a>
+            <a ng-click="changeThematic(thematic.id)">[[thematic.title]]</a>
         </li>
     </ul>
 </div>
