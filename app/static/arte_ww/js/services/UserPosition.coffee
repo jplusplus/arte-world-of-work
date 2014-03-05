@@ -12,37 +12,59 @@ class PositionsObject
 
 # TODO: handle user position saving and loading/intialization
 class UserPositionService
+    @$inject: ['$http']
+
     positions:
         thematicPosition: 0
         elementPosition: 0
     state: undefined
+
+    constructor: (@$http) ->
+        request =
+            url : '/api/my-position'
+            method : 'GET'
+        (@$http request).success (data) =>
+            console.debug 'get', data
+            @positions.thematicPosition = data.thematic_position
+            @positions.elementPosition = data.element_position
 
     currentState: (state) =>
         if state?
             @state = state
         @state
 
-    thematicPosition: (position)=> 
+    sendPosition: =>
+        request =
+            url : '/api/my-position'
+            method : 'PATCH'
+            data :
+                thematic_position : @positions.thematicPosition
+                element_position : @positions.elementPosition
+        @$http request
+
+    thematicPosition: (position) =>
         if position?
             @positions.thematicPosition = position
+            do @sendPosition
         @positions.thematicPosition
 
-    elementPosition:  (position)=> 
+    elementPosition:  (position) =>
         if position?
             @positions.elementPosition = position
+            do @sendPosition
         @positions.elementPosition
 
     nextThematic: =>
-        @positions.thematicPosition += 1
+        @thematicPosition @positions.thematicPosition + 1
 
     previousThematic: =>
-        @positions.thematicPosition -= 1
+        @thematicPosition @positions.thematicPosition - 1
 
     nextElement: =>
-        @positions.elementPosition += 1
+        @elementPosition @positions.elementPosition + 1
 
-    previousElement: => 
-        @positions.elementPosition -= 1
+    previousElement: =>
+        @elementPosition @positions.elementPosition - 1
 
     createWrapper: (elements)-> return new PositionsObject(elements)
 
