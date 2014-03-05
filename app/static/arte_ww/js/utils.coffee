@@ -18,7 +18,6 @@ class Utils
             LANDING : 0
             INTRO   : 1
             ELEMENTS: 2
-            OUTRO   : 3
 
     authenticate: (callback) =>
         createNewUser = =>
