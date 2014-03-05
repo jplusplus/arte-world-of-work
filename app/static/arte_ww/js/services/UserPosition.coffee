@@ -14,10 +14,10 @@ class PositionsObject
 class UserPositionService
     @$inject: ['$http']
 
-    positions:
-        thematicPosition: 0
-        elementPosition: 0
     state: undefined
+    positions:
+        thematicPosition: undefined
+        elementPosition: undefined
 
     constructor: (@$http) ->
         request =
@@ -25,8 +25,9 @@ class UserPositionService
             method : 'GET'
         (@$http request).success (data) =>
             console.debug 'get', data
-            @positions.thematicPosition = data.thematic_position
-            @positions.elementPosition = data.element_position
+            @positions =
+                thematicPosition : data.thematic_position
+                elementPosition : data.element_position
 
     currentState: (state) =>
         if state?
