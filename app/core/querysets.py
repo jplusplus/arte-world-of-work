@@ -4,11 +4,11 @@ from app.core.transport import Histogramme, HorizontalBarChart, VerticalBarChart
 class ResultsQuerySet(query.QuerySet):
     def in_age(self, age_min=None, age_max=None):
         if age_max and age_min:
-            return self.filter(user__profile__age__lte=age_max, user__profile__age__gte=age_min)
+            return self.filter(user__userprofile__age__lte=age_max, user__userprofile__age__gte=age_min)
         return self
 
     def with_gender(self, gender=None):
-        return self.filter(user__profile__gender=gender)
+        return self.filter(user__userprofile__gender=gender)
 
     def compute(self, question=None):
         if not question:
