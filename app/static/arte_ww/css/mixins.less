@@ -9,8 +9,12 @@
         image-rendering:crisp-edges;                /* CSS3 Proposed                  */
         -ms-interpolation-mode:bicubic;             /* IE8+                           */
 
-		background-image:url("../img/bg/@{slug}.png");
-		background-color: @bg;		
+        & * {
+            image-rendering:auto;
+        }
+
+        background-image:url("../img/bg/@{slug}.png");
+        background-color: @bg;      
 
         @media only screen and (-webkit-min-device-pixel-ratio: 2) {
             background-image:url("../img/bg/@{slug}-x2.png");
@@ -19,8 +23,6 @@
         @media (min-width: @screen-lg-min)  {
             background-image:url("../img/bg/@{slug}-x2.png");
         }
-
-        
 
 		.btn-primary {
   			.button-variant(#fff; @brand; @brand);
@@ -46,16 +48,22 @@
 
 			&__title {
 				color:@brand;
-				background-image: url("../img/ui/pic_@{slug}.png"); 
-			}
+                background-image: url("../img/ui/pic_@{slug}.png"); 
+            }
 
-			&-landing {
+            &-landing {
 
-				&__let-go:after {
-					background:@brand;
-				}
-			}
-		}
+                &__let-go:after {
+                    background:darken(@brand, 10%);
+                }
+
+                .thematic__title {
+    				background-image: url("../img/ui/pic_@{slug}-big.png"); 
+                    padding-left:80px;
+                    margin-top:10px;
+                }   
+            }
+        }
 
 
 	    .survey-element {
