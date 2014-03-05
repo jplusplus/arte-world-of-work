@@ -6,7 +6,10 @@ class ResultsCtrl
             url : "/api/questions/#{id}"
             method : 'GET'
         @$http(request).success (data) =>
-            @$scope.nochart = false
+            if data.results? and data.results.total_answer > 50
+                @$scope.nochart = false
+            else
+                @$scope.nochart = true
             @$scope.currentAnswer = data
             @$scope.hasNext = @elements[@$scope.current.thematic][@$scope.current.answer + 1]? or @elements[@$scope.current.thematic + 1]?
             @$scope.hasPrev = @elements[@$scope.current.thematic][@$scope.current.answer - 1]? or @elements[@$scope.current.thematic - 1]?
