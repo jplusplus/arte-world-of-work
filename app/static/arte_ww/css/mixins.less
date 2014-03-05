@@ -101,23 +101,12 @@
         .question-choice {
 
     		&:before {
-    			border-color: lighten(@brand, 5%);                
+    			border-color: @brand;                
     		}
 
-            &:hover:before {
-                background-color: lighten(@brand, 30%);
+            &--selected:before {                
+                background: url("../img/ui/pic-valider-small.png") center center no-repeat @brand;
             }
-
-            &--selected:hover:before {
-                background-color: #fff;
-            }
-
-    		&:hover:before, &--selected:before {
-    			border-left-width:3px;
-    			border-right-width:3px;
-    			border-color:@brand;
-    			background-image: url("../img/ui/minipic-valider_@{slug}.png");
-    		}
         }
 
         .question-choices {
