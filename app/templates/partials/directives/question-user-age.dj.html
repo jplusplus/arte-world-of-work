@@ -4,15 +4,15 @@
 	<div class="question-choices question-choices--typed-number question-choices--user-age">
 		<div slider 
 			 start='15' 
-			 end='66' 
+			 end='36' 
 			 ng-model="question.answer"></div>	
 		
 		<span class="question-choices--typed-number__min" ng-tranlsate>- de 16 ans</span>
-		<span class="question-choices--typed-number__max" ng-tranlsate>+ de 65 ans</span>
+		<span class="question-choices--typed-number__max" ng-tranlsate>+ de 35 ans</span>
 
 		<p class="question-choices--typed-number__output" ng-switch="question.answer">
 			<span ng-switch-when="15">- de 16 ans</span>
-			<span ng-switch-when="66">+ de 65 ans</span>
+			<span ng-switch-when="36">+ de 35 ans</span>
 			<span ng-switch-default>[[question.answer]] ans</span>
 		</p>
     	<button class="question-choices--typed-number__validate" ng-click="submitAnswer(question.answer)">
