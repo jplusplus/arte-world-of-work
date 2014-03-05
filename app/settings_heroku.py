@@ -57,6 +57,6 @@ COMPRESS_STORAGE     = STATICFILES_STORAGE
 COMPRESS_ENABLED     = True
 COMPRESS_OFFLINE     = True
 AWS_QUERYSTRING_AUTH = False
+TINYMCE_JS_URL       = STATIC_URL + 'arte_ww/vendor/tinymce/tinymce.min.js'
 LOCAL_SETTINGS       = False
-
 # EOF
