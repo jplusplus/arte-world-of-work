@@ -181,7 +181,6 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'sorl.thumbnail',
     'south',
-    'tinymce',
     # ------------------------ internal dependencies ------------------------ # 
     'app.core',
     'app.translations',
@@ -222,3 +221,14 @@ SOUTH_TESTS_MIGRATE = False
 TRANSLATION_STRINGS_FILE = here('i18n_strings.py')
 
 LOCAL_SETTINGS = True
+
+TINYMCE_DEFAULT_CONFIG = {
+    'width': 450,
+    'menubar': False,
+    'plugins': 'code',
+    'toolbar': "cut copy paste | undo redo | styleselect | bold underline italic | link image | code",
+}
+
+TINYMCE_JS_URL  = STATIC_URL + 'arte_ww/vendor/tinymce/tinymce.min.js'
+
+TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, 'arte_ww/vendor/tinymce')
