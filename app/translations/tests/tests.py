@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase
 from django.utils.translation import activate
-
+from django.utils.translation import ugettext, gettext
 from app.translations.translator import translator
 from app.translations.tests.models import TestModel, InheritedTestModel
 
@@ -19,16 +19,22 @@ class TranslationsLocalesTestCase(TestCase):
         activate('en')
         self.assertEqual(obj.title, 'my title')
 
-    def test_inherited_translated_field_values(self):
-        pass
-    #     activate('fr')
-    #     obj = InheritedTestModel.objects.get(pk=3)
-    #     self.assertEqual(obj.other, 'une autre traduction')
-    #     self.assertEqual(obj.title, 'mon superbe titre')
+    def test_translated_field_with_html(self):
+        obj = TestModel.objects.get(pk=5)
+        activate('en')
+        self.assertEqual(obj.title, u'my awesome title <strong>with html</strong>')
+        activate('fr')
+        self.assertEqual(obj.title, u'mon superbe titre <strong>avec du html</strong>')
 
-    #     activate('en')
-    #     self.assertEqual(obj.other, 'an other translation')
-    #     self.assertEqual(obj.title, 'my awesome title')
+    def test_inherited_translated_field_values(self):
+        activate('fr')
+        obj = InheritedTestModel.objects.get(pk=3)
+        self.assertEqual(obj.other, 'une autre traduction')
+        self.assertEqual(obj.title, 'mon superbe titre')
+
+        activate('en')
+        self.assertEqual(obj.other, 'an other translation')
+        self.assertEqual(obj.title, 'my awesome title')
 
 class SyncFromDB(TestCase):
 
@@ -38,7 +44,7 @@ class SyncFromDB(TestCase):
         strings_path = settings.TRANSLATION_STRINGS_FILE
         execfile(strings_path)
         _locals = locals()
-        self.assertEqual(len(_locals['STRINGS']), 5)
+        self.assertEqual(len(_locals['STRINGS']), 6)
 
         if os.access(strings_path, os.F_OK):
             os.remove(strings_path)

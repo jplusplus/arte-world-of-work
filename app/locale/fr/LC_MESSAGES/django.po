@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-27 17:09+0100\n"
+"POT-Creation-Date: 2014-03-04 12:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,114 +18,618 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: settings.py:51
-msgid "English"
-msgstr "Anglais"
-
-#: settings.py:52
-msgid "French"
-msgstr "Français"
-
-#: core/models.py:30
-msgid "Icon (small)"
-msgstr "Îcone (petit)"
-
-#: core/models.py:31
-msgid "Image (big)"
-msgstr "Image (grand)"
-
-#: core/models.py:71
-msgid "Thematic title"
-msgstr "Titre de la thématique"
-
-#: core/models.py:88
-msgid "Feedbacks sentence"
-msgstr "Phrase du feedback"
-
-#: core/models.py:89
-msgid "Sentence (as html content): \"Hey did you knew .. ?\""
+#: i18n_strings.py:3
+msgid "pleased to meet you, hope you guess my name."
 msgstr ""
 
-#: core/models.py:190
-msgid "Question label"
-msgstr "Label de la question"
+#: i18n_strings.py:3
+msgid "Let&#39;s go!"
+msgstr ""
 
-#: core/models.py:191
-msgid "Question hint text"
-msgstr "Text d'aide de la question"
+#: i18n_strings.py:3
+msgid "you"
+msgstr ""
 
-#: core/models.py:193
-msgid "Skip button (label)"
-msgstr "Bouton passer (label)"
+#: i18n_strings.py:3
+msgid ""
+"Aujourd’hui, il n’y a qu’une minorité des jeunes en Europe qui gagnent leur "
+"vie dans des environnements de travail traditionnels. Pour les jeunes "
+"Européens, la définition du ‘travail’ est en train de se transformer. Une "
+"grande partie d’entre eux pense que contribuer à  Wikipedia ou soigner ses "
+"grands-parents représente un travail, et ils ont découvert que le partage ou "
+"le recyclage de leurs biens peut libérer des ressources et arrondir leur "
+"budget."
+msgstr ""
 
-#: core/models.py:193
+#: i18n_strings.py:3 core/models.py:129
+msgid "See the data"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Your work"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Money, money, money"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "your money"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Non scholae, sed vitae discimus"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "your education"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "All work and no play makes the civil servant a dull boy"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "your government"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "get rich or die trying"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "your future"
+msgstr ""
+
+#: i18n_strings.py:3
+#, python-format
+msgid "82% des français aiment leur travail !"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "This is a feedback"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid ""
+"As a young European chances are higher than 50% that you owe money to your "
+"bank, family or friends. The median debt of y"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid ""
+"In France one out of ten students enrolls preparation classes for "
+"university, so called &lt;em&gt;prépas&lt;/em&gt;, after they fini"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Ta consommation de drogues"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Ton dernier e-mail"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Ton adresse"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Ton rythme de travail"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Ton parcours de soins médicaux"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Ton ADN"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Etsy"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Air bnb"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Ebay"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "yes"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "no"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Métro"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Vélo"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Yes"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "No"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Yes, in any case"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Yes, if it’s doing well"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Yes, but only to avoid upsetting them"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "No, never ever"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Fake my CV"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Break up with my partner"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Sleep my way up"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Do cash-in-hand jobs"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Coffee"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Cocaine"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Alcohol"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Cannabis"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "LSD"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "None"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Online auctions"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Flat rental "
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Microwork"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Carsharing"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "DIY Marketplace"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Your parents"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Other family members"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Your partner"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Your friends"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "The bank"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "A dream school? I don&#39;t have that"
+msgstr ""
+
+#: i18n_strings.py:3 core/models.py:39 core/types.py:9
+msgid "Male"
+msgstr ""
+
+#: i18n_strings.py:3 core/models.py:40 core/types.py:10
+msgid "Female"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "s"
+msgstr ""
+
+#: i18n_strings.py:3
+#, fuzzy
+msgid "Passer cette question"
+msgstr "Choix nombre"
+
+#: i18n_strings.py:3
+msgid "Comment allez-vous au travail ?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Sélectionne ta/tes réponses et clique sur &quot;Terminé&quot;"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Ton boss devrait être autorisé à connaître:"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Fais glisser le curseur jusqu&#39;à ta réponse"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Pour te faire poser en homme-sandwich, combien faudrait-il te payer ?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Choisis la réponse de ton choix "
+msgstr ""
+
+#: i18n_strings.py:3
+msgid ""
+"Est-ce que vous avez déjà utilisé ces plateformes pour arrondir vos fins de "
+"mois?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Sélectionner une réponse"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Aimez-vous votre travail ?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "réponds !"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Aimez-vous votre patron ?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Click yes or no!"
+msgstr ""
+
+#: i18n_strings.py:3 core/models.py:293
 msgid "Skip this question"
 msgstr "Passer cette question"
 
-#: core/models.py:232 core/models.py:288
+#: i18n_strings.py:3
+msgid ""
+"You’re a hard worker. But you could easily get replaced by a robot in the "
+"future."
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "We promise we won&#39;t tell your mum!"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid ""
+"Imagine your mother owns a family business producing plastic straws. Very "
+"honestly, would you consider carrying it on?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "You can pick several answers."
+msgstr ""
+
+#: i18n_strings.py:3
+msgid ""
+"You’re running out of money. What would you be willing to do to get a job?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Don&#39;t worry, you&#39;re anonymous here. "
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Which drugs are acceptable at work?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid ""
+"If your site is only similar to the logos shown here, no worries, we’ll "
+"accept that too."
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Have you already used one of these sites to make ends meet?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "You can obviously get money from several sources!"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid ""
+"Your bank account is empty. You have some rather big bills to pay. Who do "
+"you ask for money? "
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "It&#39;s about your future, after all."
+msgstr ""
+
+#: i18n_strings.py:3
+msgid ""
+"Put your life on hold for two years to prepare the entry exam of your dream "
+"school. Ready to do that?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "astuce"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "How old are you?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Are you..."
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Where do you live?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Where are you born?"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "€/heure"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Les français et le travail"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "Awesome paper"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "ECB (p. 60)"
+msgstr ""
+
+#: i18n_strings.py:3
+msgid "data.gouv.fr"
+msgstr ""
+
+#: settings.py:52
+msgid "English"
+msgstr "Anglais"
+
+#: settings.py:53
+msgid "French"
+msgstr "Français"
+
+#: api/serializers.py:222 api/serializers.py:240
+msgid "You have to select at least one choice"
+msgstr ""
+
+#: api/serializers.py:224 api/serializers.py:238
+msgid "This choice {c} is not related to the answered question"
+msgstr ""
+
+#: core/mixins.py:75
 msgid "Validate button (label)"
 msgstr "Bouton valider (label)"
 
-#: core/models.py:232 core/models.py:288
-msgid "I'm done"
-msgstr "J'ai fini"
+#: core/mixins.py:75
+msgid "Done"
+msgstr ""
 
-#: core/models.py:235
-msgid "Numeric input question"
-msgstr "Champ libre numérique"
-
-#: core/models.py:236
-msgid "Numeric input questions"
-msgstr "Champ libre numérique"
-
-#: core/models.py:241
-msgid "Number choice question"
-msgstr "Choix nombre"
-
-#: core/models.py:242
-msgid "Number choice questions"
-msgstr "Choix nombre"
-
-#: core/models.py:248
-msgid "Number unit"
-msgstr "Unité"
-
-#: core/models.py:248
-msgid "Unit that will be displayed after the min and max numbers."
-msgstr "L'unité qui sera affiché après les nombres minimum et maximum"
-
-#: core/models.py:294
-msgid "Text (multiple choice) question"
-msgstr "Texte (choix multiple)"
-
-#: core/models.py:295
-msgid "Text (multiple choice) questions"
-msgstr "Texte (choix multiple)"
-
-#: core/models.py:300
-msgid "Text (single choice) question"
-msgstr "Texte (choix unique)"
-
-#: core/models.py:301
-msgid "Text (single choice) questions"
-msgstr "Texte (choix unique)"
-
-#: core/models.py:315
+#: core/mixins.py:85
 msgid "Choice's media type"
 msgstr "Type de média"
 
-#: core/models.py:326
-msgid "Media choice question"
-msgstr "Choix média"
+#: core/models.py:34 core/types.py:4
+msgid "Icon (small)"
+msgstr "Îcone (petit)"
 
-#: core/models.py:327
-msgid "Media choice questions"
-msgstr "Choix média"
+#: core/models.py:35 core/types.py:5
+msgid "Image (big)"
+msgstr "Image (grand)"
 
-#: core/models.py:340
+#: core/models.py:53 core/models.py:275
+msgid "User gender"
+msgstr ""
+
+#: core/models.py:66
+#, fuzzy
+msgid "Add a vine to this question"
+msgstr "Passer cette question"
+
+#: core/models.py:122
+msgid "Thematic title"
+msgstr "Titre de la thématique"
+
+#: core/models.py:127
+msgid "Introduction description"
+msgstr ""
+
+#: core/models.py:128
+#, fuzzy
+msgid "Introduction button label"
+msgstr "Bouton passer (label)"
+
+#: core/models.py:143
+msgid "No position"
+msgstr ""
+
+#: core/models.py:164
+msgid "Feedbacks sentence"
+msgstr "Phrase du feedback"
+
+#: core/models.py:165
+msgid "Sentence (as html content): \"Hey did you knew .. ?\""
+msgstr ""
+
+#: core/models.py:291
+msgid "Question label"
+msgstr "Label de la question"
+
+#: core/models.py:292
+msgid "Question hint text"
+msgstr "Text d'aide de la question"
+
+#: core/models.py:293
+msgid "Skip button (label)"
+msgstr "Bouton passer (label)"
+
+#: core/models.py:336
+msgid "Number choice question"
+msgstr "Choix nombre"
+
+#: core/models.py:337
+msgid "Number choice questions"
+msgstr "Choix nombre"
+
+#: core/models.py:339
+msgid "Number unit"
+msgstr "Unité"
+
+#: core/models.py:339
+msgid "Unit that will be displayed after the min and max numbers."
+msgstr "L'unité qui sera affiché après les nombres minimum et maximum"
+
+#: core/models.py:376
+#, fuzzy
+msgid "Text (multiple choices) question"
+msgstr "Texte (choix multiple)"
+
+#: core/models.py:377
+#, fuzzy
+msgid "Text (multiple choices) questions"
+msgstr "Texte (choix multiple)"
+
+#: core/models.py:382
+msgid "Text (single choice) question"
+msgstr "Texte (choix unique)"
+
+#: core/models.py:383
+msgid "Text (single choice) questions"
+msgstr "Texte (choix unique)"
+
+#: core/models.py:397
+#, fuzzy
+msgid "Single choice question"
+msgstr "Texte (choix unique)"
+
+#: core/models.py:407
+#, fuzzy
+msgid "Multiple choices question"
+msgstr "Texte (choix multiple)"
+
+#: core/models.py:425
+msgid "Related profile attribute"
+msgstr ""
+
+#: core/models.py:427
+msgid "Select user profile attribute that will be changed by user answer"
+msgstr ""
+
+#: core/models.py:444
 msgid "Title of this choice"
 msgstr "Titre de ce choix"
 
+#: core/models.py:453
 #, fuzzy
-#~ msgid "my title"
-#~ msgstr "Titre de la thématique"
+msgid "Value of this field"
+msgstr "Titre de ce choix"
+
+#: core/models.py:454
+msgid "It will tell user model what value should be stored in related field"
+msgstr ""
+
+#: translations/i18n_strings.py:3
+#, fuzzy
+msgid "my title"
+msgstr "Titre de la thématique"
+
+#: translations/i18n_strings.py:3
+msgid "an other title"
+msgstr "un autre titre"
+
+#: translations/i18n_strings.py:3
+#, fuzzy
+msgid "my awesome title"
+msgstr "Titre de la thématique"
+
+#: translations/i18n_strings.py:3
+#, fuzzy
+msgid "inherited title"
+msgstr "Titre de la thématique"
+
+#: translations/i18n_strings.py:3
+msgid "my awesome title &lt;strong&gt;with html&lt;/strong&gt;"
+msgstr "mon superbe titre &lt;strong&gt;avec du html&lt;/strong&gt;"
+
+#: translations/i18n_strings.py:3
+msgid "an other translation"
+msgstr "une autre traduction"
+
+#: translations/tests/models.py:6
+#, fuzzy
+msgid "Title"
+msgstr "Titre de la thématique"
+
+#: translations/tests/models.py:10
+msgid "Other"
+msgstr "Autre"
+
+#~ msgid "I'm done"
+#~ msgstr "J'ai fini"
+
+#~ msgid "Numeric input question"
+#~ msgstr "Champ libre numérique"
+
+#~ msgid "Numeric input questions"
+#~ msgstr "Champ libre numérique"
+
+#~ msgid "Media choice question"
+#~ msgstr "Choix média"
+
+#~ msgid "Media choice questions"
+#~ msgstr "Choix média"

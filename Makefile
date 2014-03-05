@@ -11,13 +11,22 @@ create_virtualenv:
 	# if venv folder is not created yet we do it
 	if [ ! -d venv ]; then virtualenv venv --no-site-packages --distribute --prompt=Arte-WoW; fi
 
-messages: sync_db_translations makemessages
-
 sync_db_translations:
+	# synchronize all translatable string contained in database to a python file 
+	# check settings.TRANSLATION_STRINGS_FILE to change this file.
 	. $(VIRTUALENV)bin/activate; django-admin.py sync_db_translations 
 
-makemessages:
-	. $(VIRTUALENV)bin/activate; cd app; django-admin.py makemessages -a --settings=settings
+messages:
+	# will produce all locale file we need (.po files for django and .json files
+	# for angular)
+	. $(VIRTUALENV)bin/activate; cd app; django-admin.py makemessages -a --settings=settings_i18n
+
+compilemessages:
+	# will produce all locale file we need (.po files for django and .json files
+	# for angular)
+	. $(VIRTUALENV)bin/activate; cd app; django-admin.py compilemessages --settings=settings_i18n
+
+full_translations: sync_db_translations makemessages
 
 createsuperuser:
 	. $(VIRTUALENV)bin/activate; python manage.py createsuperuser --username root

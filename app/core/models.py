@@ -75,6 +75,9 @@ class QuestionMediaAttachement(mixins.PictureMixin):
 class ThematicElement(models.Model):
     class Meta:
         ordering= ['position']
+        unique_together = (
+            ('object_id', 'content_type', 'thematic'),
+        )
 
     content_type   = models.ForeignKey(ContentType)
     object_id      = models.PositiveIntegerField()
@@ -158,7 +161,7 @@ class Thematic(models.Model):
 # 
 # -----------------------------------------------------------------------------
 class BaseFeedback(mixins.ValidateButtonMixin, mixins.AsFinalMixin):
-    html_sentence = models.CharField(_('Feedbacks sentence'), max_length=120, 
+    html_sentence = models.TextField(_('Feedbacks sentence'), 
         help_text=_('Sentence (as html content): "Hey did you knew .. ?"')
     )
     # properties
@@ -176,6 +179,7 @@ class StaticFeedback( BaseFeedback,
                       mixins.PictureMixin ):
     source_url = models.URLField()
     source_title = models.CharField(max_length=120)
+    question = models.OneToOneField('BaseQuestion', null=True, blank=True, related_name='feedback')
     def __unicode__(self):
         return 'StaticFeedback: %s' % self.html_sentence[:60]
 

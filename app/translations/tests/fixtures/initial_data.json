@@ -28,6 +28,13 @@
     }
   },
   {
+    "model": "tests.testmodel",
+    "pk": 5,
+    "fields": {
+      "title": "my awesome title <strong>with html</strong>"
+    }
+  },
+  {
     "model": "tests.inheritedtestmodel",
     "pk": 3,
     "fields": {
