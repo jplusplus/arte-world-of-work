@@ -10,7 +10,9 @@ angular.module('arte-ww').directive 'questionUserCountry', [
 
                 scope.$watch 'answer', (answer, old_answer)->
                     return unless answer
-                    if old_answer and old_answer != answer
-                        scope.submitAnswer(answer)
+                    unless old_answer
+                        scope.submitAnswer answer
+                    else if old_answer != answer
+                        scope.submitAnswer answer
 
 ]
