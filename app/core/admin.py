@@ -103,13 +103,9 @@ class FeedbackAdmin(admin.ModelAdmin):
         GenericInlineThematicElement,
     )
     formfield_overrides = {
-        db_models.TextField: {'widget': TinyMCE},
+        db_models.TextField: {'widget': TinyMCE },
     }
 
-    class Admin:
-        js = ('js/tiny_mce/tiny_mce.js',
-            'js/tiny_mce/textareas.js',
-        )
 
 class AnswerAdmin(admin.ModelAdmin): 
     readonly_fields = ('content_type',)
