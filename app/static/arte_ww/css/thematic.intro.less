@@ -7,47 +7,30 @@
     top:@header-height;
     left:50%;
     margin-left:435px/-2px;
-	padding-bottom:40px;
+	padding-bottom:10px;
 
 	&__description {
 		padding:5px 10px;		
 	}
 
-
-    &__results, &__let-go {
-        display: inline-block;
-        position: absolute;  
-        font-size:12px;
-        color: @text-color;
-        display:block;
+    &__let-go {
+        background:@brand-primary;
+        border-radius: 60px;
+        color: white;
         cursor:pointer; 
+        display: block;
+        font-size:11px;
         font-weight:600;
+        height:60px;
+        line-height:60px;
+        margin:auto;
+        text-align:center;
+        white-space: nowrap;
+        width:60px;
 
         &:hover {
             text-decoration: none;
         }
     }
 
-    &__results {
-        left:10px;
-        bottom:15px;
-        height:25px;
-        line-height:25px;
-        &:hover {
-            background-position: left top;
-        }
-    }
-
-    &__let-go {
-        text-transform: lowercase;
-        padding:0 15px;
-        right:10px;
-        bottom:10px;
-        height:35px;
-        line-height:35px;
-        background:url("../img/ui/next.png") right bottom no-repeat;
-        &:hover {
-            background-position: right top;
-        }
-    }
 }
