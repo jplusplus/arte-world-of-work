@@ -63,6 +63,18 @@
                     margin-top:10px;
                 }   
             }
+
+            &-intro {
+
+                &__let-go {
+                    background:@brand;
+                    &:hover {
+                        color:@brand;                 
+                        border-color:@brand;
+                        background:white;
+                    }
+                }
+            }
         }
 
 
@@ -114,14 +126,22 @@
             &--boolean__choice:before {
                 color:white;            
                 background:@brand;
-                border-color:fade(@brand, 90);
+                border-color:@brand;
             }
 
-            &--boolean__choice--selected, &--boolean__choice:hover {
+            &--boolean__choice:hover {
                 color:@brand;
-                &:before {
+                &:before {                    
+                    border-color:@brand;
                     background:white;
                 }
+            }
+
+            &--boolean__choice--selected {
+                &:before {
+                    border-color:darken(@brand, 10);
+                    background:darken(@brand, 10);
+                }                  
             }
 
             &--typed-number, &--multiple {                
