@@ -22,7 +22,8 @@ arteww = angular
             '$route'
             '$http'
             '$translate'
-            ($rootScope, $location, $route, $http, $translate)->
+            'UserPosition'
+            ($rootScope, $location, $route, $http, $translate, UserPosition)->
 
                 $rootScope.setLang = (lang)->
                     $translate.use lang
@@ -34,6 +35,10 @@ arteww = angular
                     if $route.current
                         category = $route.current.category or null
                     return category
+
+                $rootScope.backToBeginning = ->
+                    UserPosition.thematicPosition 0
+                    UserPosition.elementPosition 0
     ])
     .config([
             '$interpolateProvider'
