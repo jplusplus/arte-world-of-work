@@ -6,6 +6,8 @@ class ResultsCtrl
             url : "/api/questions/#{id}"
             method : 'GET'
         @$http(request).success (data) =>
+            if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
+                @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
             if data.results? and data.results.total_answer > 50
                 @$scope.nochart = false
             else
@@ -14,7 +16,7 @@ class ResultsCtrl
             @$scope.hasNext = @elements[@$scope.current.thematic][@$scope.current.answer + 1]? or @elements[@$scope.current.thematic + 1]?
             @$scope.hasPrev = @elements[@$scope.current.thematic][@$scope.current.answer - 1]? or @elements[@$scope.current.thematic - 1]?
 
-    constructor: (@$scope, $location, Thematic, @$http, $sce) ->
+    constructor: (@$scope, $location, @Thematic, @$http, $sce) ->
         # Update URL when the user changes filters
         @$scope.$watch 'filters', (=>
             f = angular.copy $scope.filters
@@ -39,23 +41,31 @@ class ResultsCtrl
 
         # List all thematics
         @$scope.thematics = []
-        @.elements = []
+        @elements = []
         @$scope.$watch (=>
-            Thematic.positionList
+            @Thematic.positionList
         ), =>
-            if Thematic.positionList?
-                @$scope.thematics = _.map Thematic.positionList.elements, (thematic, i) =>
-                    slug : thematic.slug
-                    title : thematic.title
-                    id : thematic.id
-                    position : i
+            if @Thematic.positionList?
+                @$scope.thematics = _.filter (_.map @Thematic.positionList.elements, (thematic, i) =>
+                    if thematic.slug isnt 'toi'
+                        slug : thematic.slug
+                        title : thematic.title
+                        id : thematic.id
+                        position : i
+                    else
+                        return
+                ), (e) -> e?
 
                 request =
                     url : '/api/thematics-result'
                     method : 'GET'
                 (@$http request).success (data) =>
-                    @elements = _.map data, (thematic) =>
-                        _.pluck (_.filter thematic.elements, (t) -> t.type is 'question'), 'object_id'
+                    @elements = _.filter (_.map data, (thematic) =>
+                        if thematic.slug isnt 'toi'
+                            _.pluck (_.filter thematic.elements, (t) -> t.type is 'question'), 'object_id'
+                        else
+                            return
+                    ), (e) -> e?
                     @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         # Initialize filters (fron URL or default values)
@@ -99,7 +109,7 @@ class ResultsCtrl
 
         @$scope.$watch 'current.thematic', (newValue, oldValue) =>
             if @$scope.thematics? and @$scope.thematics[@$scope.current.thematic]?
-                Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
+                @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
         , yes
 
 angular.module('arte-ww')
