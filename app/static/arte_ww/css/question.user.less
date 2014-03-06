@@ -8,7 +8,8 @@
 
 			.apperance(none);
 
-			max-width: 80%;
+			max-width: 75%;
+                  margin-right:10px;
 			background: transparent;
 			padding:5px;
 			border:0;
@@ -31,6 +32,20 @@
                   	outline:none;
                   }
 		}
-	}
 
+            &__validate {
+                  .hide-text();
+                  border:0;
+                  height:50px;
+                  width:50px;
+                  display:inline-block;
+                  color:white;
+                  border-radius:50%;
+                  background:no-repeat center top;
+                  background-size:100% auto;          
+                  &:hover {
+                      background-position: center bottom;
+                  }  
+            }
+      }
 }
