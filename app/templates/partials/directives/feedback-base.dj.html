@@ -1,7 +1,8 @@
 <div class="feedback">
 
-	<h4 class="feedback__title" ng-bind-html='html_sentence'></h4>
+	<h4 class="feedback__title" ng-translate>By the way, did you know...</h4>
 	<div class="feedback__content">
+		<p ng-bind-html='html_sentence'></p>
 		{% block content %}
 		{% endblock %}
 	</div>
