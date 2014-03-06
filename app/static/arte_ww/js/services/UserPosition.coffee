@@ -41,7 +41,7 @@ class UserPositionService
 
     sendPosition: =>
         request =
-            url : '/api/my-position'
+            url : '/api/my-position/'
             method : 'PATCH'
             data :
                 thematic_position : @positions.thematicPosition
