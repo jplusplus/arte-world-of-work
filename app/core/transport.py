@@ -28,15 +28,12 @@ API -> API:
 API -> front-end (HTTP): 
     take this serialized results (JSON)
 """
+from django.utils.translation import ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-
-class CHART_TYPES:
-    HISTOGRAMME = 'histogramme'
-    PIE = 'pie'
-    HORIZONTAL_BAR = 'horizontal_bar'
-    VERTICAL_BAR = 'veritical_bar'
-
+from django.template import Context, Template
+from app.core.types import CHART_TYPES
+import random 
 
 class ResultObject(object):
     def __init__(self, question, queryset):
@@ -125,6 +122,13 @@ class PieChart(BarChart):
     chart_type = CHART_TYPES.PIE
 
 class DynamicFeedback(object):
+    SENTENCES_PROFILE_MAPPING = {
+        'living_country': _('persons living in {value}'),
+        'native_country': _('persons from {value}'),
+        'gender':         _('{value}'),
+        'age':            _('aged {value} years')
+    }
+
     def __init__(self, user, question):
         self.html_sentence = None
         self.profile       = user.userprofile
@@ -146,18 +150,110 @@ class DynamicFeedback(object):
             return AnswerType
 
     def create_html_sentence(self):
-        AnswerType  = self.AnswerType
-        BaseAnswer  = self.base_answer_model(AnswerType)
+        AnswerType = self.AnswerType
+        BaseAnswer = self.base_answer_model(AnswerType)
+        myanswer   = None
 
         try:
             myanswer    = AnswerType.objects.get(question=self.question, 
-                                             user=self.profile.user)
-            all_answers = AnswerType.objects.filter(question=self.question)\
-                                            .exclude(myanswer)
+                                                 user=self.profile.user).as_final()
         except BaseAnswer.DoesNotExist: 
-            import pdb; pdb.set_trace()
             pass
 
-            
+        answers_pool = self.lookup_for_answers()
+
+        all_answers     = answers_pool['all_answers']['set']
+        profile_answers = answers_pool['profile_answers']
+        if profile_answers:
+            answers_set  = profile_answers['set']
+            profile_attr = profile_answers['profile_attr']
+        else:
+            answers_set = all_answers
+
+        total_number    = all_answers.count()
+
+        if myanswer:
+            similar_answers = answers_set.filter(value=myanswer.value)
+            profile_attr    = None
+            use_percentage  = self.is_percentage()
+            if use_percentage:
+                percentage =  float(similar_answers.count()) / total_number
+                percentage = int(round(percentage*100))
+                self.html_sentence = _(
+                    '<strong>{value}%</strong> of '.format(
+                        value=percentage))
+            else:
+                self.html_sentence = _('<strong>{value}</strong> '.format(
+                    value=similar_answers.count()))
+
+            if profile_attr:
+                profile_value = getattr(self.profile, profile_attr, None)
+                sentence = SENTENCES_PROFILE_MAPPING[profile_attr]
+                if use_percentage and profile_attr == 'gender':
+                    self.html_sentence += _('the ')
+                self.html_sentence += sentence.format(value=profile_value)
+            else:
+                self.html_sentence += _('persons ')
+
+        else:
+            self.html_sentence = _(
+                'Until this day <strong>{value}</strong> persons'.format(value=total_number)
+            )
+
+        self.html_sentence += _('answered like you')
+
+
+    def lookup_for_answers(self):
+        # will contain multiple answers set. It will help us to know what 
+        answers_pool = {}
+
+        all_answers = self.AnswerType.objects.filter(question=self.question)
+        all_answers = all_answers.exclude(user=self.profile.user)
+
+        answers_pool['all_answers'] = { 
+            'set': all_answers
+        }
+        challenger = None
+        challenger_attr = None
+
+        for profile_attr in ('age', 'gender', 'living_country', 'native_country'):
+            profile_value = getattr(self.profile, profile_attr, None)
+            if profile_value != None:
+                lookup_key = 'user__userprofile__{attr}'.format(
+                    attr=profile_attr)
+                filters = {
+                    lookup_key: profile_value
+                }
+                set = all_answers.filter()
+
+                is_new_challenger = (
+                    (set.count() > 500) \
+                    and \
+                    (
+                        (challenger == None) \
+                        or  \
+                        (
+                            (challenger != None) \
+                            and \
+                            (set.count() > challenger.count())
+                        )
+                    )
+                )
+
+                if is_new_challenger:
+                    challenger = set
+                    challenger_attr = profile_attr
+
+        answers_pool['profile_answers'] = {
+            'set': challenger,
+            'profile_attr': challenger_attr
+        }
+        return answers_pool
+
+    def is_percentage(self):
+        # will randomly decide if we should use percentage or count results 
+        # Return boolean to tell if result type is percentage or not.
+        choices = (True, False)
+        return choices[ random.randint(0, len(choices) - 1) ]
 
 # EOF
