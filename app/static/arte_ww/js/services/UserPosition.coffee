@@ -12,22 +12,27 @@ class PositionsObject
 
 # TODO: handle user position saving and loading/intialization
 class UserPositionService
-    @$inject: ['$http']
+    @$inject: ['$http', 'utils']
 
     state: undefined
     positions:
         thematicPosition: undefined
         elementPosition: undefined
 
-    constructor: (@$http) ->
-        request =
-            url : '/api/my-position'
-            method : 'GET'
-        (@$http request).success (data) =>
-            console.debug 'get', data
-            @positions =
-                thematicPosition : data.thematic_position
-                elementPosition : data.element_position
+    constructor: (@$http, utils) ->
+        utils.authenticate (=>
+            request =
+                url : '/api/my-position'
+                method : 'GET'
+            ((@$http request).success (data) =>
+                @positions =
+                    thematicPosition : data.thematic_position
+                    elementPosition : data.element_position
+            ).error =>
+                @positions =
+                    thematicPosition : 0
+                    elementPosition : 0
+        ), no
 
     currentState: (state) =>
         if state?

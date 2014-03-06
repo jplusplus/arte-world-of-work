@@ -21,7 +21,7 @@
             <!-- step 0 -> thematic landing -->
             <div class="thematic-landing" ng-if='state == states.LANDING'>
                 <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>                
-                <a ng-click="currentState(states.INTRO)" class="thematic-landing__let-go" ng-translate>Let's go</a>
+                <a ng-click="letsgo()" class="thematic-landing__let-go" ng-translate>Let's go</a>
             </div>
 
             <!-- step 1 -> thematic intro, displaying all info we need about this thematic -->

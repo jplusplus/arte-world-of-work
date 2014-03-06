@@ -28,6 +28,7 @@ class ThematicCtrl
             currentState: @currentState
             start: =>
                 @utils.authenticate @startThematic
+            letsgo: @letsgo
 
         # ---------------------------------------------------------------------
         # watches 
@@ -36,6 +37,12 @@ class ThematicCtrl
         @scope.$watch => 
                 @userPosition.elementPosition()
             , @onElementPositionChanged
+
+    letsgo: =>
+        if do @userPosition.elementPosition is 0
+            @currentState @states.INTRO
+        else
+            @currentState @states.ELEMENTS
 
     currentState: (state)=>
         if state?
@@ -51,6 +58,7 @@ class ThematicCtrl
             @userPosition.nextElement()
         else if @isDone()
             @userPosition.nextThematic()
+            @userPosition.elementPosition 0
         else
             @currentState(@states.OUTRO)
 
@@ -82,8 +90,7 @@ class ThematicCtrl
         return unless thematic?
         @elements = @userPosition.createWrapper thematic.elements
         @scope.thematicWrapper = @elements
-        elementPosition        = 0
-        @userPosition.elementPosition(elementPosition)
+        @onElementPositionChanged @elements.getAt do @userPosition.elementPosition
 
     onElementPositionChanged: (position)=>
         return unless @elements?
