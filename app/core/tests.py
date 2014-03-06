@@ -294,7 +294,7 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         self.add_answer( self.question1, 70)
         self.add_answer( self.question1, 75)
 
-        self.question2 = TextSelectionQuestion.objects.create(label='label', hint_text='hint')
+        self.question2 = MediaSelectionQuestion.objects.create(label='label', hint_text='hint')
         self.question2_choices = (
             TextChoiceField.objects.create(title='choice1', question=self.question2),
             TextChoiceField.objects.create(title='choice2', question=self.question2),
@@ -314,6 +314,20 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
         self.create_answers(self.question2, call_selection_value)
         self.create_answers(self.question3, call_selection_value)
+
+        self.question4 = TypedNumberQuestion.objects.create(label='label', hint_text='hint')
+
+    def create_dynfeedback(self, user=None, question=None, value=None, 
+                           other_value=None, nb_similar=502, nb_other=500):
+
+        self.add_answer(question=question, user=user, value=value)
+        for i in range(0, nb_similar): 
+            self.add_answer(question=question, value=value)
+        for i in range(0, nb_other):
+            self.add_answer(question=question, value=other_value)
+
+        return transport.DynamicFeedback(user=user, question=question)
+
 
     def add_answer(self, question, value, user=None):
         if user == None:
@@ -381,10 +395,26 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         self.assertIsInstance(results, transport.PieChart)
         self.assertEqual(results.chart_type, 'pie')
 
+    def test_feedback_no_profile_attrs(self):
+        # use case: user has filled no profile attribute (skipped all user 
+        # questions 
+        user = User.objects.create()
+        accepted_sentences = (
+            u"<strong>50%</strong> of persons answered like you",
+            u"<strong>502</strong> persons answered like you"
+        )
+        feedback = self.create_dynfeedback(user=user, 
+                                        question=self.question4,
+                                        value=20, other_value=40
+                    )
+        self.assertIn(feedback.html_sentence, accepted_sentences)
+
+
+
 class UtilsTestCase(TestCase, utils.TestCaseMixin):
 
     def test_fileexists(self):
-        self.assertTrue(utils.fileexists('.'))
+        self.assertTrue( utils.fileexists('.'))
         self.assertFalse(utils.fileexists('I_DO_NOT_EXISTS.such.file'))
 
     def test_get_field_names(self):

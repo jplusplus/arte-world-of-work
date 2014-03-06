@@ -192,7 +192,7 @@ class AnswerManager(models.Manager):
     def create_answer(self, question, user, value):
         answer_type =  question.answer_type
         try:
-            answer = BaseAnswer.objects.get(question=question, user=user).as_final()
+            answer = self.get(question=question, user=user).as_final()
         except ObjectDoesNotExist:
             answer = answer_type(question=question, user=user)
         field  = answer._meta.get_field('value')
@@ -222,6 +222,7 @@ class BaseAnswer(mixins.AsFinalMixin, models.Model):
 
 class TypedNumberAnswer(BaseAnswer):
     value = models.IntegerField()
+    objects = models.Manager()
     results = PassThroughManager.for_queryset_class(querysets.HistogrammeQuerySet)() 
 
     def clean(self, *args, **kwargs):
@@ -235,14 +236,17 @@ class TypedNumberAnswer(BaseAnswer):
 class SelectionAnswer(BaseAnswer):
     value = models.ManyToManyField('BaseChoiceField')
     results = PassThroughManager.for_queryset_class(querysets.HorizontalBarChartQuerySet)() 
+    objects = models.Manager()
 
 class RadioAnswer(BaseAnswer):
     value = models.ForeignKey('BaseChoiceField')
     results = PassThroughManager.for_queryset_class(querysets.HorizontalBarChartQuerySet)() 
+    objects = models.Manager()
 
 class BooleanAnswer(BaseAnswer):
     value = models.ForeignKey('BaseChoiceField')
     results = PassThroughManager.for_queryset_class(querysets.PieChartQuerySet)()
+    objects = models.Manager()
 
 class UserProfileAnswer(BaseAnswer):
     """
