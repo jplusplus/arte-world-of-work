@@ -2,8 +2,10 @@
 
 {% block form %}
 	<div class="question-choices question-choices--typed-number">
+		[[step]]
 		<div ng-if="question.max_number" 
 			 slider 
+			 step="[[step]]"
 			 start='[[question.min_number]]' 
 			 end='[[question.max_number]]' 
 			 ng-model="question.answer"></div>	
