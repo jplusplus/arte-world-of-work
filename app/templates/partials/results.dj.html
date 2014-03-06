@@ -2,7 +2,7 @@
     <div class="answer">
         <h4 class="answer-title">[[currentAnswer.label]]</h4>
         <div class="answer-content">
-            <dynamic-chart ng-attr-nochart='[[nochart]]' ng-hide="[[nochart]]" ng-attr-id="[[currentAnswer.id]]" filters="filters"></dynamic-chart>
+            <dynamic-chart ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-id="[[currentAnswer.id]]" filters="filters"></dynamic-chart>
             <div ng-class="{'answer-description--nochart':nochart}" class="answer-description">
                 <p ng-bind-html="getTrustedHTML()"></p>
             </div>

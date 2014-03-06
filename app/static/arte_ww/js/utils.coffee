@@ -19,13 +19,16 @@ class Utils
             INTRO   : 1
             ELEMENTS: 2
 
-    authenticate: (callback) =>
+    authenticate: (callback, create = yes) =>
         createNewUser = =>
             (do @User.post).success (data) =>
                 @$cookies['apitoken'] = data.token
                 do callback
         if not @$cookies['apitoken']?
-            do createNewUser
+            if create
+                do createNewUser
+            else
+                do callback
         else
             request =
                 method : 'POST'
@@ -34,7 +37,11 @@ class Utils
                 do callback
             ).error (error, status) =>
                 if status is 401
-                    do createNewUser
+                    delete @$cookies['apitoken']
+                    if create
+                        do createNewUser
+                    else
+                        do callback
 
 
 angular.module('arte-ww.utils').service('utils', Utils)

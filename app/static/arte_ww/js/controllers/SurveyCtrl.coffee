@@ -19,8 +19,16 @@ class SurveyCtrl
             'survey-element--with-media'  : question.media isnt null
             'survey-element--choice-media': question.has_medias
             'survey-element--icon-mode'   : (question.has_medias && question.choices.length > 3) || (question.media_type and question.media_type == "icon")
-            
 
+        @scope.start = =>
+            @thematicService.onThematicPositionChanged do @userPosition.thematicPosition
+            @scope.survey.state = @scope.survey.states.DOING
+
+        @scope.startButton = =>
+            if (do @userPosition.thematicPosition is 0) and (do @userPosition.elementPosition is 0)
+                'Start'
+            else
+                'Continue'
 
 angular.module('arte-ww').controller 'SurveyCtrl', SurveyCtrl
 
