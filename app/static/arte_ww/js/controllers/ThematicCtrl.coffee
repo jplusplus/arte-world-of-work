@@ -90,7 +90,7 @@ class ThematicCtrl
         return unless thematic?
         @elements = @userPosition.createWrapper thematic.elements
         @scope.thematicWrapper = @elements
-        @onElementPositionChanged @elements.getAt do @userPosition.elementPosition
+        @onElementPositionChanged @elements.getAt do @userPosition.elementPosition        
 
     onElementPositionChanged: (position)=>
         return unless @elements?
