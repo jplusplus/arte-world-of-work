@@ -317,22 +317,27 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
         self.question4 = TypedNumberQuestion.objects.create(label='label', hint_text='hint')
 
-    def create_dynfeedback(self, create_user_answer=True, user=None, question=None, value=None, 
+    def create_dynfeedback(self, percentage=None, create_user_answer=True, user=None, question=None, value=None, 
                            other_value=None, nb_similar=502, nb_other=500):
-
         if create_user_answer:
             self.add_answer(question=question, user=user, value=value)
         for i in range(0, nb_similar): 
-            self.add_answer(question=question, value=value)
+            self.add_answer(question=question, value=value,       copy_profile=user.userprofile)
         for i in range(0, nb_other):
-            self.add_answer(question=question, value=other_value)
+            self.add_answer(question=question, value=other_value, copy_profile=user.userprofile)
 
-        return transport.DynamicFeedback(user=user, question=question)
+        return transport.DynamicFeedback(use_percentage=percentage, user=user, question=question)
 
 
-    def add_answer(self, question, value, user=None):
+    def add_answer(self, question, value, user=None, copy_profile=None):
         if user == None:
             user = User.objects.create()
+
+        if copy_profile != None:
+            profile = user.userprofile
+            for attr in ('age', 'gender', 'living_country', 'native_country'):
+                setattr(profile, attr, getattr(copy_profile, attr, None))
+            profile.save()
         self.answers[question.id] = question.create_answer(user=user, value=value)
 
     def create_answers(self, question, call_value):
@@ -396,30 +401,60 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         self.assertIsInstance(results, transport.PieChart)
         self.assertEqual(results.chart_type, 'pie')
 
-    def test_feedback_no_profile_attrs(self):
+    def test_feedback_no_profile_attrs_no_percentage(self):
         # use case: user has filled no profile attribute (skipped all user 
         # questions 
         user = User.objects.create()
-        accepted_sentences = (
-            u"<strong>50%</strong> of persons answered like you",
-            u"<strong>502</strong> persons answered like you"
-        )
         feedback = self.create_dynfeedback(user=user, 
+                                        percentage=False,
                                         question=self.question4,
-                                        value=20, other_value=40
-                    )
-        self.assertIn(feedback.html_sentence, accepted_sentences)
+                                        value=20, other_value=40)
+        self.assertEqual(feedback.html_sentence, u"<strong>502</strong> persons answered like you")
+
+    def test_feedback_no_profile_attrs_percentage(self):
+        # use case: user has filled no profile attribute (skipped all user 
+        # questions 
+        user = User.objects.create()
+        feedback = self.create_dynfeedback(
+                                        percentage=True,
+                                        user=user, 
+                                        question=self.question4,
+                                        value=20, other_value=40)
+        self.assertEqual(feedback.html_sentence, u"<strong>50%</strong> of persons answered like you")
 
     def test_feedback_no_answer(self):
         user = User.objects.create()
         feedback = self.create_dynfeedback(create_user_answer=False,
                                            user=user, 
                                            question=self.question4,
-                                           value=20, 
-                                           other_value=40)
+                                           value=20, other_value=40)
         accepted_sentence = u'Until this day <strong>1002</strong> persons answered this question'
         self.assertEqual(feedback.html_sentence, accepted_sentence)
 
+
+    def test_feedback_gender_with_percentage(self):
+        user = User.objects.create()
+        user.userprofile.gender = 'female'
+        user.userprofile.save()
+        feedback = self.create_dynfeedback(user=user,
+                                           percentage=True, 
+                                           question=self.question4,
+                                           value=20, other_value=40)
+
+        self.assertEqual(feedback.html_sentence, 
+            u"<strong>50%</strong> of the females answered like you",)
+
+    def test_feedback_gender_with_count(self):
+        user = User.objects.create()
+        user.userprofile.gender = 'male'
+        user.userprofile.save()
+        feedback = self.create_dynfeedback(user=user,
+                                           percentage=False, 
+                                           question=self.question4,
+                                           value=20, other_value=40)
+
+        self.assertEqual(feedback.html_sentence, 
+            u"<strong>502</strong> males answered like you")
 
 
 

@@ -1,4 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ungettext
 
 MEDIA_TYPES = (
     ('icon', _('Icon (small)')),
@@ -6,8 +7,8 @@ MEDIA_TYPES = (
 )
 
 GENDER_TYPES = (
-    ('male', _('Male')),
-    ('female', _('Female')),
+    ('male',    _('Male'  )),
+    ('female',  _('Female')),
 )
 
 

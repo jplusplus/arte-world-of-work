@@ -28,7 +28,7 @@ API -> API:
 API -> front-end (HTTP): 
     take this serialized results (JSON)
 """
-from django.utils.translation import ugettext as _
+from django.utils.translation import ungettext, ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.template import Context, Template
@@ -125,14 +125,17 @@ class DynamicFeedback(object):
     SENTENCES_PROFILE_MAPPING = {
         'living_country': _('persons living in {value}'),
         'native_country': _('persons from {value}'),
-        'gender':         _('{value}'),
         'age':            _('aged {value} years')
     }
 
-    def __init__(self, user, question):
-        self.html_sentence = None
-        self.profile       = user.userprofile
-        self.question      = question
+    def __init__(self, user=None, 
+                       question=None, 
+                       use_percentage=None):
+
+        self.html_sentence   = None
+        self.profile         = user.userprofile
+        self.question        = question
+        self._use_percentage = use_percentage
 
         # simple wrapper around the answer_type to use 
         class AnswerType(question.answer_type): 
@@ -155,27 +158,25 @@ class DynamicFeedback(object):
         myanswer   = None
 
         try:
-            myanswer    = AnswerType.objects.get(question=self.question, 
-                                                 user=self.profile.user).as_final()
+            myanswer = AnswerType.objects.get(question=self.question, user=self.profile.user)
+            myanswer = myanswer.as_final()
         except BaseAnswer.DoesNotExist: 
             pass
 
         answers_pool = self.lookup_for_answers()
-
         all_answers     = answers_pool['all_answers']['set']
         profile_answers = answers_pool['profile_answers']
-        if profile_answers:
-            answers_set  = profile_answers['set']
-            profile_attr = profile_answers['profile_attr']
-        else:
+        answers_set     = profile_answers['set']
+        profile_attr    = profile_answers['profile_attr']
+        
+        if answers_set == None:
             answers_set = all_answers
 
-        total_number    = all_answers.count()
-
+        total_number = answers_set.count()
+        use_percentage = self.is_percentage()
+        
         if myanswer:
             similar_answers = answers_set.filter(value=myanswer.value)
-            profile_attr    = None
-            use_percentage  = self.is_percentage()
             if use_percentage:
                 percentage =  float(similar_answers.count()) / total_number
                 percentage = int(round(percentage*100))
@@ -188,10 +189,16 @@ class DynamicFeedback(object):
 
             if profile_attr:
                 profile_value = getattr(self.profile, profile_attr, None)
-                sentence = SENTENCES_PROFILE_MAPPING[profile_attr]
-                if use_percentage and profile_attr == 'gender':
-                    self.html_sentence += _('the ')
-                self.html_sentence += sentence.format(value=profile_value)
+                if profile_attr == 'gender':
+                    if use_percentage: 
+                        self.html_sentence += _('the ')
+                    if profile_value == 'female':
+                        self.html_sentence += _('females ')
+                    else: 
+                        self.html_sentence += _('males ')
+                else:
+                    sentence = self.SENTENCES_PROFILE_MAPPING[profile_attr]
+                    self.html_sentence += sentence.format(value=profile_value)
             else:
                 self.html_sentence += _('persons ')
 
@@ -201,8 +208,6 @@ class DynamicFeedback(object):
             self.html_sentence = _(
                 'Until this day <strong>{value}</strong> persons answered this question'.format(value=total_number)
             )
-
-        
 
 
     def lookup_for_answers(self):
@@ -226,10 +231,9 @@ class DynamicFeedback(object):
                 filters = {
                     lookup_key: profile_value
                 }
-                set = all_answers.filter()
-
+                set = all_answers.filter(**filters)
                 is_new_challenger = (
-                    (set.count() > 500) \
+                    (set.count() > 100) \
                     and \
                     (
                         (challenger == None) \
@@ -255,7 +259,10 @@ class DynamicFeedback(object):
     def is_percentage(self):
         # will randomly decide if we should use percentage or count results 
         # Return boolean to tell if result type is percentage or not.
-        choices = (True, False)
-        return choices[ random.randint(0, len(choices) - 1) ]
+        if self._use_percentage != None:
+            return self._use_percentage
+        else:
+            choices = (True, False)
+            return choices[ random.randint(0, len(choices) - 1) ]
 
 # EOF
