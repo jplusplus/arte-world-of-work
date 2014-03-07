@@ -15,11 +15,11 @@
         transition: height .2s linear 0s;
         .white-panel(100%);
         margin: 0;
-        height: 150px;
+        overflow: hidden;
+        height: 0;
 
-        &--closed {
-            height: 0;
-            overflow: hidden;
+        &--opened {
+            height: 150px;
         }
 
         p {
