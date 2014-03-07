@@ -11,6 +11,7 @@ class ThematicCtrl
         ), (newdata, olddata) =>
             if newdata.elementPosition? and newdata.thematicPosition? and @scope.state is @states.LANDING
                 if (newdata.elementPosition isnt 0) or newdata.thematicPosition isnt 0
+                    @onElementPositionChanged do @userPosition.elementPosition
                     do @scope.letsgo
         , yes
 
@@ -98,7 +99,7 @@ class ThematicCtrl
         return unless thematic?
         @elements = @userPosition.createWrapper thematic.elements
         @scope.thematicWrapper = @elements
-        @onElementPositionChanged @elements.getAt do @userPosition.elementPosition
+        @onElementPositionChanged do @userPosition.elementPosition
 
     onElementPositionChanged: (position)=>
         return unless @elements?
