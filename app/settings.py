@@ -28,8 +28,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default' : {
-        'ENGINE':'django.db.backends.sqlite3',
-        'NAME': 'dev.db'
+        'ENGINE':'django.db.backends.postgresql_psycopg2',
+        'NAME': 'db_arte_wow',
+        'USER': 'toutenrab',
+        'PASSWORD': 'johndohn-',
+        'HOST': ''
     }
 }
 
@@ -164,7 +167,7 @@ COMPRESS_ENABLED = False
 
 INSTALLED_APPS = (
     # contain user model, install it first
-    'app.authentication',
+    # 'app.authentication',
     # ------------------------ django dependencies -------------------------- # 
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -186,7 +189,7 @@ INSTALLED_APPS = (
     'app.translations',
 )
 
-AUTH_USER_MODEL = 'authentication.WWUser'
+# AUTH_USER_MODEL = 'authentication.WWUser'
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
