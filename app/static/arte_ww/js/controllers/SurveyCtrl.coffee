@@ -33,12 +33,6 @@ class SurveyCtrl
             @thematicService.onThematicPositionChanged do @userPosition.thematicPosition
             @scope.survey.state = @scope.survey.states.DOING
 
-        @scope.startButton = =>
-            if (do @userPosition.thematicPosition is 0) and (do @userPosition.elementPosition is 0)
-                'Start'
-            else
-                'Continue'
-
 angular.module('arte-ww').controller 'SurveyCtrl', SurveyCtrl
 
 
