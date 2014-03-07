@@ -28,11 +28,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default' : {
-        'ENGINE':'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_arte_wow',
-        'USER': 'toutenrab',
-        'PASSWORD': 'johndohn-',
-        'HOST': ''
+        'ENGINE':'django.db.backends.sqlite3',
+        'NAME': 'dev.db'
     }
 }
 
