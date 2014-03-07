@@ -52,7 +52,7 @@ CACHES = {
     }
 }
 
-AUTH_USER_MODEL = os.getenv('AUTH_USER_MODEL', 'authentication.WWUser')
+# AUTH_USER_MODEL = os.getenv('AUTH_USER_MODEL', 'authentication.WWUser')
 
 
 COMPRESSOR_ROOT      = STATIC_ROOT
