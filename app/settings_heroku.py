@@ -52,17 +52,8 @@ CACHES = {
     }
 }
 
-COMPRESS_CSS_FILTERS = (
-    "compressor.filters.css_default.CssAbsoluteFilter",
-    "compressor.filters.cssmin.CSSMinFilter",
-    "compressor.filters.template.TemplateFilter",
-)
-
-
-COMPRESS_JS_FILTERS = (
-    "compressor.filters.jsmin.JSMinFilter",
-    "compressor.filters.template.TemplateFilter",
-)
+COMPRESS_CSS_FILTERS += ("compressor.filters.cssmin.CSSMinFilter",)
+COMPRESS_JS_FILTERS += ("compressor.filters.jsmin.JSMinFilter",)
 
 COMPRESS_TEMPLATE_FILTER_CONTEXT = {
     'STATIC_URL': STATIC_URL

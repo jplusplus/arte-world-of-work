@@ -147,7 +147,7 @@ COMPRESS_PRECOMPILERS = (
 )
 
 COMPRESS_CSS_FILTERS = (
-    "compressor.filters.css_default.CssAbsoluteFilter",
+    "app.utils.CustomCssAbsoluteFilter",
     "compressor.filters.template.TemplateFilter",
 )
 
