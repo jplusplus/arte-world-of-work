@@ -167,7 +167,7 @@ COMPRESS_ENABLED = False
 
 INSTALLED_APPS = (
     # contain user model, install it first
-    # 'app.authentication',
+    'app.authentication',
     # ------------------------ django dependencies -------------------------- # 
     'django.contrib.auth',
     'django.contrib.contenttypes',
