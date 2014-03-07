@@ -147,6 +147,8 @@ COMPRESS_PRECOMPILERS = (
 )
 
 COMPRESS_CSS_FILTERS = (
+    # Custom filter to avoid absolute URL issue: 
+    # http://stackoverflow.com/a/17033883/885541
     "app.utils.CustomCssAbsoluteFilter",
     "compressor.filters.template.TemplateFilter",
 )
