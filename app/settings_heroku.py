@@ -30,7 +30,7 @@ AWS_SECRET_ACCESS_KEY      = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME    = os.getenv('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_FILE_OVERWRITE      = os.getenv('AWS_S3_FILE_OVERWRITE') == "True" and True or False
 
-DEBUG                      = bool(os.getenv('DEBUG', False))
+DEBUG                      = bool(os.getenv('DEBUG', 0))
 
 LANGUAGE_CODE              = os.getenv('LANGUAGE_CODE', 'fr')
 
