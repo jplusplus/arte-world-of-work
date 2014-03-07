@@ -52,8 +52,20 @@ CACHES = {
     }
 }
 
-AUTH_USER_MODEL = 'authentication.WWUser'
+COMPRESS_CSS_FILTERS = (
+    "compressor.filters.css_default.CssAbsoluteFilter",
+    "compressor.filters.cssmin.CSSMinFilter",
+    "compressor.filters.template.TemplateFilter",
+)
 
+
+COMPRESS_JS_FILTERS = (
+    "compressor.filters.jsmin.JSMinFilter",
+    "compressor.filters.template.TemplateFilter",
+)
+
+
+AUTH_USER_MODEL = 'authentication.WWUser'
 
 COMPRESSOR_ROOT      = STATIC_ROOT
 COMPRESSOR_URL       = STATIC_URL
