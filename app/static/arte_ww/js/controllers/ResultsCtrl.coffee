@@ -2,19 +2,17 @@ class ResultsCtrl
     @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce']
 
     changeQuestion: (id) =>
-        request =
-            url : "/api/questions/#{id}"
-            method : 'GET'
-        @$http(request).success (data) =>
-            if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
-                @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
-            if data.results? and data.results.total_answer > 50
+        if (do @Thematic.current)?
+            request =
+                url : "/api/questions/#{id}"
+                method : 'GET'
+            @$http(request).success (data) =>
+                if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
+                    @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
                 @$scope.nochart = false
-            else
-                @$scope.nochart = true
-            @$scope.currentAnswer = data
-            @$scope.hasNext = @elements[@$scope.current.thematic][@$scope.current.answer + 1]? or @elements[@$scope.current.thematic + 1]?
-            @$scope.hasPrev = @elements[@$scope.current.thematic][@$scope.current.answer - 1]? or @elements[@$scope.current.thematic - 1]?
+                @$scope.currentAnswer = data
+                @$scope.hasNext = @elements[@$scope.current.thematic][@$scope.current.answer + 1]? or @elements[@$scope.current.thematic + 1]?
+                @$scope.hasPrev = @elements[@$scope.current.thematic][@$scope.current.answer - 1]? or @elements[@$scope.current.thematic - 1]?
 
     constructor: (@$scope, $location, @Thematic, @$http, $sce) ->
         # Update URL when the user changes filters

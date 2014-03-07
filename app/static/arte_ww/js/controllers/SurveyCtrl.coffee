@@ -1,11 +1,20 @@
 class SurveyCtrl
     @$inject: ['$scope', '$sce', 'Thematic', 'UserPosition', 'utils']
     constructor: (@scope, @sce, @thematicService, @userPosition, utils)->
-        @states = utils.states.survey
+        @scope.$watch (=>
+            @userPosition.positions
+        ), (newdata, olddata) =>
+            if newdata.elementPosition? and newdata.thematicPosition? and @scope.survey.state is 0
+                if (newdata.elementPosition isnt 0) or newdata.thematicPosition isnt 0
+                    do @scope.start
+        , yes
+
         # ---------------------------------------------------------------------
         # Scope variables bindings
         # ---------------------------------------------------------------------
-        @scope.survey =  
+        @states = utils.states.survey
+
+        @scope.survey =
             state   : 0
             states  : @states
         # User's position functions
@@ -14,7 +23,7 @@ class SurveyCtrl
         @scope.prepareVineUrl  = (url)=> @sce.trustAsResourceUrl("#{url}/embed/postcard")
 
         # Returns the classes of the given questions
-        @scope.getQuestionClasses = (question)->             
+        @scope.getQuestionClasses = (question)->
             'survey-element--with-columns': question.choices && question.choices.length >= 4
             'survey-element--with-media'  : question.media isnt null
             'survey-element--choice-media': question.has_medias
@@ -23,12 +32,6 @@ class SurveyCtrl
         @scope.start = =>
             @thematicService.onThematicPositionChanged do @userPosition.thematicPosition
             @scope.survey.state = @scope.survey.states.DOING
-
-        @scope.startButton = =>
-            if (do @userPosition.thematicPosition is 0) and (do @userPosition.elementPosition is 0)
-                'Start'
-            else
-                'Continue'
 
 angular.module('arte-ww').controller 'SurveyCtrl', SurveyCtrl
 
