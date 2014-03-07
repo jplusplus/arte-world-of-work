@@ -1,0 +1,30 @@
+.about {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+
+    &__button {
+        cursor: pointer;
+        .white-panel();
+        padding: 5px 15px 0 15px;
+    }
+
+    &__content {
+        transition: height .2s linear 0s;
+        .white-panel(100%);
+        margin: 0;
+        height: 150px;
+
+        &--closed {
+            height: 0;
+            overflow: hidden;
+        }
+
+        p {
+            padding: 10px;
+            margin-bottom: 0;
+        }
+    }
+}
