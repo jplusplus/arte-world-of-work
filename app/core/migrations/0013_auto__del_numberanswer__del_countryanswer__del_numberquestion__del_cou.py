@@ -8,6 +8,27 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+
+
+        # Adding field 'TypedNumberQuestion.validate_button_label'
+        db.add_column(u'core_typednumberquestion', 'validate_button_label',
+                      self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
+                      keep_default=False)
+
+        # Deleting field 'TypedNumberAnswer.numberanswer_ptr'
+        db.delete_column(u'core_typednumberanswer', u'numberanswer_ptr_id')
+
+        # Adding field 'TypedNumberAnswer.baseanswer_ptr'
+        db.add_column(u'core_typednumberanswer', u'baseanswer_ptr',
+                      self.gf('django.db.models.fields.related.OneToOneField')(default=1, to=orm['core.BaseAnswer'], unique=True, primary_key=True),
+                      keep_default=False)
+
+        # Adding field 'TypedNumberAnswer.value'
+        db.add_column(u'core_typednumberanswer', 'value',
+                      self.gf('django.db.models.fields.IntegerField')(default=1),
+                      keep_default=False)
+
+
         # Deleting model 'NumberAnswer'
         db.delete_table(u'core_numberanswer')
 
@@ -19,24 +40,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'CountryQuestion'
         db.delete_table(u'core_countryquestion')
-
-        # Adding field 'TypedNumberQuestion.validate_button_label'
-        db.add_column(u'core_typednumberquestion', 'validate_button_label',
-                      self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
-                      keep_default=False)
-
-        # Deleting field 'TypedNumberAnswer.numberanswer_ptr'
-        db.delete_column(u'core_typednumberanswer', u'numberanswer_ptr')
-
-        # Adding field 'TypedNumberAnswer.baseanswer_ptr'
-        db.add_column(u'core_typednumberanswer', u'baseanswer_ptr',
-                      self.gf('django.db.models.fields.related.OneToOneField')(default=1, to=orm['core.BaseAnswer'], unique=True, primary_key=True),
-                      keep_default=False)
-
-        # Adding field 'TypedNumberAnswer.value'
-        db.add_column(u'core_typednumberanswer', 'value',
-                      self.gf('django.db.models.fields.IntegerField')(default=1),
-                      keep_default=False)
 
 
     def backwards(self, orm):
