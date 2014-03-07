@@ -5,5 +5,9 @@
 		<select ng-model='answer' ng-options='c.iso_code as c.name for c in countries.list'>
 			<option value="" ng-translate>Choose a country</option>
 		</select>
+
+    	<button ng-disabled="!answer" class="question-choices--user-country__validate" ng-click="submitAnswer(answer)">
+    		[[ question.validate_button_label ]]
+    	</button>
 	</div>
 {% endblock %}
