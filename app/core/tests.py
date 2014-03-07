@@ -317,10 +317,11 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
         self.question4 = TypedNumberQuestion.objects.create(label='label', hint_text='hint')
 
-    def create_dynfeedback(self, user=None, question=None, value=None, 
+    def create_dynfeedback(self, create_user_answer=True, user=None, question=None, value=None, 
                            other_value=None, nb_similar=502, nb_other=500):
 
-        self.add_answer(question=question, user=user, value=value)
+        if create_user_answer:
+            self.add_answer(question=question, user=user, value=value)
         for i in range(0, nb_similar): 
             self.add_answer(question=question, value=value)
         for i in range(0, nb_other):
@@ -408,6 +409,17 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
                                         value=20, other_value=40
                     )
         self.assertIn(feedback.html_sentence, accepted_sentences)
+
+    def test_feedback_no_answer(self):
+        user = User.objects.create()
+        feedback = self.create_dynfeedback(create_user_answer=False,
+                                           user=user, 
+                                           question=self.question4,
+                                           value=20, 
+                                           other_value=40)
+        accepted_sentence = u'Until this day <strong>1002</strong> persons answered this question'
+        self.assertEqual(feedback.html_sentence, accepted_sentence)
+
 
 
 
@@ -517,7 +529,6 @@ class UtilsTestCase(TestCase, utils.TestCaseMixin):
             self.assertAttrEqual(test_element, 'none', None)
         except AssertionError as e:
             self.fail( 'assertAttrEqual failed where it shouldn\'t: {e}'.format(e=e))
-
 
 
 class ModelTranslationTestCase(TestCase, utils.TestCaseMixin):

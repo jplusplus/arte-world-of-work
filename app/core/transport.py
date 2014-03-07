@@ -195,12 +195,14 @@ class DynamicFeedback(object):
             else:
                 self.html_sentence += _('persons ')
 
+            self.html_sentence += _('answered like you')
+
         else:
             self.html_sentence = _(
-                'Until this day <strong>{value}</strong> persons'.format(value=total_number)
+                'Until this day <strong>{value}</strong> persons answered this question'.format(value=total_number)
             )
 
-        self.html_sentence += _('answered like you')
+        
 
 
     def lookup_for_answers(self):
