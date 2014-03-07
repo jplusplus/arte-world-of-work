@@ -6,6 +6,14 @@ class ThematicCtrl
     @$inject: [ '$rootScope', '$scope', 'utils', 'UserPosition', 'Thematic' ]
 
     constructor: (@rootScope, @scope, @utils, @userPosition, @thematicService)->
+        @scope.$watch (=>
+            @userPosition.positions
+        ), (newdata, olddata) =>
+            if newdata.elementPosition? and newdata.thematicPosition? and @scope.state is @states.LANDING
+                if (newdata.elementPosition isnt 0) or newdata.thematicPosition isnt 0
+                    do @scope.letsgo
+        , yes
+
         # ---------------------------------------------------------------------
         # Class attributes
         # ---------------------------------------------------------------------
