@@ -259,17 +259,9 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     id : scope.id
                     filters : filters
                 $Result.get request, (data) =>
-                    # scope.data = data.results
-                    # Fake data
-                    scope.data =
-                        chart_type : 'bar'
-                        results :
-                            1 : 58
-                            2 : 27
-                        total_answers : 85
-                        sets :
-                            1 : title : "lorem ipsum dolor"
-                            2 : title : "sit amet"
+                    if data.results.total_answers < 5
+                        scope.$parent.nochart = yes
+                    scope.data = data.results
                 undefined
 
             window.onresize = =>

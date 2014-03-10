@@ -10,7 +10,7 @@
         <p ng-translate>If you're under 30, you know that's not how it is.</p>
         <p ng-translate>Temporary employment, internships, volunteering, informal jobs, self-learning, emigration… Thatʼs what we do to make a living. Neither good nor bad, itʼs our world.</p>
         <p ng-translate>Explore the questions to know what it means to work today, in Europe, when you're under 30.</p>
-        <a class="btn btn-primary" ng-click="start()">[[startButton()]] the survey</a>
+        <a class="btn btn-primary" ng-click="start()">Start the survey</a>
     </div>
 
     <!-- step 1 -> we start the first thematic and going on until the end --> 
@@ -29,11 +29,9 @@
                 <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
                 <p class="thematic-intro__description">[[ thematic.currentThematic.intro_description ]]</p>
 
-                <a class="thematic-intro__results" ng-if="thematic.currentThematic.intro_button_label">
+                <a ng-click="start()" class="thematic-intro__let-go" ng-translate>
                     [[ thematic.currentThematic.intro_button_label ]]
                 </a>
-
-                <a ng-click="start()" class="thematic-intro__let-go" ng-translate>Let's go</a>
             </div>
 
             <!-- step 2 -> we're starting this thematic question -->
@@ -46,7 +44,7 @@
                 </div>
             </div>
 
-            <!-- step 3 -> thematic outro we're starting this thematic question -->
+            <!-- step 3 (DEPRECATED) -> thematic outro we're starting this thematic question -->
             <div class="thematic-outro" ng-if='state == states.OUTRO'>
                 <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
                 <div class="thematic-outro__content">

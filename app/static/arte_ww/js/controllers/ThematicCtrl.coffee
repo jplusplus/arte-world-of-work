@@ -6,6 +6,16 @@ class ThematicCtrl
     @$inject: [ '$rootScope', '$scope', 'utils', 'UserPosition', 'Thematic' ]
 
     constructor: (@rootScope, @scope, @utils, @userPosition, @thematicService)->
+        @scope.$watch (=>
+            @userPosition.positions
+        ), (newdata, olddata) =>
+            if newdata.elementPosition? and newdata.thematicPosition? and @scope.state is @states.LANDING
+                if newdata.thematicPosition is olddata.thematicPosition
+                    if (newdata.elementPosition isnt 0) or newdata.thematicPosition isnt 0
+                        @onElementPositionChanged do @userPosition.elementPosition
+                        do @scope.letsgo
+        , yes
+
         # ---------------------------------------------------------------------
         # Class attributes
         # ---------------------------------------------------------------------
@@ -59,6 +69,7 @@ class ThematicCtrl
         else if @isDone()
             @userPosition.nextThematic()
             @userPosition.elementPosition 0
+            @currentState @states.LANDING
         else
             @currentState(@states.OUTRO)
 
@@ -90,7 +101,7 @@ class ThematicCtrl
         return unless thematic?
         @elements = @userPosition.createWrapper thematic.elements
         @scope.thematicWrapper = @elements
-        @onElementPositionChanged @elements.getAt do @userPosition.elementPosition
+        @onElementPositionChanged do @userPosition.elementPosition
 
     onElementPositionChanged: (position)=>
         return unless @elements?

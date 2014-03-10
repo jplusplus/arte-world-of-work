@@ -130,7 +130,12 @@ class AnswerViewSet(viewsets.ModelViewSet,
 
 class CountryViewSet(viewsets.ViewSet):
     def list(self, request):
-        qs = django_countries.countries
+        # Pick the other countries        
+        qs = [ c for c in django_countries.countries if c[0] not in ["FR", "DE"] ]        
+        # Sort he list
+        qs.sort(key=lambda x: x[0])        
+        # Pick France and Germany
+        qs = [ c for c in django_countries.countries if c[0] in ["FR", "DE"] ] + qs
         serializer = serializers.CountrySerializer(qs, many=True)
         return Response(serializer.data)
 
