@@ -4,19 +4,26 @@
     left: 0;
     width: 100%;
     overflow: hidden;
+    z-index: 4000;
 
     &__button {
         cursor: pointer;
         .white-panel();
         padding: 5px 15px 0 15px;
+        z-index: 4001;
+
+        &:before {
+            .box-shadow(0px 0 0 0 fade(@navbar-default-bg, 10%));
+        }
     }
 
     &__content {
+        display: block;
         transition: height .2s linear 0s;
-        .white-panel(100%);
-        margin: 0;
         overflow: hidden;
         height: 0;
+        background:fade(white, 90%);
+        .box-shadow( 5px -5px 0 0  fade(@navbar-default-bg, 10%) );
 
         &--opened {
             height: 220px;
