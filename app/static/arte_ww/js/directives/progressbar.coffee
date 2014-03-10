@@ -45,13 +45,7 @@ angular.module('arte-ww').directive 'progressbar', ['UserPosition', 'Thematic', 
                     positions.element = newPosition
                     do updatePosition
 
-                scope.$watch (=> do UserPosition.thematicPosition), (newPosition) ->
+                scope.$watch (=> do UserPosition.thematicPosition), (newPosition, oldPosition) ->
                     positions.thematic = newPosition
-
-                scope.$watch (=> do UserPosition.currentState), (state, oldState) ->
-                    if state is utils.states.thematic.OUTRO
-                        positions.element = thematicElements[positions.thematic]
-                    else if (state is utils.states.thematic.ELEMENTS) and oldState is utils.states.thematic.OUTRO
-                        --positions.element
                     do updatePosition
 ]

@@ -19,7 +19,11 @@ DATABASES = {
 
 ROOT_URLCONF = 'app.urls'
 
-ALLOWED_HOSTS = ["arte-wow-staging.herokuapp.com", ".herokuapp.com"]
+ALLOWED_HOSTS = [
+                "arte-wow-staging.herokuapp.com", 
+                "arte-wow-production.herokuapp.com", 
+                ".herokuapp.com"
+            ]
 
 AWS_ACCESS_KEY_ID          = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY      = os.getenv('AWS_SECRET_ACCESS_KEY')
