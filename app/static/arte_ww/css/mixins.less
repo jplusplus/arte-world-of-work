@@ -130,19 +130,18 @@
                 border-color:@brand;
             }
 
-            &--boolean__choice:hover {
+            &--boolean__choice:last-child:before {                
+                background:darken(@brand, 15%);
+                border-color:darken(@brand, 15%);
+            }
+
+            &--boolean__choice:hover,
+            &--boolean__choice--selected {
                 color:@brand;
                 &:before {                    
                     border-color:@brand;
                     background:white;
                 }
-            }
-
-            &--boolean__choice--selected {
-                &:before {
-                    border-color:darken(@brand, 10);
-                    background:darken(@brand, 10);
-                }                  
             }
 
             &--typed-number, &--multiple, &--user-country {                
