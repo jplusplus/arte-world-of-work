@@ -31,7 +31,8 @@ API -> front-end (HTTP):
 from django.utils.translation import ungettext, ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-from django.template import Context, Template
+from django.template import loader, Context, Template
+from django.template.loader import render_to_string
 from app.core.types import CHART_TYPES
 import random 
 
@@ -122,12 +123,6 @@ class PieChart(BarChart):
     chart_type = CHART_TYPES.PIE
 
 class DynamicFeedback(object):
-    SENTENCES_PROFILE_MAPPING = {
-        'living_country': _('persons living in {value}'),
-        'native_country': _('persons from {value}'),
-        'age':            _('aged {value} years')
-    }
-
     def __init__(self, user=None, 
                        question=None, 
                        use_percentage=None):
@@ -158,13 +153,15 @@ class DynamicFeedback(object):
         myanswer   = None
 
         try:
-            myanswer = AnswerType.objects.get(question=self.question, user=self.profile.user)
+            myanswer = AnswerType.objects.get(question=self.question, 
+                user=self.profile.user)
             myanswer = myanswer.as_final()
         except BaseAnswer.DoesNotExist: 
             pass
 
-        answers_pool = self.lookup_for_answers()
-        all_answers     = answers_pool['all_answers']['set']
+        answers_pool    = self.lookup_for_answers()
+        use_percentage  = self.is_percentage()
+        all_answers     = answers_pool['all_answers']
         profile_answers = answers_pool['profile_answers']
         answers_set     = profile_answers['set']
         profile_attr    = profile_answers['profile_attr']
@@ -172,56 +169,48 @@ class DynamicFeedback(object):
         if answers_set == None:
             answers_set = all_answers
 
-        total_number = answers_set.count()
-        use_percentage = self.is_percentage()
-        
+        context_dict = {
+            'total_number':      answers_set.count(),
+            'profile':           self.profile,
+            'profile_attr':      profile_attr,
+            'use_profile_attr':  profile_attr != None,
+        }
+
         if myanswer:
             similar_answers = answers_set.filter(value=myanswer.value)
+            answer_count    = similar_answers.count()
             if use_percentage:
-                percentage =  float(similar_answers.count()) / total_number
-                percentage = int(round(percentage*100))
-                self.html_sentence = _(
-                    '<strong>{value}%</strong> of '.format(
-                        value=percentage))
+                percentage = float(answer_count) / context_dict['total_number']
+                context_dict['value'] = int(round(percentage*100))
+                rendered = render_to_string('dynamic_feedback_percentage.dj.html', context_dict)
             else:
-                self.html_sentence = _('<strong>{value}</strong> '.format(
-                    value=similar_answers.count()))
+                context_dict['value'] = answer_count
+                rendered = render_to_string('dynamic_feedback_count.dj.html', context_dict)
+        else: 
+            rendered = render_to_string('dynamic_feedback_generic.dj.html', context_dict)
+        self.html_sentence = self.clean_rendered_html(rendered)
+        return self.html_sentence
 
-            if profile_attr:
-                profile_value = getattr(self.profile, profile_attr, None)
-                if profile_attr == 'gender':
-                    if use_percentage: 
-                        self.html_sentence += _('the ')
-                    if profile_value == 'female':
-                        self.html_sentence += _('females ')
-                    else: 
-                        self.html_sentence += _('males ')
-                else:
-                    sentence = self.SENTENCES_PROFILE_MAPPING[profile_attr]
-                    self.html_sentence += sentence.format(value=profile_value)
-            else:
-                self.html_sentence += _('persons ')
-
-            self.html_sentence += _('answered like you')
-
-        else:
-            self.html_sentence = _(
-                'Until this day <strong>{value}</strong> persons answered this question'.format(value=total_number)
-            )
-
+    def clean_rendered_html(self, rendered):
+        rendered = rendered.replace('<span>',  '')
+        rendered = rendered.replace('</span>', '')
+        rendered = rendered.replace('\n',  '')
+        rendered = rendered.replace('&nbsp;',  ' ')
+        return rendered
 
     def lookup_for_answers(self):
         # will contain multiple answers set. It will help us to know what 
         answers_pool = {}
+        # challenger represents the answer set to use for this dynamic feedback
+        # it can be understood as: the best answer set that fit to with the 
+        # given user profile `self.profile`
+        challenger = None
+        challenger_attr = None
 
         all_answers = self.AnswerType.objects.filter(question=self.question)
         all_answers = all_answers.exclude(user=self.profile.user)
 
-        answers_pool['all_answers'] = { 
-            'set': all_answers
-        }
-        challenger = None
-        challenger_attr = None
+        answers_pool['all_answers'] = all_answers
 
         for profile_attr in ('age', 'gender', 'living_country', 'native_country'):
             profile_value = getattr(self.profile, profile_attr, None)

@@ -1,0 +1,32 @@
+{% spaceless %}
+{% load i18n %}
+{% if use_profile_attr %}
+    {% if profile_attr == "gender" %}
+        {% if profile.gender == "female" %}
+            {% blocktrans %}
+                <strong>{{value}}%</strong> of the females answered like you
+            {% endblocktrans %}
+        {% else %}
+            {% blocktrans %}
+                <strong>{{value}}%</strong> of the males answered like you
+            {% endblocktrans %}
+        {% endif %}
+    {% elif profile_attr == "age" %}
+        {% blocktrans with age=profile.age %}
+            <strong>{{value}}%</strong> of persons aged {{ age }} years answered like you
+        {% endblocktrans %}
+    {% elif profile_attr == "living_country" %}
+        {% blocktrans with country=profile.living_country %}
+            <strong>{{value}}%</strong> of persons living in {{ country }} answered like you
+        {% endblocktrans %}
+    {% elif profile_attr == "native_country" %}
+        {% blocktrans with country=profile.native_country %}
+            <strong>{{value}}%</strong> of persons from {{ country }} answered like you
+        {% endblocktrans %}
+    {% endif %}
+{% else %}
+    {% blocktrans %}
+        <strong>{{value}}%</strong> of persons answered like you
+    {% endblocktrans %}
+{% endif %}
+{% endspaceless %}
