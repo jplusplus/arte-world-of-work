@@ -18,6 +18,7 @@ from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db import models
 from django.db.models.fields import FieldDoesNotExist
 from django.utils.translation import ugettext_lazy as _
+from django.utils.html import strip_tags
 from django_countries.fields import CountryField
 from model_utils.managers import PassThroughManager
 
@@ -181,7 +182,7 @@ class StaticFeedback( BaseFeedback,
     source_title = models.CharField(max_length=120)
     question = models.OneToOneField('BaseQuestion', null=True, blank=True, related_name='feedback')
     def __unicode__(self):
-        return 'StaticFeedback: %s' % self.html_sentence[:60]
+        return 'StaticFeedback: %s' % strip_tags(self.html_sentence)[:60]
 
 # -----------------------------------------------------------------------------
 # 
