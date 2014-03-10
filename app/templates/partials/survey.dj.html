@@ -27,8 +27,7 @@
             <!-- step 1 -> thematic intro, displaying all info we need about this thematic -->
             <div class="thematic-intro" ng-if='state == states.INTRO'>
                 <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
-                <p class="thematic-intro__description">[[ thematic.currentThematic.intro_description ]]</p>
-
+                <div ng-bind-html="thematic.currentThematic.intro_description"></div>
                 <a ng-click="start()" class="thematic-intro__let-go" ng-translate>
                     [[ thematic.currentThematic.intro_button_label ]]
                 </a>
