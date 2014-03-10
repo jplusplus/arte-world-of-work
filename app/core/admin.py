@@ -96,6 +96,10 @@ class ThematicAdmin(admin.ModelAdmin):
     inlines = (
         InlineThematicElement,
     )
+    formfield_overrides = {
+        db_models.TextField: {'widget': TinyMCE },
+    }
+
 
 
 class FeedbackAdmin(admin.ModelAdmin):
