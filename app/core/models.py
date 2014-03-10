@@ -446,8 +446,12 @@ class BaseChoiceField(mixins.AsFinalMixin):
     Base class for choices, will be inherited by concrete choices (text and 
     media)
     """
+    class Meta:
+        ordering = ['position']
+
     question = models.ForeignKey('BaseQuestion')
     title = models.CharField(_('Title of this choice'), max_length=120)
+    position = models.PositiveIntegerField(_('Position of this choice'))
 
 class TextChoiceField(BaseChoiceField):
     pass
