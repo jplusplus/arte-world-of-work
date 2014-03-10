@@ -3,9 +3,9 @@ Key responsibilities of ThematicCtrl
     - handle different thematic states: thematic introduction
 ### 
 class ThematicCtrl
-    @$inject: [ '$rootScope', '$scope', 'utils', 'UserPosition', 'Thematic' ]
+    @$inject: [ '$rootScope', '$scope', '$sce', 'utils', 'UserPosition', 'Thematic' ]
 
-    constructor: (@rootScope, @scope, @utils, @userPosition, @thematicService)->
+    constructor: (@rootScope, @scope, @sce, @utils, @userPosition, @thematicService)->
         @scope.$watch (=>
             @userPosition.positions
         ), (newdata, olddata) =>
@@ -27,7 +27,7 @@ class ThematicCtrl
         _.extend @scope, 
             state: @states.LANDING,
             states: @states,
-            thematic: @thematicService             
+            thematic: @thematicService
 
         # ---------------------------------------------------------------------
         # Scope function bindings
@@ -101,6 +101,9 @@ class ThematicCtrl
         return unless thematic?
         @elements = @userPosition.createWrapper thematic.elements
         @scope.thematicWrapper = @elements
+        _.extend @scope.thematic.currentThematic,
+            intro_description: @sce.trustAsHtml(thematic.intro_description)
+
         @onElementPositionChanged do @userPosition.elementPosition
 
     onElementPositionChanged: (position)=>

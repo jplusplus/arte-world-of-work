@@ -1,5 +1,8 @@
-from rest_framework.test import APIClient
+from compressor.filters.css_default import CssAbsoluteFilter
+from compressor.utils import staticfiles
 from rest_framework.authtoken.models import Token
+from rest_framework.test import APIClient
+
 
 from datetime import datetime
 import re
@@ -138,3 +141,10 @@ class TestCaseMixin():
         return client
 
 here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
+
+class CustomCssAbsoluteFilter(CssAbsoluteFilter):
+    def find(self, basename):
+        # The line below is the original line.  I removed settings.DEBUG.
+        # if settings.DEBUG and basename and staticfiles.finders:
+        if basename and staticfiles.finders:
+            return staticfiles.finders.find(basename)

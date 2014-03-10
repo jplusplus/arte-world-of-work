@@ -458,6 +458,34 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
 
 
+    def test_feedback_age_with_percentage(self):
+        user = User.objects.create()
+        user.userprofile.age = 27
+        user.userprofile.save()
+        feedback = self.create_dynfeedback(user=user,
+                                           percentage=True, 
+                                           question=self.question4,
+                                           value=20, other_value=40)
+
+        self.assertEqual(feedback.html_sentence, 
+            u"<strong>50%</strong> of persons aged 27 years answered like you",)
+
+    def test_feedback_age_with_count(self):
+        user = User.objects.create()
+        user.userprofile.age = 27
+        user.userprofile.save()
+        feedback = self.create_dynfeedback(user=user,
+                                           percentage=False, 
+                                           question=self.question4,
+                                           value=20, other_value=40)
+
+        self.assertEqual(feedback.html_sentence, 
+            u"<strong>502</strong> persons aged 27 years answered like you")
+
+
+
+
+
 class UtilsTestCase(TestCase, utils.TestCaseMixin):
 
     def test_fileexists(self):

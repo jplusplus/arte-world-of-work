@@ -8,81 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-
-
-        # Adding field 'TypedNumberQuestion.validate_button_label'
-        db.add_column(u'core_typednumberquestion', 'validate_button_label',
-                      self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120),
+        # Adding field 'BaseChoiceField.position'
+        db.add_column(u'core_basechoicefield', 'position',
+                      self.gf('django.db.models.fields.PositiveIntegerField')(default=1),
                       keep_default=False)
-
-        # Deleting field 'TypedNumberAnswer.numberanswer_ptr'
-        db.delete_column(u'core_typednumberanswer', u'numberanswer_ptr_id')
-
-        # Adding field 'TypedNumberAnswer.baseanswer_ptr'
-        db.add_column(u'core_typednumberanswer', u'baseanswer_ptr',
-                      self.gf('django.db.models.fields.related.OneToOneField')(default=1, to=orm['core.BaseAnswer'], unique=True, primary_key=True),
-                      keep_default=False)
-
-        # Adding field 'TypedNumberAnswer.value'
-        db.add_column(u'core_typednumberanswer', 'value',
-                      self.gf('django.db.models.fields.IntegerField')(default=1),
-                      keep_default=False)
-
-
-        # Deleting model 'NumberAnswer'
-        db.delete_table(u'core_numberanswer')
-
-        # Deleting model 'CountryAnswer'
-        db.delete_table(u'core_countryanswer')
-
-        # Deleting model 'NumberQuestion'
-        db.delete_table(u'core_numberquestion')
-
-        # Deleting model 'CountryQuestion'
-        db.delete_table(u'core_countryquestion')
 
 
     def backwards(self, orm):
-        # Adding model 'NumberAnswer'
-        db.create_table(u'core_numberanswer', (
-            (u'baseanswer_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseAnswer'], unique=True, primary_key=True)),
-            ('value', self.gf('django.db.models.fields.IntegerField')()),
-        ))
-        db.send_create_signal(u'core', ['NumberAnswer'])
-
-        # Adding model 'CountryAnswer'
-        db.create_table(u'core_countryanswer', (
-            (u'baseanswer_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseAnswer'], unique=True, primary_key=True)),
-            ('value', self.gf('django_countries.fields.CountryField')(max_length=2)),
-        ))
-        db.send_create_signal(u'core', ['CountryAnswer'])
-
-        # Adding model 'NumberQuestion'
-        db.create_table(u'core_numberquestion', (
-            (u'basequestion_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True, primary_key=True)),
-            ('validate_button_label', self.gf('django.db.models.fields.CharField')(default=u"Done", max_length=120)),
-        ))
-        db.send_create_signal(u'core', ['NumberQuestion'])
-
-        # Adding model 'CountryQuestion'
-        db.create_table(u'core_countryquestion', (
-            (u'basequestion_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.BaseQuestion'], unique=True, primary_key=True)),
-        ))
-        db.send_create_signal(u'core', ['CountryQuestion'])
-
-        # Deleting field 'TypedNumberQuestion.validate_button_label'
-        db.delete_column(u'core_typednumberquestion', 'validate_button_label')
-
-        # Adding field 'TypedNumberAnswer.numberanswer_ptr'
-        db.add_column(u'core_typednumberanswer', u'numberanswer_ptr',
-                      self.gf('django.db.models.fields.related.OneToOneField')(default=1, to=orm['core.NumberAnswer'], unique=True, primary_key=True),
-                      keep_default=False)
-
-        # Deleting field 'TypedNumberAnswer.baseanswer_ptr'
-        db.delete_column(u'core_typednumberanswer', u'baseanswer_ptr_id')
-
-        # Deleting field 'TypedNumberAnswer.value'
-        db.delete_column(u'core_typednumberanswer', 'value')
+        # Deleting field 'BaseChoiceField.position'
+        db.delete_column(u'core_basechoicefield', 'position')
 
 
     models = {
@@ -99,21 +33,16 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
-        u'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
+        u'authentication.wwuser': {
+            'Meta': {'object_name': 'WWUser'},
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Group']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
+            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '36'})
         },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
@@ -124,20 +53,25 @@ class Migration(SchemaMigration):
         },
         u'core.baseanswer': {
             'Meta': {'object_name': 'BaseAnswer'},
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'question': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.BaseQuestion']"}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['authentication.WWUser']"})
         },
         u'core.basechoicefield': {
-            'Meta': {'object_name': 'BaseChoiceField'},
+            'Meta': {'ordering': "['position']", 'object_name': 'BaseChoiceField'},
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'position': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'question': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.BaseQuestion']"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '120'})
         },
         u'core.basefeedback': {
             'Meta': {'object_name': 'BaseFeedback'},
-            'html_sentence': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
+            'html_sentence': ('django.db.models.fields.TextField', [], {}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': "u'Done'", 'max_length': '120'})
         },
         u'core.basequestion': {
             'Meta': {'object_name': 'BaseQuestion'},
@@ -147,36 +81,37 @@ class Migration(SchemaMigration):
             'label': ('django.db.models.fields.CharField', [], {'max_length': '220'}),
             'skip_button_label': ('django.db.models.fields.CharField', [], {'default': "u'Skip this question'", 'max_length': '120'})
         },
+        u'core.booleananswer': {
+            'Meta': {'object_name': 'BooleanAnswer', '_ormbases': [u'core.BaseAnswer']},
+            u'baseanswer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseAnswer']", 'unique': 'True', 'primary_key': 'True'}),
+            'value': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.BaseChoiceField']"})
+        },
         u'core.booleanquestion': {
             'Meta': {'object_name': 'BooleanQuestion'},
             u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'core.numberanswer': {
-            'Meta': {'object_name': 'NumberAnswer', '_ormbases': [u'core.BaseAnswer']},
-            u'baseanswer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseAnswer']", 'unique': 'True', 'primary_key': 'True'}),
-            'value': ('django.db.models.fields.IntegerField', [], {})
-        },
         u'core.mediachoicefield': {
-            'Meta': {'object_name': 'MediaChoiceField', '_ormbases': [u'core.BaseChoiceField']},
+            'Meta': {'ordering': "['position']", 'object_name': 'MediaChoiceField', '_ormbases': [u'core.BaseChoiceField']},
             u'basechoicefield_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseChoiceField']", 'unique': 'True', 'primary_key': 'True'}),
             'picture': ('sorl.thumbnail.fields.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
         },
         u'core.mediaradioquestion': {
             'Meta': {'object_name': 'MediaRadioQuestion'},
             u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'}),
-            'media_type': ('django.db.models.fields.CharField', [], {'max_length': '15'})
+            'media_type': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'})
         },
         u'core.mediaselectionquestion': {
             'Meta': {'object_name': 'MediaSelectionQuestion'},
             u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'}),
-            'media_type': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
-            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': 'u"I\'m done"', 'max_length': '120'})
+            'media_type': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
+            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': "u'Done'", 'max_length': '120'})
         },
         u'core.questionmediaattachement': {
             'Meta': {'object_name': 'QuestionMediaAttachement'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'picture': ('sorl.thumbnail.fields.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'question': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True'})
+            'question': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True'}),
+            'vine_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
         u'core.radioanswer': {
             'Meta': {'object_name': 'RadioAnswer', '_ormbases': [u'core.BaseAnswer']},
@@ -192,11 +127,12 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'StaticFeedback', '_ormbases': [u'core.BaseFeedback']},
             u'basefeedback_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseFeedback']", 'unique': 'True', 'primary_key': 'True'}),
             'picture': ('sorl.thumbnail.fields.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'question': ('django.db.models.fields.related.OneToOneField', [], {'blank': 'True', 'related_name': "'feedback'", 'unique': 'True', 'null': 'True', 'to': u"orm['core.BaseQuestion']"}),
             'source_title': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
             'source_url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         u'core.textchoicefield': {
-            'Meta': {'object_name': 'TextChoiceField', '_ormbases': [u'core.BaseChoiceField']},
+            'Meta': {'ordering': "['position']", 'object_name': 'TextChoiceField', '_ormbases': [u'core.BaseChoiceField']},
             u'basechoicefield_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseChoiceField']", 'unique': 'True', 'primary_key': 'True'})
         },
         u'core.textradioquestion': {
@@ -206,15 +142,19 @@ class Migration(SchemaMigration):
         u'core.textselectionquestion': {
             'Meta': {'object_name': 'TextSelectionQuestion'},
             u'basequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseQuestion']", 'unique': 'True', 'primary_key': 'True'}),
-            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': 'u"I\'m done"', 'max_length': '120'})
+            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': "u'Done'", 'max_length': '120'})
         },
         u'core.thematic': {
-            'Meta': {'object_name': 'Thematic'},
+            'Meta': {'ordering': "('position',)", 'object_name': 'Thematic'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'intro_button_label': ('django.db.models.fields.CharField', [], {'default': "u'See the data'", 'max_length': '120', 'null': 'True', 'blank': 'True'}),
+            'intro_description': ('django.db.models.fields.TextField', [], {}),
+            'position': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '250', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '120'})
         },
         u'core.thematicelement': {
-            'Meta': {'ordering': "['position']", 'object_name': 'ThematicElement'},
+            'Meta': {'ordering': "['position']", 'unique_together': "(('object_id', 'content_type', 'thematic'),)", 'object_name': 'ThematicElement'},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
@@ -223,7 +163,7 @@ class Migration(SchemaMigration):
         },
         u'core.typednumberanswer': {
             'Meta': {'object_name': 'TypedNumberAnswer', '_ormbases': [u'core.BaseAnswer']},
-            u'numberanswer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.NumberAnswer']", 'unique': 'True', 'primary_key': 'True'}),
+            u'baseanswer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseAnswer']", 'unique': 'True', 'primary_key': 'True'}),
             'value': ('django.db.models.fields.IntegerField', [], {})
         },
         u'core.typednumberquestion': {
@@ -232,7 +172,7 @@ class Migration(SchemaMigration):
             'max_number': ('django.db.models.fields.PositiveIntegerField', [], {'default': '100'}),
             'min_number': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'unit': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
-            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': 'u"I\'m done"', 'max_length': '120'})
+            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': "u'Done'", 'max_length': '120'})
         },
         u'core.userageanswer': {
             'Meta': {'object_name': 'UserAgeAnswer', '_ormbases': [u'core.UserProfileAnswer']},
@@ -241,10 +181,11 @@ class Migration(SchemaMigration):
         },
         u'core.useragequestion': {
             'Meta': {'object_name': 'UserAgeQuestion', '_ormbases': [u'core.UserProfileQuestion']},
-            u'userprofilequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.UserProfileQuestion']", 'unique': 'True', 'primary_key': 'True'})
+            u'userprofilequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.UserProfileQuestion']", 'unique': 'True', 'primary_key': 'True'}),
+            'validate_button_label': ('django.db.models.fields.CharField', [], {'default': "u'Done'", 'max_length': '120'})
         },
         u'core.userchoicefield': {
-            'Meta': {'object_name': 'UserChoiceField', '_ormbases': [u'core.BaseChoiceField']},
+            'Meta': {'ordering': "['position']", 'object_name': 'UserChoiceField', '_ormbases': [u'core.BaseChoiceField']},
             u'basechoicefield_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.BaseChoiceField']", 'unique': 'True', 'primary_key': 'True'}),
             'value': ('django.db.models.fields.CharField', [], {'max_length': '120', 'null': 'True', 'blank': 'True'})
         },
@@ -267,6 +208,13 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'UserGenderQuestion', '_ormbases': [u'core.UserProfileQuestion']},
             u'userprofilequestion_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.UserProfileQuestion']", 'unique': 'True', 'primary_key': 'True'})
         },
+        u'core.userposition': {
+            'Meta': {'object_name': 'UserPosition'},
+            'element_position': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'thematic_position': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['authentication.WWUser']", 'unique': 'True'})
+        },
         u'core.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
             'age': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True'}),
@@ -274,7 +222,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'living_country': ('django_countries.fields.CountryField', [], {'max_length': '2', 'null': 'True'}),
             'native_country': ('django_countries.fields.CountryField', [], {'max_length': '2', 'null': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'unique': 'True'})
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['authentication.WWUser']", 'unique': 'True'})
         },
         u'core.userprofileanswer': {
             'Meta': {'object_name': 'UserProfileAnswer', '_ormbases': [u'core.BaseAnswer']},
