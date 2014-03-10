@@ -23,7 +23,8 @@ arteww = angular
             '$http'
             '$translate'
             'UserPosition'
-            ($rootScope, $location, $route, $http, $translate, UserPosition)->
+            'ThirdParty'
+            ($rootScope, $location, $route, $http, $translate, UserPosition, ThirdParty)->
 
                 $rootScope.setLang = (lang)->
                     $translate.use lang
@@ -39,6 +40,9 @@ arteww = angular
                 $rootScope.backToBeginning = ->
                     UserPosition.thematicPosition 0
                     UserPosition.elementPosition 0
+
+                # Get thirdParty helpers
+                $rootScope.thirdParty = ThirdParty                
     ])
     .config([
             '$interpolateProvider'

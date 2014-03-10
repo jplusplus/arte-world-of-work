@@ -163,3 +163,22 @@ class VerifyToken(APIView):
         return Response(status=status.HTTP_200_OK)
 
 verify_auth_token = VerifyToken.as_view()
+
+
+class GPlusCount(APIView):
+    def get(self, request):
+        url = request.GET.get("url", None)
+
+        if url is None:
+            count = 0
+        else:
+            import urllib2, re
+            
+            usock = urllib2.urlopen('https://plusone.google.com/_/+1/fastbutton?url=%s' % url)
+            xml = usock.read()
+            usock.close()
+
+            root = re.search('<div\s+id="aggregateCount".+>([ 0-9>a-zA-Z]+)</div>', xml)            
+            count = root.group(1)
+        
+        return Response(status=status.HTTP_200_OK, data={'count': count})
