@@ -259,8 +259,11 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     id : scope.id
                     filters : filters
                 $Result.get request, (data) =>
+                    scope.$parent.fullwidth = no
                     if data.results.total_answers < 5
                         scope.$parent.nochart = yes
+                    else if data.results.chart_type is 'horizontal_bar'
+                        scope.$parent.fullwidth = yes
                     scope.data = data.results
                 undefined
 
