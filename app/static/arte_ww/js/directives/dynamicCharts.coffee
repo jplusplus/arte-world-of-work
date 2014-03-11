@@ -156,7 +156,7 @@ class HBarChart extends BarChart
 
     defineXY: =>
         @x = (do d3.scale.linear).range [0, @_size.width]
-        @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.2);
+        @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.5);
         @x.domain [0, _.max _.values @scope.data.results]
         @y.domain _.map @results, (d) -> d[0]
 
@@ -172,6 +172,18 @@ class HBarChart extends BarChart
         'dominant-baseline' : 'central'
 
     appendLegend: =>
+        do (@svg.selectAll '.legend').remove
+
+        data = (@svg.selectAll '.legend').data @results
+        entered = do data.enter
+
+        fObject = (entered.append 'foreignObject').attr
+            class : 'legend'
+            width : (d) => @x(d[1])
+            height: do @y.rangeBand
+            x : 0
+            y : (d) => @y(d[0]) + do @y.rangeBand
+        (fObject.append 'xhtml:body').html (d) => "<p>#{d[0]}</p>"
 
 class Histogram extends BarChart
     constructor: (@scope, @element) ->
