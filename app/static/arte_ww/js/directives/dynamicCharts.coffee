@@ -147,7 +147,7 @@ class HBarChart extends BarChart
         @margin =
             top : 0
             right : 10
-            bottom : 10
+            bottom : 0
             left : 10
 
         super @scope, @element
@@ -182,7 +182,7 @@ class HBarChart extends BarChart
             width : (d) => @x(d[1])
             height: do @y.rangeBand
             x : 0
-            y : (d) => @y(d[0]) + do @y.rangeBand
+            y : (d) => @y(d[0]) - 2 + do @y.rangeBand
         (fObject.append 'xhtml:body').html (d) => "<p>#{d[0]}</p>"
 
 class Histogram extends BarChart
