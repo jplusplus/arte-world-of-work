@@ -164,11 +164,17 @@
             background-color: @brand;
         }
 
-        svg .bar rect {
-            fill: @brand;
+        svg {
+            .bar rect {
+                fill: @brand;
 
-            &:hover {
-                fill: darken(@brand, 10%)
+                &:hover {
+                    fill: darken(@brand, 10%)
+                }
+            }
+
+            text.zero {
+                fill: @brand;
             }
         }
 

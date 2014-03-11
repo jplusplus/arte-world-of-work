@@ -170,6 +170,7 @@ class HBarChart extends BarChart
         x : 10
         y : (d) => @y(d[0]) + (do @y.rangeBand) / 2
         'dominant-baseline' : 'central'
+        class : (d) -> if (parseInt d[1]) is 0 then 'zero' else ' '
 
     appendLegend: =>
         do (@svg.selectAll '.legend').remove
@@ -179,7 +180,7 @@ class HBarChart extends BarChart
 
         fObject = (entered.append 'foreignObject').attr
             class : 'legend'
-            width : (d) => @x(d[1])
+            width : @_size.width
             height: do @y.rangeBand
             x : 0
             y : (d) => @y(d[0]) - 2 + do @y.rangeBand
