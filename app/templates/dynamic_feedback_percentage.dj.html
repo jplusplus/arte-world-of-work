@@ -2,7 +2,7 @@
 {% load i18n %}
 {% if use_profile_attr %}
     {% if profile_attr == "gender" %}
-        {% if profile.gender == "female" %}
+        {% if profile_attr_value == "female" %}
             {% blocktrans %}
                 <strong>{{value}}%</strong> of the females answered like you
             {% endblocktrans %}
@@ -12,15 +12,15 @@
             {% endblocktrans %}
         {% endif %}
     {% elif profile_attr == "age" %}
-        {% blocktrans with age=profile.age %}
+        {% blocktrans with age=profile_attr_value %}
             <strong>{{value}}%</strong> of persons aged {{ age }} years answered like you
         {% endblocktrans %}
     {% elif profile_attr == "living_country" %}
-        {% blocktrans with country=profile.living_country %}
+        {% blocktrans with country=profile_attr_value %}
             <strong>{{value}}%</strong> of persons living in {{ country }} answered like you
         {% endblocktrans %}
     {% elif profile_attr == "native_country" %}
-        {% blocktrans with country=profile.native_country %}
+        {% blocktrans with country=profile_attr_value %}
             <strong>{{value}}%</strong> of persons from {{ country }} answered like you
         {% endblocktrans %}
     {% endif %}

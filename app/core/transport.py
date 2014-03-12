@@ -33,6 +33,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.template import loader, Context, Template
 from django.template.loader import render_to_string
+from django_countries import countries
 from app.core.types import CHART_TYPES
 import random 
 
@@ -170,10 +171,10 @@ class DynamicFeedback(object):
             answers_set = all_answers
 
         context_dict = {
-            'total_number':      answers_set.count(),
-            'profile':           self.profile,
-            'profile_attr':      profile_attr,
-            'use_profile_attr':  profile_attr != None,
+            'total_number':        answers_set.count(),
+            'profile_attr':        profile_attr,
+            'profile_attr_value':  self.get_profile_value(profile_attr),
+            'use_profile_attr':    profile_attr != None,
         }
 
         if myanswer:
@@ -190,6 +191,15 @@ class DynamicFeedback(object):
             rendered = render_to_string('dynamic_feedback_generic.dj.html', context_dict)
         self.html_sentence = self.clean_rendered_html(rendered)
         return self.html_sentence
+
+    def get_profile_value(self, profile_attr):
+        if profile_attr == None:
+            return None 
+        value = getattr(self.profile, profile_attr, None)
+        if profile_attr in ('living_country', 'native_country'):
+            value = countries.name(value)
+        return value
+
 
     def clean_rendered_html(self, rendered):
         rendered = rendered.replace('<span>',  '')

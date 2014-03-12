@@ -507,7 +507,29 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         self.assertEqual(feedback.html_sentence, 
             u"<strong>50%</strong> of persons living in France answered like you")
 
+    def test_feedback_native_country_count(self):
+        user = User.objects.create()
+        user.userprofile.native_country = 'FR'
+        user.userprofile.save()
+        feedback = self.create_dynfeedback(user=user,
+                                           percentage=False, 
+                                           question=self.question4,
+                                           value=20, other_value=40)
 
+        self.assertEqual(feedback.html_sentence, 
+            u"<strong>502</strong> persons from France answered like you")
+
+    def test_feedback_native_country_percentage(self):
+        user = User.objects.create()
+        user.userprofile.native_country = 'FR'
+        user.userprofile.save()
+        feedback = self.create_dynfeedback(user=user,
+                                           percentage=True, 
+                                           question=self.question4,
+                                           value=20, other_value=40)
+
+        self.assertEqual(feedback.html_sentence, 
+            u"<strong>50%</strong> of persons from France answered like you")
 
 class UtilsTestCase(TestCase, utils.TestCaseMixin):
 
