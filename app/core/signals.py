@@ -99,8 +99,8 @@ def create_boolean_choices(sender, **kwargs):
     # I must reckon that's clever.
     if kwargs.get('created', False) and not kwargs.get('raw'):
         instance = kwargs['instance']
-        yes = TextChoiceField(title='yes', question=instance)
-        no  = TextChoiceField(title='no', question=instance)
+        yes = TextChoiceField(title='yes', question=instance, position=1)
+        no  = TextChoiceField(title='no',  question=instance, position=2)
         yes.save()
         no.save()
 
@@ -110,9 +110,11 @@ def create_user_choice_fieds(sender, **kwargs):
     if kwargs.get('created', False) and not kwargs.get('raw'):
         question = kwargs['instance']
         field = UserProfile._meta.get_field(question.__class__.profile_attribute)
-        for c in field.choices: 
-            field = UserChoiceField(value=c[0], title= c[1], question=question)
+        position = 1
+        for c in field.choices:
+            field = UserChoiceField(value=c[0], title=c[1], question=question, position=position)
             field.save()
+            position += 1
 
 def create_user_informations(sender, **kwargs):
     # will create a profile & a token for evey newly created user

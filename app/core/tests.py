@@ -41,9 +41,9 @@ class CoreTestCase(TestCase):
         self.question1 = TextSelectionQuestion(label='Question1 ?', hint_text='Chose one answer')
         self.question1.save()
         self.question1_choices = (
-            TextChoiceField(title='choice1', question=self.question1),
-            TextChoiceField(title='choice2', question=self.question1),
-            TextChoiceField(title='choice3', question=self.question1),
+            TextChoiceField(title='choice1', question=self.question1, position=1),
+            TextChoiceField(title='choice2', question=self.question1, position=2),
+            TextChoiceField(title='choice3', question=self.question1, position=3),
         )
         [c.save() for c in self.question1_choices]
 
@@ -51,9 +51,9 @@ class CoreTestCase(TestCase):
         self.question2 = TextRadioQuestion(label='Question2 ?', hint_text='Chose one answer')
         self.question2.save()
         self.question2_choices = (
-            TextChoiceField(title='choice1', question=self.question2),
-            TextChoiceField(title='choice2', question=self.question2),
-            TextChoiceField(title='choice3', question=self.question2),
+            TextChoiceField(title='choice1', question=self.question2, position=1),
+            TextChoiceField(title='choice2', question=self.question2, position=2),
+            TextChoiceField(title='choice3', question=self.question2, position=3),
         )
         [c.save() for c in self.question2_choices]
 
@@ -296,9 +296,9 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
         self.question2 = MediaSelectionQuestion.objects.create(label='label', hint_text='hint')
         self.question2_choices = (
-            TextChoiceField.objects.create(title='choice1', question=self.question2),
-            TextChoiceField.objects.create(title='choice2', question=self.question2),
-            TextChoiceField.objects.create(title='choice3', question=self.question2),
+            TextChoiceField.objects.create(title='choice1', question=self.question2, position=1),
+            TextChoiceField.objects.create(title='choice2', question=self.question2, position=2),
+            TextChoiceField.objects.create(title='choice3', question=self.question2, position=3),
         )
         self.question3 = BooleanQuestion.objects.create(label='label', hint_text='hint')
         
@@ -483,6 +483,29 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
             u"<strong>502</strong> persons aged 27 years answered like you")
 
 
+    def test_feedback_living_country_count(self):
+        user = User.objects.create()
+        user.userprofile.living_country = 'FR'
+        user.userprofile.save()
+        feedback = self.create_dynfeedback(user=user,
+                                           percentage=False, 
+                                           question=self.question4,
+                                           value=20, other_value=40)
+
+        self.assertEqual(feedback.html_sentence, 
+            u"<strong>502</strong> persons living in France answered like you")
+
+    def test_feedback_living_country_percentage(self):
+        user = User.objects.create()
+        user.userprofile.living_country = 'FR'
+        user.userprofile.save()
+        feedback = self.create_dynfeedback(user=user,
+                                           percentage=True, 
+                                           question=self.question4,
+                                           value=20, other_value=40)
+
+        self.assertEqual(feedback.html_sentence, 
+            u"<strong>50%</strong> of persons living in France answered like you")
 
 
 

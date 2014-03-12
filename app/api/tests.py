@@ -35,9 +35,9 @@ def init(instance):
     instance.feedback2 = instance.createFeedback(StaticFeedback, **default_source)
 
     # question 3 choices
-    instance.question3_choice1 = instance.createChoice(instance.question3, TextChoiceField)
-    instance.question3_choice2 = instance.createChoice(instance.question3, TextChoiceField)
-    instance.question3_choice3 = instance.createChoice(instance.question3, TextChoiceField)
+    instance.question3_choice1 = instance.createChoice(instance.question3, TextChoiceField, position=1)
+    instance.question3_choice2 = instance.createChoice(instance.question3, TextChoiceField, position=2)
+    instance.question3_choice3 = instance.createChoice(instance.question3, TextChoiceField, position=3)
 
     instance.question1.set_thematic(instance.thematic1, 1) 
     instance.question2.set_thematic(instance.thematic1, 2) 
@@ -49,10 +49,10 @@ def init(instance):
 
     # thematic 2 question
     instance.question5 = instance.createQuestion(MediaSelectionQuestion, media_type='icon')
-    instance.question5_choice1 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict1')
-    instance.question5_choice2 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict2')
-    instance.question5_choice3 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict3')
-    instance.question5_choice4 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict3')
+    instance.question5_choice1 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict1', position=1)
+    instance.question5_choice2 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict2', position=2)
+    instance.question5_choice3 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict3', position=3)
+    instance.question5_choice4 = instance.createChoice(instance.question5, MediaChoiceField, picture='pict3', position=4)
     instance.question5.set_thematic(instance.thematic2, 1)
 
     # answers creation
