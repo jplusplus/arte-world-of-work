@@ -473,8 +473,8 @@ class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
 
     def test_boolean_question_results(self):
         question   = self.question2
-        yes_choice = question.choices().filter(title='yes')[0]
-        no_choice  = question.choices().filter(title='no' )[0]
+        yes_choice = question.choices().get(title='yes')
+        no_choice  = question.choices().get(title='no' )
 
         url = reverse('question-results', kwargs={ 'pk': question.pk })
         response        = self.client.get(url) 

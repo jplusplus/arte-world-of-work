@@ -233,6 +233,11 @@ class RadioSerializer(serializers.ModelSerializer):
             raise ValidationError(_('This choice {c} is not related to the answered question').format(c=choice))
         return attrs
 
+class BooleanSerializer(RadioSerializer):
+    class Meta: 
+        model = BooleanAnswer        
+        exclude = ('content_type',)
+
 class SelectionSerializer(serializers.ModelSerializer): 
     class Meta: 
         model = SelectionAnswer
@@ -274,7 +279,7 @@ class AnswerSerializer(mixins.InheritedModelMixin):
         model = BaseAnswer
 
     model_mapping = {
-        BooleanAnswer:     RadioSerializer,
+        BooleanAnswer:     BooleanSerializer,
         RadioAnswer:       RadioSerializer,
         SelectionAnswer:   SelectionSerializer,
         TypedNumberAnswer: TypedNumberSerializer,
