@@ -3,30 +3,18 @@
 {% if use_profile_attr %}
     {% if profile_attr == "gender" %}
         {% if profile_attr_value == "female" %}
-            {% blocktrans %}
-                <strong>{{value}}</strong> females answered like you
-            {% endblocktrans %}
+            {% blocktrans %}<strong>{{value}}</strong> females answered like you{% endblocktrans %}
         {% else %}
-            {% blocktrans %}
-                <strong>{{value}}</strong> males answered like you
-            {% endblocktrans %}
+            {% blocktrans %}<strong>{{value}}</strong> males answered like you{% endblocktrans %}
         {% endif %}
     {% elif profile_attr == "age" %}
-        {% blocktrans with age=profile_attr_value %}
-            <strong>{{value}}</strong> persons aged {{ age }} years answered like you
-        {% endblocktrans %}
+        {% blocktrans with age=profile_attr_value %}<strong>{{value}}</strong> persons aged {{ age }} years answered like you{% endblocktrans %}
     {% elif profile_attr == "living_country" %}
-        {% blocktrans with country=profile_attr_value %}
-            <strong>{{value}}</strong> persons living in {{ country }} answered like you
-        {% endblocktrans %}
+        {% blocktrans with country=profile_attr_value %}<strong>{{value}}</strong> persons living in {{ country }} answered like you{% endblocktrans %}
     {% elif profile_attr == "native_country" %}
-        {% blocktrans with country=profile_attr_value %}
-            <strong>{{value}}</strong> persons from {{ country }} answered like you
-        {% endblocktrans %}
+        {% blocktrans with country=profile_attr_value %}<strong>{{value}}</strong> persons from {{ country }} answered like you{% endblocktrans %}
     {% endif %}
 {% else %}
-    {% blocktrans %}
-        <strong>{{value}}</strong> persons answered like you
-    {% endblocktrans %}
+    {% blocktrans %}<strong>{{value}}</strong> persons answered like you{% endblocktrans %}
 {% endif %}
 {% endspaceless %}

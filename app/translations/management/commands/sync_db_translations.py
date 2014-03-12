@@ -33,6 +33,7 @@ def extract_strings_from_db(verbosity=1):
             for field_name in opts.fields:
                 src_string = getattr(instance, '_%s' % field_name, None)
                 if src_string is not None and src_string not in strings:
+                    src_string = src_string.replace('"', '\"')
                     strings.append(src_string)
 
     return strings

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-12 19:29+0100\n"
+"POT-Creation-Date: 2014-03-12 19:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,165 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: i18n_strings.py:2
-msgid "Yes"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "No"
-msgstr ""
-
-#: i18n_strings.py:2 core/models.py:41 core/types.py:11
-msgid "Female"
-msgstr ""
-
-#: i18n_strings.py:2 core/models.py:40 core/types.py:10
-msgid "Male"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Your parents"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Other family members"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Your partner"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Your friends"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "The bank"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "A DVD         (around 30 €)       "
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "An iPad                               (around 490 €)       "
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Your boss' fixie bike (900 €)"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "My parents’ opinion"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "The job market"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "My professors’ advice"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "My personal ambition"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "The cost of studies"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Sure, I love my job."
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Yes, but only to keep myself busy."
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "No way, I’m only in it for the money."
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Yes, I’m more or less living the dream."
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "No, I had to face reality."
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "No, that job does not even exist anymore."
-msgstr ""
-
-#: i18n_strings.py:2
-msgid ""
-"Worried about privacy? You should. We are as well. <br> That’s why we don’t "
-"store any personal information about you. Entering your age, gender, country "
-"of birth and residence will allow you to compare yourself to people like you "
-"- that’s all! "
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Let's go!"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "You"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid ""
-"Temporary contracts. Permanent job-hunt. Playing online poker for a living, "
-"cooking for all your flat-mates, or days of writing and editing on "
-"Wikipedia. Economists measure (un)employment. But that’s not what it is. "
-"<br> What’s work for you? Let us know and find out about others!"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Your Work"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid ""
-"The cash machine in your bank’s local branch fuels your life. But what if "
-"your source of money dries up? Doing small jobs here and there, selling "
-"stuff on ebay, renting their home to tourists, asking family and friends for "
-"cash. That’s what young people do to make ends meet. <br> How do you manage "
-"to pull through? Let us know and find out about others!"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Your Money"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid ""
-"Your teachers have always told you that being good at Maths and English, "
-"learning to type with ten fingers, enrolling auto mechanic training or "
-"studying law will guarantee you a quiet life. <br> What are the skills that "
-"you really need in your working life? Let us know and find out about others!"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid "Your Education"
-msgstr ""
-
-#: i18n_strings.py:2
-msgid ""
-"What’s a minimum salary that doesn’t destroy jobs? How can we ensure that "
-"women make as much money as men? That’s the kind of questions that "
-"politicians debate day in day out. A very few (lunatics?) think we might as "
-"well just rid ourselves of economic growth and pay everybody a universal "
-"income - no obligation to work. <br>"
-msgstr ""
-
 #: settings.py:52
 msgid "English"
 msgstr ""
 
 #: settings.py:53
+msgid "German"
+msgstr ""
+
+#: settings.py:54
 msgid "French"
 msgstr ""
 
@@ -205,6 +55,14 @@ msgstr ""
 
 #: core/models.py:36 core/types.py:6
 msgid "Image (big)"
+msgstr ""
+
+#: core/models.py:40 core/types.py:10
+msgid "Male"
+msgstr ""
+
+#: core/models.py:41 core/types.py:11
+msgid "Female"
 msgstr ""
 
 #: core/models.py:54 core/models.py:278
@@ -325,113 +183,74 @@ msgstr ""
 
 #: templates/dynamic_feedback_count.dj.html:6
 #, python-format
-msgid ""
-"\n"
-"                <strong>%(value)s</strong> females answered like you\n"
-"            "
+msgid "<strong>%(value)s</strong> females answered like you"
 msgstr ""
 
-#: templates/dynamic_feedback_count.dj.html:10
+#: templates/dynamic_feedback_count.dj.html:8
+#, python-format
+msgid "<strong>%(value)s</strong> males answered like you"
+msgstr ""
+
+#: templates/dynamic_feedback_count.dj.html:11
+#, python-format
+msgid "<strong>%(value)s</strong> persons aged %(age)s years answered like you"
+msgstr ""
+
+#: templates/dynamic_feedback_count.dj.html:13
 #, python-format
 msgid ""
-"\n"
-"                <strong>%(value)s</strong> males answered like you\n"
-"            "
+"<strong>%(value)s</strong> persons living in %(country)s answered like you"
 msgstr ""
 
 #: templates/dynamic_feedback_count.dj.html:15
 #, python-format
-msgid ""
-"\n"
-"            <strong>%(value)s</strong> persons aged %(age)s years answered "
-"like you\n"
-"        "
+msgid "<strong>%(value)s</strong> persons from %(country)s answered like you"
 msgstr ""
 
-#: templates/dynamic_feedback_count.dj.html:19
+#: templates/dynamic_feedback_count.dj.html:18
 #, python-format
-msgid ""
-"\n"
-"            <strong>%(value)s</strong> persons living in %(country)s "
-"answered like you\n"
-"        "
-msgstr ""
-
-#: templates/dynamic_feedback_count.dj.html:23
-#, python-format
-msgid ""
-"\n"
-"            <strong>%(value)s</strong> persons from %(country)s answered "
-"like you\n"
-"        "
-msgstr ""
-
-#: templates/dynamic_feedback_count.dj.html:28
-#, python-format
-msgid ""
-"\n"
-"        <strong>%(value)s</strong> persons answered like you\n"
-"    "
+msgid "<strong>%(value)s</strong> persons answered like you"
 msgstr ""
 
 #: templates/dynamic_feedback_generic.dj.html:3
 #, python-format
 msgid ""
-"\n"
-"    Until this day <strong>%(total_number)s</strong> persons answered this "
-"question\n"
+"Until this day <strong>%(total_number)s</strong> persons answered this "
+"question"
 msgstr ""
 
 #: templates/dynamic_feedback_percentage.dj.html:6
 #, python-format
-msgid ""
-"\n"
-"                <strong>%(value)s%%</strong> of the females answered like "
-"you\n"
-"            "
+msgid "<strong>%(value)s%%</strong> of the females answered like you"
 msgstr ""
 
-#: templates/dynamic_feedback_percentage.dj.html:10
+#: templates/dynamic_feedback_percentage.dj.html:8
+#, python-format
+msgid "<strong>%(value)s%%</strong> of the males answered like you"
+msgstr ""
+
+#: templates/dynamic_feedback_percentage.dj.html:11
 #, python-format
 msgid ""
-"\n"
-"                <strong>%(value)s%%</strong> of the males answered like you\n"
-"            "
+"<strong>%(value)s%%</strong> of persons aged %(age)s years answered like you"
+msgstr ""
+
+#: templates/dynamic_feedback_percentage.dj.html:13
+#, python-format
+msgid ""
+"<strong>%(value)s%%</strong> of persons living in %(country)s answered like "
+"you"
 msgstr ""
 
 #: templates/dynamic_feedback_percentage.dj.html:15
 #, python-format
 msgid ""
-"\n"
-"            <strong>%(value)s%%</strong> of persons aged %(age)s years "
-"answered like you\n"
-"        "
+"<strong>%(value)s%%</strong> of persons from %(country)s answered like you"
 msgstr ""
 
-#: templates/dynamic_feedback_percentage.dj.html:19
+#: templates/dynamic_feedback_percentage.dj.html:18
 #, python-format
-msgid ""
-"\n"
-"            <strong>%(value)s%%</strong> of persons living in %(country)s "
-"answered like you\n"
-"        "
-msgstr ""
-
-#: templates/dynamic_feedback_percentage.dj.html:23
-#, python-format
-msgid ""
-"\n"
-"            <strong>%(value)s%%</strong> of persons from %(country)s "
-"answered like you\n"
-"        "
-msgstr ""
-
-#: templates/dynamic_feedback_percentage.dj.html:28
-#, python-format
-msgid ""
-"\n"
-"        <strong>%(value)s%%</strong> of persons answered like you\n"
-"    "
+msgid "<strong>%(value)s%%</strong> of persons answered like you"
 msgstr ""
 
 #: translations/i18n_strings.py:2
