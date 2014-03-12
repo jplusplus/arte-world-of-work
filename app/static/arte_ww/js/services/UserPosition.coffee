@@ -19,8 +19,8 @@ class UserPositionService
         thematicPosition: undefined
         elementPosition: undefined
 
-    constructor: (@$http, utils) ->
-        utils.authenticate (=>
+    constructor: (@$http, @utils) ->
+        @utils.authenticate (=>
             request =
                 url : '/api/my-position'
                 method : 'GET'
@@ -61,9 +61,11 @@ class UserPositionService
         @positions.elementPosition
 
     nextThematic: =>
+        @currentState( @utils.states.thematic.LANDING )
         @thematicPosition @positions.thematicPosition + 1
 
     previousThematic: =>
+        @currentState( @utils.states.thematic.ELEMENTS )
         @thematicPosition @positions.thematicPosition - 1
 
     nextElement: =>

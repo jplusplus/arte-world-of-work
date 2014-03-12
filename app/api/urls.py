@@ -16,8 +16,9 @@ router.register(r'my-answers',       views.MyAnswerViewSet,        base_name='my
 router.register(r'answers',          views.AnswerViewSet,          base_name='answer')
 
 urlpatterns = patterns('',
-    url(r'^my-position/', views.MyPositionView.as_view(), name='my-position'),
-    url(r'^verify-token/', 'app.api.views.verify_auth_token', name='verify-token')
+    url(r'^my-position/',  views.MyPositionView.as_view(), name='my-position'),
+    url(r'^gplus-count/',  views.GPlusCount.as_view(), name='gplus-count'),
+    url(r'^verify-token/', 'app.api.views.verify_auth_token', name='verify-token'),
 )
 urlpatterns += router.urls
 

@@ -2,8 +2,9 @@
     <div class="answer">
         <h4 class="answer-title">[[currentAnswer.label]]</h4>
         <div class="answer-content">
-            <dynamic-chart ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-id="[[currentAnswer.id]]" filters="filters"></dynamic-chart>
-            <div ng-class="{'answer-description--nochart':nochart}" class="answer-description">
+            <dynamic-chart ng-class="{'chart--fullwidth':fullwidth}" ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-id="[[currentAnswer.id]]" filters="filters"></dynamic-chart>
+            <p class='chart--nochart' ng-show='nochart'>Il n'y a pas assez de données pour les filtres sélectionnés.</p>
+            <div ng-class="{'answer-description--nochart':nochart||fullwidth}" class="answer-description">
                 <p ng-bind-html="getTrustedHTML()"></p>
             </div>
         </div>
@@ -33,6 +34,6 @@
     <div class="answer-filters__age">
         <p ng-if="filters.age_min !== filters.age_max"><strong>[[filters.age_min]]</strong> à <strong>[[filters.age_max]]</strong> ans</p>
         <p ng-if="filters.age_min === filters.age_max"><strong>[[filters.age_min]]</strong> ans</p>
-        <div slider ng-from='filters.age_min' ng-to='filters.age_max' start='0' end='99'></div>
+        <div slider ng-from='filters.age_min' ng-to='filters.age_max' start='0' end='99' ng-attr-callback='set'></div>
     </div>
 </div>

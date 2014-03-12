@@ -44,11 +44,11 @@ class AnswerService
 
         promise.success (data)=>
             @addAnswer(data)
-            cb.success(data)
+            cb.success(data) if cb? and angular.isFunction cb.success
 
         promise.error (data)=>
             @onAnswerError(data)
-            cb.error(data)
+            cb.error(data) if cb? and angular.isFunction cb.error
 
         return promise
 

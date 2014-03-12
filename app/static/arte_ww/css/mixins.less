@@ -117,7 +117,8 @@
     		}
 
             &--selected:before {                
-                background: url("../img/ui/pic-valider-small.png") center center no-repeat @brand;
+                background: url("../img/ui/pic-valider.svg") center center no-repeat @brand;
+                background-size: 300% auto;
             }
         }
 
@@ -129,19 +130,18 @@
                 border-color:@brand;
             }
 
-            &--boolean__choice:hover {
+            &--boolean__choice:last-child:before {                
+                background:darken(@brand, 15%);
+                border-color:darken(@brand, 15%);
+            }
+
+            &--boolean__choice:hover,
+            &--boolean__choice--selected {
                 color:@brand;
                 &:before {                    
                     border-color:@brand;
                     background:white;
                 }
-            }
-
-            &--boolean__choice--selected {
-                &:before {
-                    border-color:darken(@brand, 10);
-                    background:darken(@brand, 10);
-                }                  
             }
 
             &--typed-number, &--multiple, &--user-country {                
@@ -164,11 +164,17 @@
             background-color: @brand;
         }
 
-        svg .bar rect {
-            fill: @brand;
+        svg {
+            .bar rect {
+                fill: @brand;
 
-            &:hover {
-                fill: darken(@brand, 10%)
+                &:hover {
+                    fill: darken(@brand, 10%)
+                }
+            }
+
+            text.zero {
+                fill: @brand;
             }
         }
 

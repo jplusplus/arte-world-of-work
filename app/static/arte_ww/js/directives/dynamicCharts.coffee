@@ -147,7 +147,7 @@ class HBarChart extends BarChart
         @margin =
             top : 0
             right : 10
-            bottom : 10
+            bottom : 0
             left : 10
 
         super @scope, @element
@@ -156,7 +156,7 @@ class HBarChart extends BarChart
 
     defineXY: =>
         @x = (do d3.scale.linear).range [0, @_size.width]
-        @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.2);
+        @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.5);
         @x.domain [0, _.max _.values @scope.data.results]
         @y.domain _.map @results, (d) -> d[0]
 
@@ -170,8 +170,21 @@ class HBarChart extends BarChart
         x : 10
         y : (d) => @y(d[0]) + (do @y.rangeBand) / 2
         'dominant-baseline' : 'central'
+        class : (d) -> if (parseInt d[1]) is 0 then 'zero' else ' '
 
     appendLegend: =>
+        do (@svg.selectAll '.legend').remove
+
+        data = (@svg.selectAll '.legend').data @results
+        entered = do data.enter
+
+        fObject = (entered.append 'foreignObject').attr
+            class : 'legend'
+            width : @_size.width
+            height: do @y.rangeBand
+            x : 0
+            y : (d) => @y(d[0]) - 2 + do @y.rangeBand
+        (fObject.append 'xhtml:body').html (d) => "<p>#{d[0]}</p>"
 
 class Histogram extends BarChart
     constructor: (@scope, @element) ->
@@ -246,7 +259,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     else throw "Chart type '#{scope.data.chart_type}' does not exist."
 
             update = =>
-                return if (scope.nochart is 'true') or not scope.id? or scope.id is ""
+                return if not scope.id? or scope.id is ""
 
                 filters = angular.copy scope.filters
                 if filters.male isnt filters.female
@@ -259,8 +272,12 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     id : scope.id
                     filters : filters
                 $Result.get request, (data) =>
+                    scope.$parent.fullwidth = no
+                    scope.$parent.nochart = no
                     if data.results.total_answers < 5
                         scope.$parent.nochart = yes
+                    else if data.results.chart_type is 'horizontal_bar'
+                        scope.$parent.fullwidth = yes
                     scope.data = data.results
                 undefined
 

@@ -20,21 +20,17 @@ class ThematicService
         # we will first load a thematic list in that array. It will help us 
         # to guess a thematic ID by its position  
         @metaList  = [] 
-
         # first (fast) request where we get the list of thematics and their positions 
         $http(@listConfig).success (data)=>
             @positionList = @userPosition.createWrapper(data)
             # watches 
-            @rootScope.$watch =>
-                    @userPosition.thematicPosition()
-                , @onThematicPositionChanged
+            @rootScope.$watch (=> do @userPosition.thematicPosition), @onThematicPositionChanged
 
         @nestedThematics = $resource @resourceConfig.url, {id: 1}, 
             @resourceConfig.actions
 
     # API method / internal functions 
-    all: (cb)=> 
-        return @nestedThematics.all cb
+    all: (cb)=> @nestedThematics.all cb
 
     get: (params, cb)=>
         @nestedThematics.get params, (thematic)=>
@@ -43,18 +39,15 @@ class ThematicService
 
     getAt: (position, cb)=>
         return unless @positionList
+        positionAt = @positionList.getAt(position)             
+        if positionAt? and positionAt.id?
+            if @loadedThematics[positionAt.id]?
+                cb @loadedThematics[positionAt.id]        
+            else
+                @get(id: positionAt.id, cb)
 
-        id = @positionList.getAt(position).id # we have to check thematic list 
-        thematic = @loadedThematics[id]
-        if thematic?
-            cb(thematic)
-        else
-            @get(id: id, cb)
-
-    onThematicPositionChanged: (position)=>
-        @getAt position, (thematic)=> 
-            @currentThematic = thematic
-
+    onThematicPositionChanged: (position)=>        
+        @getAt position, (thematic)=> @currentThematic = thematic
 
     current: => @currentThematic
 

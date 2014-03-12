@@ -23,8 +23,10 @@ angular.module('arte-ww').directive 'surveyElement', [
                         question: scope.element.id 
                         value: answer
 
-                    answerService.answer answerParams,
-                        success: scope.next
+                    # Save the answer
+                    answerService.answer answerParams
+                    # Add go to the new question instantanetly
+                    do scope.next                        
             ]
 
             link: (scope, elem, attrs)->
