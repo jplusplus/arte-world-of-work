@@ -76,9 +76,6 @@ class QuestionMediaAttachement(mixins.PictureMixin):
 class ThematicElement(models.Model):
     class Meta:
         ordering= ['position']
-        unique_together = (
-            ('object_id', 'content_type', 'thematic'),
-        )
 
     content_type   = models.ForeignKey(ContentType)
     object_id      = models.PositiveIntegerField()
