@@ -58,6 +58,10 @@
     </div>
 
     <!-- step 2 -> all thematic/feedback and question are now done --> 
-    <div class="survey-navigator--end" ng-switch-when="2"></div>
+    <div class="survey-navigator--end" ng-switch-when="2">
+        <p ng-translate>Great job! Want to make extra hours?</p>
+        <a class="btn btn-primary" ng-href="{% url 'results' %}">Results</a>
+        <a class="btn btn-primary" ng-click="backToBeginning()">Back to the beginning</a>
+    </div>
 
 </div>

@@ -40,6 +40,7 @@ arteww = angular
                 $rootScope.backToBeginning = ->
                     UserPosition.thematicPosition 0
                     UserPosition.elementPosition 0
+                    $location.url "/"
 
                 # Get thirdParty helpers
                 $rootScope.thirdParty = ThirdParty                
