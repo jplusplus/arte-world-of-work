@@ -132,8 +132,8 @@ def bind():
     # pre_save.connect(set_thematic_position, sender=Thematic)
     
     # will trigger `create_boolean` after every boolean question creation
-    post_save.connect(create_boolean_choices, sender=BooleanQuestion)
-    post_save.connect(create_user_choice_fieds, sender=UserGenderQuestion)
+    # post_save.connect(create_boolean_choices, sender=BooleanQuestion)
+    # post_save.connect(create_user_choice_fieds, sender=UserGenderQuestion)
 
     # create user information on user created
     post_save.connect(create_user_informations, sender=get_user_model())
