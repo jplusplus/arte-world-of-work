@@ -395,6 +395,10 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         self.assertIsInstance(results, transport.HorizontalBarChart)
         self.assertEqual(results.chart_type, 'horizontal_bar')
         self.check_results(results)
+        total_percentage = 0 
+        for (key,value) in results.results.items():
+            total_percentage += value
+        self.assertTrue(total_percentage <= 100)  
 
     def test_boolean_question_results(self):
         results = self.question3.results()
