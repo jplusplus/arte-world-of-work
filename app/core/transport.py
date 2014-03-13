@@ -35,13 +35,13 @@ from django.template import loader, Context, Template
 from django.template.loader import render_to_string
 from django_countries import countries
 from app.core.types import CHART_TYPES
-import random 
+import random
 
 class ResultObject(object):
     def __init__(self, question, queryset):
         self.question = question
         self.queryset = queryset
-        self.total_answers = float(queryset.count())
+        self.total_answers = queryset.count()
         self.max_id = 0
         self.sets = {}
         self.results = {}
@@ -59,7 +59,7 @@ class ResultObject(object):
             'sets':          self.sets,
             'results':       self.results,
             'chart_type':    self.chart_type,
-            'total_answers': int(self.total_answers)
+            'total_answers': self.total_answers
         }
 
 
@@ -80,7 +80,7 @@ class Histogramme(ResultObject):
                 int_max = gap * (i+1)
 
                 answers = self.queryset.filter(value__gte=int_min, value__lt=int_max).count()
-                percentage =  answers * 100.0 / self.total_answers
+                percentage =  answers * 100.0 / float(self.total_answers)
                 percentage = int(percentage)
                 self.add_set(mininum=int_min, maximum=int_max, percentage=percentage)
 
@@ -100,19 +100,35 @@ class Histogramme(ResultObject):
         return self.max_id + 1
 
 class BarChart(ResultObject):
+    def __init__(self, question, queryset):
+        super(BarChart, self).__init__(question, queryset)
+        self.check_if_multiple()
+
     def create_sets(self):
         if int(self.total_answers) > 0:
             for choice in self.question.choices():
-                answers = self.queryset.filter(value=choice).count()
-                percentage = answers * 100.0 / self.total_answers
+                answers = self.queryset.filter(value=choice)
+                percentage = answers.count() * 100.0 / self.total_answers
                 percentage = int(percentage)
                 self.add_set(choice, percentage)
 
     def add_set(self, choice, value): 
-        self.sets[choice.id] = {
+        self.sets[choice.id] = { 
             'title': choice.title
         }
         self.results[choice.id] = value
+
+    def check_if_multiple(self):
+        if self.contains_multiple_answer():
+            # we recompute total answers, we need to be sure to count every 
+            self.total_answers = 0
+            for choice in self.question.choices():
+                self.total_answers += self.queryset.filter(value=choice).count()
+
+    def contains_multiple_answer(self):
+        answer_type = self.question.__class__.answer_type
+        value_field = answer_type._meta.get_field('value')
+        return hasattr(value_field, 'm2m_db_table')
 
 class HorizontalBarChart(BarChart):
     chart_type = CHART_TYPES.HORIZONTAL_BAR
