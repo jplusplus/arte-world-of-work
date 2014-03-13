@@ -3,9 +3,9 @@ Key responsibilities of ThematicCtrl
     - handle different thematic states: thematic introduction
 ### 
 class ThematicCtrl
-    @$inject: [ '$rootScope', '$scope', '$sce', 'utils', 'UserPosition', 'Thematic' ]
+    @$inject: [ '$rootScope', '$scope', '$sce', 'utils', 'UserPosition', 'Thematic', 'Answer' ]
 
-    constructor: (@rootScope, @scope, @sce, @utils, @userPosition, @thematicService)->
+    constructor: (@rootScope, @scope, @sce, @utils, @userPosition, @thematicService, @Answer)->
         @scope.$watch (=>
             @userPosition.positions
         ), (newdata, olddata) =>
@@ -63,7 +63,10 @@ class ThematicCtrl
     startThematic: =>
         @currentState(@states.ELEMENTS)
 
-    skipElement: =>    
+    skipElement: (skipped=false) =>
+        if skipped and @scope.currentElement.type is "question"
+            @Answer.deleteAnswerForQuestion @scope.currentElement.id
+
         if @hasNextElement()
             @userPosition.nextElement()
         else if @isDone()
