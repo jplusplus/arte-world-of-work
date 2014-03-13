@@ -15,6 +15,11 @@ class AnswerService
     getAnswerForQuestion: (question_id)=>
         return @answers[ question_id ]
 
+    deleteAnswerForQuestion: (question_id) =>
+        if @answers[question_id]?
+            (@delete @answers[question_id]).success (data) =>
+                delete @answers[question_id]
+
     listMyAnswers: (cb)=>
         request =
             method : 'GET'
@@ -51,6 +56,13 @@ class AnswerService
             cb.error(data) if cb? and angular.isFunction cb.error
 
         return promise
+
+    delete: (answer) =>
+        request =
+            method : 'DELETE'
+            url : "/api/answers/#{answer.id}"
+
+        @$http request
 
     post: (params) =>
         request =

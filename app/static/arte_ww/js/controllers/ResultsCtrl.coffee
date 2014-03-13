@@ -69,8 +69,8 @@ class ResultsCtrl
         # Initialize filters (fron URL or default values)
         urlFilters = do $location.search
         @$scope.filters =
-            age_min : urlFilters.age_min or 0
-            age_max : urlFilters.age_max or 99
+            age_min : urlFilters.age_min or 16
+            age_max : urlFilters.age_max or 35
             male : if urlFilters.gender isnt 'female' then yes else no
             female : if urlFilters.gender isnt 'male' then yes else no
 

@@ -178,8 +178,10 @@ class HBarChart extends BarChart
         data = (@svg.selectAll '.legend').data @results
         entered = do data.enter
 
+        cssclass = if entered[0].length >= 6 then 'legend small' else 'legend'
+
         fObject = (entered.append 'foreignObject').attr
-            class : 'legend'
+            class : cssclass
             width : @_size.width
             height: do @y.rangeBand
             x : 0
@@ -274,6 +276,8 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                 $Result.get request, (data) =>
                     scope.$parent.fullwidth = no
                     scope.$parent.nochart = no
+
+
                     if data.results.total_answers < 5
                         scope.$parent.nochart = yes
                     else if data.results.chart_type is 'horizontal_bar'

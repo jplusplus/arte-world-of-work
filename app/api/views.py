@@ -128,6 +128,10 @@ class AnswerViewSet(viewsets.ModelViewSet,
         self.update_request(request)
         return super(AnswerViewSet, self).update(request, *args, **kwargs)
 
+    def delete(self, request, *args, **kwargs):
+        self.update_request(request)
+        return super(AnswerViewSet, self).delete(request, *args, **kwargs)
+
 class CountryViewSet(viewsets.ViewSet):
     def list(self, request):
         # Pick the other countries        
