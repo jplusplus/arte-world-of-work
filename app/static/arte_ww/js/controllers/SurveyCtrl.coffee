@@ -14,6 +14,9 @@ class SurveyCtrl
         # ---------------------------------------------------------------------
         @states = utils.states.survey
 
+        @scope.setState = (state) =>
+            @scope.survey.state = state
+
         @scope.survey =
             state   : 0
             states  : @states

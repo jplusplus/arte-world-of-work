@@ -72,7 +72,11 @@ class ThematicCtrl
         else if @isDone()
             @userPosition.nextThematic()
             @userPosition.elementPosition 0
-            @currentState @states.LANDING
+            (do @userPosition.thematicPosition)
+            if (do @userPosition.thematicPosition) < @thematicService.positionList.elements.length
+                @currentState @states.LANDING
+            else
+                @scope.$parent.setState @scope.$parent.survey.states.OUTRO
         else
             @currentState(@states.OUTRO)
 
