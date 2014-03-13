@@ -15,9 +15,12 @@
 from app                         import utils
 from app.core                    import transport   
 from app.core.models             import * 
+from app.core.signals            import create_boolean_choices
+from app.core.signals            import create_user_choice_fields
 from app.translations.translator import translator
 from django_countries.fields     import CountryField
 from django.core.exceptions      import ValidationError
+from django.db.models.signals    import post_save
 from django.test                 import TestCase
 
 from django.contrib.auth import get_user_model
@@ -27,6 +30,9 @@ from random import randint
 
 class CoreTestCase(TestCase):
     def setUp(self):
+        post_save.connect(create_boolean_choices, sender=BooleanQuestion)
+        post_save.connect(create_user_choice_fields, sender=UserGenderQuestion)
+
         # create user
         self.user = User.objects.create_user('myuser', 'myuser')
         # user question (country)
@@ -279,6 +285,9 @@ class CoreTestCase(TestCase):
 
 class ResultsTestCase(TestCase, utils.TestCaseMixin):
     def setUp(self):
+        post_save.connect(create_boolean_choices, sender=BooleanQuestion)
+        post_save.connect(create_user_choice_fields, sender=UserGenderQuestion)
+
         self.users = []
         self.answers = {}
 

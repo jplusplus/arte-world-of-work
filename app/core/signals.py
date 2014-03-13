@@ -105,7 +105,7 @@ def create_boolean_choices(sender, **kwargs):
         no.save()
 
 
-def create_user_choice_fieds(sender, **kwargs):
+def create_user_choice_fields(sender, **kwargs):
     # will create user gender choice 
     if kwargs.get('created', False) and not kwargs.get('raw'):
         question = kwargs['instance']
