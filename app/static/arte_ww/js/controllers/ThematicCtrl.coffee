@@ -103,13 +103,22 @@ class ThematicCtrl
     isIntro   : => @currentState() == @states.INTRO
     isElements: => @currentState() == @states.ELEMENTS
     isDone    : => @isElements() and @userPosition.elementPosition() == @elements.count() - 1
-  
-    onThematicChanged: (thematic, old_thematic)=>        
+
+    onThematicChanged: (thematic, old_thematic)=>
         return unless thematic?
         @elements = @userPosition.createWrapper thematic.elements
         @scope.thematicWrapper = @elements
-        _.extend @scope.thematic.currentThematic,
-            intro_description: @sce.trustAsHtml(thematic.intro_description)
+
+        if (typeof thematic.intro_description) is typeof String
+            _.extend @scope.thematic.currentThematic,
+                intro_description: @sce.trustAsHtml(thematic.intro_description)
+        else
+            _.extend @scope.thematic.currentThematic,
+                intro_description: thematic.intro_description
+
+
+        if thematic.position is 1
+            @currentState @states.INTRO
 
         @onElementPositionChanged do @userPosition.elementPosition
 
