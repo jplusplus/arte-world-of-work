@@ -54,14 +54,16 @@ class UserPositionService
             do @sendPosition
         @positions.thematicPosition
 
-    elementPosition:  (position) =>
+    elementPosition:  (position, save=true) =>
         if position?
             @positions.elementPosition = position
-            do @sendPosition
+            if save
+                do @sendPosition
         @positions.elementPosition
 
     nextThematic: =>
         @currentState( @utils.states.thematic.LANDING )
+        @elementPosition 0, false
         @thematicPosition @positions.thematicPosition + 1
 
     previousThematic: =>
