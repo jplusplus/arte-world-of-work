@@ -1,14 +1,57 @@
 .survey-navigator {
 
-	&--start {
+	&--start, &--end {
 		.white-panel(responsive);
 	    .do-sliding();
-	    
+
 	    position:absolute;
 	    top:@header-height;
 	    left:50%;
 	    margin-left:435px/-2px;
 		padding:10px;
+
+		&__start {
+			text-align: center;
+			margin: auto;
+			display: block;
+			color: white;
+			width:  100px;
+			margin-top: 50px;
+			padding: 0 10px;
+			position: relative;
+			text-transform: uppercase;
+			font-weight: 600;
+			cursor: pointer;
+			background: transparent;
+
+			&:hover {
+				text-decoration: none;
+				color: white;
+				&:after {
+					background: @brand-primary !important;
+					border: 5px solid lighten(@brand-primary, 10);
+				}
+			}
+
+			&:after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				.transform( translate(-50%, -50%) );
+				width:  100px;
+				height: 100px;
+				display: block;
+				z-index: -1;
+				border: 5px solid transparent;
+				border-radius: 50px;
+				.transition(0.8s);
+			}
+		}
+	}
+
+	&--end {
+		text-align: center;
 	}
 
 }

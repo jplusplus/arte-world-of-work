@@ -10,7 +10,7 @@
         <p ng-translate>If you're under 30, you know that's not how it is.</p>
         <p ng-translate>Temporary employment, internships, volunteering, informal jobs, self-learning, emigration… Thatʼs what we do to make a living. Neither good nor bad, itʼs our world.</p>
         <p ng-translate>Explore the questions to know what it means to work today, in Europe, when you're under 30.</p>
-        <a class="btn btn-primary" ng-click="start()">Start the survey</a>
+        <a class="survey-navigator--start__start" ng-click="start()">Start the survey</a>
     </div>
 
     <!-- step 1 -> we start the first thematic and going on until the end --> 
@@ -58,6 +58,11 @@
     </div>
 
     <!-- step 2 -> all thematic/feedback and question are now done --> 
-    <div class="survey-navigator--end" ng-switch-when="2"></div>
+    <div class="survey-navigator--end" ng-switch-when="2">
+        <p ng-translate>Great job! Want to make extra hours?</p>
+        <a class="btn btn-primary" ng-href="{% url 'results' %}">Results</a><br />
+        <br />
+        <a class="btn btn-primary" ng-click="backToBeginning()">Back to the beginning</a>
+    </div>
 
 </div>

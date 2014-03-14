@@ -14,6 +14,9 @@ class SurveyCtrl
         # ---------------------------------------------------------------------
         @states = utils.states.survey
 
+        @scope.setState = (state) =>
+            @scope.survey.state = state
+
         @scope.survey =
             state   : 0
             states  : @states
@@ -33,7 +36,10 @@ class SurveyCtrl
 
         @scope.start = =>
             @thematicService.onThematicPositionChanged do @userPosition.thematicPosition
-            @scope.survey.state = @scope.survey.states.DOING
+            if (do @userPosition.thematicPosition) >= @thematicService.positionList.elements.length
+                @scope.survey.state = @scope.survey.states.OUTRO
+            else
+                @scope.survey.state = @scope.survey.states.DOING
 
 angular.module('arte-ww').controller 'SurveyCtrl', SurveyCtrl
 

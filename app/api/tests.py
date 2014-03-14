@@ -3,16 +3,23 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.db.models.signals    import post_save
 from rest_framework.serializers import ModelSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase, APIClient
 
-from app.core import transport
-from app.core.models import *
+from app.core         import transport
+from app.core.models  import *
+from app.core.signals import create_boolean_choices
+from app.core.signals import create_user_choice_fields
+
 from app.utils import TestCaseMixin
 from app.api import mixins 
 
 def init(instance):
+    post_save.connect(create_boolean_choices, sender=BooleanQuestion)
+    post_save.connect(create_user_choice_fields, sender=UserGenderQuestion)
+
     # auth & client setup
     instance.user = User.objects.create()
     instance.anon_client = APIClient()

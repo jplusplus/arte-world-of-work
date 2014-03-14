@@ -77,6 +77,11 @@
             }
         }
 
+        .survey-navigator--start__start {
+            &:after {
+                background: @brand;
+            }
+        }
 
 	    .survey-element {
 
@@ -168,10 +173,6 @@
         svg {
             .bar rect {
                 fill: @brand;
-
-                &:hover {
-                    fill: darken(@brand, 10%)
-                }
             }
 
             text.zero {

@@ -126,6 +126,12 @@ class Thematic(models.Model):
     intro_button_label = models.CharField(_('Introduction button label'), 
         default=_('See the data'), max_length=120, null=True, blank=True)
 
+    outro_description = models.TextField(_('Thematic ending description'), 
+        null=True, blank=True)
+    outro_button_label = models.CharField(_('Thematic ending button label'),
+        default=_('Skip'), max_length=120, null=True, blank=True)
+
+
 
     def add_element(self, instance, position=None):
         # Add an element to a thematic object 
