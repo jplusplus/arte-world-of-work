@@ -1,0 +1,1260 @@
+[
+{
+    "pk": 2, 
+    "model": "core.questionmediaattachement", 
+    "fields": {
+        "picture": "uploaded/bettler.jpg", 
+        "question": 3, 
+        "vine_url": ""
+    }
+},
+{
+    "pk": 6, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 3, 
+        "position": 5, 
+        "content_type": [
+            "core", 
+            "booleanquestion"
+        ], 
+        "thematic": 2
+    }
+},
+{
+    "pk": 8, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 4, 
+        "position": 1, 
+        "content_type": [
+            "core", 
+            "useragequestion"
+        ], 
+        "thematic": 1
+    }
+},
+{
+    "pk": 9, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 5, 
+        "position": 2, 
+        "content_type": [
+            "core", 
+            "usergenderquestion"
+        ], 
+        "thematic": 1
+    }
+},
+{
+    "pk": 11, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 6, 
+        "position": 3, 
+        "content_type": [
+            "core", 
+            "usercountryquestion"
+        ], 
+        "thematic": 1
+    }
+},
+{
+    "pk": 13, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 7, 
+        "position": 4, 
+        "content_type": [
+            "core", 
+            "usercountryquestion"
+        ], 
+        "thematic": 1
+    }
+},
+{
+    "pk": 15, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 8, 
+        "position": 1, 
+        "content_type": [
+            "core", 
+            "mediaselectionquestion"
+        ], 
+        "thematic": 3
+    }
+},
+{
+    "pk": 16, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 3, 
+        "position": 6, 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "thematic": 2
+    }
+},
+{
+    "pk": 17, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 4, 
+        "position": 2, 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "thematic": 3
+    }
+},
+{
+    "pk": 23, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 10, 
+        "position": 5, 
+        "content_type": [
+            "core", 
+            "mediaradioquestion"
+        ], 
+        "thematic": 3
+    }
+},
+{
+    "pk": 25, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 6, 
+        "position": 6, 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "thematic": 3
+    }
+},
+{
+    "pk": 27, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 11, 
+        "position": 1, 
+        "content_type": [
+            "core", 
+            "mediaradioquestion"
+        ], 
+        "thematic": 4
+    }
+},
+{
+    "pk": 29, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 7, 
+        "position": 2, 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "thematic": 4
+    }
+},
+{
+    "pk": 31, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 12, 
+        "position": 1, 
+        "content_type": [
+            "core", 
+            "booleanquestion"
+        ], 
+        "thematic": 5
+    }
+},
+{
+    "pk": 33, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 13, 
+        "position": 1, 
+        "content_type": [
+            "core", 
+            "mediaradioquestion"
+        ], 
+        "thematic": 6
+    }
+},
+{
+    "pk": 35, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 8, 
+        "position": 2, 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "thematic": 5
+    }
+},
+{
+    "pk": 37, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 9, 
+        "position": 2, 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "thematic": 6
+    }
+},
+{
+    "pk": 39, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 14, 
+        "position": 3, 
+        "content_type": [
+            "core", 
+            "booleanquestion"
+        ], 
+        "thematic": 2
+    }
+},
+{
+    "pk": 41, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 15, 
+        "position": 3, 
+        "content_type": [
+            "core", 
+            "typednumberquestion"
+        ], 
+        "thematic": 3
+    }
+},
+{
+    "pk": 43, 
+    "model": "core.thematicelement", 
+    "fields": {
+        "object_id": 16, 
+        "position": 1, 
+        "content_type": [
+            "core", 
+            "mediaradioquestion"
+        ], 
+        "thematic": 2
+    }
+},
+{
+    "pk": 1, 
+    "model": "core.thematic", 
+    "fields": {
+        "intro_button_label": "Let's go!", 
+        "position": 1, 
+        "intro_description": "Worried about privacy? You should. We are as well. <br> That\u2019s why we don\u2019t store any personal information about you. Entering your age, gender, country of birth and residence will allow you to compare yourself to people like you - that\u2019s all! ", 
+        "title": "You", 
+        "slug": "toi"
+    }
+},
+{
+    "pk": 2, 
+    "model": "core.thematic", 
+    "fields": {
+        "intro_button_label": "Let's go!", 
+        "position": 2, 
+        "intro_description": "Temporary contracts. Permanent job-hunt. Playing online poker for a living, cooking for all your flat-mates, or days of writing and editing on Wikipedia. Economists measure (un)employment. But that\u2019s not what it is. <br> What\u2019s work for you? Let us know and find out about others!", 
+        "title": "Your Work", 
+        "slug": "travail"
+    }
+},
+{
+    "pk": 3, 
+    "model": "core.thematic", 
+    "fields": {
+        "intro_button_label": "Let's go!", 
+        "position": 3, 
+        "intro_description": "The cash machine in your bank\u2019s local branch fuels your life. But what if your source of money dries up? Doing small jobs here and there, selling stuff on ebay, renting their home to tourists, asking family and friends for cash. That\u2019s what young people do to make ends meet. <br> How do you manage to pull through? Let us know and find out about others!", 
+        "title": "Your Money", 
+        "slug": "argent"
+    }
+},
+{
+    "pk": 4, 
+    "model": "core.thematic", 
+    "fields": {
+        "intro_button_label": "Let's go!", 
+        "position": 4, 
+        "intro_description": "Your teachers have always told you that being good at Maths and English, learning to type with ten fingers, enrolling auto mechanic training or studying law will guarantee you a quiet life. <br> What are the skills that you really need in your working life? Let us know and find out about others!", 
+        "title": "Your Education", 
+        "slug": "education"
+    }
+},
+{
+    "pk": 5, 
+    "model": "core.thematic", 
+    "fields": {
+        "intro_button_label": "Let's go!", 
+        "position": 5, 
+        "intro_description": "What\u2019s a minimum salary that doesn\u2019t destroy jobs? How can we ensure that women make as much money as men? That\u2019s the kind of questions that politicians debate day in day out. A very few (lunatics?) think we might as well just rid ourselves of economic growth and pay everybody a universal income - no obligation to work. <br>\nIf you were Minister of Labour for one day, what would you do? Let us know and find out about others!", 
+        "title": "Your Government", 
+        "slug": "gouvernement"
+    }
+},
+{
+    "pk": 6, 
+    "model": "core.thematic", 
+    "fields": {
+        "intro_button_label": "Let's go!", 
+        "position": 6, 
+        "intro_description": "A 38-hour week. A single-family, detached house. Retirement with 62. That might have been your parents\u2019  work life plan. The circumstances have changed. Our generation is dreaming a different dream. But what\u2019s still to come? Will self-driving cars bring our children to school? Will you even have (more) children? <br> How do you see your future World of Work? Let us know and find out about others!", 
+        "title": "Your Future", 
+        "slug": "avenir"
+    }
+},
+{
+    "pk": 3, 
+    "model": "core.basefeedback", 
+    "fields": {
+        "validate_button_label": "Next", 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "html_sentence": "<p>In France begging was considered a <strong>normal activity</strong> until the <strong>end of the 19th century</strong>. In the 20th century it went out of fashion and some beggars would even wear masks while doing their job.</p>"
+    }
+},
+{
+    "pk": 4, 
+    "model": "core.basefeedback", 
+    "fields": {
+        "validate_button_label": "Next", 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "html_sentence": "<p>As a young European chances are <strong>almost 50% that you owe money</strong> to your bank, family or friends. The median debt of young people in Europe is <strong>5000 &euro;</strong>.</p>"
+    }
+},
+{
+    "pk": 6, 
+    "model": "core.basefeedback", 
+    "fields": {
+        "validate_button_label": "Next", 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "html_sentence": "<p>Often theft in the workplace doesn&rsquo;t have anything to do with &ldquo;real world&rdquo; crime. Those <strong>who steal most</strong> are also those who <strong>work most</strong>. They think they&rsquo;re not paid enough.</p>"
+    }
+},
+{
+    "pk": 7, 
+    "model": "core.basefeedback", 
+    "fields": {
+        "validate_button_label": "Next", 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "html_sentence": "<p>Academics agree on this matter: <strong>social background and parents&rsquo; opinions</strong> matter most when young people decide what to do with their lives.</p>"
+    }
+},
+{
+    "pk": 8, 
+    "model": "core.basefeedback", 
+    "fields": {
+        "validate_button_label": "Next", 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "html_sentence": "<p>The average McDonald&rsquo;s worker has to work <strong>7 months</strong> to get what the company&rsquo;s CEO takes home in <strong>just 1 hour</strong>.</p>"
+    }
+},
+{
+    "pk": 9, 
+    "model": "core.basefeedback", 
+    "fields": {
+        "validate_button_label": "Next", 
+        "content_type": [
+            "core", 
+            "staticfeedback"
+        ], 
+        "html_sentence": "<p>In Germany people seem to love their jobs. After a 10 million &euro; win only <strong>every third man would quit his job</strong>. <strong>Women</strong> are even more attached to their work: <strong>only every fourth</strong> would pack it all in.</p>"
+    }
+},
+{
+    "pk": 3, 
+    "model": "core.staticfeedback", 
+    "fields": {
+        "picture": "", 
+        "source_title": "Eugen Weber, 1976", 
+        "source_url": "http://www.sup.org/book.cgi?id=3200", 
+        "question": 3
+    }
+},
+{
+    "pk": 4, 
+    "model": "core.staticfeedback", 
+    "fields": {
+        "picture": "", 
+        "source_title": "ECB, p. 60", 
+        "source_url": "http://www.ecb.europa.eu/pub/pdf/other/art1_mb201304en_pp57-71en.pdf", 
+        "question": 8
+    }
+},
+{
+    "pk": 6, 
+    "model": "core.staticfeedback", 
+    "fields": {
+        "picture": "", 
+        "source_title": "Greenberg, 2002", 
+        "source_url": "http://econpapers.repec.org/article/eeejobhdp/v_3a89_3ay_3a2002_3ai_3a1_3ap_3a985-1003.htm", 
+        "question": 10
+    }
+},
+{
+    "pk": 7, 
+    "model": "core.staticfeedback", 
+    "fields": {
+        "picture": "", 
+        "source_title": "Hachmeister et al., 2007", 
+        "source_url": "http://www.che.de/downloads/Einfluss_auf_Studienentscheidung_AP95.pdf", 
+        "question": 11
+    }
+},
+{
+    "pk": 8, 
+    "model": "core.staticfeedback", 
+    "fields": {
+        "picture": "", 
+        "source_title": "QZ", 
+        "source_url": "http://qz.com/156522/how-many-months-it-takes-an-average-worker-to-earn-what-the-ceo-makes-in-an-hour/", 
+        "question": 12
+    }
+},
+{
+    "pk": 9, 
+    "model": "core.staticfeedback", 
+    "fields": {
+        "picture": "", 
+        "source_title": "Forsa for Westlotto (PDF)", 
+        "source_url": "https://www.westlotto.com/media/pdfdateien/presse/2012/120829PM-Eurojackpot_forsa-Studie.pdf", 
+        "question": 13
+    }
+},
+{
+    "pk": 3, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "Is begging work?", 
+        "hint_text": "Yes or no?", 
+        "content_type": [
+            "core", 
+            "booleanquestion"
+        ], 
+        "skip_button_label": "Skip this question"
+    }
+},
+{
+    "pk": 4, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "How old are you?", 
+        "hint_text": "What's your age again?", 
+        "content_type": [
+            "core", 
+            "useragequestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 5, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "If at all - what gender do you identify yourself with most?", 
+        "hint_text": "What toilet door would you choose?", 
+        "content_type": [
+            "core", 
+            "usergenderquestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 6, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "Where do you live?", 
+        "hint_text": "Where do you spend most of your time?", 
+        "content_type": [
+            "core", 
+            "usercountryquestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 7, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "Where were you born?", 
+        "hint_text": "Your country of birth.", 
+        "content_type": [
+            "core", 
+            "usercountryquestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 8, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "Your bank account is empty. You have some rather big bills to pay. Who do you ask for money? ", 
+        "hint_text": "We won't tell them.", 
+        "content_type": [
+            "core", 
+            "mediaselectionquestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 10, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "It\u2019s late and you\u2019re alone in the office. You can steal whatever you want. Nobody will find out. What do you take?", 
+        "hint_text": "We won't tell your boss.", 
+        "content_type": [
+            "core", 
+            "mediaradioquestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 11, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "What counted most when you picked your field of education?", 
+        "hint_text": "When you were younger you would still listen to others, right?", 
+        "content_type": [
+            "core", 
+            "mediaradioquestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 12, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "Should CEO salaries should be capped?", 
+        "hint_text": "Think you might be CEO some day as well?", 
+        "content_type": [
+            "core", 
+            "booleanquestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 13, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "You hit the jackpot and win 10 million in the lottery. Do you continue your current work?", 
+        "hint_text": "You never know.", 
+        "content_type": [
+            "core", 
+            "mediaradioquestion"
+        ], 
+        "skip_button_label": "Skip this question"
+    }
+},
+{
+    "pk": 14, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "Working for free on an organic farm for one year. No pay, but food and shelter provided. Would you be up for that?", 
+        "hint_text": "Maybe just while you're still young?", 
+        "content_type": [
+            "core", 
+            "booleanquestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 15, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "Walk around as a human billboard for a day to make some money. Ok, but I would need to get paid at least\u2026", 
+        "hint_text": "You could also be a sandwich man or a mascot.", 
+        "content_type": [
+            "core", 
+            "typednumberquestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 16, 
+    "model": "core.basequestion", 
+    "fields": {
+        "label": "Like all children, you surely had a dream job, when you were younger. Are you working in your childhood dreamjob now?", 
+        "hint_text": "Click on one!", 
+        "content_type": [
+            "core", 
+            "mediaradioquestion"
+        ], 
+        "skip_button_label": "Skip"
+    }
+},
+{
+    "pk": 15, 
+    "model": "core.typednumberquestion", 
+    "fields": {
+        "min_number": 0, 
+        "max_number": 1000, 
+        "validate_button_label": "Done", 
+        "unit": "\u20ac per day"
+    }
+},
+{
+    "pk": 3, 
+    "model": "core.booleanquestion", 
+    "fields": {}
+},
+{
+    "pk": 12, 
+    "model": "core.booleanquestion", 
+    "fields": {}
+},
+{
+    "pk": 14, 
+    "model": "core.booleanquestion", 
+    "fields": {}
+},
+{
+    "pk": 10, 
+    "model": "core.mediaradioquestion", 
+    "fields": {
+        "media_type": "image"
+    }
+},
+{
+    "pk": 11, 
+    "model": "core.mediaradioquestion", 
+    "fields": {
+        "media_type": null
+    }
+},
+{
+    "pk": 13, 
+    "model": "core.mediaradioquestion", 
+    "fields": {
+        "media_type": null
+    }
+},
+{
+    "pk": 16, 
+    "model": "core.mediaradioquestion", 
+    "fields": {
+        "media_type": null
+    }
+},
+{
+    "pk": 8, 
+    "model": "core.mediaselectionquestion", 
+    "fields": {
+        "media_type": null, 
+        "validate_button_label": "Done"
+    }
+},
+{
+    "pk": 4, 
+    "model": "core.userprofilequestion", 
+    "fields": {}
+},
+{
+    "pk": 5, 
+    "model": "core.userprofilequestion", 
+    "fields": {}
+},
+{
+    "pk": 6, 
+    "model": "core.userprofilequestion", 
+    "fields": {}
+},
+{
+    "pk": 7, 
+    "model": "core.userprofilequestion", 
+    "fields": {}
+},
+{
+    "pk": 4, 
+    "model": "core.useragequestion", 
+    "fields": {
+        "validate_button_label": "Done"
+    }
+},
+{
+    "pk": 6, 
+    "model": "core.usercountryquestion", 
+    "fields": {
+        "profile_attribute": "living_country"
+    }
+},
+{
+    "pk": 7, 
+    "model": "core.usercountryquestion", 
+    "fields": {
+        "profile_attribute": "native_country"
+    }
+},
+{
+    "pk": 5, 
+    "model": "core.usergenderquestion", 
+    "fields": {}
+},
+{
+    "pk": 8, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 3, 
+        "title": "Yes", 
+        "content_type": [
+            "core", 
+            "textchoicefield"
+        ]
+    }
+},
+{
+    "pk": 9, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 3, 
+        "title": "No", 
+        "content_type": [
+            "core", 
+            "textchoicefield"
+        ]
+    }
+},
+{
+    "pk": 14, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 5, 
+        "title": "Female", 
+        "content_type": [
+            "core", 
+            "userchoicefield"
+        ]
+    }
+},
+{
+    "pk": 15, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 5, 
+        "title": "Male", 
+        "content_type": [
+            "core", 
+            "userchoicefield"
+        ]
+    }
+},
+{
+    "pk": 16, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 8, 
+        "title": "Your parents", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 17, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 8, 
+        "title": "Other family members", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 18, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 8, 
+        "title": "Your partner", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 19, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 8, 
+        "title": "Your friends", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 20, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 8, 
+        "title": "The bank", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 21, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 10, 
+        "title": "A DVD         (around 30 \u20ac)       ", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 22, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 10, 
+        "title": "An iPad                               (around 490 \u20ac)       ", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 23, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 10, 
+        "title": "Your boss' fixie bike (900 \u20ac)", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 24, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 11, 
+        "title": "My parents\u2019 opinion", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 25, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 11, 
+        "title": "The job market", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 26, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 11, 
+        "title": "My professors\u2019 advice", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 27, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 11, 
+        "title": "My personal ambition", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 28, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 11, 
+        "title": "The cost of studies", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 31, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 12, 
+        "title": "Yes", 
+        "content_type": [
+            "core", 
+            "textchoicefield"
+        ]
+    }
+},
+{
+    "pk": 32, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 12, 
+        "title": "No", 
+        "content_type": [
+            "core", 
+            "textchoicefield"
+        ]
+    }
+},
+{
+    "pk": 33, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 13, 
+        "title": "Sure, I love my job.", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 34, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 13, 
+        "title": "Yes, but only to keep myself busy.", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 35, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 13, 
+        "title": "No way, I\u2019m only in it for the money.", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 38, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 14, 
+        "title": "Yes", 
+        "content_type": [
+            "core", 
+            "textchoicefield"
+        ]
+    }
+},
+{
+    "pk": 39, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 14, 
+        "title": "No", 
+        "content_type": [
+            "core", 
+            "textchoicefield"
+        ]
+    }
+},
+{
+    "pk": 40, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 16, 
+        "title": "Yes, I\u2019m more or less living the dream.", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 41, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 16, 
+        "title": "No, I had to face reality.", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 42, 
+    "model": "core.basechoicefield", 
+    "fields": {
+        "position": 1, 
+        "question": 16, 
+        "title": "No, that job does not even exist anymore.", 
+        "content_type": [
+            "core", 
+            "mediachoicefield"
+        ]
+    }
+},
+{
+    "pk": 8, 
+    "model": "core.textchoicefield", 
+    "fields": {}
+},
+{
+    "pk": 9, 
+    "model": "core.textchoicefield", 
+    "fields": {}
+},
+{
+    "pk": 31, 
+    "model": "core.textchoicefield", 
+    "fields": {}
+},
+{
+    "pk": 32, 
+    "model": "core.textchoicefield", 
+    "fields": {}
+},
+{
+    "pk": 38, 
+    "model": "core.textchoicefield", 
+    "fields": {}
+},
+{
+    "pk": 39, 
+    "model": "core.textchoicefield", 
+    "fields": {}
+},
+{
+    "pk": 16, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 17, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 18, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 19, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 20, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 24, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 25, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 26, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 27, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 28, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 23, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": "uploaded/fixie.jpg"
+    }
+},
+{
+    "pk": 22, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": "uploaded/ipad.jpg"
+    }
+},
+{
+    "pk": 21, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": "uploaded/dvd.jpg"
+    }
+},
+{
+    "pk": 33, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 34, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 35, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 40, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 41, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 42, 
+    "model": "core.mediachoicefield", 
+    "fields": {
+        "picture": ""
+    }
+},
+{
+    "pk": 14, 
+    "model": "core.userchoicefield", 
+    "fields": {
+        "value": "female"
+    }
+},
+{
+    "pk": 15, 
+    "model": "core.userchoicefield", 
+    "fields": {
+        "value": "male"
+    }
+}
+]
