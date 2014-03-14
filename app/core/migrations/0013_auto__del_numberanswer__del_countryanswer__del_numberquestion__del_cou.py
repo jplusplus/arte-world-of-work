@@ -16,7 +16,7 @@ class Migration(SchemaMigration):
                       keep_default=False)
 
         # Deleting field 'TypedNumberAnswer.numberanswer_ptr'
-        db.delete_column(u'core_typednumberanswer', u'numberanswer_ptr')
+        db.delete_column(u'core_typednumberanswer', u'numberanswer_ptr_id')
 
         # Adding field 'TypedNumberAnswer.baseanswer_ptr'
         db.add_column(u'core_typednumberanswer', u'baseanswer_ptr',
