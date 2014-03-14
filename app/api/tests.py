@@ -13,8 +13,44 @@ from app.core.models  import *
 from app.core.signals import create_boolean_choices
 from app.core.signals import create_user_choice_fields
 
+from app.utils import receiver_subclasses
 from app.utils import TestCaseMixin
 from app.api import mixins 
+
+@receiver_subclasses(post_save, BaseQuestion, "basequestion_post_save")
+@receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
+def create_generic_element(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    if not kwargs.get('raw', False):
+        ctype = ContentType.objects.get_for_model(instance)
+        try:
+            element = ThematicElement.objects.get(content_type=ctype, object_id=instance.pk)
+        except ThematicElement.DoesNotExist:
+            element = ThematicElement(content_object=instance)
+
+        element.content_type = instance.content_type
+        element.save()
+
+
+@receiver_subclasses(post_save, ThematicElement, "thematicelement_post_save")
+def create_thematic_element(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    try:
+        filters  = dict(content_type=instance.content_type, object_id=instance.object_id)
+        excludes = dict(id=instance.id)
+
+        te       = ThematicElement.objects.filter(**filters).exclude(**excludes)
+
+        # Remove this instance if the thematic element is already        
+        if len(te):
+            prev_el = te[0]
+            if prev_el.thematic and not instance.thematic:
+                instance.delete()
+            else:
+                prev_el.delete()
+    except ThematicElement.DoesNotExist:
+        pass
+
 
 def init(instance):
     post_save.connect(create_boolean_choices, sender=BooleanQuestion)
@@ -611,6 +647,7 @@ class TestSerializer(mixins.GenericModelMixin, ModelSerializer):
 class MixinsTestCase(TestCase, TestCaseMixin, TestUtils):
 
     def setUp(self):
+
         self.thematic = Thematic.objects.create(position=1, title='You')
         self.question = self.createQuestion(TypedNumberQuestion, **{'unit': '%'})
         self.question.set_thematic(self.thematic, 1) 
