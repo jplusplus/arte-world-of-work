@@ -17,11 +17,7 @@
         <div class="survey-element__question" question-boolean      ng-if="element.typology == TYPOLOGIES.BOOLEAN"></div>
         <div class="survey-element__question" question-radio        ng-if="element.typology == TYPOLOGIES.RADIO_TYPE"></div>
         <div class="survey-element__question" question-selection    ng-if="element.typology == TYPOLOGIES.SELECTION_TYPE"></div>
-        <!-- Question featured media -->
-        <div ng-if="element.media" class="survey-element__media">
-            <img    ng-if="element.media.picture"  ng-src="[[element.media.picture]]" />
-            <iframe ng-if="element.media.vine_url" ng-src="[[prepareVineUrl(element.media.vine_url)]]" frameborder="0"></iframe>
-        </div>
+        <!-- question position output --> 
         <div class="survey-element__position">
             <strong>[[elementPosition()]]</strong>/[[elementsCount()]]
         </div>

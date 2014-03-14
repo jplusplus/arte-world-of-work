@@ -27,10 +27,12 @@ class SurveyCtrl
 
         # Returns the classes of the given questions
         @scope.getQuestionClasses = (question)->
-            'survey-element--with-columns': question.choices && question.choices.length >= 4
-            'survey-element--with-media'  : question.media isnt null
-            'survey-element--choice-media': question.has_medias
-            'survey-element--icon-mode'   : (question.has_medias && question.choices.length > 3) || (question.media_type and question.media_type == "icon")
+            'survey-element--with-columns'   : question.choices && question.choices.length >= 4
+            'survey-element--without-columns': not(question.choices && question.choices.length >= 4)
+            'survey-element--with-media'     : question.media isnt null
+            'survey-element--without-media'  : not(question.media isnt null)
+            'survey-element--choice-media'   : question.has_medias
+            'survey-element--icon-mode'      : (question.has_medias && question.choices.length > 3) || (question.media_type and question.media_type == "icon")
 
         @scope.start = =>
             @thematicService.onThematicPositionChanged do @userPosition.thematicPosition

@@ -1,5 +1,11 @@
 <h4 class="survey-element__label">[[ question.label ]]</h4>
 
+<!-- Question featured media -->
+<div ng-if="element.media" class="survey-element__media">
+    <img    ng-if="element.media.picture"  ng-src="[[element.media.picture]]" />
+    <iframe ng-if="element.media.vine_url" ng-src="[[prepareVineUrl(element.media.vine_url)]]" frameborder="0"></iframe>
+</div>
+
 {% block form %}
 {% endblock %}
 

@@ -5,7 +5,8 @@
         display: block;
         color: grey;
         list-style: none;
-        height:30px;
+        height:45px;
+        clear:both;
 
 
 
@@ -105,8 +106,7 @@
         color:#777777;
         font-weight:400;
         font-size: 11px;
-        clear:both;
-        .clearfix();
+
     }
 
     &--with-media {
@@ -114,10 +114,8 @@
         .clearfix();
 
         .survey-element__question {
-            min-height:200px;
-            width:160px;
-            margin-left:30px;
-            float:left;      
+            min-height:200px;            
+            margin:0 15px;
 
             @media (max-width: @screen-xs-min) {    
                 width:100%;
@@ -131,11 +129,33 @@
         .survey-element__label {
             margin-bottom:10px;
         }
+
+        .question-choices,
+        .survey-element__hint {
+            width:215px;
+            margin:10px 0;
+            padding:0 10px;
+        }
+
+        .question-choices--typed-number {
+            margin-top:40px;
+
+            &__validate {
+                .scale(0.8);
+            }
+        }
+    }
+
+    &--without-media {
+
+        .survey-element__hint, .question-choices  {
+            .clearfix();
+        }
     }
 
     &__media {
         float:right;
-        margin:-20px 40px 40px 0;
+        margin:10px 0px 20px 0;
         border:3px solid @brand-primary;
         width: 180px+(3px*2px);
 
