@@ -48,8 +48,8 @@ def set_thematic_position(sender, **kwargs):
         set_max_position(thematic, Thematic.objects.all())
 
 
-@receiver_subclasses(post_save, BaseQuestion, "basequestion_post_save")
-@receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
+# @receiver_subclasses(post_save, BaseQuestion, "basequestion_post_save")
+# @receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
 def create_generic_element(sender, **kwargs):
     instance = kwargs.get('instance', None)
     if not kwargs.get('raw', False):
@@ -63,7 +63,7 @@ def create_generic_element(sender, **kwargs):
         element.save()
 
 
-@receiver_subclasses(post_save, ThematicElement, "thematicelement_post_save")
+# @receiver_subclasses(post_save, ThematicElement, "thematicelement_post_save")
 def create_thematic_element(sender, **kwargs):
     instance = kwargs.get('instance', None)
     try:

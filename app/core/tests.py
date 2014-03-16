@@ -17,7 +17,10 @@ from app.core                    import transport
 from app.core.models             import * 
 from app.core.signals            import create_boolean_choices
 from app.core.signals            import create_user_choice_fields
+from app.core.signals            import create_generic_element
+from app.core.signals            import create_thematic_element
 from app.translations.translator import translator
+from app.utils                   import receiver_subclasses
 from django_countries.fields     import CountryField
 from django.core.exceptions      import ValidationError
 from django.db.models.signals    import post_save
@@ -27,6 +30,15 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 from random import randint
+
+@receiver_subclasses(post_save, BaseQuestion, "basequestion_post_save")
+@receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
+def _create_generic_element(sender, **kwargs):
+    create_generic_element(sender, **kwargs)
+
+@receiver_subclasses(post_save, ThematicElement, "thematicelement_post_save")
+def _create_thematic_element(sender, **kwargs):
+    create_thematic_element(sender, **kwargs)
 
 class CoreTestCase(TestCase):
     def setUp(self):

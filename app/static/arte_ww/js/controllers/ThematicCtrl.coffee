@@ -13,7 +13,7 @@ class ThematicCtrl
                 if newdata.thematicPosition is olddata.thematicPosition
                     if (newdata.elementPosition isnt 0) or newdata.thematicPosition isnt 0
                         @onElementPositionChanged do @userPosition.elementPosition
-                        do @scope.letsgo
+                        @scope.letsgo true
         , yes
 
         # ---------------------------------------------------------------------
@@ -48,8 +48,8 @@ class ThematicCtrl
                 @userPosition.elementPosition()
             , @onElementPositionChanged
 
-    letsgo: =>
-        if do @userPosition.elementPosition is 0
+    letsgo: (skipIntro=false) =>
+        if (do @userPosition.elementPosition is 0) and not skipIntro
             @currentState @states.INTRO
         else
             @currentState @states.ELEMENTS
@@ -71,7 +71,6 @@ class ThematicCtrl
             @userPosition.nextElement()
         else if @isDone()
             @userPosition.nextThematic()
-            @userPosition.elementPosition 0
             (do @userPosition.thematicPosition)
             if (do @userPosition.thematicPosition) < @thematicService.positionList.elements.length
                 @currentState @states.LANDING
@@ -115,7 +114,6 @@ class ThematicCtrl
         else
             _.extend @scope.thematic.currentThematic,
                 intro_description: thematic.intro_description
-
 
         if thematic.position is 1
             @currentState @states.INTRO

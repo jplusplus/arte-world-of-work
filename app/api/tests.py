@@ -13,8 +13,22 @@ from app.core.models  import *
 from app.core.signals import create_boolean_choices
 from app.core.signals import create_user_choice_fields
 
+from app.utils import receiver_subclasses
 from app.utils import TestCaseMixin
 from app.api import mixins 
+
+from app.core.signals            import create_generic_element
+from app.core.signals            import create_thematic_element
+
+@receiver_subclasses(post_save, BaseQuestion, "basequestion_post_save")
+@receiver_subclasses(post_save, BaseFeedback, "basefeedback_post_save")
+def _create_generic_element(sender, **kwargs):
+    create_generic_element(sender, **kwargs)
+
+@receiver_subclasses(post_save, ThematicElement, "thematicelement_post_save")
+def _create_thematic_element(sender, **kwargs):
+    create_thematic_element(sender, **kwargs)
+
 
 def init(instance):
     post_save.connect(create_boolean_choices, sender=BooleanQuestion)
@@ -611,6 +625,7 @@ class TestSerializer(mixins.GenericModelMixin, ModelSerializer):
 class MixinsTestCase(TestCase, TestCaseMixin, TestUtils):
 
     def setUp(self):
+
         self.thematic = Thematic.objects.create(position=1, title='You')
         self.question = self.createQuestion(TypedNumberQuestion, **{'unit': '%'})
         self.question.set_thematic(self.thematic, 1) 
