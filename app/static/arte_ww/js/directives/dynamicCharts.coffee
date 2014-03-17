@@ -167,7 +167,7 @@ class HBarChart extends BarChart
         height : do @y.rangeBand
 
     getTextAttrs: =>
-        x : 10
+        x : 5
         y : (d) => @y(d[0]) + (do @y.rangeBand) / 2
         'dominant-baseline' : 'central'
         class : (d) -> if (parseInt d[1]) is 0 then 'zero' else ' '
@@ -257,7 +257,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     when 'pie' then new PieChart scope, elem
                     when 'bar' then new BarChart scope, elem
                     when 'horizontal_bar' then new HBarChart scope, elem
-                    when 'histo' then new Histogram scope, elem
+                    when 'histogramme' then new Histogram scope, elem
                     else throw "Chart type '#{scope.data.chart_type}' does not exist."
 
             update = =>
