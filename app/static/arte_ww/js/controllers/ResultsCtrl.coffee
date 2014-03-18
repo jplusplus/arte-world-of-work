@@ -28,6 +28,7 @@ class ResultsCtrl
 
         @$scope.hasNext = no
         @$scope.hasPrev = no
+        @$scope.intro = yes
 
         @$scope.current =
             thematic : 0
@@ -36,6 +37,10 @@ class ResultsCtrl
         @$scope.getTrustedHTML = =>
             if @$scope.currentAnswer? and @$scope.currentAnswer.feedback?
                 $sce.trustAsHtml @$scope.currentAnswer.feedback.html_sentence
+
+        @$scope.start = =>
+            @$scope.intro = no
+            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         # List all thematics
         @$scope.thematics = []
@@ -64,7 +69,6 @@ class ResultsCtrl
                         else
                             return
                     ), (e) -> e?
-                    @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         # Initialize filters (fron URL or default values)
         urlFilters = do $location.search
