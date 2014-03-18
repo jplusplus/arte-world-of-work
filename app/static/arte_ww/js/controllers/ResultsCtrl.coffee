@@ -9,7 +9,7 @@ class ResultsCtrl
             @$http(request).success (data) =>
                 if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
                     @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
-                @$scope.nochart = false
+                @$scope.nochart = true
                 @$scope.currentAnswer = data
                 @$scope.hasNext = @elements[@$scope.current.thematic][@$scope.current.answer + 1]? or @elements[@$scope.current.thematic + 1]?
                 @$scope.hasPrev = @elements[@$scope.current.thematic][@$scope.current.answer - 1]? or @elements[@$scope.current.thematic - 1]?
