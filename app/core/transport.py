@@ -186,9 +186,10 @@ class DynamicFeedback(object):
         if answers_set == None:
             answers_set = all_answers
 
+        self.total_answers = answers_set.count()
+
         context_dict = {
-            'type':                'feedback',
-            'total_number':        answers_set.count(),
+            'total_number':        self.total_answers,
             'profile_attr':        profile_attr,
             'profile_attr_value':  self.get_profile_value(profile_attr),
             'use_profile_attr':    profile_attr != None,
@@ -280,5 +281,13 @@ class DynamicFeedback(object):
         else:
             choices = (True, False)
             return choices[ random.randint(0, len(choices) - 1) ]
+
+    def as_dict(self):
+        return {
+            'total_answers': self.total_answers,
+            'html_sentence': self.html_sentence,
+            'type': 'feedback',
+            'sub_type': 'dynamic' 
+        }
 
 # EOF
