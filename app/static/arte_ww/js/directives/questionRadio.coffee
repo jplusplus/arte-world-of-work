@@ -5,24 +5,7 @@ angular.module('arte-ww').directive 'questionRadio', [
             templateUrl: "partial/directives/question-radio.html"
             link: (scope, elem, attrs)->
                 scope.question = scope.$parent.element
-
-                scope.submit = (choice)->
-                    answerParams = 
-                        question: scope.question.id
-                        value: choice.id
-
-                    scope.submitAnswer(answerParams)
-                        .success(->
-                            console.log 'success ! '
-                            scope.next()
-                        )
-                        .error((data)->
-                            console.log 'error !', data
-                        )
-
-
+                scope.$watch '$parent.element', -> scope.question = scope.$parent.element               
                 
 
 ]
-
-

@@ -5,4 +5,6 @@ angular.module('arte-ww').directive 'questionUserGender', [
             templateUrl: "partial/directives/question-user-gender.html"
             link: (scope, elem, attrs)->
                 scope.question = scope.$parent.element
+                scope.$watch '$parent.element', -> scope.question = scope.$parent.element               
+                
 ]

@@ -45,8 +45,6 @@ class FeedbackService
             deferred.reject('passed question id is undefined')
         else
             loadedFeedback = @getLoaded(question_id)
-            console.log "loadedFeedback: ", loadedFeedback
-
             unless loadedFeedback?
                 config = _.extend @feedbackConfig,
                     url: @feedbackConfig.url.replace(':question_id', question_id)

@@ -53,20 +53,20 @@ class ElementsWrapper
     checkFeedbackFor: (element, position)=>
         return unless element
         return if element.type is 'feedback'
-        console.log 'checkFeedbackFor'
+        # console.log 'checkFeedbackFor'
         next_element = @elements.getAt position + 1
         if (next_element and next_element.type != 'feedback') or (!next_element?)
             if @feedbackService.isDistanceFarEnought()
                 @feedbackService.getForQuestion(element.id).then (dynFeedback)=>
-                    console.log 'received feedback: ', dynFeedback
+                    # console.log 'received feedback: ', dynFeedback
                     if dynFeedback.hasEnoughAnswers()
-                        console.log('if dynFeedback.hasEnoughAnswers()')
+                        # console.log('if dynFeedback.hasEnoughAnswers()')
                         feedback = dynFeedback
                     else if element.feedback
-                        console.log('else if element.feedback')
+                        # console.log('else if element.feedback')
                         feedback = element.feedback
                     if feedback
-                        console.log 'feedback for element (',element,'):', feedback
+                        # console.log 'feedback for element (',element,'):', feedback
                         @elements.insertAt position + 1, feedback
 
 

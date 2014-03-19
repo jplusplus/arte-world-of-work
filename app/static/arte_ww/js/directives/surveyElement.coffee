@@ -36,6 +36,7 @@ angular.module('arte-ww').directive 'surveyElement', [
                         scope.$eval(attrs.surveyElement)
                     , (element)->
                         scope.element = element
+                    , yes
                 
 
                 scope.$watch ->
