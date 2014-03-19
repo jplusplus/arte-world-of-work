@@ -1,15 +1,26 @@
 class PositionsObject
     constructor: (elements)->
         @elements  =  _.sortBy elements, (el)-> el.position
+        @updatePositions()
+
+    updatePositions: (elements)=>
         @positions =  _.map(@elements, (el)-> el.position )
 
     positionAt: (i)=> @positions[i]
 
     getAt: (i)=> _.findWhere @elements, position: @positionAt(i)
 
-    count: => @elements.length 
+    insertAt: (i, el)=>
+        left_part   = _.first( @elements, i )
+        right_part  = _.rest(  @elements, i )
+        el.position = _.last( left_part).position + 1
+        _.each right_part, (el)-> el.position += 1
+        @elements  = _.union left_part, [el], right_part
+        @updatePositions()
 
+    count: => @elements.length
 
+\
 # TODO: handle user position saving and loading/intialization
 class UserPositionService
     @$inject: ['$http', 'utils']
