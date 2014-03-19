@@ -187,6 +187,7 @@ class DynamicFeedback(object):
             answers_set = all_answers
 
         context_dict = {
+            'type':                'feedback',
             'total_number':        answers_set.count(),
             'profile_attr':        profile_attr,
             'profile_attr_value':  self.get_profile_value(profile_attr),
