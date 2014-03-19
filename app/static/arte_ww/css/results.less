@@ -1,6 +1,15 @@
 .answer-navigator {
     .white-panel();
 
+    @media (max-width: @screen-xs-min) {
+        width: 100%;
+
+        &:before {
+            background: transparent;
+            box-shadow: none;
+        }
+    }
+
     max-height: none;
 
     &__intro {
@@ -25,6 +34,20 @@
             bottom: 0;
             left: 0;
             right: 0;
+
+            @media (max-width: @screen-xs-min) {
+                height:50px;
+                background:fade(white, 80);
+                position:fixed;
+
+                @media (max-height: 300px) {
+                    position:relative;
+                }
+
+                .ng-enter & {
+                    position:absolute;
+                }
+            }
         }
 
         &__previous, &__next {
@@ -129,6 +152,10 @@
 }
 
 .answer-thematics {
+    @media (max-width: @screen-xs-min) {
+        display: none;
+    }
+
     .white-panel(@width:160px);
 
     position: absolute;
@@ -168,6 +195,10 @@
 }
 
 .answer-filters {
+    @media (max-width: @screen-xs-min) {
+        display: none;
+    }
+
     .white-panel(@width:150px);
 
     padding: 10px 20px 20px 20px;
