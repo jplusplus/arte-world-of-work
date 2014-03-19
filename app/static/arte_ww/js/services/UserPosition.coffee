@@ -20,8 +20,6 @@ class PositionsObject
 
     count: => @elements.length
 
-\
-# TODO: handle user position saving and loading/intialization
 class UserPositionService
     @$inject: ['$http', 'utils']
 
