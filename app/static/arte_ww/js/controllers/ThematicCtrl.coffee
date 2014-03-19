@@ -1,18 +1,30 @@
+# TODO
+# -> handle skip when on feedback
+# -> handle previous on feedback 
+
 ### 
 Key responsibilities of ThematicCtrl
     - handle different thematic states: thematic introduction
 ### 
 class ThematicCtrl
-    @$inject: [ '$rootScope', '$scope', '$sce', 'utils', 'UserPosition', 'Thematic', 'Answer' ]
+    @$inject: [
+        '$scope'
+        '$sce'
+        'utils'
+        'UserPosition'
+        'Thematic'
+        'Answer'
+        'Feedback'
+        'ElementsWrapper'
+    ]
 
-    constructor: (@rootScope, @scope, @sce, @utils, @userPosition, @thematicService, @Answer)->
+    constructor: ( @scope, @sce, @utils, @userPosition, @thematicService, @Answer, @feedbackService, @elementsWrapper )->
         @scope.$watch (=>
             @userPosition.positions
         ), (newdata, olddata) =>
             if newdata.elementPosition? and newdata.thematicPosition? and @scope.state is @states.LANDING
                 if newdata.thematicPosition is olddata.thematicPosition
                     if (newdata.elementPosition isnt 0) or newdata.thematicPosition isnt 0
-                        @onElementPositionChanged do @userPosition.elementPosition
                         @scope.letsgo true
         , yes
 
@@ -28,6 +40,7 @@ class ThematicCtrl
             state: @states.LANDING,
             states: @states,
             thematic: @thematicService
+            elements: @elementsWrapper
 
         # ---------------------------------------------------------------------
         # Scope function bindings
@@ -40,13 +53,8 @@ class ThematicCtrl
                 @utils.authenticate @startThematic
             letsgo: @letsgo
 
-        # ---------------------------------------------------------------------
-        # watches 
-        # ---------------------------------------------------------------------
+        # watches
         @scope.$watch 'thematic.currentThematic', @onThematicChanged 
-        @scope.$watch => 
-                @userPosition.elementPosition()
-            , @onElementPositionChanged
 
     letsgo: (skipIntro=false) =>
         if (do @userPosition.elementPosition is 0) and not skipIntro
@@ -64,10 +72,9 @@ class ThematicCtrl
         @currentState(@states.ELEMENTS)
 
     skipElement: (skipped=false) =>
-        if skipped and @scope.currentElement.type is "question"
-            @Answer.deleteAnswerForQuestion @scope.currentElement.id
-
-        if @hasNextElement()
+        if skipped
+            @Answer.deleteAnswerForQuestion @scope.elements.currentElement.id
+        if @elementsWrapper.hasNextElement()
             @userPosition.nextElement()
         else if @isDone()
             @userPosition.nextThematic()
@@ -81,33 +88,22 @@ class ThematicCtrl
 
     previousElement: =>
         if @isIntro()
-            @userPosition.previousThematic()        
+            @userPosition.previousThematic()
             @currentState(@states.ELEMENTS)
-        else if @hasPreviousElement()
+        else if @elementsWrapper.hasPreviousElement()
             @userPosition.previousElement()
         else
             @currentState(@states.INTRO)
 
-    hasNextElement: => 
-        return false unless @elements
-        element = @elements.getAt(@userPosition.elementPosition() + 1)
-        if element then true else false
-
-    hasPreviousElement: =>
-        return false unless @elements
-        element = @elements.getAt(@userPosition.elementPosition() - 1)
-        if element then true else false
 
     isLanding : => @currentState() == @states.LANDING
     isIntro   : => @currentState() == @states.INTRO
     isElements: => @currentState() == @states.ELEMENTS
-    isDone    : => @isElements() and @userPosition.elementPosition() == @elements.count() - 1
+    isDone    : => @isElements() and @userPosition.elementPosition() == @elementsWrapper.count() - 1
+    
 
     onThematicChanged: (thematic, old_thematic)=>
         return unless thematic?
-        @elements = @userPosition.createWrapper thematic.elements
-        @scope.thematicWrapper = @elements
-
         if (typeof thematic.intro_description) is typeof String
             _.extend @scope.thematic.currentThematic,
                 intro_description: @sce.trustAsHtml(thematic.intro_description)
@@ -118,10 +114,5 @@ class ThematicCtrl
         if thematic.position is 1
             @currentState @states.INTRO
 
-        @onElementPositionChanged do @userPosition.elementPosition
-
-    onElementPositionChanged: (position)=>
-        return unless @elements?
-        @scope.currentElement = @elements.getAt position
 
 angular.module('arte-ww').controller 'ThematicCtrl', ThematicCtrl
