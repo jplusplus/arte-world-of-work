@@ -197,10 +197,6 @@
 }
 
 .answer-filters {
-    @media (max-width: @screen-xs-min) {
-        display: none;
-    }
-
     .white-panel(@width:150px);
 
     padding: 10px 20px 20px 20px;
@@ -257,6 +253,41 @@
 
     }
 
+    @media (max-width: @screen-xs-min) {
+        width: auto;
+        left: 0;
+        margin: 0 0;
+        top: auto;
+        bottom: 50px;
+        height: 110px;
+
+        &:before {
+            box-shadow: none;
+            background: transparent;
+        }
+
+        &__gender, &__age {
+            float: left;
+        }
+
+        &__gender {
+            width: 35%;
+            padding-top: 10px;
+
+            &:after {
+                width: 0;
+            }
+        }
+
+        &__age {
+            width: 65%;
+            padding-right: 20px;
+
+            p {
+                margin: 0;
+            }
+        }
+    }
 
     #no-ui > .horizontal();
 }
