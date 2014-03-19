@@ -29,9 +29,8 @@ def _create_generic_element(sender, **kwargs):
 def _create_thematic_element(sender, **kwargs):
     create_thematic_element(sender, **kwargs)
 
-
 def init(instance):
-    post_save.connect(create_boolean_choices, sender=BooleanQuestion)
+    post_save.connect(create_boolean_choices,    sender=BooleanQuestion)
     post_save.connect(create_user_choice_fields, sender=UserGenderQuestion)
 
     # auth & client setup
@@ -52,8 +51,8 @@ def init(instance):
     instance.question4 = instance.createQuestion(TypedNumberQuestion, **{'unit': '%'})
 
     default_source = {'source_url': 'http://jplusplus.org', 'source_title': 'Jpp website' }
-    instance.feedback1 = instance.createFeedback(StaticFeedback, **default_source)
-    instance.feedback2 = instance.createFeedback(StaticFeedback, **default_source)
+    instance.feedback1 = instance.createFeedback(instance.question1, StaticFeedback, **default_source)
+    instance.feedback2 = instance.createFeedback(instance.question2, StaticFeedback, **default_source)
 
     # question 3 choices
     instance.question3_choice1 = instance.createChoice(instance.question3, TextChoiceField, position=1)
@@ -64,9 +63,6 @@ def init(instance):
     instance.question2.set_thematic(instance.thematic1, 2) 
     instance.question3.set_thematic(instance.thematic1, 3) 
     instance.question4.set_thematic(instance.thematic1, 4)
-
-    instance.feedback1.set_thematic(instance.thematic1, 5)
-    instance.feedback2.set_thematic(instance.thematic1, 6) 
 
     # thematic 2 question
     instance.question5 = instance.createQuestion(MediaSelectionQuestion, media_type='icon')
@@ -102,9 +98,10 @@ class TestUtils(object):
         kwargs['hint_text'] = kwargs.get('hint_text', 'Default hint text')
         return self.createModelInstance(klass, **kwargs)
 
-    def createFeedback(self, klass=None, **kwargs):
+    def createFeedback(self, question, klass=None, **kwargs):
         kwargs['html_sentence'] = kwargs.get('html_sentence', 
             'Default <strong>html_sentence</strong>')
+        kwargs['question'] = question
         return self.createModelInstance(klass, **kwargs)
 
     def createChoice(self, question, klass, **kwargs):
@@ -153,17 +150,21 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
         response = self.client.get(url)
         thematic = response.data
         sub_elements = thematic.get('elements')
-        self.assertLenIs(sub_elements, 6)
+        self.assertLenIs(sub_elements, 4)
         question1_elem = sub_elements[0]
         question2_elem = sub_elements[1]
         question3_elem = sub_elements[2]
         question4_elem = sub_elements[3]
-        feedback1_elem = sub_elements[4]
-        feedback2_elem = sub_elements[5]
-
+        
+        # Question 1 
         self.assertAttrEqual(question1_elem, 'type',      'question')
         self.assertAttrEqual(question1_elem, 'typology',  'typed_number')
         self.assertAttrEqual(question1_elem, 'object_id', self.question1.id)
+
+        # Question 1 feedback
+        feedback1 = question1_elem['feedback']
+        self.assertAttrEqual(feedback1, 'type',     'feedback' )
+        self.assertAttrEqual(feedback1, 'sub_type', 'static')
 
         self.assertAttrEqual(question2_elem, 'type',      'question')
         self.assertAttrEqual(question2_elem, 'typology',  'boolean')
@@ -178,14 +179,6 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
         self.assertAttrEqual(question4_elem, 'type',      'question')
         self.assertAttrEqual(question4_elem, 'typology',  'typed_number')
         self.assertAttrEqual(question4_elem, 'object_id', self.question4.id)
-        
-        self.assertAttrEqual(feedback1_elem, 'type',      'feedback')
-        self.assertAttrEqual(feedback1_elem, 'sub_type',  'static')
-        self.assertAttrEqual(feedback1_elem, 'object_id', self.feedback1.id)
-        
-        self.assertAttrEqual(feedback2_elem, 'type',      'feedback')
-        self.assertAttrEqual(feedback2_elem, 'sub_type',  'static')
-        self.assertAttrEqual(feedback2_elem, 'object_id', self.feedback2.id)
 
     def test_thematic_nested_detail_with_pictures(self):
         url = reverse('thematic-nested-detail', kwargs={ 'pk': self.thematic2.pk})
@@ -544,6 +537,22 @@ class ResultsTestCase(APITestCase, TestCaseMixin, TestUtils):
         self.assertIsNotNone( sets[ choice3.pk ] )
         self.assertEqual( sets[ choice3.pk ]['title'], choice3.title )
         self.assertEqual( results[ choice3.pk ], 50)
+
+    def test_dynamic_feedback(self):
+        client = APIClient()
+        user = User.objects.create()
+        token, created = Token.objects.get_or_create(user=user)
+        client.force_authenticate(user=user, token=token)
+        question = self.question1
+        url      = reverse('question-feedback', kwargs={ 'pk': question.pk })
+        response = client.get(url)
+
+        feedback = response.data
+        self.assertAttrEqual(  feedback, 'type',     'feedback')
+        self.assertAttrEqual(  feedback, 'sub_type', 'dynamic')
+        self.assertAttrNotNone(feedback, 'html_sentence')
+        self.assertAttrNotNone(feedback, 'question')
+        self.assertAttrEqual(feedback['question'], 'id', question.pk)
 
 
 class CountriesTestCase(APITestCase, TestCaseMixin):

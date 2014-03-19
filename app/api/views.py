@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.decorators import action, link
+from rest_framework.decorators import link, permission_classes, authentication_classes
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django_countries import countries as django_countries
@@ -19,6 +19,7 @@ User = get_user_model()
 class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BaseQuestion.objects.all()
     serializer_class = serializers.QuestionSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication,)
 
     @link()
     def results(self, request, pk):
