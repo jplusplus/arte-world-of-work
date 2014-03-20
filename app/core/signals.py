@@ -4,7 +4,7 @@ from django.db.models import Max
 from django.db.models.signals import post_save, pre_save
 from rest_framework.authtoken.models import Token
 
-from app.utils import receiver_subclasses, clean_string_for_i18n
+from app.utils import receiver_subclasses, clean_string
 # all used models for signals
 from app.core.models import Thematic
 from app.core.models import StaticFeedback
@@ -131,13 +131,13 @@ def create_user_informations(sender, **kwargs):
 
 def clean_thematic(sender, **kwargs):
     instance = kwargs.get('instance')
-    instance.intro_description = clean_string_for_i18n(instance.intro_description)
-    instance.outro_description = clean_string_for_i18n(instance.outro_description)
+    instance.intro_description = clean_string(instance.intro_description)
+    instance.outro_description = clean_string(instance.outro_description)
 
 
 def clean_feedback(sender, **kwargs):
     instance = kwargs.get('instance')
-    instance.html_sentence = clean_string_for_i18n(instance.html_sentence)
+    instance.html_sentence = clean_string(instance.html_sentence)
 
 
 
