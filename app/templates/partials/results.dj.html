@@ -12,6 +12,7 @@
             <p class='chart--nochart' ng-show='nochart' ng-translate>There is not enough data for the selected filters.</p>
             <div ng-class="{'answer-description--nochart':nochart||fullwidth}" class="answer-description">
                 <p ng-bind-html="getTrustedHTML()"></p>
+                <a href="[[currentAnswer.feedback.source_url]]" target="_blank">[[currentAnswer.feedback.source_title]]</a>
             </div>
         </div>
     </div>
