@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: arte-world-of-work\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-20 16:39+0100\n"
-"PO-Revision-Date: 2014-03-20 12:54-0400\n"
+"PO-Revision-Date: 2014-03-20 12:59-0400\n"
 "Last-Translator: Toutenrab <bellon.pierre+crowdin@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1407,7 +1407,7 @@ msgstr "<strong>%(value)s%%</strong> of persons answered like you"
 
 #: translations/i18n_strings.py:2
 msgid "an other translation"
-msgstr "an other translation"
+msgstr "une autre traduction"
 
 #: translations/i18n_strings.py:2
 msgid "my awesome title"
@@ -1419,7 +1419,7 @@ msgstr "mon titre"
 
 #: translations/i18n_strings.py:2
 msgid "an other title"
-msgstr "an other title"
+msgstr "un autre titre"
 
 #: translations/i18n_strings.py:2
 msgid "inherited title"
@@ -1427,7 +1427,7 @@ msgstr "inherited title"
 
 #: translations/i18n_strings.py:2
 msgid "my awesome title <strong>with html</strong>"
-msgstr "mon superbe titrle <strong>avec du html</strong>"
+msgstr "mon superbe titre <strong>avec du html</strong>"
 
 #: translations/tests/models.py:6
 msgid "Title"
@@ -1435,5 +1435,5 @@ msgstr "Title"
 
 #: translations/tests/models.py:10
 msgid "Other"
-msgstr "Other"
+msgstr "Autre"
 
