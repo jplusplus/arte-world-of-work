@@ -17,6 +17,7 @@ from django.core.management.base import BaseCommand
 from django.template import Context, Template
 
 from app.translations.translator import translator
+from app.utils import clean_string
 import os
 import codecs
 import re
@@ -68,7 +69,7 @@ def write_strings(strings=(), verbosity=1):
             'STRINGS = (\n'
                 '{% for str in strings %}'
                     '{% autoescape off %}'
-                    '\t_("{{ str }}"),\n'
+                    '\t_("""{{ str }}"""),\n'
                     '{% endautoescape %}'
                 '{% endfor %}'
             ')'
