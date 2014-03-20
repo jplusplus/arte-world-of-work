@@ -60,7 +60,7 @@ class AnswerService
     delete: (answer) =>
         request =
             method : 'DELETE'
-            url : "/api/answers/#{answer.id}"
+            url : "/api/answers/#{answer.id}/"
 
         @$http request
 

@@ -180,7 +180,7 @@ class ThematicSerializer(serializers.ModelSerializer):
     elements = serializers.PrimaryKeyRelatedField(many=True, source='thematicelement_set')
     class Meta:
         model = Thematic
-        fields = ('id', 'title',  'intro_description', 
+        fields = ('id', 'title',  'intro_description', 'outro_description',
             'elements', 'position', 'slug')
         depth = 1
 
