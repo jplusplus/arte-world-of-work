@@ -1,14 +1,13 @@
 class PageCtrl
-    @$inject: ['$scope', '$location', '$translate']
+    @$inject: ['$scope', '$location', '$translate', '$cookies']
 
-    constructor: (@scope, @location, @$translate)->
-        @title = @$translate('World of Work')
+    constructor: (@scope, @location, @$translate, @cookies)->
+        @title = ''
         @scope.Page = this
 
         params = @location.search()
         if params.lang
             @langChanged params.lang
-
 
         @scope.$watch ->
             @location.search().lang if @location
@@ -17,6 +16,8 @@ class PageCtrl
     langChanged: (lang)=>
         return unless lang
         @$translate.use(lang)
+        @cookies.django_language = lang
+
 
     title: (title) =>
         if title?
@@ -27,7 +28,5 @@ class PageCtrl
         if lang?
             @langChanged(lang)
         @$translate.use()
-
-
 
 angular.module('arte-ww').controller 'PageCtrl', PageCtrl
