@@ -6,7 +6,7 @@ from app.translations.translator import translator, TranslationOptions
 
 # question translation
 class QuestionTransOpts(TranslationOptions):
-    fields = ('label', 'hint_text', 'skip_button_label')
+    fields = ('label', 'hint_text', )
 
 class ChoiceFieldTransOpts(TranslationOptions):
     fields = ('title', )
