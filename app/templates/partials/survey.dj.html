@@ -1,7 +1,6 @@
 {% load staticfiles %}
 
-
-<div class="survey-navigator" ng-switch on='survey.state'>
+<div class="survey-navigator" ng-switch on='survey.state' ng-class="{ 'survey-navigator--loading': isThematicLoading }">
 
     <!-- step 0 -> Introduction of the survey, first step  -->
     <div class="survey-navigator--start"  ng-switch-when="0">

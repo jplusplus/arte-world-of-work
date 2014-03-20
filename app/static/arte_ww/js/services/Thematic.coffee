@@ -33,8 +33,12 @@ class ThematicService
     all: (cb)=> @nestedThematics.all cb
 
     get: (params, cb)=>
+        # Notify rootScope to display a loading spinner
+        @rootScope.isThematicLoading = yes 
         @nestedThematics.get params, (thematic)=>
             @loadedThematics[thematic.id] = thematic
+            # Disabled loading spinner
+            @rootScope.isThematicLoading  = no 
             cb(thematic)
 
     getAt: (position, cb)=>
