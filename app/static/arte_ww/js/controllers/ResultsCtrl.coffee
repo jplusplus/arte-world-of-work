@@ -8,6 +8,7 @@ class ResultsCtrl
     changeQuestion: (id) =>
         if (do @Thematic.current)?
             @$scope.hasNext = @$scope.hasPrev = yes
+            @$scope.nochart = true
             if id.id >= 0
                 request =
                     url : "/api/questions/#{id.id}"
@@ -15,7 +16,6 @@ class ResultsCtrl
                 @$http(request).success (data) =>
                     if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
                         @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
-                    @$scope.nochart = true
                     @$scope.currentAnswer = data
             else
                 @$scope.currentAnswer = id
