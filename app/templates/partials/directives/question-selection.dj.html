@@ -11,7 +11,7 @@
         <span>[[ choice.title ]]</span>
     </div>
 
-    <button class="question-choices--multiple__validate" ng-class="{ 'question-choices--multiple__validate--disable': answer.length == 0 }" ng-click="answer.length && submitAnswer(answer)">
+    <button class="question-choices--multiple__validate" ng-class="{ 'question-choices--multiple__validate--disable': answer.length == 0 }" ng-click="answer.length && submitAnswer(answer, false)">
         [[ question.validate_button_label ]]
     </button>
 
