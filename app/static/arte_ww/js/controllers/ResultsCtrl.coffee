@@ -88,7 +88,7 @@ class ResultsCtrl
                                 id : _steps.intro
                                 label : thematic.title
                             }].concat elements).concat [{
-                                    content : "OUTRO"
+                                    content : thematic.outro_description
                                     id : _steps.outro
                                     label : thematic.title
                                 }]
