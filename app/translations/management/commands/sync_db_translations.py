@@ -30,20 +30,6 @@ def check_string(str):
     is_valid = is_valid and str != " "
     return is_valid 
 
-
-def clean_string(src_string):
-    src_string = re.sub(r'id="[\w\W]*"',    '', src_string)
-    src_string = re.sub(r'style="[\w\W]*"', '', src_string)
-    src_string = re.sub(r'dir="[\w\W]*"',   '', src_string)
-
-    src_string = re.sub(r'<p[\W]*>', "<p>", src_string)
-    src_string = src_string.replace("% ", "%&nbsp'")
-    src_string = src_string.replace("<span >", "")
-    src_string = src_string.replace("</span>", "")
-    src_string = src_string.replace('"', '\\"')
-    src_string = src_string.replace('\n', '')
-    return src_string
-
 def extract_strings_from_db(verbosity=1):
     models = translator.get_registered_models()
     if verbosity > 1:
@@ -54,8 +40,7 @@ def extract_strings_from_db(verbosity=1):
             for field_name in opts.fields:
                 src_string = getattr(instance, '_%s' % field_name, None)
                 if check_string(src_string) is True:
-                    clean_str = clean_string(src_string)
-                    strings.append(clean_str)
+                    strings.append(src_string)
 
     return strings
 
