@@ -73,6 +73,7 @@ arteww = angular
                 $routeProvider
                     .when('/', redirectTo: '/survey')
                     .when '/survey',
+                            reloadOnSearch: no
                             controller: 'SurveyCtrl'
                             templateUrl: '/partial/survey.html'
                             category: 'survey'
@@ -86,4 +87,5 @@ arteww = angular
                             templateUrl: '/partial/results.embedded.html'
                     .when '/about',
                         templateUrl: '/partial/about.html'
+                        reloadOnSearch: no
     ])

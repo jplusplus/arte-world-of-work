@@ -123,8 +123,7 @@ class Thematic(models.Model):
     slug     = models.SlugField(max_length=250, unique=True, null=True, blank=True)
 
     intro_description = models.TextField(_('Introduction description'))
-    outro_description = models.TextField(_('Thematic ending description'), 
-        null=True, blank=True)
+    outro_description = models.TextField(_('Thematic ending description'))
 
 
     def add_element(self, instance, position=None):
