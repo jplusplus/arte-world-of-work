@@ -1,4 +1,5 @@
 {
+    "About": "About",
     "Youth work in Europe": "Youth work in Europe",
     "Survey": "Survey",
     "Results": "Results",
@@ -6,7 +7,7 @@
     "Let's go": "Let's go",
     "There is not enough data for the selected filters.": "There is not enough data for the selected filters.",
     "Previous": "Previous",
-    "Skip": "Skip",
+    "next": "next",
     "A 40-hours-a-week office job and a laid-down career path?": "A 40-hours-a-week office job and a laid-down career path?",
     "If you're under 30, you know that's not how it is.": "If you're under 30, you know that's not how it is.",
     "Temporary employment, internships, volunteering, informal jobs, self-learning, emigration… Thatʼs what we do to make a living. Neither good nor bad, itʼs our world.": "Temporary employment, internships, volunteering, informal jobs, self-learning, emigration… Thatʼs what we do to make a living. Neither good nor bad, itʼs our world.",
@@ -15,7 +16,6 @@
     "Start": "Start",
     "Great job! Want to make extra hours?": "Great job! Want to make extra hours?",
     "By the way, did you know...": "By the way, did you know...",
-    "next": "next",
     "skip": "skip",
     "or": "or",
     "Choose a country": "Choose a country"
