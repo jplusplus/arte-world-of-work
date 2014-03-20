@@ -69,7 +69,8 @@ class PieChart extends Chart
                 transform : (d) => "translate(#{@arc.centroid d})"
             .style
                 'text-anchor' : 'middle'
-            .text (d) -> "#{d.data[0]} - #{d.data[1]}%"
+            .text (d) ->
+                if d.data[1] > 0 then "#{d.data[0]} - #{d.data[1]}%" else ""
 
 
 class BarChart extends Chart
