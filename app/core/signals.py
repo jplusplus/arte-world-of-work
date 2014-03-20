@@ -4,9 +4,10 @@ from django.db.models import Max
 from django.db.models.signals import post_save, pre_save
 from rest_framework.authtoken.models import Token
 
-from app.utils import receiver_subclasses
+from app.utils import receiver_subclasses, clean_string_for_i18n
 # all used models for signals
 from app.core.models import Thematic
+from app.core.models import StaticFeedback
 from app.core.models import BaseAnswer
 from app.core.models import BaseChoiceField
 from app.core.models import BaseFeedback
@@ -127,6 +128,20 @@ def create_user_informations(sender, **kwargs):
         position.save()
         token.save()
 
+
+def clean_thematic(sender, **kwargs):
+    instance = kwargs.get('instance')
+    instance.intro_description = clean_string_for_i18n(instance.intro_description)
+    instance.outro_description = clean_string_for_i18n(instance.outro_description)
+
+
+def clean_feedback(sender, **kwargs):
+    instance = kwargs.get('instance')
+    instance.html_sentence = clean_string_for_i18n(instance.html_sentence)
+
+
+
+
 def bind():
     pre_save.connect(set_element_position, sender=ThematicElement)    
     # pre_save.connect(set_thematic_position, sender=Thematic)
@@ -137,5 +152,9 @@ def bind():
 
     # create user information on user created
     post_save.connect(create_user_informations, sender=get_user_model())
+
+
+    pre_save.connect(clean_thematic, sender=Thematic)
+    pre_save.connect(clean_feedback, sender=StaticFeedback)
 
 #EOF
