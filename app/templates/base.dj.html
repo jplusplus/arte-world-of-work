@@ -23,7 +23,9 @@
         </script>
     </head>
     <body ng-cloak track-thematic>
-        {% block content %}{% endblock %}
-        {% block extrajs %}{% endblock %}
+        <div ng-controller='PageCtrl'>
+            {% block content %}{% endblock %}
+            {% block extrajs %}{% endblock %}
+        </div>
     </body>
 </html>

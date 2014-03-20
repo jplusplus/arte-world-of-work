@@ -2,7 +2,7 @@
     <div class="container">
         <nav class="header__nav">
 
-            <a class="header__nav__brand-logo" draggable restore ng-href="{% url 'home' %}">
+            <a class="header__nav__brand-logo" draggable restore ng-href="{% url 'home' %}?lang=[[Page.currentLang()]]">
                 <h2>World <small>of</small> Work</h2>
                 <p class="header__nav__brand-logo__caption">[[ "Youth work in Europe" | translate ]]</p>                
             </a>
@@ -10,11 +10,11 @@
             <ul class="header__nav__links list-inline">
                 <li class="header__nav__links__element" 
                     ng-class="{ 'header__nav__links__element--active': currentCategory() == 'survey' }">
-                    <a ng-href="{% url 'survey' %}" translate>Survey</a>
+                    <a ng-href="{% url 'survey' %}?lang=[[Page.currentLang()]]" translate>Survey</a>
                 </li>
                 <li class="header__nav__links__element" 
                     ng-class="{ 'header__nav__links__element--active': currentCategory() == 'results' }">
-                    <a ng-href="{% url 'results' %}" translate>Results</a>
+                    <a ng-href="{% url 'results' %}?lang=[[Page.currentLang()]]" translate>Results</a>
                 </li>
             </ul>
             <div class="header__nav__back-to-beginning" ng-if="currentCategory() == 'survey' ">   
@@ -30,9 +30,6 @@
         </nav>
 
         <ul class="header__social list-inline">
-            <li class="hidden" ng-click="setLang('fr')">FR</li>
-            <li class="hidden" ng-click="setLang('de')">DE</li>
-            <li class="hidden" ng-click="setLang('en')">EN</li>
             <li>
                 <a href="" target="_blank"  class="header__social__link header__social__link--googleplus">                    
                     [[thirdParty.gplusCount]]
