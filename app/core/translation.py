@@ -15,7 +15,7 @@ class TypedNumberQuestionTransOpts(TranslationOptions):
     fields = ('unit', )
 
 class ThematicTransOpts(TranslationOptions):
-    fields = ('title', 'intro_description', 'intro_button_label')
+    fields = ('title', 'intro_description',)
 
 class FeedbackTransOpts(TranslationOptions):
     fields = ('html_sentence', )

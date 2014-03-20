@@ -123,14 +123,8 @@ class Thematic(models.Model):
     slug     = models.SlugField(max_length=250, unique=True, null=True, blank=True)
 
     intro_description = models.TextField(_('Introduction description'))
-    intro_button_label = models.CharField(_('Introduction button label'), 
-        default=_('See the data'), max_length=120, null=True, blank=True)
-
     outro_description = models.TextField(_('Thematic ending description'), 
         null=True, blank=True)
-    outro_button_label = models.CharField(_('Thematic ending button label'),
-        default=_('Skip'), max_length=120, null=True, blank=True)
-
 
 
     def add_element(self, instance, position=None):
