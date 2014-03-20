@@ -100,7 +100,21 @@ def get_fields_names(model=None, type=None):
                 names.append(field.name)
     return names
 
+def clean_string(src_string):
+    if not src_string:
+        return src_string
+    src_string = re.sub(r'id="[\w\W]*"',    '', src_string)
+    src_string = re.sub(r'style="[\w\W]*"', '', src_string)
+    src_string = re.sub(r'dir="[\w\W]*"',   '', src_string)
 
+    src_string = re.sub(r'<p[\W]*>', '<p>',  src_string)
+    src_string = re.sub(r'<span[\W]*>', '',  src_string)
+
+    src_string = src_string.replace('% ', '%&nbsp;')
+
+    src_string = src_string.replace("<span>", '')
+    src_string = src_string.replace("</span>", '')
+    return src_string
 
 def camel_to_underscore(str):
     # took from http://stackoverflow.com/a/1176023/885541

@@ -81,7 +81,7 @@ class Histogramme(ResultObject):
 
                 answers = self.queryset.filter(value__gte=int_min, value__lt=int_max).count()
                 percentage =  answers * 100.0 / float(self.total_answers)
-                percentage = int(percentage)
+                percentage = int(percentage + 0.5)
                 self.add_set(mininum=int_min, maximum=int_max, percentage=percentage)
 
 

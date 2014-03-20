@@ -173,7 +173,6 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
         self.assertAttrEqual(question3_elem, 'typology',  'text_selection')
         self.assertAttrEqual(question3_elem, 'object_id', self.question3.id)
 
-        self.assertAttrNotNone(question3_elem, 'validate_button_label')
 
         self.assertAttrEqual(question4_elem, 'type',      'question')
         self.assertAttrEqual(question4_elem, 'typology',  'typed_number')
@@ -193,7 +192,6 @@ class ThematicTests(APITestCase, TestCaseMixin, TestUtils):
         thematic = response.data
         sub_elements = thematic.get('elements')
         question = sub_elements[0]
-        self.assertAttrNotNone(question, 'validate_button_label')
         self.assertEqual(question['type'], 'question')
         for choice in question.get('choices'):
             self.assertAttrNotNone(choice, 'title')
@@ -647,7 +645,6 @@ class MixinsTestCase(TestCase, TestCaseMixin, TestUtils):
         data = TestSerializer(self.question).data
         # should contain all basic question informations
         self.assertAttrNotNone(data, 'label')
-        self.assertAttrNotNone(data, 'skip_button_label')
         self.assertAttrNotNone(data, 'hint_text')
 
         # and all typed number information

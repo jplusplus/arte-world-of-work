@@ -1,7 +1,26 @@
 .answer-navigator {
     .white-panel();
 
+    @media (max-width: @screen-xs-min) {
+        width: 100%;
+        position: absolute;
+        top: 35px;
+
+        &:before {
+            background: transparent;
+            box-shadow: none;
+        }
+    }
+
     max-height: none;
+
+    &__intro {
+        padding-bottom: 5px;
+
+        p {
+            padding: 20px;
+        }
+    }
 
     &__nav {
         display: block;
@@ -17,6 +36,20 @@
             bottom: 0;
             left: 0;
             right: 0;
+
+            @media (max-width: @screen-xs-min) {
+                height:50px;
+                background:fade(white, 80);
+                position:fixed;
+
+                @media (max-height: 300px) {
+                    position:relative;
+                }
+
+                .ng-enter & {
+                    position:absolute;
+                }
+            }
         }
 
         &__previous, &__next {
@@ -101,6 +134,8 @@
 
             &--nochart {
                 padding: 0 15px;
+                font-size: 12px;
+                color: lighten(@text-color, 30%);
             }
         }
 
@@ -116,11 +151,19 @@
                 left: 0;
                 padding: 10px 15px 10px 15px;
             }
+
+            a {
+                font-size: 11px;
+            }
         }
     }
 }
 
 .answer-thematics {
+    @media (max-width: @screen-xs-min) {
+        display: none;
+    }
+
     .white-panel(@width:160px);
 
     position: absolute;
@@ -216,6 +259,39 @@
 
     }
 
+    @media (max-width: @screen-xs-min) {
+        width: auto;
+        left: 0;
+        margin: 0 0;
+        top: auto;
+        bottom: 50px;
+        height: 110px;
+
+        &:before {
+            box-shadow: none;
+            background: transparent;
+        }
+
+        &__gender {
+            float: left;
+            width: 40%;
+            padding-top: 10px;
+
+            &:after {
+                width: 0;
+            }
+        }
+
+        &__age {
+            float: right;
+            width: 60%;
+            padding-right: 20px;
+
+            p {
+                margin: 0;
+            }
+        }
+    }
 
     #no-ui > .horizontal();
 }

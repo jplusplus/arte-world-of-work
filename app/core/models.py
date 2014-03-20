@@ -123,14 +123,8 @@ class Thematic(models.Model):
     slug     = models.SlugField(max_length=250, unique=True, null=True, blank=True)
 
     intro_description = models.TextField(_('Introduction description'))
-    intro_button_label = models.CharField(_('Introduction button label'), 
-        default=_('See the data'), max_length=120, null=True, blank=True)
-
     outro_description = models.TextField(_('Thematic ending description'), 
         null=True, blank=True)
-    outro_button_label = models.CharField(_('Thematic ending button label'),
-        default=_('Skip'), max_length=120, null=True, blank=True)
-
 
 
     def add_element(self, instance, position=None):
@@ -164,7 +158,7 @@ class Thematic(models.Model):
 #     Feedbacks
 # 
 # -----------------------------------------------------------------------------
-class BaseFeedback(mixins.ValidateButtonMixin, mixins.AsFinalMixin):
+class BaseFeedback(mixins.AsFinalMixin):
     html_sentence = models.TextField(_('Feedbacks sentence'), 
         help_text=_('Sentence (as html content): "Hey did you knew .. ?"')
     )
@@ -298,8 +292,7 @@ class BaseQuestion(mixins.ThematicElementMixin, mixins.AsFinalMixin):
     """
     answer_type       = None
     label             = models.CharField(_('Question label')    ,  max_length=220)
-    hint_text         = models.CharField(_('Question hint text'),  max_length=120)
-    skip_button_label = models.CharField(_('Skip button (label)'), default=_('Skip this question'),max_length=120)
+    hint_text         = models.CharField(_('Question hint text'),  max_length=120, blank=True, null=True)
     objects           = QuestionManager()
     # properties 
     @property

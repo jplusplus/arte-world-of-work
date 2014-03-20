@@ -96,19 +96,11 @@ class ThematicAdmin(admin.ModelAdmin):
     inlines = (
         InlineThematicElement,
     )
-    formfield_overrides = {
-        db_models.TextField: {'widget': TinyMCE },
-    }
 
 
 
 class FeedbackAdmin(admin.ModelAdmin):
-    inlines = (
-        GenericInlineThematicElement,
-    )
-    formfield_overrides = {
-        db_models.TextField: {'widget': TinyMCE },
-    }
+    pass
 
 
 class AnswerAdmin(admin.ModelAdmin): 
