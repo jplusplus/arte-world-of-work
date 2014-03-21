@@ -145,19 +145,17 @@ class DynamicFeedback(object):
                        question=None, 
                        use_percentage=None):
 
+        self.AnswerType      = None
         self.html_sentence   = None
         self.profile         = user.userprofile
         self.question        = question
         self._use_percentage = use_percentage
-
-        # simple wrapper around the answer_type to use 
-        class AnswerType(question.answer_type): 
-            class Meta: 
-                proxy=True
-            pass
-        # make him accessible for this instance    
-        self.AnswerType = AnswerType
+        self.AnswerType      = self.question.answer_type
         self.create_html_sentence()
+
+
+    def get_base_answer_model(self):
+        return self.base_answer_model(self.AnswerType)
 
     def base_answer_model(self, AnswerType=None):
         if AnswerType.__name__ != 'BaseAnswer':
@@ -166,12 +164,10 @@ class DynamicFeedback(object):
             return AnswerType
 
     def create_html_sentence(self):
-        AnswerType = self.AnswerType
-        BaseAnswer = self.base_answer_model(AnswerType)
         myanswer   = None
-
+        BaseAnswer = self.get_base_answer_model()
         try:
-            myanswer = AnswerType.objects.get(question=self.question, 
+            myanswer = BaseAnswer.objects.get(question=self.question, 
                 user=self.profile.user)
             myanswer = myanswer.as_final()
         except BaseAnswer.DoesNotExist: 
@@ -208,7 +204,7 @@ class DynamicFeedback(object):
                 rendered = render_to_string('dynamic_feedback_count.dj.html', context_dict)
         else: 
             rendered = render_to_string('dynamic_feedback_generic.dj.html', context_dict)
-        self.html_sentence = self.clean_rendered_html(rendered)
+        self.html_sentence = rendered
         return self.html_sentence
 
     def get_profile_value(self, profile_attr):
@@ -227,14 +223,8 @@ class DynamicFeedback(object):
             similar_answers = answers_set.filter(value=value)
         return similar_answers
 
-    def clean_rendered_html(self, rendered):
-        rendered = rendered.replace('<span>',  '')
-        rendered = rendered.replace('</span>', '')
-        rendered = rendered.replace('\n',  '')
-        rendered = rendered.replace('&nbsp;',  ' ')
-        return rendered
-
     def lookup_for_answers(self):
+        BaseAnswer = self.get_base_answer_model()
         # will contain multiple answers set. It will help us to know what 
         answers_pool = {}
         # challenger represents the answer set to use for this dynamic feedback

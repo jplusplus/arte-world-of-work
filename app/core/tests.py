@@ -338,14 +338,14 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
         self.question4 = TypedNumberQuestion.objects.create(label='label', hint_text='hint')
 
-        self.question5 = TextSelectionQuestion.objects.create(label='label', hint_text='hint')
+        self.selection = MediaSelectionQuestion.objects.create(label='label', hint_text='hint')
 
-        self.question5_choices = (
-            TextChoiceField(title='a', question=self.question5, position=1),
-            TextChoiceField(title='b', question=self.question5, position=2),
-            TextChoiceField(title='c', question=self.question5, position=3),
+        self.selection_choices = (
+            MediaChoiceField(title='a', question=self.selection, position=1),
+            MediaChoiceField(title='b', question=self.selection, position=2),
+            MediaChoiceField(title='c', question=self.selection, position=3),
         )
-        [ c.save() for c in self.question5_choices ]
+        [ c.save() for c in self.selection_choices ]
 
     def create_dynfeedback(self, percentage=None, create_user_answer=True, user=None, question=None, value=None, 
                            other_value=None, nb_similar=502, nb_other=500):
@@ -569,12 +569,13 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
         user = User.objects.create()
         user.userprofile.age = 27
         user.userprofile.save()
-        choices =self.question5_choices 
-        value = choices[1:] # the 2 last choice of q5 choices
+        question    = self.selection
+        choices     = self.selection_choices 
+        value       = choices[1:] # the 2 last choice of q5 choices
         other_value = choices[:1]
-        feedback = self.create_dynfeedback(user=user,
+        feedback    = self.create_dynfeedback(user=user,
                                            percentage=True, 
-                                           question=self.question5,
+                                           question=question,
                                            value=value, 
                                            other_value=other_value)
 
