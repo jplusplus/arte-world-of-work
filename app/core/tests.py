@@ -338,6 +338,15 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
         self.question4 = TypedNumberQuestion.objects.create(label='label', hint_text='hint')
 
+        self.question5 = TextSelectionQuestion.objects.create(label='label', hint_text='hint')
+
+        self.question5_choices = (
+            TextChoiceField(title='a', question=self.question5, position=1),
+            TextChoiceField(title='b', question=self.question5, position=2),
+            TextChoiceField(title='c', question=self.question5, position=3),
+        )
+        [ c.save() for c in self.question5_choices ]
+
     def create_dynfeedback(self, percentage=None, create_user_answer=True, user=None, question=None, value=None, 
                            other_value=None, nb_similar=502, nb_other=500):
         if create_user_answer:
@@ -555,6 +564,25 @@ class ResultsTestCase(TestCase, utils.TestCaseMixin):
 
         self.assertEqual(feedback.html_sentence, 
             u"<strong>50%</strong> of persons from France answered like you")
+
+    def test_feedback_selection_age(self):
+        user = User.objects.create()
+        user.userprofile.age = 27
+        user.userprofile.save()
+        choices =self.question5_choices 
+        value = choices[1:] # the 2 last choice of q5 choices
+        other_value = choices[:1]
+        feedback = self.create_dynfeedback(user=user,
+                                           percentage=True, 
+                                           question=self.question5,
+                                           value=value, 
+                                           other_value=other_value)
+
+        self.assertEqual(feedback.html_sentence, 
+            u"<strong>50%</strong> of persons aged 27 years answered like you",)
+
+
+
 
 class UtilsTestCase(TestCase, utils.TestCaseMixin):
 

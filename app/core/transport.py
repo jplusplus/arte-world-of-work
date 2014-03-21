@@ -31,6 +31,7 @@ API -> front-end (HTTP):
 from django.utils.translation import ungettext, ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
+from django.db.models import fields
 from django.template import loader, Context, Template
 from django.template.loader import render_to_string
 from django_countries import countries
@@ -196,7 +197,7 @@ class DynamicFeedback(object):
         }
 
         if myanswer:
-            similar_answers = answers_set.filter(value=myanswer.value)
+            similar_answers = self.get_similar(answers_set, myanswer)
             answer_count    = similar_answers.count()
             if use_percentage:
                 percentage = float(answer_count) / context_dict['total_number']
@@ -218,6 +219,13 @@ class DynamicFeedback(object):
             value = countries.name(value)
         return value
 
+    def get_similar(self, answers_set, myanswer):
+        value = myanswer.value
+        if hasattr(value, 'all'):
+            similar_answers = answers_set.filter(value__pk=value.values('pk'))
+        else:
+            similar_answers = answers_set.filter(value=value)
+        return similar_answers
 
     def clean_rendered_html(self, rendered):
         rendered = rendered.replace('<span>',  '')
