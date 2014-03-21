@@ -17,11 +17,13 @@
             bottom:0;
             left:0;
             right:0;
+            text-align: center;
 
             @media (max-width: @screen-xs-min) {                    
                 height:50px;
                 background:fade(white, 80);
                 position:fixed;
+                text-align: left;
 
                 @media (max-height: 300px) {
                     position:relative;
@@ -31,31 +33,28 @@
                     position:absolute;
                 }
             }
-
         }
 
         &__previous, &__next {
+            clear: both;
             display: inline-block;
-            position: absolute;  
             font-size:12px;
             padding:0 15px;
 
             a {
                 color: @text-color;
                 display:block;
-                cursor:pointer; 
+                cursor:pointer;
                 text-transform: lowercase;
 
                 &:hover {
                     text-decoration: none;
                 }
-            }             
+            }
         }
 
         &__previous {
             font-weight:300;
-            left:10px;
-            bottom:15px;
             height:25px;
             line-height:25px;
             background:url("../img/ui/previous.png") left bottom no-repeat;
@@ -65,14 +64,10 @@
         }
 
         &__next {
-            font-weight:600;
-            right:10px;
-            bottom:10px;
-            height:35px;
-            line-height:35px;
-            background:url("../img/ui/next.png") right bottom no-repeat;
-            &:hover {
-                background-position: right top;
+            font-weight:300;
+
+            a {
+                text-decoration: underline;
             }
         }
 
