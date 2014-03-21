@@ -3,6 +3,9 @@ isApi = (url) -> ((url.indexOf 'api') is 0) or (url.indexOf '/api') is 0
 angular.module('arte-ww.services').factory('HttpInterceptor', [ '$q', '$cookies', ($q, $cookies)->
     request: (config)->
         config = config or $q.when(config)
+        if $cookies.django_language
+            config.headers = config.headers or {}
+            config.headers['django_language'] = $cookies.django_language
         # Add CSRF Token for post request
         if $cookies.csrftoken?
             config.headers = config.headers or {}

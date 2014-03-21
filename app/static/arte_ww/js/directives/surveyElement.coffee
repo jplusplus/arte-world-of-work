@@ -16,8 +16,8 @@ angular.module('arte-ww').directive 'surveyElement', [
             restrict: "AE"
             replace: yes
             templateUrl: "partial/directives/survey-element.html"
-            controller: ['$scope', 'Answer', (scope, answerService) ->
-                scope.submitAnswer = (answer)->
+            controller: ['$scope', 'Answer', '$timeout', (scope, answerService, $timeout) ->
+                scope.submitAnswer = (answer, delay=yes)->
                     answer = answer ? scope.answer
                     answerParams = 
                         question: scope.element.id 
@@ -25,8 +25,11 @@ angular.module('arte-ww').directive 'surveyElement', [
 
                     # Save the answer
                     answerService.answer answerParams
+                    # Add a light duration before switching to the next step
+                    duration = if delay then 500 else 0
                     # Add go to the new question instantanetly
-                    do scope.next                        
+                    $timeout(scope.next, duration)
+                    
             ]
 
             link: (scope, elem, attrs)->

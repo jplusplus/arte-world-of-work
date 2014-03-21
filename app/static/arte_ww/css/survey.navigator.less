@@ -1,5 +1,32 @@
 .survey-navigator {
 
+    &--loading {
+		
+		&:after {
+			content:"";
+			position:absolute;
+			top:50%;
+			left:50%;
+			.translate(-50%, -50%);
+			width:40px;
+			height:40px;
+        	background:white url("../img/ui/loading.gif") center center no-repeat;
+        	opacity:0.9;        	
+		}
+
+    	.survey-navigator {
+
+    		
+    		&--doing,
+    		&--start,
+    		&--end {
+        		visibility: hidden;
+    		}
+
+    	}
+    }
+
+
 	&--start, &--end {
 		.white-panel(responsive);
 	    .do-sliding();

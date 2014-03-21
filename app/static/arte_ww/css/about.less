@@ -6,14 +6,26 @@
     overflow: hidden;
     z-index: 4000;
 
+
+    @media (max-height: 300px) {
+        display: none;
+    }
+
+
     &__button {
         cursor: pointer;
-        .white-panel();
+        .white-panel(70px);
         padding: 5px 15px 0 15px;
         z-index: 4001;
 
+        margin: 0;
+
         &:before {
             .box-shadow(0px 0 0 0 fade(@navbar-default-bg, 10%));
+        }
+
+        @media (max-width: @screen-xs-min) {
+            margin: 0 auto;
         }
     }
 
@@ -32,6 +44,14 @@
         p {
             padding: 10px;
             margin-bottom: 0;
+        }
+
+        @media (max-width: @screen-xs-min) {
+            width: 100%;
+
+            &--opened {
+                height: 100%;
+            }
         }
     }
 }

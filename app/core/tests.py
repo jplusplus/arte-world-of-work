@@ -670,4 +670,3 @@ class ModelTranslationTestCase(TestCase, utils.TestCaseMixin):
         fields = opts.fields
         self.assertAttrNotNone(fields, 'label')
         self.assertAttrNotNone(fields, 'hint_text')
-        self.assertAttrNotNone(fields, 'skip_button_label')

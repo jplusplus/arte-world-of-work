@@ -17,13 +17,20 @@ from django.core.management.base import BaseCommand
 from django.template import Context, Template
 
 from app.translations.translator import translator
+from app.utils import clean_string
 import os
 import codecs
+import re
 
 TRANSLATION_DEFAULT_LANGUAGE = getattr(settings, 'TRANSLATION_DEFAULT_LANGUAGE', 'en')
+strings = []
+
+def check_string(str):
+    is_valid = str is not None and str not in strings
+    is_valid = is_valid and str != " "
+    return is_valid 
 
 def extract_strings_from_db(verbosity=1):
-    strings = []
     models = translator.get_registered_models()
     if verbosity > 1:
         print "%s model to register" % len(models)
@@ -32,21 +39,22 @@ def extract_strings_from_db(verbosity=1):
         for instance in model.objects.all():
             for field_name in opts.fields:
                 src_string = getattr(instance, '_%s' % field_name, None)
-                if src_string is not None and src_string not in strings:
-                    src_string = src_string.replace('"', '\"')
+                if check_string(src_string) is True:
                     strings.append(src_string)
 
     return strings
+
+
 
 def write_strings(strings=(), verbosity=1):
     if verbosity > 1:
         print "%s strings to write" % len(strings)
     template = Template((
             'from django.utils.translation import ugettext_noop as _\n'
-            'STRINGS = ('
+            'STRINGS = (\n'
                 '{% for str in strings %}'
                     '{% autoescape off %}'
-                    '_("{{ str }}"),'
+                    '\t_("""{{ str }}"""),\n'
                     '{% endautoescape %}'
                 '{% endfor %}'
             ')'

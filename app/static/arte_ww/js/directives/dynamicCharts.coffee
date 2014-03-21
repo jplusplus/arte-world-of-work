@@ -69,7 +69,8 @@ class PieChart extends Chart
                 transform : (d) => "translate(#{@arc.centroid d})"
             .style
                 'text-anchor' : 'middle'
-            .text (d) -> "#{d.data[0]} - #{d.data[1]}%"
+            .text (d) ->
+                if d.data[1] > 0 then "#{d.data[0]} - #{d.data[1]}%" else ""
 
 
 class BarChart extends Chart
@@ -261,7 +262,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     else throw "Chart type '#{scope.data.chart_type}' does not exist."
 
             update = =>
-                return if not scope.id? or scope.id is ""
+                return if not scope.id? or scope.id is "" or scope.id < 0
 
                 filters = angular.copy scope.filters
                 if filters.male isnt filters.female
