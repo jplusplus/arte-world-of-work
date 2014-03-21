@@ -2,5 +2,5 @@
 
 {% block content %}
     <img ng-src="[[feedback.picture]]" class="feedback__content__picture thumbnail" ng-if="feedback.picture">
-    <p class="feedback__content__source">Source: <a href="[[ feedback.source_url ]]">[[ feedback.source_title]]</a></p>
+    <dynamic-chart ng-class="{'chart--fullwidth':fullwidth}" ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-id="[[feedback.question_id]]" filters="filters"></dynamic-chart>
 {% endblock %}
