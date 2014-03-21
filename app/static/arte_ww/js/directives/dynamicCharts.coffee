@@ -42,7 +42,7 @@ class PieChart extends Chart
         @layout.value (d) -> d[1]
 
         # Create arcs
-        radius = (Math.min @size.width, @size.height) / 2
+        radius = (Math.min @size.width, @size.height) / 2 - 10
         @arc = do d3.svg.arc
         @arc.outerRadius radius
         @arc.innerRadius 0
@@ -157,7 +157,7 @@ class HBarChart extends BarChart
 
     defineXY: =>
         @x = (do d3.scale.linear).range [0, @_size.width]
-        @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.5);
+        @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.5, 0);
         @x.domain [0, _.max _.values @scope.data.results]
         @y.domain _.map @results, (d) -> d[0]
 
