@@ -19,11 +19,10 @@
             right:0;
             text-align: center;
 
-            @media (max-width: @screen-xs-min) {                    
+            @media (max-width: @screen-xs-min) {
                 height:50px;
                 background:fade(white, 80);
                 position:fixed;
-                text-align: left;
 
                 @media (max-height: 300px) {
                     position:relative;
@@ -36,10 +35,11 @@
         }
 
         &__previous, &__next {
-            clear: both;
             display: inline-block;
             font-size:12px;
             padding:0 15px;
+            height:25px;
+            line-height:25px;
 
             a {
                 color: @text-color;
@@ -55,11 +55,13 @@
 
         &__previous {
             font-weight:300;
-            height:25px;
-            line-height:25px;
             background:url("../img/ui/previous.png") left bottom no-repeat;
+            background-position: 5px bottom;
+            position: absolute;
+            left: 0;
+
             &:hover {
-                background-position: left top;
+                background-position: 5px top;
             }
         }
 
