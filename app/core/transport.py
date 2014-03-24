@@ -192,7 +192,7 @@ class DynamicFeedback(object):
             'use_profile_attr':    profile_attr != None,
         }
 
-        if myanswer:
+        if myanswer and context_dict['total_number'] > 0:
             similar_answers = self.get_similar(answers_set, myanswer)
             answer_count    = similar_answers.count()
             if use_percentage:
@@ -282,6 +282,7 @@ class DynamicFeedback(object):
 
     def as_dict(self):
         return {
+            'question_id'  : self.question.pk,
             'total_answers': self.total_answers,
             'html_sentence': self.html_sentence,
             'type': 'feedback',
