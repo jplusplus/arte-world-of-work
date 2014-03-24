@@ -50,7 +50,7 @@
                     <p>Laborum American Apparel fanny pack, flexitarian raw denim scenester Wes Anderson.</p>
                     <p>Velit sustainable aesthetic nostrud. Assumenda Wes Anderson flexitarian, nihil exercitation Portland narwhal seitan mustache labore sriracha street art accusamus. Minim selvage vero placeat Shoreditch.</p>
                     <a class="thematic-outro__previous" ng-click='previous()'>Previous</a>
-                    <a class="thematic-outro__next"     ng-click='next()'> Go to next thematic</a>
+                    <a class="thematic-outro__next"     ng-click='next()'> Go to next topic</a>
                 </div>
             </div>
         </div>
@@ -58,9 +58,10 @@
 
     <!-- step 2 -> all thematic/feedback and question are now done --> 
     <div class="survey-navigator--end" ng-switch-when="2">
-        <p ng-translate>Great job! Want to make extra hours?</p>
+        <p ng-translate>Great job! Want to put in extra hours? Check out the Results!</p>
         <a class="btn btn-primary" ng-href="{% url 'results' %}">Results</a><br />
         <br />
+        <p ng-translate>Or want to do it all again?</p><br />
         <a class="btn btn-primary" ng-click="backToBeginning()">Back to the beginning</a>
     </div>
 
