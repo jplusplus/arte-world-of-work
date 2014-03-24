@@ -242,6 +242,7 @@
         }
 
         button {
+            padding: 0;
             @color: #903157;
             width: 52px;
             height: 52px;
@@ -250,17 +251,20 @@
             background-color: @color;
             font-weight: 600;
             color: #fff;
-            font-size: 13px;
+            font-size: 12px;
             .transition(0.8s);
+
+            &.active {
+                background-color: white;
+            }
 
             &:last-child {
                 background-color: darken(@color, 15%);
                 border-color: darken(@color, 15%);
-            }
 
-            &.active {
-                background-color: white;
-                color: #903157;
+                &.active {
+                    color: #903157;
+                }
             }
 
             @media (max-width: @screen-xs-min) {
