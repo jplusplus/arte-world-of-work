@@ -1,10 +1,19 @@
 class PositionsObject
-    constructor: (elements)->
-        @elements  =  _.sortBy elements, (el)-> el.position
-        @updatePositions()
+    constructor: (elements, @utils)->
+        @elements = _.map @elements, @wrapElem
+        @elements = _.sortBy elements, (el)-> el.position
+        do @updateIDS
+        do @updatePositions
 
-    updatePositions: (elements)=>
+    updatePositions: =>
         @positions =  _.map(@elements, (el)-> el.position )
+
+    updateIDS: =>
+        @elements = _.map @elements, (el,i)->
+            el = _.extend el, _id: i
+            if not el.id
+                el.id = el._id 
+            el
 
     positionAt: (i)=> @positions[i]
 
@@ -13,12 +22,20 @@ class PositionsObject
     insertAt: (i, el)=>
         left_part   = _.first( @elements, i )
         right_part  = _.rest(  @elements, i )
-        el.position = _.last( left_part).position + 1
+        if left_part.length > 0
+            el.position = _.last( left_part ).position + 1
+        else
+            el.position = _.first( right_part ).position
         _.each right_part, (el)-> el.position += 1
         @elements  = _.union left_part, [el], right_part
+        @updateIDS()
         @updatePositions()
 
     count: => @elements.length
+
+    wrapElem: (el)=>
+        if el.type is 'question'
+            @utils.wrapQuestion(el)
 
 class UserPositionService
     @$inject: ['$http', 'utils']
@@ -85,7 +102,7 @@ class UserPositionService
     previousElement: =>
         @elementPosition @positions.elementPosition - 1
 
-    createWrapper: (elements)-> return new PositionsObject(elements)
+    createWrapper: (elements)-> return new PositionsObject(elements, @utils)
 
 
 angular.module('arte-ww.services').service 'UserPosition', UserPositionService
