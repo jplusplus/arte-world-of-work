@@ -40,7 +40,9 @@ class ThematicCtrl
             state: @states.LANDING,
             states: @states,
             thematic: @thematicService
-            elements: @elementsWrapper
+            # function binding
+            elements: @elements
+            currentElement: @currentElement
 
         # ---------------------------------------------------------------------
         # Scope function bindings
@@ -62,6 +64,10 @@ class ThematicCtrl
         else
             @currentState @states.ELEMENTS
 
+    elements: => @elementsWrapper.all()
+
+    currentElement: => @elementsWrapper.currentElement
+
     currentState: (state)=>
         if state?
             @scope.state = state
@@ -73,10 +79,13 @@ class ThematicCtrl
 
     skipElement: (skipped=false) =>
         if skipped
-            @Answer.deleteAnswerForQuestion @scope.elements.currentElement.id
-        if @elementsWrapper.hasNextElement()
+            # console.log "if skipped"
+            @Answer.deleteAnswerForQuestion @scope.currentElement().id
+        else if @elementsWrapper.hasNextElement()
+            # console.log "else if @elementsWrapper.hasNextElement()"
             @userPosition.nextElement()
         else if @isDone()
+            # console.log "else if @isDone()"
             @userPosition.nextThematic()
             (do @userPosition.thematicPosition)
             if (do @userPosition.thematicPosition) < @thematicService.positionList.elements.length
@@ -95,12 +104,22 @@ class ThematicCtrl
         else
             @currentState(@states.INTRO)
 
-
     isLanding : => @currentState() == @states.LANDING
     isIntro   : => @currentState() == @states.INTRO
     isElements: => @currentState() == @states.ELEMENTS
-    isDone    : => @isElements() and @userPosition.elementPosition() == @elementsWrapper.count() - 1
-    
+
+    isDone    : => 
+        pos = @userPosition.elementPosition()
+        return false unless @isElements()
+        is_last_element = pos == @elementsWrapper.count() - 1
+        last_elem = @elementsWrapper.getAt pos
+        if last_elem and last_elem.type is 'question'
+            if @elementsWrapper.shouldDisplayFeedback()
+                return false 
+            else
+                return true
+        else
+            return is_last_element
 
     onThematicChanged: (thematic, old_thematic)=>
         return unless thematic?
@@ -113,6 +132,5 @@ class ThematicCtrl
 
         if thematic.position is 1
             @currentState @states.INTRO
-
 
 angular.module('arte-ww').controller 'ThematicCtrl', ThematicCtrl
