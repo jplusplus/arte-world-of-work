@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: arte-world-of-work\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-20 16:39+0100\n"
-"PO-Revision-Date: 2014-03-24 07:48-0400\n"
+"PO-Revision-Date: 2014-03-24 08:19-0400\n"
 "Last-Translator: Toutenrab <bellon.pierre+crowdin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1294,8 +1294,7 @@ msgstr "Einheit, die nach den niedrigsten und höchsten Zahlen angezeigt wird."
 
 #: core/models.py:378
 msgid "Text (multiple choices) question"
-msgstr "Text (multiple choice) Frage\n"
-""
+msgstr "Text (multiple choice) Frage"
 
 #: core/models.py:379
 msgid "Text (multiple choices) questions"
@@ -1344,67 +1343,67 @@ msgstr "It will tell user model what value should be stored in related field"
 #: templates/dynamic_feedback_count.dj.html:6
 #, python-format
 msgid "<strong>%(value)s</strong> females answered like you"
-msgstr "<strong>%s (Wert)</strong> Frauen haben genauso geantwortet"
+msgstr "<strong>%(value)s</strong> Frauen haben genauso geantwortet"
 
 #: templates/dynamic_feedback_count.dj.html:8
 #, python-format
 msgid "<strong>%(value)s</strong> males answered like you"
-msgstr "<strong>%s (Wert)</strong> Männer haben genauso geantwortet"
+msgstr "<strong>%(value)s</strong> Männer haben genauso geantwortet"
 
 #: templates/dynamic_feedback_count.dj.html:11
 #, python-format
 msgid "<strong>%(value)s</strong> persons aged %(age)s years answered like you"
-msgstr "<strong>%s (Wert)</strong> Personen im Alter von % (Alter) Jahren haben genauso geantwortet "
+msgstr "<strong>%(value)s</strong> Personen im Alter von %(age)s Jahren haben genauso geantwortet"
 
 #: templates/dynamic_feedback_count.dj.html:13
 #, python-format
 msgid "<strong>%(value)s</strong> persons living in %(country)s answered like you"
-msgstr "<strong>(Wert) % s'</strong> in %s (Land) lebende Personen haben genauso geantwortet"
+msgstr "<strong>%(value)s</strong> in %(country)s lebende Personen haben genauso geantwortet"
 
 #: templates/dynamic_feedback_count.dj.html:15
 #, python-format
 msgid "<strong>%(value)s</strong> persons from %(country)s answered like you"
-msgstr "<strong>%s (Wert)</strong> Personen von %s (Land) haben genauso geantwortet"
+msgstr "<strong>%(value)s</strong> Personen von %(country)s haben genauso geantwortet"
 
 #: templates/dynamic_feedback_count.dj.html:18
 #, python-format
 msgid "<strong>%(value)s</strong> persons answered like you"
-msgstr "<strong>%s (Wert)</strong> Personen haben genauso geantwortet"
+msgstr "<strong>%(value)s</strong> Personen haben genauso geantwortet"
 
 #: templates/dynamic_feedback_generic.dj.html:3
 #, python-format
 msgid "Until this day <strong>%(total_number)s</strong> persons answered this question"
-msgstr "Bislang haben <strong>%s (Total_number)</strong> Personen diese Frage beantwortet"
+msgstr "Bislang haben <strong>%(total_number)s</strong> Personen diese Frage beantwortet"
 
 #: templates/dynamic_feedback_percentage.dj.html:6
 #, python-format
 msgid "<strong>%(value)s%%</strong> of the females answered like you"
-msgstr "<strong>%s (Wert) %%</strong> der Frauen haben genauso geantwortet"
+msgstr "<strong>%(value)s%%</strong> der Frauen haben genauso geantwortet"
 
 #: templates/dynamic_feedback_percentage.dj.html:8
 #, python-format
 msgid "<strong>%(value)s%%</strong> of the males answered like you"
-msgstr "<strong>%s (Wert) %%</strong> der Männer haben genauso geantwortet"
+msgstr "<strong>%(value)s%%</strong> der Männer haben genauso geantwortet"
 
 #: templates/dynamic_feedback_percentage.dj.html:11
 #, python-format
 msgid "<strong>%(value)s%%</strong> of persons aged %(age)s years answered like you"
-msgstr "<strong>%s (Wert)</strong> Personen im Alter von % (Alter) Jahren haben genauso geantwortet"
+msgstr "<strong>%(value)s%%</strong> Personen im Alter von %(age)s Jahren haben genauso geantwortet"
 
 #: templates/dynamic_feedback_percentage.dj.html:13
 #, python-format
 msgid "<strong>%(value)s%%</strong> of persons living in %(country)s answered like you"
-msgstr "<strong>(Wert) % s'</strong> in %s (Land) lebende Personen haben genauso geantwortet"
+msgstr "<strong>%(value)s%%</strong> in %(country)s lebende Personen haben genauso geantwortet"
 
 #: templates/dynamic_feedback_percentage.dj.html:15
 #, python-format
 msgid "<strong>%(value)s%%</strong> of persons from %(country)s answered like you"
-msgstr "<strong>%s (Wert)</strong> Personen aus %s (Land) haben genauso geantwortet"
+msgstr "<strong>%(value)s%%</strong> Personen aus %(country)s haben genauso geantwortet"
 
 #: templates/dynamic_feedback_percentage.dj.html:18
 #, python-format
 msgid "<strong>%(value)s%%</strong> of persons answered like you"
-msgstr "<strong>%s (Wert)</strong> Personen haben genauso geantwortet"
+msgstr "<strong>%(value)s%%</strong> Personen haben genauso geantwortet"
 
 #: translations/i18n_strings.py:2
 msgid "an other translation"
