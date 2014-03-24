@@ -35,7 +35,9 @@ class PositionsObject
 
     wrapElem: (el)=>
         if el.type is 'question'
-            @utils.wrapQuestion(el)
+            el = @utils.wrapQuestion(el)
+        else if el.type is 'feedback'
+            el = @utils.wrapFeedback(el)
 
 class UserPositionService
     @$inject: ['$http', 'utils']
