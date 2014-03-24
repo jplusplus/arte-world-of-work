@@ -18,6 +18,7 @@
             left:0;
             right:0;
             text-align: center;
+            height: 35px;
 
             @media (max-width: @screen-xs-min) {
                 height:50px;
@@ -34,12 +35,13 @@
             }
         }
 
-        &__previous, &__next {
+        &__previous, &__next, &__skip {
             display: inline-block;
             font-size:12px;
             padding:0 15px;
             height:25px;
             line-height:25px;
+            font-weight:300;
 
             a {
                 color: @text-color;
@@ -54,25 +56,33 @@
         }
 
         &__previous {
-            font-weight:300;
             background:url("../img/ui/previous.png") left bottom no-repeat;
             background-position: 5px bottom;
             position: absolute;
             left: 0;
+            margin-top: 5px;
 
             &:hover {
                 background-position: 5px top;
             }
         }
 
-        &__next {
-            font-weight:300;
-
-            a {
-                text-decoration: underline;
-            }
+        &__skip a {
+            text-decoration: underline;
+            margin-top: 5px;
         }
 
+        &__next {
+            background: url("../img/ui/next.png") right bottom no-repeat;
+            line-height: 35px;
+            height: 35px;
+            position: absolute;
+            right: 0;
+
+            &:hover {
+                background-position: right top;
+            }
+        }
     }
 
     &__label {
