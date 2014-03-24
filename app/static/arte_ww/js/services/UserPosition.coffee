@@ -34,6 +34,7 @@ class PositionsObject
     count: => @elements.length
 
     wrapElem: (el)=>
+        return unless el.type 
         if el.type is 'question'
             el = @utils.wrapQuestion(el)
         else if el.type is 'feedback'
