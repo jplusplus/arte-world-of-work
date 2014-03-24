@@ -244,8 +244,8 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
             id : '@'
             filters : '='
             nochart : '@'
-        controller : ['$scope', (scope) ->
-            scope.filter =
+        controller : [ '$scope', (scope) ->
+            scope.filters =
                 from : 0
                 to : 99
                 h : yes
@@ -274,6 +274,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                 request =
                     id : scope.id
                     filters : filters
+
                 $Result.get request, (data) =>
                     scope.$parent.fullwidth = no
                     scope.$parent.nochart = no

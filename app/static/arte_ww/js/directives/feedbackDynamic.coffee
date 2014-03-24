@@ -6,8 +6,9 @@ angular.module('arte-ww').directive 'feedbackDynamic', [ '$sce'
             link: (scope, elem, attrs)->
                 bindFeedback = ->
                     feedback = scope.$parent.element
-                    feedback = _.extend feedback, 
-                        html_sentence: $sce.trustAsHtml(feedback.html_sentence)
+                    if typeof feedback.html_sentence is String
+                        feedback = _.extend feedback, 
+                            html_sentence: $sce.trustAsHtml(feedback.html_sentence)
                     scope.feedback = feedback
 
                 scope.$watch '$parent.element', bindFeedback 

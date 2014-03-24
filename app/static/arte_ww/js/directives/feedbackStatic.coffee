@@ -9,6 +9,7 @@ angular.module('arte-ww').directive 'feedbackStatic', [ '$sce'
                     if typeof feedback.html_sentence is typeof String 
                         feedback = _.extend feedback, 
                             html_sentence: $sce.trustAsHtml(feedback.html_sentence)
+
                     scope.feedback = feedback
 
                 scope.$watch '$parent.element', bindFeedback 
