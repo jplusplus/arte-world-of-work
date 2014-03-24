@@ -1,5 +1,9 @@
 {% extends "partials/directives/feedback-base.dj.html" %}
 
+{% block title %}
+    By the way, did you know...
+{% endblock title %}
+
 {% block content %}
     <img ng-src="[[feedback.picture]]" class="feedback__content__picture thumbnail" ng-if="feedback.picture">
     <p class="feedback__content__source">Source: <a href="[[ feedback.source_url ]]">[[ feedback.source_title]]</a></p>
