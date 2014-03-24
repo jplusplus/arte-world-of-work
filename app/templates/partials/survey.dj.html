@@ -35,16 +35,12 @@
 
             <!-- step 2 -> we're starting this thematic question -->
             <div class="thematic-elements" ng-if='state == states.ELEMENTS'>
-                <div class="thematic-elements__element" ng-if="elements.currentElement">
-                    <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
-                    <div survey-element="elements.currentElement" class="survey-element"></div>
-                </div>
-                {# <div ng-repeat="element in elements.list track by $index">
-                    <div class="thematic-elements__element" ng-if="elements.currentElement.id === element.id && elements.currentElement.type === element.type">
+                <div ng-repeat="element in elements() track by $index">
+                    <div class="thematic-elements__element" ng-if="currentElement().id === element.id && currentElement().type === element.type">
                         <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
                         <div survey-element="element" class="survey-element"></div>
                     </div>
-                </div> #}
+                </div>
             </div>
 
             <!-- step 3 (DEPRECATED) -> thematic outro we're starting this thematic question -->
