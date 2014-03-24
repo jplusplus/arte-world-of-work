@@ -1,18 +1,10 @@
-# extra attributes and method usefull for angular app.
-Feedback =
-    shown: false
-    hasBeenShown: => @shown
-    setShown: => @shown = true
-    hasEnoughAnswers: => 
-        return false unless @total_answers
-        @total_answers >= 300 
 
 
 class FeedbackService
     # Dependencies injection
-    @$inject: ['$http', '$q']
+    @$inject: ['$http', '$q', 'utils']
     
-    constructor: (@http, @q)->
+    constructor: (@http, @q, @utils)->
         @loadedFeedbacks = {}
         @last_feedback_distance = 0
 
@@ -21,7 +13,7 @@ class FeedbackService
         url: '/api/questions/:question_id/feedback'
         method: 'GET'
 
-    isDistanceFarEnought: => @last_feedback_distance > 3 
+    distanceIsGood: => @last_feedback_distance > 3 
 
     resetDistance: => @last_feedback_distance = 0
 
@@ -51,7 +43,7 @@ class FeedbackService
                 http_promise = @http(config)
                 http_promise.success (feedback)=>
                     # adding extra utility methods for this feedback 
-                    feedback = _.extend feedback, Feedback
+                    feedback = @utils.wrapFeedback(feedback)
                     @setLoaded(question_id, feedback)
                     deferred.resolve(feedback)
 
