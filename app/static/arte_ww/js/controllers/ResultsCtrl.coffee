@@ -6,23 +6,24 @@ class ResultsCtrl
     @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce']
 
     changeQuestion: (id) =>
-        if (do @Thematic.current)?
-            @$scope.hasNext = @$scope.hasPrev = yes
-            @$scope.nochart = true
-            if id.id >= 0
-                request =
-                    url : "/api/questions/#{id.id}"
-                    method : 'GET'
-                @$http(request).success (data) =>
-                    if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
-                        @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
-                    @$scope.currentAnswer = data
-            else
-                @$scope.currentAnswer = id
-                if id.id is _steps.intro and not @elements[@$scope.current.thematic - 1]?
-                    @$scope.hasPrev = no
-                else if id.id is _steps.outro and not @elements[@$scope.current.thematic + 1]?
-                    @$scope.hasNext = no
+        if not (do @Thematic.current)?
+            @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
+        @$scope.hasNext = @$scope.hasPrev = yes
+        @$scope.nochart = true
+        if id.id >= 0
+            request =
+                url : "/api/questions/#{id.id}"
+                method : 'GET'
+            @$http(request).success (data) =>
+                if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
+                    @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
+                @$scope.currentAnswer = data
+        else
+            @$scope.currentAnswer = id
+            if id.id is _steps.intro and not @elements[@$scope.current.thematic - 1]?
+                @$scope.hasPrev = no
+            else if id.id is _steps.outro and not @elements[@$scope.current.thematic + 1]?
+                @$scope.hasNext = no
 
 
     constructor: (@$scope, $location, @Thematic, @$http, $sce) ->
