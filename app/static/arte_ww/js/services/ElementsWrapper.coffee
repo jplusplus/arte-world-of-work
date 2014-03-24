@@ -1,20 +1,27 @@
 # Top responsibilties:
 # - handle what element should be shown based on user's position. 
 # - handle dynamic feedback loading
+question_only = (el)-> el.type and el.type is 'question'
+
 class ElementsWrapper
     @$inject: [
-        '$rootScope', 'utils' , 'UserPosition', 'Thematic', 'Feedback'
+        '$rootScope', 'utils' , 'UserPosition', 'Thematic', 'Answer', 'Feedback'
     ]
-    constructor: (@rootScope, @utils , @userPosition, @Thematic, @feedbackService)->
+    constructor: (@rootScope, @utils , @userPosition, @Thematic, @Answer, @feedbackService)->
         # ---------------------------------------------------------------------
         # watches 
         # ---------------------------------------------------------------------
         @rootScope.$watch =>
                 @Thematic.currentThematic
             , @onThematicChanged
+
         @rootScope.$watch => 
                 @userPosition.elementPosition()
             , @onElementPositionChanged
+
+        @rootScope.$watch =>
+                @currentElement
+            , @onElementChanged
 
     onThematicChanged: (thematic, old_thematic)=>
         return unless thematic?
@@ -23,19 +30,48 @@ class ElementsWrapper
         @onElementPositionChanged do @userPosition.elementPosition
 
     onElementPositionChanged: (position, old_position)=>
-        return unless @elements?
-        @currentElement = @elements.getAt position
-        if do @hasNextElement
-            next_element = @elements.getAt position + 1 
-        
-        @checkFeedbackFor next_element, position + 1 
-        if @currentElement.type is 'feedback'
-            @feedbackService.resetDistance()
+        return unless @elements? and position?
+        challenger = @elements.getAt position
+
+        if !@currentElement
+            @currentElement = challenger
+
+
+        # @currentElement need to be updated but we'll check if we should
+        # load a feedback for this element or not.
+        if position > old_position and @feedbackService.distanceIsGood()
+            # check if old element should display a feedback
+            promise = @feedbackService.getForQuestion(@currentElement.id)
+            promise.then (dynFeedback)=>
+                console.log 'received dat feedback: ', dynFeedback
+                if dynFeedback.hasEnoughAnswers()
+                    feedback = dynFeedback
+                else if challenger.feedback
+                    feedback = @utils.wrapFeedback challenger.feedback
+                
+                if @shouldDisplayFeedback()
+                    @elements.insertAt position, feedback
+                else
+                    if !challenger
+                        @userPosition.nextThematic()
+
+                @currentElement = @elements.getAt position
         else
-            if position > old_position or !old_position?
-                @feedbackService.increaseDistance()
-            else if position < old_position
-                @feedbackService.decreaseDistance()
+            @currentElement = @elements.getAt position
+
+    onElementChanged: (new_el, old_el)=>
+        if new_el and new_el.type is 'feedback'
+            @feedbackService.resetDistance()
+        else if old_el and new_el.position > old_el.position
+            @feedbackService.increaseDistance()
+        else if old_el and new_el.position < old_el.position 
+            @feedbackService.decreaseDistance()
+
+    shouldDisplayFeedback: =>
+        return false unless @feedbackService.distanceIsGood()
+        return false unless @Thematic.currentThematic.slug != 'toi'
+        # return Math.floor(Math.random()*5)+1 == 1
+        return true # Math.floor(Math.random()*5)+1 == 1
 
     hasNextElement: =>
         return false unless @elements
@@ -48,28 +84,12 @@ class ElementsWrapper
         if element then true else false
 
     # wrapped .count method
-    count: => @elements.count() 
+    count: => @allQuestions().length
 
-    checkFeedbackFor: (element, position)=>
-        return unless element
-        return if element.type is 'feedback'
-        # console.log 'checkFeedbackFor'
-        next_element = @elements.getAt position + 1
-        if (next_element and next_element.type != 'feedback') or (!next_element?)
-            if @feedbackService.isDistanceFarEnought()
-                @feedbackService.getForQuestion(element.id).then (dynFeedback)=>
-                    # console.log 'received feedback: ', dynFeedback
-                    if dynFeedback.hasEnoughAnswers()
-                        # console.log('if dynFeedback.hasEnoughAnswers()')
-                        feedback = dynFeedback
-                    else if element.feedback
-                        # console.log('else if element.feedback')
-                        feedback = element.feedback
-                    if feedback
-                        # console.log 'feedback for element (',element,'):', feedback
-                        @elements.insertAt position + 1, feedback
+    all: => if @elements then @elements.all() else []  
 
+    allQuestions: => _.filter(@all(), question_only )
 
-
+    getAt: (pos)=> @elements.getAt pos
 
 angular.module('arte-ww.services').service 'ElementsWrapper', ElementsWrapper
