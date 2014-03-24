@@ -40,6 +40,8 @@ class PositionsObject
         else if el.type is 'feedback'
             el = @utils.wrapFeedback(el)
 
+    all: => @elements
+
 class UserPositionService
     @$inject: ['$http', 'utils']
 
@@ -99,11 +101,11 @@ class UserPositionService
         @currentState( @utils.states.thematic.ELEMENTS )
         @thematicPosition @positions.thematicPosition - 1
 
-    nextElement: =>
-        @elementPosition @positions.elementPosition + 1
+    nextElement: (save = true) =>
+        @elementPosition @positions.elementPosition + 1, save
 
-    previousElement: =>
-        @elementPosition @positions.elementPosition - 1
+    previousElement: (save = true) =>
+        @elementPosition @positions.elementPosition - 1, save
 
     createWrapper: (elements)-> return new PositionsObject(elements, @utils)
 
