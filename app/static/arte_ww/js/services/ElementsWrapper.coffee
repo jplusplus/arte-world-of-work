@@ -17,7 +17,7 @@ class ElementsWrapper
 
         @rootScope.$watch => 
                 @userPosition.elementPosition()
-            , @onElementPositionChanged
+            , @onElementPositionChanged, yes
 
         @rootScope.$watch =>
                 @currentElement
@@ -26,57 +26,72 @@ class ElementsWrapper
     onThematicChanged: (thematic, old_thematic)=>
         return unless thematic?
         @elements = @userPosition.createWrapper thematic.elements
-        @list = @elements
         @onElementPositionChanged do @userPosition.elementPosition
 
     onElementPositionChanged: (position, old_position)=>
         return unless @elements? and position?
-        challenger = @elements.getAt position
+        challenger = @getAt position
 
-        if !@currentElement
+        # first time we arrive on the widget 
+        if !@currentElement and challenger
             @currentElement = challenger
 
+        # we initialized the widget with a wrong
+        if !challenger and !old_position 
+            @fixPosition(position)
 
-        # @currentElement need to be updated but we'll check if we should
         # load a feedback for this element or not.
         if position > old_position and @feedbackService.distanceIsGood()
             # check if old element should display a feedback
             promise = @feedbackService.getForQuestion(@currentElement.id)
             promise.then (dynFeedback)=>
-                console.log 'received dat feedback: ', dynFeedback
                 if dynFeedback.hasEnoughAnswers()
                     feedback = dynFeedback
-                else if challenger.feedback
-                    feedback = @utils.wrapFeedback challenger.feedback
+                else if @currentElement.feedback
+                    feedback = @utils.wrapFeedback @currentElement.feedback
                 
-                if @shouldDisplayFeedback()
+                if @shouldDisplayFeedback() and feedback
                     @elements.insertAt position, feedback
-                else
-                    if !challenger
-                        @userPosition.nextThematic()
-
-                @currentElement = @elements.getAt position
+                challenger = @elements.getAt position
+                @currentElement = challenger
         else
-            @currentElement = @elements.getAt position
+            @currentElement = challenger
+
+    fixPosition: (position)=>
+        console.log 'fixPosition(', position, ')'
+        nb_elem = @all().length
+        if position >= nb_elem
+            @userPosition.elementPosition(nb_elem - 1)
+            @onElementPositionChanged do @userPosition.elementPosition
+            # @rootScope.$apply()
 
     onElementChanged: (new_el, old_el)=>
+        return unless new_el
         if new_el and new_el.type is 'feedback'
             @feedbackService.resetDistance()
-        else if old_el and new_el.position > old_el.position
+        else if !old_el and new_el
             @feedbackService.increaseDistance()
-        else if old_el and new_el.position < old_el.position 
-            @feedbackService.decreaseDistance()
+        else if old_el and new_el
+            if new_el.position > old_el.position
+                @feedbackService.increaseDistance()
+            else 
+                @feedbackService.decreaseDistance()
 
     shouldDisplayFeedback: =>
         return false unless @feedbackService.distanceIsGood()
-        return false unless @Thematic.currentThematic.slug != 'toi'
+        return false if @isYou()
         # return Math.floor(Math.random()*5)+1 == 1
         return true # Math.floor(Math.random()*5)+1 == 1
 
     hasNextElement: =>
         return false unless @elements
-        element = @elements.getAt(@userPosition.elementPosition() + 1)
-        if element then true else false
+        position = @userPosition.elementPosition()
+        element = @elements.getAt( position + 1)
+        if position is @all().length and !@isYou()
+            result = true
+        else
+            result = if element then true else false
+        return result
 
     hasPreviousElement: =>
         return false unless @elements
@@ -91,5 +106,7 @@ class ElementsWrapper
     allQuestions: => _.filter(@all(), question_only )
 
     getAt: (pos)=> @elements.getAt pos
+
+    isYou: => @Thematic.currentThematic.slug == 'toi'
 
 angular.module('arte-ww.services').service 'ElementsWrapper', ElementsWrapper

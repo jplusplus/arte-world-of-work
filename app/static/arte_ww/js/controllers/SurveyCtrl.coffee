@@ -43,7 +43,7 @@ class SurveyCtrl
 
         @scope.start = =>
             @thematicService.onThematicPositionChanged do @userPosition.thematicPosition
-            if (do @userPosition.thematicPosition) >= @thematicService.positionList.elements.length
+            if (do @userPosition.thematicPosition) >= @thematicService.count()
                 @scope.survey.state = @scope.survey.states.OUTRO
             else
                 @scope.survey.state = @scope.survey.states.DOING

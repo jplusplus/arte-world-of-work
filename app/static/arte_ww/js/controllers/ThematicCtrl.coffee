@@ -41,8 +41,8 @@ class ThematicCtrl
             states: @states,
             thematic: @thematicService
             # function binding
-            elements: @elements
-            currentElement: @currentElement
+            elements: => @elements()
+            currentElement: => @currentElement()
 
         # ---------------------------------------------------------------------
         # Scope function bindings
@@ -57,6 +57,9 @@ class ThematicCtrl
 
         # watches
         @scope.$watch 'thematic.currentThematic', @onThematicChanged 
+        @scope.$watch => 
+                @currentElement()
+            , @onElementChanged
 
     letsgo: (skipIntro=false) =>
         if (do @userPosition.elementPosition is 0) and not skipIntro
@@ -79,20 +82,16 @@ class ThematicCtrl
 
     skipElement: (skipped=false) =>
         if skipped
-            # console.log "if skipped"
+            console.log 'skipElement - if skipped'
             @Answer.deleteAnswerForQuestion @scope.currentElement().id
         else if @elementsWrapper.hasNextElement()
-            # console.log "else if @elementsWrapper.hasNextElement()"
+            console.log 'skipElement - else if @elementsWrapper.hasNextElement()'
             @userPosition.nextElement()
         else if @isDone()
-            # console.log "else if @isDone()"
-            @userPosition.nextThematic()
-            (do @userPosition.thematicPosition)
-            if (do @userPosition.thematicPosition) < @thematicService.positionList.elements.length
-                @currentState @states.LANDING
-            else
-                @scope.$parent.setState @scope.$parent.survey.states.OUTRO
+            console.log 'skipElement - else if @isDone()'
+            @setNextThematic()
         else
+            console.log 'skipElement - else'
             @currentState(@states.OUTRO)
 
     previousElement: =>
@@ -107,19 +106,15 @@ class ThematicCtrl
     isLanding : => @currentState() == @states.LANDING
     isIntro   : => @currentState() == @states.INTRO
     isElements: => @currentState() == @states.ELEMENTS
+    isDone    : => @isElements() and @userPosition.elementPosition() == @elements().length - 1
 
-    isDone    : => 
-        pos = @userPosition.elementPosition()
-        return false unless @isElements()
-        is_last_element = pos == @elementsWrapper.count() - 1
-        last_elem = @elementsWrapper.getAt pos
-        if last_elem and last_elem.type is 'question'
-            if @elementsWrapper.shouldDisplayFeedback()
-                return false 
-            else
-                return true
+    setNextThematic: =>
+        @userPosition.nextThematic()
+        (do @userPosition.thematicPosition)
+        if (do @userPosition.thematicPosition) < @thematicService.count()
+            @currentState @states.LANDING
         else
-            return is_last_element
+            @scope.$parent.setState @utils.states.OUTRO
 
     onThematicChanged: (thematic, old_thematic)=>
         return unless thematic?
@@ -132,5 +127,13 @@ class ThematicCtrl
 
         if thematic.position is 1
             @currentState @states.INTRO
+
+    onElementChanged: (elem, old_elem)=>
+        out_of_range = @userPosition.elementPosition() >= @elements().length 
+        # security check, to pass to next thematic if last element is undefined
+        # this undefined value can occur if we wanted to show a feedback for the 
+        # last element of the current thematic
+        if old_elem and !elem and out_of_range
+            @setNextThematic()
 
 angular.module('arte-ww').controller 'ThematicCtrl', ThematicCtrl

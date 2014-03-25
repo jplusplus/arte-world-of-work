@@ -1,7 +1,19 @@
 class PositionsObject
     constructor: (elements, @utils)->
-        @elements = _.map @elements, @wrapElem
-        @elements = _.sortBy elements, (el)-> el.position
+        console.log elements
+        @elements = @wrapElements(elements)
+        do @updateElements
+
+    makeElementPositionsUnique: =>
+        console.log @elements
+        get_pos          = (el)  -> el.position
+        set_index_as_pos = (el,i)-> el.position = i; return el
+        @elements = _.sortBy @elements, get_pos
+        @elements = _.map    @elements, set_index_as_pos 
+
+
+    updateElements: =>
+        do @makeElementPositionsUnique
         do @updateIDS
         do @updatePositions
 
@@ -9,7 +21,7 @@ class PositionsObject
         @positions =  _.map(@elements, (el)-> el.position )
 
     updateIDS: =>
-        @elements = _.map @elements, (el,i)->
+        @elements = _.map @elements, (el, i)->
             el = _.extend el, _id: i
             if not el.id
                 el.id = el._id 
@@ -28,17 +40,19 @@ class PositionsObject
             el.position = _.first( right_part ).position
         _.each right_part, (el)-> el.position += 1
         @elements  = _.union left_part, [el], right_part
-        @updateIDS()
-        @updatePositions()
+        do @updateElements
 
     count: => @elements.length
 
     wrapElem: (el)=>
-        return unless el.type 
+        return el unless el.type 
         if el.type is 'question'
             el = @utils.wrapQuestion(el)
         else if el.type is 'feedback'
             el = @utils.wrapFeedback(el)
+        el
+
+    wrapElements: (elements)=> _.map elements, @wrapElem
 
     all: => @elements
 
