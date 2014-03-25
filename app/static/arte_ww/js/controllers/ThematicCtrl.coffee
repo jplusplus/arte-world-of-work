@@ -84,7 +84,8 @@ class ThematicCtrl
         if skipped
             # console.log 'skipElement - if skipped'
             @Answer.deleteAnswerForQuestion @scope.currentElement().id
-        else if @elementsWrapper.hasNextElement()
+        
+        if @elementsWrapper.hasNextElement()
             # console.log 'skipElement - else if @elementsWrapper.hasNextElement()'
             @userPosition.nextElement()
         else if @isDone()
