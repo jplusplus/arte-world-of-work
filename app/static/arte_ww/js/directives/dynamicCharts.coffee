@@ -251,13 +251,6 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$root
             id : '@'
             filters : '='
             nochart : '@'
-        controller : [ '$scope', (scope) ->
-            scope.filters =
-                from : 0
-                to : 99
-                h : yes
-                f : yes
-        ]
         link: (scope, elem, attr) ->
             newChart = =>
                 # We instanciate the right chart from data.chart_type
