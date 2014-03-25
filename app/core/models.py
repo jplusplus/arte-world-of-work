@@ -138,7 +138,7 @@ class Thematic(models.Model):
 
     def __unicode__(self):
         position = self.position or _('No position')
-        return u"{pos} - {title}".format(pos=position, title=self.title)
+        return u"{pos} - {title}".format(pos=position, title=self.title.decode('utf-8'))
 
     def all_elements(self):
         # list all elements (feedback + question) of a thematic object
@@ -169,7 +169,7 @@ class BaseFeedback(mixins.AsFinalMixin):
         return utils.camel_to_underscore(klass)
 
     def __unicode__(self):
-        return 'Feedback: %s' % self.html_sentence[:60]
+        return u'StaticFeedback: %s' % strip_tags(self.html_sentence.decode('utf-8'))[:60]
 
 class StaticFeedback( BaseFeedback, 
                       mixins.ThematicElementMixin, 
@@ -177,9 +177,8 @@ class StaticFeedback( BaseFeedback,
     source_url = models.URLField()
     source_title = models.CharField(max_length=120)
     question = models.OneToOneField('BaseQuestion', null=True, blank=True, related_name='feedback')
-    def __unicode__(self):
-        return 'StaticFeedback: %s' % strip_tags(self.html_sentence)[:60]
-
+    
+    
 # -----------------------------------------------------------------------------
 # 
 #     Answer types
