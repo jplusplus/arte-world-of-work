@@ -202,10 +202,13 @@ class Histogram extends BarChart
     update: =>
         super ''
 
-        ((((d3.select @element[0]).selectAll 'svg').append 'g').attr
+        (((((((d3.select @element[0]).selectAll 'svg').append 'g').attr
             class : 'x axis'
             transform : "translate(#{@margin.left}, #{@size.height - @margin.bottom})"
-        ).call @xAxis
+        ).call @xAxis).append 'text').text '€').attr
+            x : @size.width - 35
+            y : 5
+            class : 'scale'
 
     computeResults: =>
         @results = []
@@ -216,7 +219,7 @@ class Histogram extends BarChart
         @x = (do d3.scale.linear).range [0, @_size.width];
         @y = (do d3.scale.linear).range [@_size.height, 0]
         @x.domain [0, (_.max @results, (elem) -> elem[2])[2]]
-        @y.domain [0, 100]
+        @y.domain [0, (_.max @results, (elem) -> elem[1])[1]]
 
         tickValues = [0].concat _.pluck @results, 2
         @xAxis = (((do d3.svg.axis).scale @x).orient 'bottom').tickValues tickValues
