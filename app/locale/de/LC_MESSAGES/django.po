@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: arte-world-of-work\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-20 16:39+0100\n"
-"PO-Revision-Date: 2014-03-24 08:19-0400\n"
+"PO-Revision-Date: 2014-03-25 07:08-0400\n"
 "Last-Translator: Toutenrab <bellon.pierre+crowdin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -94,7 +94,7 @@ msgstr "Ein iPad (ca. 490 €)       "
 
 #: i18n_strings.py:23
 msgid "Your boss' fixie bike (900 €)"
-msgstr "Das Fixie Bike Deines Chefs (900 €)"
+msgstr "Das Fixie Deines Chefs (900 €)"
 
 #: i18n_strings.py:24
 msgid "My parents’ opinion"
@@ -298,7 +298,8 @@ msgstr "Mein/e Partner/in"
 
 #: i18n_strings.py:74
 msgid "Flat rental "
-msgstr "Wohnungsmiete"
+msgstr "Wohnungs\n"
+"miete"
 
 #: i18n_strings.py:75
 msgid "No, it’s a hobby not more"
@@ -990,7 +991,7 @@ msgstr "Vielleicht nur, solange Du noch jung bist?"
 
 #: i18n_strings.py:247
 msgid "Working for free on an organic farm for one year. No pay, but food and shelter provided. Would you be up for that?"
-msgstr "Umsonst ein Jahr lang auf einem Bio-Bauernhof für arbeiten, ohne Bezahlung, dafür aber mit Kost und Logis. Würdest Du es machen?"
+msgstr "Umsonst ein Jahr lang auf einem Bio-Bauernhof für arbeiten, ohne Bezahlung, dafür aber mit Kost und Logis. Würdest Du das machen?"
 
 #: i18n_strings.py:248
 msgid "Click on one!"

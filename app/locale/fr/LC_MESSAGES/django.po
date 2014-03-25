@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: arte-world-of-work\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-20 16:39+0100\n"
-"PO-Revision-Date: 2014-03-24 07:48-0400\n"
+"PO-Revision-Date: 2014-03-25 07:24-0400\n"
 "Last-Translator: Toutenrab <bellon.pierre+crowdin@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -258,11 +258,11 @@ msgstr "Oui mais j’ai traîné en route alors ça sera probablement un peu tar
 
 #: i18n_strings.py:64
 msgid "Yes, if it’s doing well"
-msgstr "Yes, if it’s doing well"
+msgstr "Oui, si l’entreprise marche bien"
 
 #: i18n_strings.py:65
 msgid "Organize a big party"
-msgstr "Organize a big party"
+msgstr "J’organise une méga soirée"
 
 #: i18n_strings.py:66
 msgid "Slavery has been abolished, right? Of course interns should get a salary!"
@@ -318,7 +318,7 @@ msgstr "Cocaïne"
 
 #: i18n_strings.py:79
 msgid "I prefer to use my contacts"
-msgstr "I prefer to use my contacts"
+msgstr "Je préfère passer par mes contacts"
 
 #: i18n_strings.py:80
 msgid "read a long newspaper article (20 min)"
@@ -354,7 +354,7 @@ msgstr "Non, j’ai compris que la retraite c’était comme le Père Noël."
 
 #: i18n_strings.py:88
 msgid "Yes, but only to avoid upsetting them"
-msgstr "Yes, but only to avoid upsetting them"
+msgstr "Oui, mais seulement pour ne pas m’embrouiller avec ma famille"
 
 #: i18n_strings.py:89
 msgid "Buy an apartment"
@@ -382,7 +382,7 @@ msgstr "Mes amis"
 
 #: i18n_strings.py:95
 msgid "I don’t have a dream school"
-msgstr "I don’t have a dream school"
+msgstr "Je n’ai pas d’école de rêve"
 
 #: i18n_strings.py:96
 msgid "My friends"
@@ -410,7 +410,7 @@ msgstr "Alcool"
 
 #: i18n_strings.py:102
 msgid "I always do unsolicited applications"
-msgstr "I always do unsolicited applications"
+msgstr "En général, je fais des candidatures spontanées"
 
 #: i18n_strings.py:103
 msgid "listen to the entire album Cheese, by Stromae (40 min)"
@@ -434,7 +434,7 @@ msgstr "accepter un boulot au black"
 
 #: i18n_strings.py:108
 msgid "No, never ever"
-msgstr "No, never ever"
+msgstr "Non, jamais"
 
 #: i18n_strings.py:109
 msgid "My drug consumption"
@@ -446,7 +446,7 @@ msgstr "Mes parents"
 
 #: i18n_strings.py:111
 msgid "The state"
-msgstr "L'État"
+msgstr "Des aides de l'état"
 
 #: i18n_strings.py:112
 msgid "Carsharing"
@@ -486,7 +486,7 @@ msgstr "Mon parcours de soins médicaux"
 
 #: i18n_strings.py:121
 msgid "Loans"
-msgstr "Loans"
+msgstr "Un prêt bancaire"
 
 #: i18n_strings.py:122
 msgid "DIY Marketplace "
@@ -522,7 +522,8 @@ msgstr "Rien, je réponds à ce questionnaire depuis Berlin (ou ailleurs) et c�
 
 #: i18n_strings.py:130
 msgid "In France begging was considered a <strong>normal activity</strong> until the <strong>end of the 19th century</strong>. In the 20th century it went out of fashion and some beggars would even wear masks while doing their job."
-msgstr "In France begging was considered a <strong>normal activity</strong> until the <strong>end of the 19th century</strong>. In the 20th century it went out of fashion and some beggars would even wear masks while doing their job."
+msgstr "En France la mendicité était considérée comme une <strong>activité normale </strong>jusqu’à la fin du 19ème siècle. \n"
+"Au début du 20ème siècle, c’était déjà beaucoup moins accepté : des mendiants ont alors commencé à porter des masques en faisant leur métier."
 
 #: i18n_strings.py:131
 msgid "Eugen Weber, 1976"
@@ -530,7 +531,7 @@ msgstr "Eugen Weber, 1976"
 
 #: i18n_strings.py:132
 msgid "As a young European chances are <strong>almost 50%&nbsp;that you owe money</strong> to your bank, family or friends. The median debt of young people in Europe is <strong>5000 €</strong>."
-msgstr "As a young European chances are <strong>almost 50%&nbsp;that you owe money</strong> to your bank, family or friends. The median debt of young people in Europe is <strong>5000 €</strong>."
+msgstr "Presque la moitié des jeunes doivent de l’argent à leur banque, leur familles ou amis. La valeur moyenne de leur dette s'élève à <strong> 5 000 €</strong>."
 
 #: i18n_strings.py:133
 msgid "ECB, p. 60"
@@ -538,7 +539,7 @@ msgstr "ECB, p. 60"
 
 #: i18n_strings.py:134
 msgid "Often theft in the workplace doesn't have anything to do with \"real world\" crime. Those <strong>who steal most</strong> are also those who <strong>work most</strong>. They think they're not paid enough."
-msgstr "Often theft in the workplace doesn't have anything to do with \"real world\" crime. Those <strong>who steal most</strong> are also those who <strong>work most</strong>. They think they're not paid enough."
+msgstr "Souvent le vol au travail et la criminalité dans la “vraie vie” ne sont pas liés. <strong>Ceux qui volent le plus sont ceux qui travaillent le plus</strong>. Ils ne se sentent pas assez payés."
 
 #: i18n_strings.py:135
 msgid "Greenberg, 2002"
@@ -546,7 +547,7 @@ msgstr "Greenberg, 2002"
 
 #: i18n_strings.py:136
 msgid "Academics agree on this matter: <strong>social background and parents' opinions</strong> matter most when young people decide what to do with their lives."
-msgstr "Academics agree on this matter: <strong>social background and parents' opinions</strong> matter most when young people decide what to do with their lives."
+msgstr "Sur ce point les scientifiques sont d’accord, les facteurs déterminants dans le choix des études sont <strong>le milieu social et l’avis des parents</strong>."
 
 #: i18n_strings.py:137
 msgid "Hachmeister et al., 2007"
@@ -554,7 +555,7 @@ msgstr "Hachmeister et al., 2007"
 
 #: i18n_strings.py:138
 msgid "The average McDonald's worker has to work <strong>7 months</strong> to get what the company's CEO takes home in <strong>just 1 hour</strong>."
-msgstr "The average McDonald's worker has to work <strong>7 months</strong> to get what the company's CEO takes home in <strong>just 1 hour</strong>."
+msgstr "Un employé moyen de Mac Donald’s doit travailler <strong>7 mois </strong>pour gagner ce que son patron gagne en <strong>seulement 1 heure</strong>."
 
 #: i18n_strings.py:139
 msgid "QZ"
@@ -562,7 +563,7 @@ msgstr "QZ"
 
 #: i18n_strings.py:140
 msgid "<p>In Germany people seem to love their jobs. After a 10 million &euro; win only <strong>every third man would quit his job</strong>. <strong>Women</strong> are even more attached to their work: <strong>only every fourth</strong> would pack it &#39; all in.</p>"
-msgstr "<p>In Germany people seem to love their jobs. After a 10 million &euro; win only <strong>every third man would quit his job</strong>. <strong>Women</strong> are even more attached to their work: <strong>only every fourth</strong> would pack it &#39; all in.</p>"
+msgstr "En Allemagne, après avoir gagné 10 millions&euro;  d’euros au loto, <strong>1 homme sur 3 </strong>rendrait son tablier.Seulement <strong>1 femme sur 4 ferait pareil</strong>."
 
 #: i18n_strings.py:141
 msgid "Forsa for Westlotto (PDF)"
@@ -570,7 +571,7 @@ msgstr "Forsa for Westlotto (PDF)"
 
 #: i18n_strings.py:142
 msgid "Spain is Erasmus destination <strong>#1</strong>."
-msgstr "Spain is Erasmus destination <strong>#1</strong>."
+msgstr "<strong>L’Espagne </strong>est numéro 1 des destinations Erasmus."
 
 #: i18n_strings.py:143
 msgid "Erasmus.ahoi.in"
@@ -578,7 +579,7 @@ msgstr "Erasmus.ahoi.in"
 
 #: i18n_strings.py:144
 msgid "In Germany people seem to love their jobs. After a <strong>10 million €</strong> win only <strong>every third man</strong> would <strong>quit</strong> his job. <strong>Women</strong> are even more attached to their work: <strong>only every fourth</strong> would pack it all in."
-msgstr "In Germany people seem to love their jobs. After a <strong>10 million €</strong> win only <strong>every third man</strong> would <strong>quit</strong> his job. <strong>Women</strong> are even more attached to their work: <strong>only every fourth</strong> would pack it all in."
+msgstr "En Allemagne, après avoir gagné 10 millions d’euros au loto, <strong>1 homme sur 3</strong> rendrait son tablier. Seulement <strong>1 femme sur 4 </strong>ferait pareil."
 
 #: i18n_strings.py:145
 msgid " Forsa for Westlotto"
@@ -586,7 +587,7 @@ msgstr "Forsa for Westlotto"
 
 #: i18n_strings.py:146
 msgid "Distorted perception: The French are amongst those who are the <strong>most insecure about their jobs</strong> in Europe. At the same time their jobs are also the most stable."
-msgstr "Distorted perception: The French are amongst those who are the <strong>most insecure about their jobs</strong> in Europe. At the same time their jobs are also the most stable."
+msgstr "Les Français sont ceux qui sont <strong>le plus incertains de leur avenir professionnel</strong> en Europe. Pourtant ce sont aussi eux qui ont les boulots les plus stables."
 
 #: i18n_strings.py:147
 msgid "Institut Arbeit und Qualifikation (p. 190)"
@@ -598,7 +599,7 @@ msgstr "Pour augmenter le nombre de naissances, il est préférable pour le gouv
 
 #: i18n_strings.py:149
 msgid " Institut National d’Etudes Démographiques (p. 2)"
-msgstr " Institut National d’Etudes Démographiques (p. 2)"
+msgstr "Institut National d’Etudes Démographiques (p. 2)"
 
 #: i18n_strings.py:150
 msgid "9 out of 10 French find it normal to <strong>“arrange” their CV</strong> and only 1 employer out of 5 actually check what people send them."
@@ -610,7 +611,7 @@ msgstr "Institut Florian Mantione"
 
 #: i18n_strings.py:152
 msgid "Granny and grandad at the office? <strong>Half of the German population</strong> thinks that they will be able to work <strong>beyond the age of 69</strong>."
-msgstr "Granny and grandad at the office? <strong>Half of the German population</strong> thinks that they will be able to work <strong>beyond the age of 69</strong>."
+msgstr "Grand-père et grand-mère au bureau ? La moitié des Allemands pensent pouvoir <strong>continuer à bosser après 69 ans</strong>."
 
 #: i18n_strings.py:153
 msgid "Bertelsmann Stiftung"
@@ -618,7 +619,7 @@ msgstr "Bertelsmann Stiftung"
 
 #: i18n_strings.py:154
 msgid "Family disputes in sight: <strong>9 out of 10</strong> family business <strong>owners</strong> could <strong>not</strong> imagine <strong>selling</strong> their company."
-msgstr "Family disputes in sight: <strong>9 out of 10</strong> family business <strong>owners</strong> could <strong>not</strong> imagine <strong>selling</strong> their company."
+msgstr "<strong>9 patrons d’entreprise familiale sur 10 </strong>ne pourraient pas s’imaginer la vendre. Pour éviter les querelles de famille ?"
 
 #: i18n_strings.py:155
 msgid "Economist Intelligence Unit for Barclays"
@@ -626,7 +627,7 @@ msgstr "Economist Intelligence Unit for Barclays"
 
 #: i18n_strings.py:156
 msgid "Only <strong>1 in 6&nbsp;</strong>in Europe would <strong>start a business</strong> if they inherited money. Every third would buy a house."
-msgstr "Only <strong>1 in 6&nbsp;</strong>in Europe would <strong>start a business</strong> if they inherited money. Every third would buy a house."
+msgstr "Seulement <strong>1 Européen sur 6&nbsp; </strong>créerait une entreprise avec un héritage. <strong>1 sur 3 achèterait une maison</strong>."
 
 #: i18n_strings.py:157
 msgid "Eurobarometer (p. 90)"
@@ -634,7 +635,7 @@ msgstr "Eurobaromètre (p. 90)"
 
 #: i18n_strings.py:158
 msgid "70%&nbsp;of EU citizens think that \"robots steal people's jobs\". According to an Oxford study <strong>models</strong>, <strong>waiters</strong>, <strong>taxi drivers</strong>, and <strong>accountants</strong> are amongst the jobs most likely to disappear."
-msgstr "70%&nbsp;of EU citizens think that \"robots steal people's jobs\". According to an Oxford study <strong>models</strong>, <strong>waiters</strong>, <strong>taxi drivers</strong>, and <strong>accountants</strong> are amongst the jobs most likely to disappear."
+msgstr "70%&nbsp;des citoyens de l’UE pensent que “les robots volent les emplois des gens”. Selon une étude de l’Université d’Oxford les <strong>mannequins, les serveurs, les chauffeurs de taxi et les comptables vont disparaître</strong>."
 
 #: i18n_strings.py:159
 msgid "Oxford Martin School"
@@ -642,7 +643,7 @@ msgstr "Oxford Martin School"
 
 #: i18n_strings.py:160
 msgid "<p> professionally useful there.</p>"
-msgstr "<p> professionally useful there.</p>"
+msgstr "<p>professionnellement utile.</p>"
 
 #: i18n_strings.py:161
 msgid "Eurobarometer"
@@ -674,7 +675,7 @@ msgstr "Aruba Network"
 
 #: i18n_strings.py:168
 msgid "Disappointed by your paycheck? In Portugal the minimum salary is only 566 €."
-msgstr "Disappointed by your paycheck? In Portugal the minimum salary is only 566 €."
+msgstr "Vous vous plaignez de votre salaire minimum ? <strong>Au Portugal il est seulement à 566 €</strong>."
 
 #: i18n_strings.py:169
 msgid "Eurostat"
@@ -682,7 +683,7 @@ msgstr "Eurostat"
 
 #: i18n_strings.py:170
 msgid "Taking care of your grand-parents can be a full time job. And therefore half of the European population thinks you <strong>should be paid for it</strong> by your government!"
-msgstr "Taking care of your grand-parents can be a full time job. And therefore half of the European population thinks you <strong>should be paid for it</strong> by your government!"
+msgstr "S’occuper de ses proches peut être un travail à plein temps. C’est pour cela que presque <strong>la moitié des Européens </strong>pensent qu’il faut rémunérer les gens qui s’occupent de leur grand-parents."
 
 #: i18n_strings.py:171
 msgid "Eurobarometer (p. 103)"
@@ -706,7 +707,7 @@ msgstr "Institut der deutschen Wirtschaft (p. 4)"
 
 #: i18n_strings.py:176
 msgid "Sheltered employment is a trap. Many policies see it as a springboard into the “regular” labor market. But <strong>only very few people manage to make the transition</strong>. In Austria it’s less then every 30th. "
-msgstr "Sheltered employment is a trap. Many policies see it as a springboard into the “regular” labor market. But <strong>only very few people manage to make the transition</strong>. In Austria it’s less then every 30th. "
+msgstr "Les politiques d’insertion présentent les ateliers pour personnes handicapées comme un tremplin vers le marché de l’emploi “regulier”. Mais pourtant, en Autriche par exemple, <strong>moins d’une personne sur 30 </strong>arrive à faire la transition."
 
 #: i18n_strings.py:177
 msgid "ANED (p. 15)"
@@ -718,7 +719,7 @@ msgstr "Les jeunes Européens ne croient pas aux syndicats. <strong>Même pas 1 
 
 #: i18n_strings.py:179
 msgid "You can tweak your CV as much as you want. If you have the <strong>wrong name</strong> or live in the <strong>wrong place</strong> you still get discriminated against. That’s why some governments try out anonymous CVs."
-msgstr "You can tweak your CV as much as you want. If you have the <strong>wrong name</strong> or live in the <strong>wrong place</strong> you still get discriminated against. That’s why some governments try out anonymous CVs."
+msgstr "Malheureusement, si vous n’avez <strong>pas le bon nom </strong>ou si vous <strong>habitez au mauvais endroit</strong>, vous risquez de subir de la discrimination. C’est pour cette raison que plusieurs gouvernements testent les CVs anonymes."
 
 #: i18n_strings.py:180
 msgid "J-Pal"
@@ -726,7 +727,7 @@ msgstr "J-Pal"
 
 #: i18n_strings.py:181
 msgid "Older people are generally against a <strong>universal basic income</strong>. For young people it’s less of a problem to receive money without having to work for it. Economists say that financial incentives make us work harder but not necessarily smarter. It’s hard to say what the actual effects of a basic income on the labor market would be."
-msgstr "Older people are generally against a <strong>universal basic income</strong>. For young people it’s less of a problem to receive money without having to work for it. Economists say that financial incentives make us work harder but not necessarily smarter. It’s hard to say what the actual effects of a basic income on the labor market would be."
+msgstr "Recevoir de l’argent sans travailler ? Cela pose moins de problèmes aux jeunes qu’aux personnes plus âgées."
 
 #: i18n_strings.py:182
 msgid "World Values Survey"
@@ -734,7 +735,7 @@ msgstr "World Values Survey"
 
 #: i18n_strings.py:183
 msgid "In France <strong>one out of ten students</strong> enrolls preparation classes for university, so called <em>prépas</em>, after they finish school. Some of them are 2 years long and extremely demanding."
-msgstr "In France <strong>one out of ten students</strong> enrolls preparation classes for university, so called <em>prépas</em>, after they finish school. Some of them are 2 years long and extremely demanding."
+msgstr "En France, <strong>1 étudiant sur 10 </strong>s’inscrit en prépa."
 
 #: i18n_strings.py:184
 msgid "data.gouv.fr"
@@ -742,7 +743,7 @@ msgstr "Data.gouv.fr"
 
 #: i18n_strings.py:185
 msgid "Young people have the highest risk to be working but poor in Scandinavia. By the way, in most countries working women are less likely to need assistance from their relatives or the government."
-msgstr "Young people have the highest risk to be working but poor in Scandinavia. By the way, in most countries working women are less likely to need assistance from their relatives or the government."
+msgstr "En Scandinavie les jeunes ont du mal à gagner leur vie. Dans les pays nordiques la proportion de jeunes qui ont un emploi mais qui sont toujours considérés comme pauvres est la plus elevée d’Europe."
 
 #: i18n_strings.py:186
 msgid "Eurofound (p. 7)"
@@ -750,7 +751,7 @@ msgstr "Eurofound (p. 7)"
 
 #: i18n_strings.py:187
 msgid "In some countries, like Denmark, sperm donations are tax free."
-msgstr "In some countries, like Denmark, sperm donations are tax free."
+msgstr "Dans certains pays, comme le Danemark, le don de sperme est exonéré d’impôts."
 
 #: i18n_strings.py:188
 msgid "Spiegel Online"
@@ -758,11 +759,11 @@ msgstr "Spiegel Online"
 
 #: i18n_strings.py:189
 msgid "If you’ve managed to leave your parents’ house consider yourself lucky. For young Europeans between 18 and 34 chances are almost 50 %&nbsp;that they still live with their parents. Half of them say it’s for financial reasons."
-msgstr "If you’ve managed to leave your parents’ house consider yourself lucky. For young Europeans between 18 and 34 chances are almost 50 %&nbsp;that they still live with their parents. Half of them say it’s for financial reasons."
+msgstr "Si vous avez déjà pu quitter le nid parental, vous pouvez vous estimer heureux. En Europe aujourd’hui, près de <strong>la moitié des jeunes entre 18 et 34 ans vivent encore avec leurs parents</strong>. La plupart disent que c’est pour des raisons financières."
 
 #: i18n_strings.py:190
 msgid "In Berlin, <strong>one third of the student population</strong> could imagine financing their studies with prostitution."
-msgstr "In Berlin, <strong>one third of the student population</strong> could imagine financing their studies with prostitution."
+msgstr "<strong>Un tiers des étudiants Berlinois</strong> pourraient s’imaginer financer leurs études <strong>en se prostituant</strong>."
 
 #: i18n_strings.py:191
 msgid "Studienkolleg zu Berlin"
@@ -770,7 +771,7 @@ msgstr "Studienkolleg zu Berlin"
 
 #: i18n_strings.py:192
 msgid "In Dresden, Germany, you can make <strong>100 € by queuing for a night</strong>. Couples, who want to fix a wedding date at the local register office, are willing to pay that price. The office opens it’s schedule only twice a year and at 8 in the morning."
-msgstr "In Dresden, Germany, you can make <strong>100 € by queuing for a night</strong>. Couples, who want to fix a wedding date at the local register office, are willing to pay that price. The office opens it’s schedule only twice a year and at 8 in the morning."
+msgstr "A Dresde, en Allemagne, des étudiants se font payer <strong>100 € pour faire la queue pendant une nuit</strong>. Ils réservent une place pour des couples souhaitant fixer la date de leur mariage à la mairie qui n’ouvre son calendrier que 2 fois par ans, à 8 heures du matin."
 
 #: i18n_strings.py:193
 msgid "Kölner Stadt-Anzeiger"
@@ -802,7 +803,8 @@ msgstr "Gallup"
 
 #: i18n_strings.py:200
 msgid "Neurosurgeons, soldiers, and art teachers are amongst those who consider their jobs as <strong>important for society</strong>. Securities traders, fashion designers, and gas station attendants think their jobs are not very meaningful."
-msgstr "Neurosurgeons, soldiers, and art teachers are amongst those who consider their jobs as <strong>important for society</strong>. Securities traders, fashion designers, and gas station attendants think their jobs are not very meaningful."
+msgstr "Les <strong>neurochirurgiens, les soldats, et les profs d’art </strong>estiment leur travail <strong>important pour la société</strong>.\n"
+"<strong>Les traders, les designers de mode et les opérateurs de station service</strong> ne trouvent <strong>pas beaucoup de valeur ajoutée à leur boulot</strong>."
 
 #: i18n_strings.py:201
 msgid "Payscale"
@@ -826,7 +828,7 @@ msgstr "INPES"
 
 #: i18n_strings.py:206
 msgid "34%&nbsp;of European workers have found their jobs through unsolicited applications. Fewer used their personal network and even less actually applied for official job openings. In general, the less transparent a labour market is, the more useful your own address book becomes."
-msgstr "34%&nbsp;of European workers have found their jobs through unsolicited applications. Fewer used their personal network and even less actually applied for official job openings. In general, the less transparent a labour market is, the more useful your own address book becomes."
+msgstr "<strong>34%&nbsp; </strong>des employés européens ont trouvé leur job via des candidatures spontanées. Ce qui est plus que ceux ayant trouvé grâce aux relations personnelles ou les petites annonces. En général, moins le marché du travail est transparent, plus les contacts sont utiles."
 
 #: i18n_strings.py:207
 msgid "Pellizzari, 2003"
@@ -866,7 +868,7 @@ msgstr "Eurostat, Vice, Les inrocks, Glückliche Arbeitslose"
 
 #: i18n_strings.py:216
 msgid "59%&nbsp; did not receive any financial compensation during their last internship. 10%&nbsp;consider that they <strong>haven’t learned anything</strong> professionally useful there."
-msgstr "59%&nbsp; did not receive any financial compensation during their last internship. 10%&nbsp;consider that they <strong>haven’t learned anything</strong> professionally useful there."
+msgstr "<strong>59% </strong>des stagiaires n’ont reçu aucune rémuneration lors de leur dernier stage. <strong>20% </strong>considèrent qu’ils n’y ont rien appris d’utile pour leur future carrière. "
 
 #: i18n_strings.py:217
 msgid "Eurobarometer, p. 14"
@@ -874,7 +876,7 @@ msgstr "Eurobaromètre, p. 14"
 
 #: i18n_strings.py:218
 msgid "Two English students have made over £30,000 by renting out their faces for ads. They <strong>charge £100</strong> per day."
-msgstr "Two English students have made over £30,000 by renting out their faces for ads. They <strong>charge £100</strong> per day."
+msgstr "Deux étudiants anglais ont gagné <strong>plus de £30 000</strong>en louant leurs visages à des publicitaires pour £100 la journée."
 
 #: i18n_strings.py:219
 msgid "AFP"
@@ -890,7 +892,7 @@ msgstr "Kahneman & Krueger, 2004"
 
 #: i18n_strings.py:222
 msgid "In 2010 <strong>75000 people</strong> went wwoofing, meaning they volunteered on an organic farm. And numbers are growing! But the concept is not entirely new. In so called Kibbutzim in Israel people have been working in exchange for food and shelter since the 1920s."
-msgstr "In 2010 <strong>75000 people</strong> went wwoofing, meaning they volunteered on an organic farm. And numbers are growing! But the concept is not entirely new. In so called Kibbutzim in Israel people have been working in exchange for food and shelter since the 1920s."
+msgstr "En 2010, <strong>80 000 personnes </strong>ont pratiqué le wwoofing (volontariat en ferme bio).Mais le concept n’est pas vraiment nouveau : dans des Kibboutzim en Israël, des gens travaillent pour gîte et couvert depuis les années 1920."
 
 #: i18n_strings.py:223
 msgid "Kotůlek, 2010"
@@ -898,7 +900,7 @@ msgstr "Kotůlek, 2010"
 
 #: i18n_strings.py:224
 msgid "Pilot, veterinary, astronaut, writer... At least <strong>7 out of 10 people</strong> do not work in their childhood dreamjobs."
-msgstr "Pilot, veterinary, astronaut, writer... At least <strong>7 out of 10 people</strong> do not work in their childhood dreamjobs."
+msgstr "Pilote, vétérinaire, astronaute, écrivain... <strong>Au moins 7 personnes sur 10 </strong>ne font pas le travail qui les faisait rêver pendant leur enfance."
 
 #: i18n_strings.py:225
 msgid "Linkedin"
@@ -906,15 +908,15 @@ msgstr "LinkedIn"
 
 #: i18n_strings.py:226
 msgid "Yes or no?"
-msgstr "Yes or no?"
+msgstr "Oui ou non ?"
 
 #: i18n_strings.py:227
 msgid "Is begging work?"
-msgstr "Is begging work?"
+msgstr "La mendicité, c’est un boulot ?"
 
 #: i18n_strings.py:228
 msgid "What's your age again?"
-msgstr "What's your age again?"
+msgstr "Quel âge avez-vous déjà ?"
 
 #: i18n_strings.py:229
 msgid "How old are you?"
@@ -926,23 +928,23 @@ msgstr "Quelle porte des toilettes choisiriez-vous ?"
 
 #: i18n_strings.py:231
 msgid "If at all - what gender do you identify yourself with most?"
-msgstr "If at all - what gender do you identify yourself with most?"
+msgstr "A quel sexe vous identifiez-vous le plus ?"
 
 #: i18n_strings.py:232
 msgid "Where do you spend most of your time?"
-msgstr "Where do you spend most of your time?"
+msgstr "Où passez-vous le plus de temps ?"
 
 #: i18n_strings.py:233
 msgid "Where do you live?"
-msgstr "Where do you live?"
+msgstr "Où habitez-vous ?"
 
 #: i18n_strings.py:234
 msgid "Your country of birth."
-msgstr "Your country of birth."
+msgstr "Quel est votre pays de naissance ?"
 
 #: i18n_strings.py:235
 msgid "Where were you born?"
-msgstr "Where were you born?"
+msgstr "Où êtes-vous né(e) ?"
 
 #: i18n_strings.py:236
 msgid "We won't tell them."
@@ -950,7 +952,7 @@ msgstr "On ne leur dira pas."
 
 #: i18n_strings.py:237
 msgid "Your bank account is empty. You have some rather big bills to pay. Who do you ask for money? "
-msgstr "Your bank account is empty. You have some rather big bills to pay. Who do you ask for money? "
+msgstr "Vous n’arrivez pas à boucler vos fins de mois, ou vous avez une grosse dépense à prévoir. A qui allez-vous demander de l’argent ?"
 
 #: i18n_strings.py:238
 msgid "We won't tell your boss."
@@ -958,11 +960,11 @@ msgstr "On ne le répètera pas à votre boss."
 
 #: i18n_strings.py:239
 msgid "It’s late and you’re alone in the office. You can steal whatever you want. Nobody will find out. What do you take?"
-msgstr "It’s late and you’re alone in the office. You can steal whatever you want. Nobody will find out. What do you take?"
+msgstr "Tard au bureau, il n’y a plus personne. Vous pouvez voler ce que vous voulez et personne n’en saura rien. Vous prenez quoi ?"
 
 #: i18n_strings.py:240
 msgid "When you were younger you would still listen to others, right?"
-msgstr "When you were younger you would still listen to others, right?"
+msgstr "Quand vous étiez jeune vous écoutiez toujours les autres pas vrai ?"
 
 #: i18n_strings.py:241
 msgid "What counted most when you picked your field of education?"
@@ -970,15 +972,15 @@ msgstr "Quand vous avez choisi vos études, c’était quoi le plus important ?"
 
 #: i18n_strings.py:242
 msgid "Think you might be CEO some day as well?"
-msgstr "Think you might be CEO some day as well?"
+msgstr "Vous imaginez-vous chef d'entreprise ?"
 
 #: i18n_strings.py:243
 msgid "Should CEO salaries should be capped?"
-msgstr "Should CEO salaries should be capped?"
+msgstr "Les salaires des chefs d’entreprise devraient être plafonnés ?"
 
 #: i18n_strings.py:244
 msgid "You never know."
-msgstr "You never know."
+msgstr "On ne sait jamais."
 
 #: i18n_strings.py:245
 msgid "You hit the jackpot and win 10 million in the lottery. Do you continue your current work?"
@@ -986,15 +988,15 @@ msgstr "Gros coup de chance, vous gagnez 10 millions au loto. Vous continuez à 
 
 #: i18n_strings.py:246
 msgid "Maybe just while you're still young?"
-msgstr "Maybe just while you're still young?"
+msgstr "Peut-être juste pendant que vous êtes encore jeune ?"
 
 #: i18n_strings.py:247
 msgid "Working for free on an organic farm for one year. No pay, but food and shelter provided. Would you be up for that?"
-msgstr "Working for free on an organic farm for one year. No pay, but food and shelter provided. Would you be up for that?"
+msgstr "Un an à bosser dans une ferme bio, avec le gîte et le couvert assurés, mais <strong>pas payé</strong>. Ça vous tente ?"
 
 #: i18n_strings.py:248
 msgid "Click on one!"
-msgstr "Click on one!"
+msgstr "Choisis une réponse"
 
 #: i18n_strings.py:249
 msgid "Like all children, you surely had a dream job, when you were younger. Are you working in your childhood dreamjob now?"
@@ -1006,11 +1008,11 @@ msgstr "Pour vous, un étudiant qui veut aller étudier au soleil c’est..."
 
 #: i18n_strings.py:251
 msgid "Any clue where your money in 12 months will be coming from?"
-msgstr "Any clue where your money in 12 months will be coming from?"
+msgstr "Vous n’arrivez pas à boucler vos fins de mois, ou vous avez une grosse dépense à prévoir. A qui allez-vous demander de l’argent ?"
 
 #: i18n_strings.py:252
 msgid "When do you see yourself having a(nother) child?"
-msgstr "When do you see yourself having a(nother) child?"
+msgstr "Quand pensez-vous avoir un (autre) enfant ?"
 
 #: i18n_strings.py:253
 msgid "You’re running out of money. What would you be willing to do to get a job?"
@@ -1030,7 +1032,7 @@ msgstr "On vous donne 100,000 € sans conditions. Vous faites quoi avec ?"
 
 #: i18n_strings.py:257
 msgid "If you think of the job you’re currently doing. Could you get replaced by a robot in the future?"
-msgstr "If you think of the job you’re currently doing. Could you get replaced by a robot in the future?"
+msgstr "Dans l’avenir, un robot pourrait-il vous remplacer dans votre travail ?"
 
 #: i18n_strings.py:258
 msgid "Is it OK when internships are unpaid?"
@@ -1042,7 +1044,7 @@ msgstr "Depuis la crise vous bossez comme un malade. C’est vrai ?"
 
 #: i18n_strings.py:260
 msgid "Women and men should get equal pay for equal work. But, does that actually work in real life?"
-msgstr "Women and men should get equal pay for equal work. But, does that actually work in real life?"
+msgstr "Le même job, qu'il soit effectué par un homme ou une femmes, mérite le même salaire. C’est comme ça dans la vraie vie ?"
 
 #: i18n_strings.py:261
 msgid "What should your boss be allowed to know about you?"
@@ -1050,7 +1052,7 @@ msgstr "Mon boss devrait avoir le droit de connaître…"
 
 #: i18n_strings.py:262
 msgid "Taking care of your grandparents - full time. Would you be ready to do that if the state guaranteed you a basic income?"
-msgstr "Taking care of your grandparents - full time. Would you be ready to do that if the state guaranteed you a basic income?"
+msgstr "Si l’Etat vous garantit un revenu de base, seriez-vous prêt à vous occuper à plein temps de vos grand-parents ?"
 
 #: i18n_strings.py:263
 msgid "As almost everybody you’ve probably received some professional career advice. But, did it help you?"
@@ -1062,7 +1064,7 @@ msgstr "Vous avez passé un entretien pour un job mais c'est un étranger (plus 
 
 #: i18n_strings.py:265
 msgid "Would you pay 2 € more for a drying rack manufactured by disabled people?"
-msgstr "Would you pay 2 € more for a drying rack manufactured by disabled people?"
+msgstr "Vous paieriez 2 € de plus pour un séchoir à linge fabriqué par des travailleurs handicapés ?"
 
 #: i18n_strings.py:266
 msgid "If you were mobbed at work who would you ask for help?"
@@ -1070,23 +1072,23 @@ msgstr "On vous harcèle au travail. Vous vous adressez à qui ?"
 
 #: i18n_strings.py:267
 msgid "You’re applying for a job. Do you try to hide your gender, your religion or your skin color?"
-msgstr "You’re applying for a job. Do you try to hide your gender, your religion or your skin color?"
+msgstr "Sur votre CV, essayez-vous de cacher votre sexe, votre religion ou votre couleur de peau ?"
 
 #: i18n_strings.py:268
 msgid "Imagine everybody was guaranteed 800 € per month without doing anything. Would you regret to be working so much?"
-msgstr "Imagine everybody was guaranteed 800 € per month without doing anything. Would you regret to be working so much?"
+msgstr "Imaginez une société avec 800 €/mois garantis, sans bosser. Vous voudriez ne plus travailler ?"
 
 #: i18n_strings.py:269
 msgid "Put your life on hold for two years to prepare the entry exam of your dream school. Ready to do that?"
-msgstr "Put your life on hold for two years to prepare the entry exam of your dream school. Ready to do that?"
+msgstr "Mettre votre vie entre parenthèses pendant 2 ans afin de préparer un concours à l’école de vos rêves. Vous seriez prêt à le faire ?"
 
 #: i18n_strings.py:270
 msgid "Apart from work, where does the money on your bank account come from?"
-msgstr "Apart from work, where does the money on your bank account come from?"
+msgstr "A part votre boulot, quelles sont vos autres sources de revenu ?"
 
 #: i18n_strings.py:271
 msgid "Have you ever had to leave an apartment because you were unable to pay the rent?"
-msgstr "Have you ever had to leave an apartment because you were unable to pay the rent?"
+msgstr "Avez-vous déjà dû quitter un appartement parce que vous n’arriviez plus à payer le loyer ?"
 
 #: i18n_strings.py:272
 msgid "If your site is only similar to our options, no worries, we’ll accept that too."
@@ -1118,7 +1120,7 @@ msgstr "Quelles drogues sont acceptables au boulot ?"
 
 #: i18n_strings.py:279
 msgid "Have you ever replied to a normal job ad?"
-msgstr "Have you ever replied to a normal job ad?"
+msgstr "Avez-vous déjà répondu à une petite annonce pour un job ?"
 
 #: i18n_strings.py:280
 msgid "I spend so much time on my way to work that I could..."
@@ -1150,7 +1152,7 @@ msgstr "Ne rien faire du tout… Quelle est la période la plus longue que vous 
 
 #: i18n_strings.py:287
 msgid "<strong>Tell us more about you and compare yourself to others.</strong> <br> Worried about privacy? You should. We are, too. That's why we don't store any personal information."
-msgstr "<strong>Tell us more about you and compare yourself to others.</strong> <br> Worried about privacy? You should. We are, too. That's why we don't store any personal information."
+msgstr "<strong>Dîtes-en nous plus sur vous et comparez-vous aux autres</strong><br>Le respect de la vie privée vous importe ? A nous aussi, c'est pourquoi nous ne stockons aucune information personnelle."
 
 #: i18n_strings.py:288
 msgid "You"
@@ -1158,7 +1160,7 @@ msgstr "Vous"
 
 #: i18n_strings.py:289
 msgid "Temporary contracts. Permanent job-hunt. Playing online poker for a living, cooking for all your flat-mates, or days of writing and editing on Wikipedia. Economists only measure (un)employment. <br> <strong> What&rsquo;s work for you? Let us know and find out about others! </strong>"
-msgstr "Temporary contracts. Permanent job-hunt. Playing online poker for a living, cooking for all your flat-mates, or days of writing and editing on Wikipedia. Economists only measure (un)employment. <br> <strong> What&rsquo;s work for you? Let us know and find out about others! </strong>"
+msgstr "Jouer au poker en ligne pour gagner sa vie, cuisiner pour tous ses colocs ou passer des jours à rédiger et éditer des articles sur Wikipedia. Est-ce un travail pour vous ?Les économistes mesurent uniquement les emplois et le chômage. <br><strong>Mais ce n'est peut-être pas aussi simple !</strong>"
 
 #: i18n_strings.py:290
 msgid "Your Work"
@@ -1166,7 +1168,7 @@ msgstr "Votre travail"
 
 #: i18n_strings.py:291
 msgid "The cash machine in your bank&rsquo;s local branch fuels your life. But what if your source of money dries up? Doing small jobs here and there, selling stuff on ebay, asking family and friends for cash. That&rsquo;s what young people do get by. <br> <strong>How do you make ends meet? Let us know and find out about others!</strong>"
-msgstr "The cash machine in your bank&rsquo;s local branch fuels your life. But what if your source of money dries up? Doing small jobs here and there, selling stuff on ebay, asking family and friends for cash. That&rsquo;s what young people do get by. <br> <strong>How do you make ends meet? Let us know and find out about others!</strong>"
+msgstr "Le distributeur d'argent au coin de votre rue alimente votre vie quotidiennement. Mais que se passe-t-il lorsque votre source d'argent se tarit ? Faire des petits boulots à droite à gauche, vendre des affaires sur ebay, demander de l'argent à la famille et aux amis...C'est ce que plein de jeunes font.<br><strong>Et vous, comment faites-vous pour joindre les deux bouts ?</strong>"
 
 #: i18n_strings.py:292
 msgid "Your Money"
@@ -1174,7 +1176,7 @@ msgstr "Votre argent"
 
 #: i18n_strings.py:293
 msgid "Your teachers have always told you that being good at Maths and English, learning to type with ten fingers, enrolling auto mechanic training or studying law will guarantee you a quiet life. <br> <strong>What are the skills that you really need in your working life? Let us know and find out about others!</strong>"
-msgstr "Your teachers have always told you that being good at Maths and English, learning to type with ten fingers, enrolling auto mechanic training or studying law will guarantee you a quiet life. <br> <strong>What are the skills that you really need in your working life? Let us know and find out about others!</strong>"
+msgstr "Vos profs vous ont toujours dit qu'être bon en maths, écrire sans fautes d'orthographe et faire de bonnes études vous garantirons une vie sereine. <br><strong>Mais en vrai, quelles sont les compétences dont vous avez vraiment besoin au quotidien ?</strong>"
 
 #: i18n_strings.py:294
 msgid "Your Education"
@@ -1182,7 +1184,7 @@ msgstr "Vos études"
 
 #: i18n_strings.py:295
 msgid "What&rsquo;s a minimum salary that doesn&rsquo;t destroy jobs? How can we ensure that women make as much money as men? That&rsquo;s what politicians debate. Some think we should pay everybody a universal income - with no obligation to work. <br> <strong>If you were Minister of Labour for one day, what would be your plan? Let us know and find out about others!</strong>"
-msgstr "What&rsquo;s a minimum salary that doesn&rsquo;t destroy jobs? How can we ensure that women make as much money as men? That&rsquo;s what politicians debate. Some think we should pay everybody a universal income - with no obligation to work. <br> <strong>If you were Minister of Labour for one day, what would be your plan? Let us know and find out about others!</strong>"
+msgstr "Est-ce que le salaire minimum détruit les emplois ? Comment faire pour que les femmes gagnent autant que les hommes ? Ce sont des questions politiques récurrentes.<br><strong>Si vous étiez ministre du travail pour une journée, quel serait votre plan ?</strong>"
 
 #: i18n_strings.py:296
 msgid "Your Government"
@@ -1190,7 +1192,7 @@ msgstr "Votre gouvernement"
 
 #: i18n_strings.py:297
 msgid "A 38-hour week. A single-family, detached house. Retirement with 62. That might have been your parents’  work life plan. The circumstances have changed. Our generation is dreaming a different dream. But what’s still to come? Will self-driving cars bring our children to school? <br> <strong>How do you see your future World of Work? Let us know and find out about others!</strong>"
-msgstr "A 38-hour week. A single-family, detached house. Retirement with 62. That might have been your parents’  work life plan. The circumstances have changed. Our generation is dreaming a different dream. But what’s still to come? Will self-driving cars bring our children to school? <br> <strong>How do you see your future World of Work? Let us know and find out about others!</strong>"
+msgstr "Une semaine de 35 heures, une maison familiale à la campagne et la retraite à 62 ans.C'était peut-être le rêve de vos parents.Mais les choses ont changé et notre génération a des aspirations différentes.Qu'est ce qui est encore à venir ? Est-ce que des voitures sans chauffeur conduiront nos enfants à l'école ?<br><strong>Comment imaginez-vous le futur ?</strong>"
 
 #: i18n_strings.py:298
 msgid "Your Future"
@@ -1343,67 +1345,67 @@ msgstr "It will tell user model what value should be stored in related field"
 #: templates/dynamic_feedback_count.dj.html:6
 #, python-format
 msgid "<strong>%(value)s</strong> females answered like you"
-msgstr "<strong>%(value)s</strong> females answered like you"
+msgstr "<strong>%(value)s</strong> femmes ont répondu comme vous"
 
 #: templates/dynamic_feedback_count.dj.html:8
 #, python-format
 msgid "<strong>%(value)s</strong> males answered like you"
-msgstr "<strong>%(value)s</strong> males answered like you"
+msgstr "<strong>%(value)s</strong> hommes ont répondu comme vous"
 
 #: templates/dynamic_feedback_count.dj.html:11
 #, python-format
 msgid "<strong>%(value)s</strong> persons aged %(age)s years answered like you"
-msgstr "<strong>%(value)s</strong> persons aged %(age)s years answered like you"
+msgstr "<strong>%(value)s</strong> personnes de %(age)s ans ont répondu comme vous"
 
 #: templates/dynamic_feedback_count.dj.html:13
 #, python-format
 msgid "<strong>%(value)s</strong> persons living in %(country)s answered like you"
-msgstr "<strong>%(value)s</strong> persons living in %(country)s answered like you"
+msgstr "<strong>%(value)s</strong> personnes vivant en %(country)s ont répondu comme vous"
 
 #: templates/dynamic_feedback_count.dj.html:15
 #, python-format
 msgid "<strong>%(value)s</strong> persons from %(country)s answered like you"
-msgstr "<strong>%(value)s</strong> persons from %(country)s answered like you"
+msgstr "<strong>%(value)s</strong> personnes nées en %(country)s ont répondu comme vous"
 
 #: templates/dynamic_feedback_count.dj.html:18
 #, python-format
 msgid "<strong>%(value)s</strong> persons answered like you"
-msgstr "<strong>%(value)s</strong> persons answered like you"
+msgstr "<strong>%(value)s</strong> personnes ont répondu comme vous"
 
 #: templates/dynamic_feedback_generic.dj.html:3
 #, python-format
 msgid "Until this day <strong>%(total_number)s</strong> persons answered this question"
-msgstr "Until this day <strong>%(total_number)s</strong> persons answered this question"
+msgstr "A ce jour, <strong>%(total_number)s</strong> personnes ont répondu comme vous"
 
 #: templates/dynamic_feedback_percentage.dj.html:6
 #, python-format
 msgid "<strong>%(value)s%%</strong> of the females answered like you"
-msgstr "<strong>%(value)s%%</strong> of the females answered like you"
+msgstr "<strong>%(value)s%%</strong> des femmes ont répondu comme vous"
 
 #: templates/dynamic_feedback_percentage.dj.html:8
 #, python-format
 msgid "<strong>%(value)s%%</strong> of the males answered like you"
-msgstr "<strong>%(value)s%%</strong> of the males answered like you"
+msgstr "<strong>%(value)s%%</strong> des hommes ont répondu comme vous"
 
 #: templates/dynamic_feedback_percentage.dj.html:11
 #, python-format
 msgid "<strong>%(value)s%%</strong> of persons aged %(age)s years answered like you"
-msgstr "<strong>%(value)s%%</strong> of persons aged %(age)s years answered like you"
+msgstr "<strong>%(value)s%%</strong> des personnes de %(age)s ans ont répondu comme vous"
 
 #: templates/dynamic_feedback_percentage.dj.html:13
 #, python-format
 msgid "<strong>%(value)s%%</strong> of persons living in %(country)s answered like you"
-msgstr "<strong>%(value)s%%</strong> of persons living in %(country)s answered like you"
+msgstr "<strong>%(value)s%%</strong> des personnes vivant en %(country)s ont répondu comme vous"
 
 #: templates/dynamic_feedback_percentage.dj.html:15
 #, python-format
 msgid "<strong>%(value)s%%</strong> of persons from %(country)s answered like you"
-msgstr "<strong>%(value)s%%</strong> of persons from %(country)s answered like you"
+msgstr "<strong>%(value)s%%</strong> des personnes nées en %(country)s ont répondu comme vous"
 
 #: templates/dynamic_feedback_percentage.dj.html:18
 #, python-format
 msgid "<strong>%(value)s%%</strong> of persons answered like you"
-msgstr "<strong>%(value)s%%</strong> of persons answered like you"
+msgstr "<strong>%(value)s%%</strong> des personnes ont répondu comme vous"
 
 #: translations/i18n_strings.py:2
 msgid "an other translation"
