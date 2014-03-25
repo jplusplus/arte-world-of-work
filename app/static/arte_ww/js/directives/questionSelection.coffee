@@ -24,4 +24,7 @@ angular.module('arte-ww').directive 'questionSelection', [
                 # -------------------------------------------------------------
                 scope.isSelected   = _isSelected
                 scope.toggleChoice = _toggleChoice
+
+                scope.$watch '$parent.element', -> scope.question = scope.$parent.element               
+
 ]

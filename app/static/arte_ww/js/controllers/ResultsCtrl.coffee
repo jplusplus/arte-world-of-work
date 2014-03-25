@@ -32,7 +32,7 @@ class ResultsCtrl
         # Update URL when the user changes filters
         @$scope.$watch 'filters', (=>
             f = angular.copy $scope.filters
-            params = _.extend $location.search(),
+            params = _.extend $location.search(), 
                 gender:  null
                 age_min: f.age_min
                 age_max: f.age_max
@@ -41,7 +41,7 @@ class ResultsCtrl
 
             if (f.male isnt f.female)
 
-                params['gender'] = 'male' if f.male
+                params['gender'] = 'male' if f.male 
                 params['gender'] = 'female' if f.female
                 $location.search params
         ), yes

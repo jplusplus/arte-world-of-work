@@ -41,24 +41,30 @@ class ChoiceField(mixins.GenericModelMixin):
 
     class Meta:
         model = BaseChoiceField
-        exclude = ('question', )
+        exclude = ('question', 'content_type')
 
 class StaticFeedbackSerializer(serializers.ModelSerializer):
     picture = serializers.SerializerMethodField('get_picture')
+    type = serializers.SerializerMethodField('get_type')
+    sub_type = serializers.SerializerMethodField('get_sub_type')
     class Meta:
         model = StaticFeedback
+        exclude = ('content_type', )
+
     def get_picture(self, obj):
         return obj.picture.url if obj.picture else None
+
+    def get_type(self, obj):     return 'feedback'
+    def get_sub_type(self, obj): return 'static'
+    
 
 class FeedbackSerializer(mixins.InheritedModelMixin):
     model_mapping = {
         StaticFeedback: StaticFeedbackSerializer
     }
-
-    sub_type = serializers.Field()
     class Meta:
         model = BaseFeedback
-        fields = ('html_sentence', 'sub_type')
+        fields = ('html_sentence',)
 
 
 class MultipleChoicesSerializer(serializers.ModelSerializer):
@@ -116,6 +122,7 @@ class QuestionSerializer(mixins.InheritedModelMixin):
 class QuestionResultsSerializer(mixins.InheritedModelMixin):
     model_mapping = question_mapping
     results       = serializers.SerializerMethodField('get_results')
+
     class Meta:
         model = BaseQuestion
         depth = 1
@@ -136,9 +143,17 @@ class QuestionResultsSerializer(mixins.InheritedModelMixin):
             return serializer.data
         return None
 
-class QuestionFeedbackSerializer(QuestionResultsSerializer):
-    html_sentence = serializers.SerializerMethodField('get_html_sentence')
+class QuestionFeedbackSerializer(serializers.Serializer):
+    def get_request(self):
+        return self.context['request']
 
+    def to_native(self, question):
+        user     = self.get_request().user
+        feedback = DynamicFeedback(user, question)
+        data = feedback.as_dict()
+        data['question'] = QuestionSerializer(question).data
+        return data
+    
     def get_html_sentence(self, question):
         user     = self.get_request().user
         feedback = DynamicFeedback(user, question)
@@ -225,16 +240,17 @@ class RadioSerializer(serializers.ModelSerializer):
         value = attrs.get('value')
         question = attrs.get('question').as_final()
 
-        out_of_choices = question.choices().filter(id=value.pk).count() == 0
+        out_of_choices = question.choices().filter(pk=value.pk).count() == 0
 
         if value == None:
             raise ValidationError(_('You have to select at least one choice'))
         elif out_of_choices:
-            raise ValidationError(_('This choice {c} is not related to the answered question').format(c=choice))
+            msg = 'This choice with id {c} is not related to the answered question ({q}'
+            raise ValidationError(_(msg).format(c=value.pk, q=question.pk))
         return attrs
 
 class BooleanSerializer(RadioSerializer):
-    class Meta: 
+    class Meta:
         model = BooleanAnswer        
         exclude = ('content_type',)
 

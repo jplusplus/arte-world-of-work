@@ -17,9 +17,6 @@ class ThematicService
     constructor: (@rootScope, @routeParams, $http, $resource, @userPosition, @utils)-> 
         # every loaded thematic will be contained inside this object 
         @loadedThematics = {}
-        # we will first load a thematic list in that array. It will help us 
-        # to guess a thematic ID by its position  
-        @metaList  = [] 
         # first (fast) request where we get the list of thematics and their positions 
         $http(@listConfig).success (data)=>
             @positionList = @userPosition.createWrapper(data)
@@ -29,8 +26,13 @@ class ThematicService
         @nestedThematics = $resource @resourceConfig.url, {id: 1}, 
             @resourceConfig.actions
 
+    count: ()=> @positions().length
+
+    positions: => if @positionList then @positionList.all() else []
+
     # API method / internal functions 
     all: (cb)=> @nestedThematics.all cb
+
 
     get: (params, cb)=>
         # Notify rootScope to display a loading spinner

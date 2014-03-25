@@ -1,6 +1,6 @@
 class SurveyCtrl
-    @$inject: ['$scope', '$sce', 'Thematic', 'UserPosition', 'utils']
-    constructor: (@scope, @sce, @thematicService, @userPosition, utils)->
+    @$inject: ['$scope', '$sce', 'Thematic', 'ElementsWrapper', 'UserPosition', 'utils']
+    constructor: (@scope, @sce, @thematicService, @elementsWrapper, @userPosition, utils)->
         @scope.$watch (=>
             @userPosition.positions
         ), (newdata, olddata) =>
@@ -21,8 +21,15 @@ class SurveyCtrl
             state   : 0
             states  : @states
         # User's position functions
-        @scope.elementPosition = => @userPosition.elementPosition() + 1
-        @scope.elementsCount   = => @thematicService.current().elements.length
+        @scope.elementPosition = => 
+            current = @elementsWrapper.currentElement
+            if current.type is 'question'
+                index = @elementsWrapper.allQuestions().indexOf current
+                return index + 1  
+
+        @scope.elementsCount   = => 
+            @elementsWrapper.allQuestions().length 
+
         @scope.prepareVineUrl  = (url)=> @sce.trustAsResourceUrl("#{url}/embed/postcard")
 
         # Returns the classes of the given questions
@@ -36,7 +43,7 @@ class SurveyCtrl
 
         @scope.start = =>
             @thematicService.onThematicPositionChanged do @userPosition.thematicPosition
-            if (do @userPosition.thematicPosition) >= @thematicService.positionList.elements.length
+            if (do @userPosition.thematicPosition) >= @thematicService.count()
                 @scope.survey.state = @scope.survey.states.OUTRO
             else
                 @scope.survey.state = @scope.survey.states.DOING
