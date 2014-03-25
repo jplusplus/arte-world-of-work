@@ -31,19 +31,17 @@ class ResultsCtrl
     constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope) ->
         # Update URL when the user changes filters
         @$scope.$watch 'filters', (=>
-            f = angular.copy $scope.filters
-            params = _.extend $location.search(), 
+            f = angular.copy @$scope.filters
+            params = _.extend $location.search(),
                 gender:  null
                 age_min: f.age_min
                 age_max: f.age_max
 
-            $location.search params
-
             if (f.male isnt f.female)
-
-                params['gender'] = 'male' if f.male 
+                params['gender'] = 'male' if f.male
                 params['gender'] = 'female' if f.female
-                $location.search params
+
+            $location.search params
         ), yes
 
         @$scope.filtered = =>

@@ -171,12 +171,22 @@
         }
 
         svg {
+            path {
+                &.yes {
+                    fill: lighten(@brand, 5%);
+                }
+
+                &.no {
+                    fill: lighten(@brand, 15%);
+                }
+            }
+
             .bar rect {
-                fill: @brand;
+                fill: lighten(@brand, 5%);
             }
 
             text.zero {
-                fill: @brand;
+                fill: lighten(@brand, 5%);
             }
         }
 

@@ -61,7 +61,9 @@ class PieChart extends Chart
         g.attr 'class', 'arc'
 
         # Append the path
-        ((g.append 'path').attr 'd', @arc).style 'fill', (d) => @color d.data[0]
+        (g.append 'path').attr
+            d : @arc
+            class : (d) => d.data[0]
 
         # And append the text
         (g.append 'text')
@@ -249,13 +251,6 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$root
             id : '@'
             filters : '='
             nochart : '@'
-        controller : [ '$scope', (scope) ->
-            scope.filters =
-                from : 0
-                to : 99
-                h : yes
-                f : yes
-        ]
         link: (scope, elem, attr) ->
             newChart = =>
                 # We instanciate the right chart from data.chart_type
