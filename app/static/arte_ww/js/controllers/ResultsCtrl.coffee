@@ -3,9 +3,10 @@ _steps =
     outro : -2
 
 class ResultsCtrl
-    @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce']
+    @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce', '$rootScope']
 
     changeQuestion: (id) =>
+        @$rootScope.isThematicLoading = yes
         if not (do @Thematic.current)?
             @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
         @$scope.hasNext = @$scope.hasPrev = yes
@@ -19,6 +20,7 @@ class ResultsCtrl
                     @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
                 @$scope.currentAnswer = data
         else
+            @$rootScope.isThematicLoading = no
             @$scope.currentAnswer = id
             if id.id is _steps.intro and not @elements[@$scope.current.thematic - 1]?
                 @$scope.hasPrev = no
@@ -26,7 +28,7 @@ class ResultsCtrl
                 @$scope.hasNext = no
 
 
-    constructor: (@$scope, $location, @Thematic, @$http, $sce) ->
+    constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope) ->
         # Update URL when the user changes filters
         @$scope.$watch 'filters', (=>
             f = angular.copy $scope.filters

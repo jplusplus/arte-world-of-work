@@ -235,7 +235,7 @@ class Histogram extends BarChart
     appendLegend: =>
 
 
-angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($window, $Result) ->
+angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$rootScope', ($window, $Result, $rootScope) ->
     directive =
         templateUrl : 'partial/directives/chart.html'
         replace : yes
@@ -284,6 +284,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     else if data.results.chart_type is 'horizontal_bar'
                         scope.$parent.fullwidth = yes
                     scope.data = data.results
+                    $rootScope.isThematicLoading = no
                 undefined
 
             window.onresize = =>
