@@ -210,27 +210,29 @@ class Histogram extends BarChart
     computeResults: =>
         @results = []
         _.forEach (_.keys @scope.data.results), (key) =>
-            percent = parseInt (@scope.data.results[key] * 100 / @scope.data.total_answers + 0.5)
-            @results.push [@scope.data.sets[key].min, @scope.data.sets[key].max, @scope.data.results[key], percent]
+            @results.push [@scope.data.sets[key].min, @scope.data.results[key], @scope.data.sets[key].max]
 
     defineXY: =>
         @x = (do d3.scale.linear).range [0, @_size.width];
         @y = (do d3.scale.linear).range [@_size.height, 0]
-        @x.domain [0, (_.max @results, (elem) -> elem[1])[1]]
-        @y.domain [0, @scope.data.total_answers]
+        @x.domain [0, (_.max @results, (elem) -> elem[2])[2]]
+        @y.domain [0, 100]
 
-        tickValues = [0].concat _.pluck @results, 1
+        tickValues = [0].concat _.pluck @results, 2
         @xAxis = (((do d3.svg.axis).scale @x).orient 'bottom').tickValues tickValues
         @xAxis.tickFormat (d3.format 'f')
 
     getTextAttrs: =>
-        display: 'none'
+        x : (d) => (@x d[0]) + ((@x d[2]) - (@x d[0])) / 2
+        y : (d) => if (parseInt d[1]) > 0 then (@y d[1]) + 15 else (@y d[1]) - 5
+        'text-anchor' : 'middle'
+        class : (d) -> if (parseInt d[1]) is 0 then 'zero' else ' '
 
     getRectAttrs: =>
         x : (d) => (@x d[0])
-        y : (d) => (@y d[2])
-        width : (d) => (@x d[1]) - (@x d[0])
-        height : (d) => @_size.height - @y(d[2])
+        y : (d) => (@y d[1])
+        width : (d) => (@x d[2]) - (@x d[0])
+        height : (d) => @_size.height - @y(d[1])
 
     appendLegend: =>
 
