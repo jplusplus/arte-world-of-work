@@ -82,16 +82,16 @@ class ThematicCtrl
 
     skipElement: (skipped=false) =>
         if skipped
-            console.log 'skipElement - if skipped'
+            # console.log 'skipElement - if skipped'
             @Answer.deleteAnswerForQuestion @scope.currentElement().id
         else if @elementsWrapper.hasNextElement()
-            console.log 'skipElement - else if @elementsWrapper.hasNextElement()'
+            # console.log 'skipElement - else if @elementsWrapper.hasNextElement()'
             @userPosition.nextElement()
         else if @isDone()
-            console.log 'skipElement - else if @isDone()'
+            # console.log 'skipElement - else if @isDone()'
             @setNextThematic()
         else
-            console.log 'skipElement - else'
+            # console.log 'skipElement - else'
             @currentState(@states.OUTRO)
 
     previousElement: =>
@@ -106,34 +106,44 @@ class ThematicCtrl
     isLanding : => @currentState() == @states.LANDING
     isIntro   : => @currentState() == @states.INTRO
     isElements: => @currentState() == @states.ELEMENTS
-    isDone    : => @isElements() and @userPosition.elementPosition() == @elements().length - 1
+    isDone    : => @isElements() and @userPosition.elementPosition() >= @elements().length - 1
 
     setNextThematic: =>
+        # console.log 'setNextThematic'
         @userPosition.nextThematic()
         (do @userPosition.thematicPosition)
+        # console.log '@userPosition.thematicPosition', @userPosition.thematicPosition()
+        # console.log '@thematicService.count()', @thematicService.count()
         if (do @userPosition.thematicPosition) < @thematicService.count()
-            @currentState @states.LANDING
+            @currentState @states.INTRO
         else
-            @scope.$parent.setState @utils.states.OUTRO
+            @scope.$parent.setState @utils.states.survey.OUTRO
 
     onThematicChanged: (thematic, old_thematic)=>
+        # console.log 'onThematicChanged(', thematic, ')'
         return unless thematic?
         if (typeof thematic.intro_description) is typeof String
             _.extend @scope.thematic.currentThematic,
                 intro_description: @sce.trustAsHtml(thematic.intro_description)
-        else
-            _.extend @scope.thematic.currentThematic,
-                intro_description: thematic.intro_description
+        # console.log 'thematic changed, new element pos: ', @userPosition.elementPosition()
+        
+        if @userPosition.thematicPosition() is 0
+            @currentState @states.LANDING
 
-        if thematic.position is 1
-            @currentState @states.INTRO
 
     onElementChanged: (elem, old_elem)=>
-        out_of_range = @userPosition.elementPosition() >= @elements().length 
-        # security check, to pass to next thematic if last element is undefined
-        # this undefined value can occur if we wanted to show a feedback for the 
-        # last element of the current thematic
-        if old_elem and !elem and out_of_range
+
+        # console.log 'onElementChanged(',elem, old_elem, ')'
+        elem_pos = @userPosition.elementPosition()
+        out_of_range = elem_pos >= @elements().length 
+        # # security check, to pass to next thematic if last element is undefined
+        # # this undefined value can occur if we wanted to show a feedback for the 
+        # # last element of the current thematic
+        if old_elem and !elem and @isDone()
             @setNextThematic()
+        # if elem and !@isElements() and !@isIntro()
+        #     @currentState @states.ELEMENTS
+
+
 
 angular.module('arte-ww').controller 'ThematicCtrl', ThematicCtrl

@@ -58,7 +58,7 @@ class ElementsWrapper
             @currentElement = challenger
 
     fixPosition: (position)=>
-        console.log 'fixPosition(', position, ')'
+        # console.log 'fixPosition(', position, ')'
         nb_elem = @all().length
         if position >= nb_elem
             @userPosition.elementPosition(nb_elem - 1)
@@ -87,11 +87,11 @@ class ElementsWrapper
         return false unless @elements
         position = @userPosition.elementPosition()
         element = @elements.getAt( position + 1)
-        if position is @all().length and !@isYou()
+        if position <= @all().length and !@isYou()
             result = true
         else
             result = if element then true else false
-        return result
+        result
 
     hasPreviousElement: =>
         return false unless @elements

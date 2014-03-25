@@ -1,11 +1,9 @@
 class PositionsObject
     constructor: (elements, @utils)->
-        console.log elements
         @elements = @wrapElements(elements)
         do @updateElements
 
     makeElementPositionsUnique: =>
-        console.log @elements
         get_pos          = (el)  -> el.position
         set_index_as_pos = (el,i)-> el.position = i; return el
         @elements = _.sortBy @elements, get_pos

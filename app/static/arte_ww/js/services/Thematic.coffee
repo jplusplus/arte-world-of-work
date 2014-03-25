@@ -28,7 +28,8 @@ class ThematicService
 
     count: ()=> @positions().length
 
-    positions: => if @positionList then @positionList else []
+    positions: => if @positionList then @positionList.all() else []
+
     # API method / internal functions 
     all: (cb)=> @nestedThematics.all cb
 
