@@ -6,7 +6,7 @@ Feedback =
     setShown: => @shown = true
     hasEnoughAnswers: =>
         return false unless @total_answers
-        @total_answers >= 300 
+        @total_answers >= 15
 
 
 Question = 
