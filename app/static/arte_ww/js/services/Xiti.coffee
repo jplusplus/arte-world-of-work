@@ -44,8 +44,7 @@ angular.module('arte-ww.services').service 'Xiti', ['$cookies', ($cookies)->
             at.src = "http://www.arte.tv/guide/javascripts/xtcore.js"
             angular.element("header").append(at)
 
-        loadPage: =>
-            return console.log arguments      
+        loadPage: =>  
             # Convert arguments object to an array
             args = Array.prototype.slice.call(arguments)      
             # Current page must be different
@@ -68,8 +67,6 @@ angular.module('arte-ww.services').service 'Xiti', ['$cookies', ($cookies)->
                 # Appends the image to the body
                 angular.element("body").append @img
 
-        trackClick: (name, level=window.xtn2)->
-            window.xt_click(@, 'C', level, name,'N')
-                
-                
+        trackClick: (ev, name, level=window.xtn2)->       
+            window.xt_click(ev.target, 'C', level, name,'N')                
 ]

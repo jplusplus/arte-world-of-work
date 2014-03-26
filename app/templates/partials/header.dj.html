@@ -21,7 +21,7 @@
                 </li>
             </ul>
             <div class="header__nav__back-to-beginning" ng-if="currentCategory() == 'survey' ">   
-                <a href="{% url 'survey' %}?lang=[[Page.currentLang()]]" ng-click="backToBeginning()" translate>Back to the beginning</a>
+                <a href="{% url 'survey' %}?lang=[[Page.currentLang()]]" ng-click="backToBeginning() && xiti.trackClick($event, 'back_to_beginning')" translate>Back to the beginning</a>
             </div>
             <div class="header__nav__progress">
                 <div class="header__nav__progress__container progress">
@@ -34,19 +34,19 @@
 
         <ul class="header__social list-inline">
             <li>
-                <a href="" target="_blank"  class="header__social__link header__social__link--googleplus">                    
+                <a href="" target="_blank"  class="header__social__link header__social__link--googleplus" ng-click="xiti.trackClick($event, 'share_gplus')">                    
                     [[thirdParty.gplusCount]]
                     <span class="sr-only">Google Plus</span>                    
                 </a>
             </li>    
             <li>
-                <a href="" target="_blank"  class="header__social__link header__social__link--twitter">
+                <a href="" target="_blank"  class="header__social__link header__social__link--twitter" ng-click="xiti.trackClick($event, 'share_twitter')">
                     [[thirdParty.twitterCount]]
                     <span class="sr-only">Twitter</span>                    
                 </a>
             </li>    
             <li>
-                <a href="" target="_blank"  class="header__social__link header__social__link--facebook">
+                <a href="" target="_blank"  class="header__social__link header__social__link--facebook" ng-click="xiti.trackClick($event, 'share_facebook')">
                     [[thirdParty.facebookCount]]
                     <span class="sr-only">Facebook</span>                    
                 </a>

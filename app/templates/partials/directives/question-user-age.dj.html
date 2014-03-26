@@ -15,7 +15,7 @@
 			<span ng-switch-when="36">+ de 35 ans</span>
 			<span ng-switch-default>[[question.answer]] ans</span>
 		</p>
-    	<button class="question-choices--typed-number__validate" ng-click="submitAnswer(question.answer, false)">
+    	<button class="question-choices--typed-number__validate" ng-click="submitAnswer(question.answer, false) && xiti.trackClick($event, 'submit_age')">
     		[[ question.validate_button_label ]]
     	</button>
 	</div>
