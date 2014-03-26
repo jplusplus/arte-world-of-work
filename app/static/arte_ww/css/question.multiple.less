@@ -1,9 +1,14 @@
 .question-choices {
+ 
 	
     &--multiple {
 
         position:relative;
         .clearfix();
+
+        .survey-element--with-media &{
+            top:20px;
+        }
 
         &__validate {
             .hide-text();            
@@ -28,13 +33,22 @@
             &--disable, &--disable:hover {
                 background-position: center center;                
             }
-
+ 
             @media (max-width: @screen-xs-min) {
                 position:static;
                 margin:10px auto;  
                 display:block;
                 clear:both;
                 .translate(0, 0); 
+            }
+
+
+            .survey-element--with-media & {
+                position:static;
+                margin:auto;  
+                margin-top:20px;
+                display:block;
+                .translate(0, 0);        
             }
         }
     }
