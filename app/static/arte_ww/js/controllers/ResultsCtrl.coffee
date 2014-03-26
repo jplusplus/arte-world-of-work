@@ -101,6 +101,8 @@ class ResultsCtrl
                                 }]
                         else
                             return
+                        if not @$scope.intro
+                            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
                     ), (e) -> e?
 
         # Initialize filters (fron URL or default values)
