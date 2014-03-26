@@ -13,6 +13,9 @@ class PageCtrl
             @location.search().lang if @location
         , @langChanged
 
+        if @cookies.django_language
+            @langChanged(@cookies.django_language)
+
     langChanged: (lang)=>
         return unless lang
         @$translate.use(lang)
