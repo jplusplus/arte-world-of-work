@@ -45,7 +45,8 @@ class ElementsWrapper
             @fixPosition(position)
 
         # load a feedback for this element or not.
-        if position > old_position and @feedbackService.distanceIsGood()
+        # if position > old_position and @feedback.distanceIsGood()
+        if position > old_position and @shouldDisplayFeedback()
             # check if old element should display a feedback
             promise = @feedbackService.getForQuestion(@currentElement.id)
             promise.then (dynFeedback)=>
@@ -53,8 +54,10 @@ class ElementsWrapper
                     feedback = dynFeedback
                 else if @currentElement.feedback
                     feedback = @utils.wrapFeedback @currentElement.feedback
-                if @shouldDisplayFeedback() and feedback
+                # if @shouldDisplayFeedback() and feedback
+                if feedback
                     @elements.insertAt position, feedback
+
                 challenger = @elements.getAt position
                 @currentElement = challenger
         else
@@ -81,10 +84,10 @@ class ElementsWrapper
                 @feedbackService.decreaseDistance()
 
     shouldDisplayFeedback: =>
-        return false unless @feedbackService.distanceIsGood()
+        # return false unless @feedbackService.distanceIsGood()
         return false if @isYou()
         # return Math.floor(Math.random()*5)+1 == 1
-        return true # Math.floor(Math.random()*5)+1 == 1
+        return true
 
     hasNextElement: =>
         return false unless @elements
