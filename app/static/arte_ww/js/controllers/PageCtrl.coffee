@@ -3,8 +3,10 @@ class PageCtrl
 
     constructor: (@scope, @location, @$translate, @cookies)->
         @title = ''
-        @scope.Page = this        
 
+        @scope.Page = this        
+        @scope.currentLang = @currentLang
+        
         if @cookies.django_language
             @langChanged(@cookies.django_language)
 
