@@ -1,12 +1,33 @@
 angular.module('arte-ww.services').service 'Xiti', ['$cookies', ($cookies)->
     new class Xiti
-        constructor:->
-            @currentPage    = null
+        config:
+            fr:
+                xtsite: "428435"
+                xtn2  : "1"
+                prefix:  "dos_europe::fr::dos_wow::"
+            de:
+                xtsite: "428450"
+                xtn2  : "2"     
+                prefix:  "dos_europe::de::dos_wow::"       
+            en:
+                xtsite: "431209"
+                xtn2  : "2"
+                prefix:  "dos_europe::en::dos_wow::"
+
+        constructor:->     
+            do @updateConfig
+            # Load xiti script
+            do @loadScript
+
+        getConfig:=> @config[$cookies.django_language or "en"]           
+
+        updateConfig: =>
+            config          = @getConfig()
             # Xiti's core variables
             window.xtnv     = document
-            window.xtsd     = "http://logi104"
-            window.xtsite   = "428435"                  # site number
-            window.xtn2     = "1"                       # level 2 site            
+            window.xtsd     = config.xtsd   or "http://logi104"
+            window.xtsite   = config.xtsite or "428435" # site number
+            window.xtn2     = config.xtn2   or "1"      # level 2 site            
             window.xtpage   = ""                        # page name (with the use of :: to create chapters)
             window.xtdi     = ""                        # implication degree
             window.xt_multc = ""                        # customized indicators
@@ -15,13 +36,6 @@ angular.module('arte-ww.services').service 'Xiti', ['$cookies', ($cookies)->
 
             window.xtparam = "" unless window.xtparam?
             window.xtparam += "&ac=" + xt_ac + "&an=" + xt_an + xt_multc            
-            # Load xiti script
-            @loadScript()
-
-        getPrefix: ->            
-            lang = $cookies.django_language or "en"
-            "dos_europe::#{lang}::dos_wow::"
-
 
         loadScript: ->            
             at = document.createElement("script")
@@ -31,14 +45,15 @@ angular.module('arte-ww.services').service 'Xiti', ['$cookies', ($cookies)->
             angular.element("header").append(at)
 
         loadPage: =>
+            return console.log arguments      
             # Convert arguments object to an array
-            args = Array.prototype.slice.call(arguments)            
+            args = Array.prototype.slice.call(arguments)      
             # Current page must be different
             if @currentPage isnt args.join("::")
                 # Record the current page slug to avoid declare the page twice
                 @currentPage = args.join("::")
                 # Create xtpage slug
-                xtpage       = @getPrefix() + @currentPage
+                xtpage       = @getConfig().prefix + @currentPage
                 # Destroy existing image
                 angular.element( @img ).remove() if @img?
                 # Create the new image
@@ -52,6 +67,9 @@ angular.module('arte-ww.services').service 'Xiti', ['$cookies', ($cookies)->
                 @img.src   += "&amp;di=#{window.xtdi}"
                 # Appends the image to the body
                 angular.element("body").append @img
+
+        trackClick: (name, level=window.xtn2)->
+            window.xt_click(@, 'C', level, name,'N')
                 
                 
 ]

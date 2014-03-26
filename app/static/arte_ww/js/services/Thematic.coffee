@@ -11,10 +11,11 @@ class ThematicService
         '$http', 
         '$resource', 
         'UserPosition',
-        'utils'
+        'utils',
+        'Xiti'
     ]
     
-    constructor: (@rootScope, @routeParams, $http, $resource, @userPosition, @utils)-> 
+    constructor: (@rootScope, @routeParams, $http, $resource, @userPosition, @utils, @Xiti)-> 
         # every loaded thematic will be contained inside this object 
         @loadedThematics = {}
         # first (fast) request where we get the list of thematics and their positions 
@@ -53,7 +54,11 @@ class ThematicService
                 @get(id: positionAt.id, cb)
 
     onThematicPositionChanged: (position)=>        
-        @getAt position, (thematic)=> @currentThematic = thematic
+        @getAt position, (thematic)=> 
+            # Monitor user activity
+            @Xiti.loadPage @rootScope.currentCategory(), thematic.slug
+            # Update current thematic
+            @currentThematic = thematic
 
     current: => @currentThematic
 

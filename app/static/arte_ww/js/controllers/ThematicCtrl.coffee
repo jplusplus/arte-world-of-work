@@ -18,7 +18,7 @@ class ThematicCtrl
         'ElementsWrapper'
     ]
 
-    constructor: ( @scope, @sce, @utils, @userPosition, @thematicService, @Answer, @feedbackService, @elementsWrapper )->
+    constructor: ( @scope, @sce, @utils, @userPosition, @thematicService, @Answer, @feedbackService, @elementsWrapper)->
         @scope.$watch (=>
             @userPosition.positions
         ), (newdata, olddata) =>
@@ -77,7 +77,7 @@ class ThematicCtrl
             @userPosition.currentState @scope.state
         @scope.state
 
-    startThematic: =>
+    startThematic: =>        
         @currentState(@states.ELEMENTS)
 
     skipElement: (skipped=false) =>
