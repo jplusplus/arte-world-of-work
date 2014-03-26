@@ -3,27 +3,26 @@ class PositionsObject
         @elements = @wrapElements(elements)
         do @updateElements
 
+    get_pos = (el)-> 
+        return el unless el
+        el.position
+
+    set_index_as_pos = (el,i)-> 
+        return el unless el
+        el.position = i
+        el
+
     makeElementPositionsUnique: =>
-        get_pos          = (el)  -> el.position
-        set_index_as_pos = (el,i)-> el.position = i; return el
         @elements = _.sortBy @elements, get_pos
         @elements = _.map    @elements, set_index_as_pos 
 
 
     updateElements: =>
         do @makeElementPositionsUnique
-        do @updateIDS
         do @updatePositions
 
     updatePositions: =>
-        @positions =  _.map(@elements, (el)-> el.position )
-
-    updateIDS: =>
-        @elements = _.map @elements, (el, i)->
-            el = _.extend el, _id: i
-            if not el.id
-                el.id = el._id 
-            el
+        @positions =  _.map(@elements, get_pos)
 
     positionAt: (i)=> @positions[i]
 
@@ -43,7 +42,7 @@ class PositionsObject
     count: => @elements.length
 
     wrapElem: (el)=>
-        return el unless el.type 
+        return el unless el.type?
         if el.type is 'question'
             el = @utils.wrapQuestion(el)
         else if el.type is 'feedback'
