@@ -38,8 +38,8 @@ class Utils
             FEEDBACK: 3 
 
     genericWrap: (el, klass_obj)=>
-        return unless el
-        return if el._wrapped
+        return el unless el
+        return el if el._wrapped
         return _.extend(el, klass_obj)
         
 
