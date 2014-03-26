@@ -3,7 +3,7 @@ _steps =
     outro : -2
 
 class ResultsCtrl
-    @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce', '$rootScope']
+    @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce', '$rootScope', "Xiti"]
 
     changeQuestion: (id) =>
         @$rootScope.isThematicLoading = yes
@@ -28,7 +28,10 @@ class ResultsCtrl
                 @$scope.hasNext = no
 
 
-    constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope) ->
+    constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope, Xiti) ->       
+    
+        Xiti.loadPage("results")
+
         # Update URL when the user changes filters
         @$scope.$watch 'filters', (=>
             f = angular.copy @$scope.filters

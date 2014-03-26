@@ -10,13 +10,17 @@
 # Creation : 14-Jan-2014
 # Last mod : 14-Jan-2014
 # -----------------------------------------------------------------------------
-from django.shortcuts import render_to_response, redirect
+from django.conf      import settings
 from django.http      import Http404
+from django.shortcuts import render_to_response, redirect
 from django.template  import TemplateDoesNotExist, RequestContext
 
 def home(request):
     # Render template without any argument
-    response = render_to_response('home.dj.html', context_instance=RequestContext(request))
+    response = render_to_response('home.dj.html', context_instance=RequestContext(request))            
+    # Homepage always set a language cookie
+    if request.COOKIES.get('django_language') is None:
+        response.set_cookie('django_language', settings.LANGUAGE_CODE)
     return response
 
 def embedded(request):
