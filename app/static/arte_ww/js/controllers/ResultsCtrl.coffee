@@ -64,7 +64,10 @@ class ResultsCtrl
 
         @$scope.start = =>
             @$scope.intro = no
-            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            if @elements[@$scope.current.thematic]?
+                @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            else
+                setTimeout (((o) => return => do o.$scope.start) @), 1000
 
         # List all thematics
         @$scope.thematics = []
@@ -89,21 +92,21 @@ class ResultsCtrl
                 (@$http request).success (data) =>
                     @elements = _.filter (_.map data, (thematic) =>
                         if thematic.slug isnt 'toi'
-                            elements = _.filter thematic.elements, (t) -> t.type is 'question'
+                            elems = _.filter thematic.elements, (t) -> t.type is 'question'
                             return ([{
                                 content : thematic.intro_description
                                 id : _steps.intro
                                 label : thematic.title
-                            }].concat elements).concat [{
+                            }].concat elems).concat [{
                                     content : thematic.outro_description
                                     id : _steps.outro
                                     label : thematic.title
                                 }]
                         else
                             return
-                        if not @$scope.intro
-                            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
                     ), (e) -> e?
+                    if not @$scope.intro
+                        @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         # Initialize filters (fron URL or default values)
         urlFilters = do $location.search
