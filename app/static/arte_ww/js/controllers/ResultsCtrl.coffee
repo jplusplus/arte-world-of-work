@@ -19,12 +19,12 @@ class ResultsCtrl
                 if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
                     @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
                 @$scope.currentAnswer = data
+            if @$scope.current.answer is 0
+                @$scope.hasPrev = @elements[@$scope.current.thematic - 1]?
         else
             @$rootScope.isThematicLoading = no
             @$scope.currentAnswer = id
-            if id.id is _steps.intro and not @elements[@$scope.current.thematic - 1]?
-                @$scope.hasPrev = no
-            else if id.id is _steps.outro and not @elements[@$scope.current.thematic + 1]?
+            if id.id is _steps.outro and not @elements[@$scope.current.thematic + 1]?
                 @$scope.hasNext = no
 
 
@@ -93,15 +93,11 @@ class ResultsCtrl
                     @elements = _.filter (_.map data, (thematic) =>
                         if thematic.slug isnt 'toi'
                             elems = _.filter thematic.elements, (t) -> t.type is 'question'
-                            return ([{
-                                content : thematic.intro_description
-                                id : _steps.intro
+                            return elems.concat [{
+                                content : thematic.outro_description
+                                id : _steps.outro
                                 label : thematic.title
-                            }].concat elems).concat [{
-                                    content : thematic.outro_description
-                                    id : _steps.outro
-                                    label : thematic.title
-                                }]
+                            }]
                         else
                             return
                     ), (e) -> e?
