@@ -61,12 +61,15 @@ angular.module('arte-ww.services').service 'Xiti', ['$cookies', ($cookies)->
                 @img.width  = 1
                 @img.src    = "#{window.xtsd}.xiti.com/"
                 @img.src   += "hit.xiti?s=#{window.xtsite}"
-                @img.src   += "&amp;s2=2"
-                @img.src   += "&amp;p=#{xtpage}"
-                @img.src   += "&amp;di=#{window.xtdi}"
+                @img.src   += "&s2=2"
+                @img.src   += "&p=#{xtpage}"
+                @img.src   += "&di=#{window.xtdi}"
                 # Appends the image to the body
                 angular.element("body").append @img
 
-        trackClick: (ev, name, level=window.xtn2)->       
-            window.xt_click(ev.target, 'C', level, name,'N')                
+        trackClick: (ev, name, level=window.xtn2)->      
+            console.log ev.target
+            window.xt_click(ev.target, 'C', level, name,'N')        
+            yes        
+
 ]

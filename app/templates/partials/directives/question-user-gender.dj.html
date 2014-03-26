@@ -4,7 +4,7 @@
 <div class='question-choices question-choices--boolean'>
 
     <span ng-repeat='choice in question.choices'>
-        <span ng-click="submitAnswer(choice.value || choice.id) && xiti.trackClick($event, 'submit_gender')"
+        <span ng-click="submitAnswer(choice.value || choice.id); xiti.trackClick($event, 'submit_gender')"
               ng-class='{"question-choices--boolean__choice--selected": (choice.value || choice.id) == answer}'
             class="question-choices--boolean__choice">
             [[ choice.title ]]

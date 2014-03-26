@@ -163,11 +163,15 @@
                 display: none;
             }
 
-            a {                
+            button {      
+                border:0;          
+                padding:0;
+                background:transparent;
                 color:inherit;
                 font-family: @headings-font-family;
                 font-weight:400;
                 font-size:12px;
+                cursor:pointer;
 
                 @media (max-width: @screen-sm-min) {
                     .hide-text();
@@ -209,7 +213,7 @@
         z-index: @header-zindex - 10;
         position:absolute;
         top:7px;
-        right:0px;        
+        right:5px;        
 
         font-weight:400;
         display: inline-block;
@@ -227,14 +231,19 @@
         &__link {
             color:inherit;
             position:relative;
+            padding:0;
             padding-left: 27px;
             overflow:hidden;
             display: inline-block;
             height:24px;
             line-height: 24px;
+            background:none;
+            border:0;
+            cursor:pointer;
 
             @media (max-width: @screen-sm-min) {
                 width:0;
+                text-indent: 100px;
             }
 
             &:before {
