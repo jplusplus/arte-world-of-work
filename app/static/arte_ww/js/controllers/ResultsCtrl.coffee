@@ -24,7 +24,6 @@ class ResultsCtrl
         else
             @$rootScope.isThematicLoading = no
             @$scope.currentAnswer = id
-            do @$rootScope.apply
 
     constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope, Xiti) ->       
     
