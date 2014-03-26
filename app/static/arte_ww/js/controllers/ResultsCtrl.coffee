@@ -130,7 +130,7 @@ class ResultsCtrl
             else
                 @$scope.intro = 2
                 @$scope.hasNext = no
-                @$scope.hasPrev = yes
+                @$scope.hasPrev = no
 
         @$scope.previous = =>
             if @$scope.intro is 2

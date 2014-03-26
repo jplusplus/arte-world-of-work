@@ -21,8 +21,8 @@
                 </li>
             </ul>
             <div class="header__nav__back-to-beginning" ng-if="currentCategory() == 'survey' ">   
-                <button href="{% url 'survey' %}?lang=[[Page.currentLang()]]" ng-click="backToBeginning() && xiti.trackClick($event, 'back_to_beginning')">
-                    <span translate>Back to the beginning</span>
+                <button ng-click="backToBeginning() && xiti.trackClick($event, 'back_to_beginning')" translate>
+                    Back to the beginning
                 </button>
             </div>
             <div class="header__nav__progress">
@@ -36,22 +36,22 @@
 
         <ul class="header__social list-inline">
             <li>
-                <button class="header__social__link header__social__link--googleplus" ng-click="thirdParty.shareOnGplus(); xiti.trackClick($event, 'share_gplus')">                    
+                <a target="_blank"  class="header__social__link header__social__link--googleplus" ng-click="thirdParty.shareOnGplus(); xiti.trackClick($event, 'share_gplus')">                    
                     [[thirdParty.gplusCount]]
                     <span class="sr-only">Google Plus</span>                    
-                </button>
+                </a>
             </li>    
             <li>
-                <button class="header__social__link header__social__link--twitter" ng-click="thirdParty.shareOnTwitter(); xiti.trackClick($event, 'share_twitter')">
+                <a target="_blank"  class="header__social__link header__social__link--twitter" ng-click="thirdParty.shareOnTwitter(); xiti.trackClick($event, 'share_twitter')">
                     [[thirdParty.twitterCount]]
                     <span class="sr-only">Twitter</span>                    
-                </button>
+                </a>
             </li>    
             <li>
-                <button class="header__social__link header__social__link--facebook" ng-click="thirdParty.shareOnFacebook(); xiti.trackClick($event, 'share_facebook')">
+                <a target="_blank"  class="header__social__link header__social__link--facebook" ng-click="thirdParty.shareOnFacebook(); xiti.trackClick($event, 'share_facebook')">
                     [[thirdParty.facebookCount]]
                     <span class="sr-only">Facebook</span>                    
-                </button>
+                </a>
             </li>    
         </ul>
     </div>
