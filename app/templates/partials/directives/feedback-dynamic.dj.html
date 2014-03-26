@@ -5,6 +5,5 @@
 {% endblock title %}
 
 {% block content %}
-    <img ng-src="[[feedback.picture]]" class="feedback__content__picture thumbnail" ng-if="feedback.picture">
     <dynamic-chart class="feedback__chart" ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-id="[[feedback.question_id]]" filters="filters"></dynamic-chart>
 {% endblock %}

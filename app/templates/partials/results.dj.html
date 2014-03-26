@@ -1,7 +1,7 @@
 <div class="answer-navigator" ng-class="{ 'survey-navigator--loading': isThematicLoading }">
     <div ng-show='intro' class='answer-navigator__intro'>
-        <p>Check out what other people have answered. The filters on the right help you identify what people with your age, older or younger have said.</p>
-        <a ng-click="start()" class="thematic-intro__let-go" ng-translate>
+        <p translate>Check out what other people have answered. The filters on the right help you identify what people with your age, older or younger have said.</p>
+        <a ng-click="start()" class="thematic-intro__let-go" translate>
             Let's go
         </a>
     </div>
@@ -9,11 +9,11 @@
         <h4 class="answer-title">[[currentAnswer.label]]</h4>
         <div class="answer-content" ng-show="currentAnswer.id >= 0">
             <dynamic-chart ng-class="{'chart--fullwidth':fullwidth}" ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-id="[[currentAnswer.id]]" filters="filters"></dynamic-chart>
-            <p class='chart--nochart' ng-show='nochart&&filtered()' ng-translate>There is not enough data for the selected filters.</p>
+            <p class='chart--nochart' ng-show='nochart&&filtered()' translate>There is not enough data for the selected filters.</p>
             <div ng-class="{'answer-description--nochart':nochart||fullwidth}" class="answer-description">
-                <h5 class="answer-description__catchphrase">Did you know that?</h4>
+                <h5 class="answer-description__catchphrase" translate>Did you know that?</h4>
                 <p ng-bind-html="getTrustedHTML()"></p>
-                <span class="answer-description__source">Source:</span> <a href="[[currentAnswer.feedback.source_url]]" target="_blank">[[currentAnswer.feedback.source_title]]</a>
+                <span class="answer-description__source" translate>Source:</span> <a href="[[currentAnswer.feedback.source_url]]" target="_blank">[[currentAnswer.feedback.source_title]]</a>
             </div>
         </div>
         <div class="answer-content" ng-show="currentAnswer.id < 0">
@@ -24,8 +24,8 @@
     </div>
     <nav class="answer-navigator__nav" ng-show='!intro&&!isThematicLoading'>
         <ul>
-            <li class="answer-navigator__nav__previous" ng-show="hasPrev"><a ng-href="" ng-click="previous()" ng-translate>Previous</a></li>
-            <li class="answer-navigator__nav__next" ng-show="hasNext"><a ng-href="" ng-click="next()" ng-translate>next</a></li>
+            <li class="answer-navigator__nav__previous" ng-show="hasPrev"><a ng-href="" ng-click="previous()" translate>Previous</a></li>
+            <li class="answer-navigator__nav__next" ng-show="hasNext"><a ng-href="" ng-click="next()" translate>next</a></li>
         </ul>
     </nav>
 </div>
