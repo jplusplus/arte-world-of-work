@@ -50,7 +50,7 @@ class ElementsWrapper
             # check if old element should display a feedback
             promise = @feedbackService.getForQuestion(@currentElement.id)
             promise.then (dynFeedback)=>
-                if dynFeedback.hasEnoughAnswers()
+                if dynFeedback.total_answers >= 15
                     feedback = dynFeedback
                 else if @currentElement.feedback
                     feedback = @utils.wrapFeedback @currentElement.feedback
