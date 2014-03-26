@@ -63,7 +63,7 @@ class PieChart extends Chart
         # Append the path
         (g.append 'path').attr
             d : @arc
-            class : (d) => d.data[0]
+            class : (d, i) => "pie#{i}"
 
         # And append the text
         (g.append 'text')
