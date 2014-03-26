@@ -1,4 +1,14 @@
 .answer-navigator {
+
+    &.survey-navigator--loading {
+        height: 300px;
+
+        &:before {
+            background: transparent;
+            box-shadow: none;
+        }
+    }
+
     .white-panel();
 
     @media (max-width: @screen-xs-min) {
@@ -19,6 +29,10 @@
 
         p {
             padding: 20px;
+        }
+
+        .survey-navigator--start__start {
+            margin-bottom: 50px;
         }
     }
 
@@ -150,6 +164,7 @@
             right: 0;
             bottom: 0;
             left: 50%;
+            padding-right: 10px;
 
             &--nochart {
                 position: relative;
@@ -298,21 +313,12 @@
 
     #no-ui > .horizontal();
 
-    @media (max-width: @screen-xs-min) {
-        width: auto;
-        height: auto;
-        padding-top: 0;
-        padding-bottom: 0;
-        padding-left: 10px;
+    @media (max-width: @screen-sm-min) {
+        position: relative;
+        top: 0;
         left: 0;
-        margin: 0 0;
-        top: auto;
-        bottom: 50px;
-
-        &:before {
-            box-shadow: none;
-            background: transparent;
-        }
+        width: 485px;
+        height: 120px;
 
         &__gender {
             float: left;
@@ -333,6 +339,24 @@
             p {
                 margin: 0;
             }
+        }
+    }
+
+    @media (max-width: @screen-xs-min) {
+        position: absolute;
+        width: auto;
+        height: auto;
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: 10px;
+        left: 0;
+        margin: 0 0;
+        top: auto;
+        bottom: 50px;
+
+        &:before {
+            box-shadow: none;
+            background: transparent;
         }
 
         &__title {

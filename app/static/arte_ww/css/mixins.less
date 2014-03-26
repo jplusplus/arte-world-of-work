@@ -1,5 +1,5 @@
 
-.thematic(@slug; @brand:@brand-primary; @bg:@body-bg) {	
+.thematic(@slug; @brand:@brand-primary; @brand-second:lighten(@brand-primary, 10%); @bg:@body-bg) {	
 	
 	.thematic-@{slug} {
         image-rendering:optimizeSpeed;              /* Legal fallback                 */
@@ -173,20 +173,20 @@
         svg {
             path {
                 &.pie0 {
-                    fill: lighten(@brand, 5%);
+                    fill: @brand-second;
                 }
 
                 &.pie1 {
-                    fill: lighten(@brand, 15%);
+                    fill: lighten(@brand-second, 10%);
                 }
             }
 
             .bar rect {
-                fill: lighten(@brand, 5%);
+                fill: @brand-second;
             }
 
             text.zero {
-                fill: lighten(@brand, 5%);
+                fill: @brand-second;
             }
         }
 

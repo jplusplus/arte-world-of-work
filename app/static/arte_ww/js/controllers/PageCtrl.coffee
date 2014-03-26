@@ -5,6 +5,9 @@ class PageCtrl
         @title = ''
         @scope.Page = this        
 
+        if @cookies.django_language
+            @langChanged(@cookies.django_language)
+
     langChanged: (lang)=>
         return unless lang
         @$translate.use(lang)
