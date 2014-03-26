@@ -12,8 +12,8 @@ class ElementsWrapper
         # watches 
         # ---------------------------------------------------------------------
         @rootScope.$watch =>
-                @Thematic.currentThematic
-            , @onThematicChanged
+                @userPosition.thematicPosition()
+            , @onThematicChanged, yes
 
         @rootScope.$watch => 
                 @userPosition.elementPosition()
@@ -23,10 +23,14 @@ class ElementsWrapper
                 @currentElement
             , @onElementChanged
 
-    onThematicChanged: (thematic, old_thematic)=>
-        return unless thematic?
-        @elements = @userPosition.createWrapper thematic.elements
-        @onElementPositionChanged do @userPosition.elementPosition
+    onThematicChanged: (thematicposition, old_thematicposition)=>
+        if thematicposition?
+            @Thematic.getAt thematicposition, ((o) =>
+                return (thematic) =>
+                    return unless thematic?
+                    @elements = @userPosition.createWrapper thematic.elements
+                    @onElementPositionChanged do @userPosition.elementPosition
+            ) @
 
     onElementPositionChanged: (position, old_position)=>
         return unless @elements? and position?
@@ -49,7 +53,6 @@ class ElementsWrapper
                     feedback = dynFeedback
                 else if @currentElement.feedback
                     feedback = @utils.wrapFeedback @currentElement.feedback
-                
                 if @shouldDisplayFeedback() and feedback
                     @elements.insertAt position, feedback
                 challenger = @elements.getAt position

@@ -129,7 +129,7 @@ class ThematicCtrl
         # special case for "You" thematic to skip the landing page. 
         # !! DO NOT CHANGE !!
         if @userPosition.thematicPosition() is 0
-            @currentState @states.INTRO
+            do @letsgo
 
 
     onElementChanged: (elem, old_elem)=>
