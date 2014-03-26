@@ -148,6 +148,7 @@ class ResultsCtrl
                     @$scope.current.thematic = parseInt index
                     @$scope.current.answer = 0
                     @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+                    @$scope.intro = 0
                     return
 
         @$scope.$watch 'current.thematic', (newValue, oldValue) =>
