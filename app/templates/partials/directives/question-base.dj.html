@@ -16,7 +16,15 @@
 
 <nav class="survey-element__nav">
     <ul>
-        <li class="survey-element__nav__previous"><a ng-href="" ng-click="previous() && xiti.trackClick($event, 'question_previous')">[[ 'previous' | translate ]]</a></li>
-        <li class="survey-element__nav__skip"><a ng-href="" ng-click="next(true)  && xiti.trackClick($event, 'question_skip')">[[ 'skip' | translate ]]</a></li>
+        <li class="survey-element__nav__previous">
+            <button class="btn btn-link" ng-click="previous(); xiti.trackClick($event, 'question_previous')">
+                [[ 'previous' | translate ]]
+            </button>
+        </li>
+        <li class="survey-element__nav__skip">
+            <button class="btn btn-link" ng-click="next(true); xiti.trackClick($event, 'question_skip')">
+                [[ 'skip' | translate ]]
+            </button>
+        </li>
     </ul>
 </nav>

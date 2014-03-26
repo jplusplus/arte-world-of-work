@@ -8,8 +8,6 @@
         height:45px;
         clear:both;
 
-
-
         ul {
             margin: 0;
             padding: 0;
@@ -43,9 +41,11 @@
             line-height:25px;
             font-weight:300;
 
-            a {
+            button.btn, a {
+                font:inherit;
+                padding:0;
                 color: @text-color;
-                display:block;
+                display: inline-block;
                 cursor:pointer;
                 text-transform: lowercase;
 
@@ -67,6 +67,7 @@
             }
         }
 
+        &__skip button,
         &__skip a {
             text-decoration: underline;
             margin-top: 5px;
