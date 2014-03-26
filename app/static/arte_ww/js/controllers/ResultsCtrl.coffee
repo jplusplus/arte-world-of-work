@@ -148,8 +148,11 @@ class ResultsCtrl
                 if @$scope.thematics[index].id is id
                     @$scope.current.thematic = parseInt index
                     @$scope.current.answer = 0
-                    @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
-                    @$scope.intro = 0
+                    if @elements[@$scope.current.thematic]?
+                        @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+                        @$scope.intro = 0
+                    else
+                        @$scope.intro = 1
                     return
 
         @$scope.$watch 'current.thematic', (newValue, oldValue) =>
