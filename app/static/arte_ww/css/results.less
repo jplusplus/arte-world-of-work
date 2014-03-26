@@ -1,4 +1,14 @@
 .answer-navigator {
+
+    &.survey-navigator--loading {
+        height: 300px;
+
+        &:before {
+            background: transparent;
+            box-shadow: none;
+        }
+    }
+
     .white-panel();
 
     @media (max-width: @screen-xs-min) {
