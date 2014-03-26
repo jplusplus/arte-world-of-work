@@ -24,7 +24,6 @@ class ResultsCtrl
         else
             @$rootScope.isThematicLoading = no
             @$scope.currentAnswer = id
-            do @$rootScope.apply
 
     constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope, Xiti) ->       
     
@@ -67,6 +66,8 @@ class ResultsCtrl
             @$scope.intro = 0
             if @elements[@$scope.current.thematic]?
                 @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            else
+                setTimeout (((o) => return => do o.$scope.start) @), 1000
 
         # List all thematics
         @$scope.thematics = []
@@ -147,7 +148,11 @@ class ResultsCtrl
                 if @$scope.thematics[index].id is id
                     @$scope.current.thematic = parseInt index
                     @$scope.current.answer = 0
-                    @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+                    if @elements[@$scope.current.thematic]?
+                        @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+                        @$scope.intro = 0
+                    else
+                        @$scope.intro = 1
                     return
 
         @$scope.$watch 'current.thematic', (newValue, oldValue) =>

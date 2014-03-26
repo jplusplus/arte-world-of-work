@@ -9,6 +9,8 @@ class SurveyCtrl
                     do @scope.start
         , yes
 
+        @thematicService.onThematicPositionChanged do @userPosition.thematicPosition
+
         # ---------------------------------------------------------------------
         # Scope variables bindings
         # ---------------------------------------------------------------------
