@@ -138,7 +138,11 @@ class Thematic(models.Model):
 
     def __unicode__(self):
         position = self.position or _('No position')
-        return u"{pos} - {title}".format(pos=position, title=self.title.decode('utf-8'))
+        try:
+            title = self.title.decode('utf-8')
+        except UnicodeEncodeError:
+            title = self.title 
+        return u"{pos} - {title}".format(pos=position, title=title)
 
     def all_elements(self):
         # list all elements (feedback + question) of a thematic object
@@ -169,7 +173,14 @@ class BaseFeedback(mixins.AsFinalMixin):
         return utils.camel_to_underscore(klass)
 
     def __unicode__(self):
-        return u'StaticFeedback: %s' % strip_tags(self.html_sentence.decode('utf-8'))[:60]
+        try:
+            utf_html_sentence = self.html_sentence.decode('utf-8')[:60]
+        except UnicodeEncodeError:
+            utf_html_sentence = self.html_sentence[:60]
+
+        return u"StaticFeedback: {sent}".format(
+            sent=strip_tags(utf_html_sentence)
+        )
 
 class StaticFeedback( BaseFeedback, 
                       mixins.ThematicElementMixin, 
