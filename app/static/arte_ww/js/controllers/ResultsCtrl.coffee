@@ -23,8 +23,8 @@ class ResultsCtrl
                 @$scope.hasPrev = @elements[@$scope.current.thematic - 1]?
         else
             @$rootScope.isThematicLoading = no
-            do @$rootScope.apply
             @$scope.currentAnswer = id
+            do @$rootScope.apply
 
     constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope, Xiti) ->       
     
