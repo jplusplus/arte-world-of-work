@@ -20,11 +20,13 @@ arteww = angular
             '$rootScope'
             '$location'
             '$route'
-            '$http'
             '$translate'
             'UserPosition'
             'ThirdParty'
-            ($rootScope, $location, $route, $http, $translate, UserPosition, ThirdParty)->
+            ($rootScope, $location, $route, $translate, UserPosition, ThirdParty)->
+
+                # Activate arte mode
+                $rootScope.shouldDisplayArte = $location.search().arte                     
 
                 $rootScope.setLang = (lang)->
                     $translate.use lang

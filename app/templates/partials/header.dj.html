@@ -4,7 +4,10 @@
 
             <a class="header__nav__brand-logo" draggable restore ng-href="{% url 'home' %}?lang=[[Page.currentLang()]]">
                 <h2>World <small>of</small> Work</h2>
-                <p class="header__nav__brand-logo__caption">[[ "Youth work in Europe" | translate ]]</p>                
+                
+                <p class="header__nav__brand-logo__caption" ng-class="{ 'header__nav__brand-logo__caption--arte': shouldDisplayArte }">
+                    [[ "Youth work in Europe" | translate ]]
+                </p>                                                
             </a>
             <span class="header__nav__brand-wow"></span>
             <ul class="header__nav__links list-inline">
