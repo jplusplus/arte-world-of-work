@@ -42,7 +42,7 @@ class PieChart extends Chart
         @layout.value (d) -> d[1]
 
         # Create arcs
-        radius = (Math.min @size.width, @size.height) / 2
+        radius = (Math.min @size.width, @size.height) / 2 - 10
         @arc = do d3.svg.arc
         @arc.outerRadius radius
         @arc.innerRadius 0
@@ -61,7 +61,9 @@ class PieChart extends Chart
         g.attr 'class', 'arc'
 
         # Append the path
-        ((g.append 'path').attr 'd', @arc).style 'fill', (d) => @color d.data[0]
+        (g.append 'path').attr
+            d : @arc
+            class : (d, i) => "pie#{i}"
 
         # And append the text
         (g.append 'text')
@@ -157,7 +159,7 @@ class HBarChart extends BarChart
 
     defineXY: =>
         @x = (do d3.scale.linear).range [0, @_size.width]
-        @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.5);
+        @y = (do d3.scale.ordinal).rangeRoundBands([0, @_size.height], 0.0, 0);
         @x.domain [0, _.max _.values @scope.data.results]
         @y.domain _.map @results, (d) -> d[0]
 
@@ -165,11 +167,11 @@ class HBarChart extends BarChart
         x : 0
         y : (d) => @y(d[0])
         width : (d) => @x(d[1])
-        height : do @y.rangeBand
+        height : do @y.rangeBand / 2
 
     getTextAttrs: =>
         x : 5
-        y : (d) => @y(d[0]) + (do @y.rangeBand) / 2
+        y : (d) => @y(d[0]) + (do @y.rangeBand) / 4
         'dominant-baseline' : 'central'
         class : (d) -> if (parseInt d[1]) is 0 then 'zero' else ' '
 
@@ -186,7 +188,7 @@ class HBarChart extends BarChart
             width : @_size.width
             height: do @y.rangeBand
             x : 0
-            y : (d) => @y(d[0]) - 2 + do @y.rangeBand
+            y : (d) => @y(d[0]) - 2 + do @y.rangeBand / 2
         (fObject.append 'xhtml:body').html (d) => "<p>#{d[0]}</p>"
 
 class Histogram extends BarChart
@@ -194,7 +196,7 @@ class Histogram extends BarChart
         @margin =
             top : 20
             right : 20
-            bottom : 20
+            bottom : 40
             left : 20
 
         super @scope, @element
@@ -202,40 +204,45 @@ class Histogram extends BarChart
     update: =>
         super ''
 
-        ((((d3.select @element[0]).selectAll 'svg').append 'g').attr
+        (((((((d3.select @element[0]).selectAll 'svg').append 'g').attr
             class : 'x axis'
             transform : "translate(#{@margin.left}, #{@size.height - @margin.bottom})"
-        ).call @xAxis
+        ).call @xAxis).append 'text').text '€').attr
+            x : @size.width - 35
+            y : 5
+            class : 'scale'
 
     computeResults: =>
         @results = []
         _.forEach (_.keys @scope.data.results), (key) =>
-            percent = parseInt (@scope.data.results[key] * 100 / @scope.data.total_answers + 0.5)
-            @results.push [@scope.data.sets[key].min, @scope.data.sets[key].max, @scope.data.results[key], percent]
+            @results.push [@scope.data.sets[key].min, @scope.data.results[key], @scope.data.sets[key].max]
 
     defineXY: =>
         @x = (do d3.scale.linear).range [0, @_size.width];
         @y = (do d3.scale.linear).range [@_size.height, 0]
-        @x.domain [0, (_.max @results, (elem) -> elem[1])[1]]
-        @y.domain [0, @scope.data.total_answers]
+        @x.domain [0, (_.max @results, (elem) -> elem[2])[2]]
+        @y.domain [0, (_.max @results, (elem) -> elem[1])[1]]
 
-        tickValues = [0].concat _.pluck @results, 1
+        tickValues = [0].concat _.pluck @results, 2
         @xAxis = (((do d3.svg.axis).scale @x).orient 'bottom').tickValues tickValues
         @xAxis.tickFormat (d3.format 'f')
 
     getTextAttrs: =>
-        display: 'none'
+        x : (d) => (@x d[0]) + ((@x d[2]) - (@x d[0])) / 2
+        y : (d) => if (parseInt d[1]) > 0 then (@y d[1]) + 15 else (@y d[1]) - 5
+        'text-anchor' : 'middle'
+        class : (d) -> if (parseInt d[1]) is 0 then 'zero' else ' '
 
     getRectAttrs: =>
         x : (d) => (@x d[0])
-        y : (d) => (@y d[2])
-        width : (d) => (@x d[1]) - (@x d[0])
-        height : (d) => @_size.height - @y(d[2])
+        y : (d) => (@y d[1])
+        width : (d) => (@x d[2]) - (@x d[0])
+        height : (d) => @_size.height - @y(d[1])
 
     appendLegend: =>
 
 
-angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($window, $Result) ->
+angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$rootScope', ($window, $Result, $rootScope) ->
     directive =
         templateUrl : 'partial/directives/chart.html'
         replace : yes
@@ -244,13 +251,6 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
             id : '@'
             filters : '='
             nochart : '@'
-        controller : ['$scope', (scope) ->
-            scope.filter =
-                from : 0
-                to : 99
-                h : yes
-                f : yes
-        ]
         link: (scope, elem, attr) ->
             newChart = =>
                 # We instanciate the right chart from data.chart_type
@@ -274,6 +274,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                 request =
                     id : scope.id
                     filters : filters
+
                 $Result.get request, (data) =>
                     scope.$parent.fullwidth = no
                     scope.$parent.nochart = no
@@ -284,6 +285,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', ($wind
                     else if data.results.chart_type is 'horizontal_bar'
                         scope.$parent.fullwidth = yes
                     scope.data = data.results
+                    $rootScope.isThematicLoading = no
                 undefined
 
             window.onresize = =>

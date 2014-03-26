@@ -1,16 +1,59 @@
 class PositionsObject
-    constructor: (elements)->
-        @elements  =  _.sortBy elements, (el)-> el.position
+    constructor: (elements, @utils)->
+        @elements = @wrapElements(elements)
+        do @updateElements
+
+    makeElementPositionsUnique: =>
+        get_pos          = (el)  -> el.position
+        set_index_as_pos = (el,i)-> el.position = i; return el
+        @elements = _.sortBy @elements, get_pos
+        @elements = _.map    @elements, set_index_as_pos 
+
+
+    updateElements: =>
+        do @makeElementPositionsUnique
+        do @updateIDS
+        do @updatePositions
+
+    updatePositions: =>
         @positions =  _.map(@elements, (el)-> el.position )
+
+    updateIDS: =>
+        @elements = _.map @elements, (el, i)->
+            el = _.extend el, _id: i
+            if not el.id
+                el.id = el._id 
+            el
 
     positionAt: (i)=> @positions[i]
 
     getAt: (i)=> _.findWhere @elements, position: @positionAt(i)
 
-    count: => @elements.length 
+    insertAt: (i, el)=>
+        left_part   = _.first( @elements, i )
+        right_part  = _.rest(  @elements, i )
+        if left_part.length > 0
+            el.position = _.last( left_part ).position + 1
+        else
+            el.position = _.first( right_part ).position
+        _.each right_part, (el)-> el.position += 1
+        @elements  = _.union left_part, [el], right_part
+        do @updateElements
 
+    count: => @elements.length
 
-# TODO: handle user position saving and loading/intialization
+    wrapElem: (el)=>
+        return el unless el.type 
+        if el.type is 'question'
+            el = @utils.wrapQuestion(el)
+        else if el.type is 'feedback'
+            el = @utils.wrapFeedback(el)
+        el
+
+    wrapElements: (elements)=> _.map elements, @wrapElem
+
+    all: => @elements
+
 class UserPositionService
     @$inject: ['$rootScope', '$http', 'utils']
 
@@ -79,13 +122,13 @@ class UserPositionService
         @currentState( @utils.states.thematic.ELEMENTS )
         @thematicPosition @positions.thematicPosition - 1
 
-    nextElement: =>
-        @elementPosition @positions.elementPosition + 1
+    nextElement: (save = true) =>
+        @elementPosition @positions.elementPosition + 1, save
 
-    previousElement: =>
-        @elementPosition @positions.elementPosition - 1
+    previousElement: (save = true) =>
+        @elementPosition @positions.elementPosition - 1, save
 
-    createWrapper: (elements)-> return new PositionsObject(elements)
+    createWrapper: (elements)-> return new PositionsObject(elements, @utils)
 
 
 angular.module('arte-ww.services').service 'UserPosition', UserPositionService

@@ -1,18 +1,30 @@
+# TODO
+# -> handle skip when on feedback
+# -> handle previous on feedback 
+
 ### 
 Key responsibilities of ThematicCtrl
     - handle different thematic states: thematic introduction
 ### 
 class ThematicCtrl
-    @$inject: [ '$rootScope', '$scope', '$sce', 'utils', 'UserPosition', 'Thematic', 'Answer' ]
+    @$inject: [
+        '$scope'
+        '$sce'
+        'utils'
+        'UserPosition'
+        'Thematic'
+        'Answer'
+        'Feedback'
+        'ElementsWrapper'
+    ]
 
-    constructor: (@rootScope, @scope, @sce, @utils, @userPosition, @thematicService, @Answer)->
+    constructor: ( @scope, @sce, @utils, @userPosition, @thematicService, @Answer, @feedbackService, @elementsWrapper )->
         @scope.$watch (=>
             @userPosition.positions
         ), (newdata, olddata) =>
             if newdata.elementPosition? and newdata.thematicPosition? and @scope.state is @states.LANDING
                 if newdata.thematicPosition is olddata.thematicPosition
                     if (newdata.elementPosition isnt 0) or newdata.thematicPosition isnt 0
-                        @onElementPositionChanged do @userPosition.elementPosition
                         @scope.letsgo true
         , yes
 
@@ -28,6 +40,9 @@ class ThematicCtrl
             state: @states.LANDING,
             states: @states,
             thematic: @thematicService
+            # function binding
+            elements: => @elements()
+            currentElement: => @currentElement()
 
         # ---------------------------------------------------------------------
         # Scope function bindings
@@ -40,19 +55,21 @@ class ThematicCtrl
                 @utils.authenticate @startThematic
             letsgo: @letsgo
 
-        # ---------------------------------------------------------------------
-        # watches 
-        # ---------------------------------------------------------------------
+        # watches
         @scope.$watch 'thematic.currentThematic', @onThematicChanged 
         @scope.$watch => 
-                @userPosition.elementPosition()
-            , @onElementPositionChanged
+                @currentElement()
+            , @onElementChanged
 
     letsgo: (skipIntro=false) =>
         if (do @userPosition.elementPosition is 0) and not skipIntro
             @currentState @states.INTRO
         else
             @currentState @states.ELEMENTS
+
+    elements: => @elementsWrapper.all()
+
+    currentElement: => @elementsWrapper.currentElement
 
     currentState: (state)=>
         if state?
@@ -64,64 +81,70 @@ class ThematicCtrl
         @currentState(@states.ELEMENTS)
 
     skipElement: (skipped=false) =>
-        if skipped and @scope.currentElement.type is "question"
-            @Answer.deleteAnswerForQuestion @scope.currentElement.id
-
-        if @hasNextElement()
+        if skipped
+            # console.log 'skipElement - if skipped'
+            @Answer.deleteAnswerForQuestion @scope.currentElement().id
+        
+        if @elementsWrapper.hasNextElement()
+            # console.log 'skipElement - else if @elementsWrapper.hasNextElement()'
             @userPosition.nextElement()
         else if @isDone()
-            @userPosition.nextThematic()
-            (do @userPosition.thematicPosition)
-            if (do @userPosition.thematicPosition) < @thematicService.positionList.elements.length
-                @currentState @states.LANDING
-            else
-                @scope.$parent.setState @scope.$parent.survey.states.OUTRO
+            # console.log 'skipElement - else if @isDone()'
+            @setNextThematic()
         else
+            # console.log 'skipElement - else'
             @currentState(@states.OUTRO)
 
     previousElement: =>
         if @isIntro()
-            @userPosition.previousThematic()        
+            @userPosition.previousThematic()
             @currentState(@states.ELEMENTS)
-        else if @hasPreviousElement()
+        else if @elementsWrapper.hasPreviousElement()
             @userPosition.previousElement()
         else
             @currentState(@states.INTRO)
 
-    hasNextElement: => 
-        return false unless @elements
-        element = @elements.getAt(@userPosition.elementPosition() + 1)
-        if element then true else false
-
-    hasPreviousElement: =>
-        return false unless @elements
-        element = @elements.getAt(@userPosition.elementPosition() - 1)
-        if element then true else false
-
     isLanding : => @currentState() == @states.LANDING
     isIntro   : => @currentState() == @states.INTRO
     isElements: => @currentState() == @states.ELEMENTS
-    isDone    : => @isElements() and @userPosition.elementPosition() == @elements.count() - 1
+    isDone    : => @isElements() and @userPosition.elementPosition() >= @elements().length - 1
+
+    setNextThematic: =>
+        # console.log 'setNextThematic'
+        @userPosition.nextThematic()
+        (do @userPosition.thematicPosition)
+        # console.log '@userPosition.thematicPosition', @userPosition.thematicPosition()
+        # console.log '@thematicService.count()', @thematicService.count()
+        if (do @userPosition.thematicPosition) < @thematicService.count()
+            @currentState @states.LANDING
+        else
+            @scope.$parent.setState @utils.states.survey.OUTRO
 
     onThematicChanged: (thematic, old_thematic)=>
         return unless thematic?
-        @elements = @userPosition.createWrapper thematic.elements
-        @scope.thematicWrapper = @elements
-
         if (typeof thematic.intro_description) is typeof String
             _.extend @scope.thematic.currentThematic,
                 intro_description: @sce.trustAsHtml(thematic.intro_description)
-        else
-            _.extend @scope.thematic.currentThematic,
-                intro_description: thematic.intro_description
-
-        if thematic.position is 1
+        
+        # special case for "You" thematic to skip the landing page. 
+        # !! DO NOT CHANGE !!
+        if @userPosition.thematicPosition() is 0
             @currentState @states.INTRO
 
-        @onElementPositionChanged do @userPosition.elementPosition
 
-    onElementPositionChanged: (position)=>
-        return unless @elements?
-        @scope.currentElement = @elements.getAt position
+    onElementChanged: (elem, old_elem)=>
+
+        # console.log 'onElementChanged(',elem, old_elem, ')'
+        elem_pos = @userPosition.elementPosition()
+        out_of_range = elem_pos >= @elements().length 
+        # # security check, to pass to next thematic if last element is undefined
+        # # this undefined value can occur if we wanted to show a feedback for the 
+        # # last element of the current thematic
+        if old_elem and !elem and @isDone()
+            @setNextThematic()
+        # if elem and !@isElements() and !@isIntro()
+        #     @currentState @states.ELEMENTS
+
+
 
 angular.module('arte-ww').controller 'ThematicCtrl', ThematicCtrl

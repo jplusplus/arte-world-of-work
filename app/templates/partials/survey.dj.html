@@ -5,11 +5,11 @@
     <!-- step 0 -> Introduction of the survey, first step  -->
     <div class="survey-navigator--start"  ng-switch-when="0">
         <img class="survey-navigator__illustration"></img> 
-        <p ng-translate>A 40-hours-a-week office job and a laid-down career path?</p>
-        <p ng-translate>If you're under 30, you know that's not how it is.</p>
-        <p ng-translate>Temporary employment, internships, volunteering, informal jobs, self-learning, emigration… Thatʼs what we do to make a living. Neither good nor bad, itʼs our world.</p>
-        <p ng-translate>Explore the questions to know what it means to work today, in Europe, when you're under 30.</p>
-        <a class="survey-navigator--start__start" ng-click="start()" ng-translate>Start the survey</a>
+        <p translate>A 40-hours-a-week office job and a laid-down career path?</p>
+        <p translate>If you're under 30, you know that's not how it is.</p>
+        <p translate>Temporary employment, internships, volunteering, informal jobs, self-learning, emigration… Thatʼs what we do to make a living. Neither good nor bad, itʼs our world.</p>
+        <p translate>Explore the questions to know what it means to work today, in Europe, when you're under 30.</p>
+        <a class="survey-navigator--start__start" ng-click="start()" translate>Start the survey</a>
     </div>
 
     <!-- step 1 -> we start the first thematic and going on until the end --> 
@@ -20,7 +20,7 @@
             <!-- step 0 -> thematic landing -->
             <div class="thematic-landing" ng-if='state == states.LANDING'>
                 <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>                
-                <a ng-click="letsgo()" class="thematic-landing__let-go" ng-translate>Let's go</a>
+                <a ng-click="letsgo()" class="thematic-landing__let-go" translate>Let's go</a>
             </div>
 
             <!-- step 1 -> thematic intro, displaying all info we need about this thematic -->
@@ -28,15 +28,15 @@
                 <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
                 <div class="thematic-intro__description" 
                      ng-bind-html="thematic.currentThematic.intro_description"></div>
-                <a ng-click="start()" class="thematic-intro__let-go" ng-translate>
+                <a ng-click="start()" class="thematic-intro__let-go" translate>
                     Start
                 </a>
             </div>
 
             <!-- step 2 -> we're starting this thematic question -->
             <div class="thematic-elements" ng-if='state == states.ELEMENTS'>
-                <div ng-repeat="element in thematicWrapper.elements">
-                    <div class="thematic-elements__element" ng-if="currentElement.id === element.id && currentElement.type === element.type">
+                <div ng-repeat="element in elements() track by $index">
+                    <div class="thematic-elements__element" ng-if="currentElement().id === element.id && currentElement().type === element.type">
                         <h3 class="thematic__title">[[ thematic.currentThematic.title ]]</h3>
                         <div survey-element="element" class="survey-element"></div>
                     </div>
@@ -49,8 +49,8 @@
                 <div class="thematic-outro__content">
                     <p>Laborum American Apparel fanny pack, flexitarian raw denim scenester Wes Anderson.</p>
                     <p>Velit sustainable aesthetic nostrud. Assumenda Wes Anderson flexitarian, nihil exercitation Portland narwhal seitan mustache labore sriracha street art accusamus. Minim selvage vero placeat Shoreditch.</p>
-                    <a class="thematic-outro__previous" ng-click='previous()'>Previous</a>
-                    <a class="thematic-outro__next"     ng-click='next()'> Go to next thematic</a>
+                    <a class="thematic-outro__previous" ng-click='previous()' translate>Previous</a>
+                    <a class="thematic-outro__next"     ng-click='next()' translate>Go to next topic</a>
                 </div>
             </div>
         </div>
@@ -58,10 +58,8 @@
 
     <!-- step 2 -> all thematic/feedback and question are now done --> 
     <div class="survey-navigator--end" ng-switch-when="2">
-        <p ng-translate>Great job! Want to make extra hours?</p>
-        <a class="btn btn-primary" ng-href="{% url 'results' %}">Results</a><br />
-        <br />
-        <a class="btn btn-primary" ng-click="backToBeginning()">Back to the beginning</a>
+        <p translate>Great job! Want to put in extra hours? Check out the Results!</p><br />
+        <a class="survey-navigator--end__start" ng-href="{% url 'results' %}" translate>Results</a><br />
     </div>
 
 </div>

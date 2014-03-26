@@ -1,3 +1,20 @@
+# extra attributes and method usefull for angular app.
+Feedback =
+    _wrapped: true 
+    shown: false
+    hasBeenShown: => @shown
+    setShown: => @shown = true
+    hasEnoughAnswers: =>
+        return false unless @total_answers
+        @total_answers >= 300 
+
+
+Question = 
+    _wrapped: true
+    hasFeedback: => @feedback?
+
+
+
 class Utils
     @$inject: ['$http', '$cookies', 'User']
 
@@ -18,6 +35,22 @@ class Utils
             LANDING : 0
             INTRO   : 1
             ELEMENTS: 2
+            FEEDBACK: 3 
+
+    genericWrap: (el, klass_obj)=>
+        return unless el
+        return if el._wrapped
+        return _.extend(el, klass_obj)
+        
+
+    wrapQuestion: (question)=> 
+        question = @genericWrap(question, Question)
+        if question and question.hasFeedback()
+            question.feedback = @wrapFeedback(question.feedback)
+        return question
+
+    wrapFeedback: (feedback)=>
+        return @genericWrap(feedback, Feedback)
 
     authenticate: (callback, create = yes) =>
         createNewUser = =>

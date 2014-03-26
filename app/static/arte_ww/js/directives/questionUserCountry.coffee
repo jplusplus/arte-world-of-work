@@ -6,6 +6,8 @@ angular.module('arte-ww').directive 'questionUserCountry', [
             templateUrl: "partial/directives/question-user-country.html"
             link: (scope, elem, attrs)->
                 scope.question  = scope.$parent.element
-                scope.countries = countryService                         
+                scope.countries = countryService 
+
+                scope.$watch '$parent.element', -> scope.question = scope.$parent.element               
 
 ]

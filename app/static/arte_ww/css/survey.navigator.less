@@ -34,7 +34,7 @@
 	    position:absolute;
 	    top:@header-height;
 	    left:50%;
-	    margin-left:435px/-2px;
+	    margin-left:485px/-2px;
 		padding:10px;
 
 		&__start {
@@ -50,6 +50,7 @@
 			font-weight: 600;
 			cursor: pointer;
 			background: transparent;
+			margin-bottom: 30px;
 
 			&:hover {
 				text-decoration: none;
@@ -79,6 +80,10 @@
 
 	&--end {
 		text-align: center;
+
+		&__start:after {
+			background-color: darken(@brand-primary, 15%)
+		}
 	}
 
 }

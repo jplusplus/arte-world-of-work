@@ -2,8 +2,6 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
-    overflow: hidden;
     z-index: 4000;
 
 
@@ -38,7 +36,7 @@
         .box-shadow( 5px -5px 0 0  fade(@navbar-default-bg, 10%) );
 
         &--opened {
-            height: 220px;
+            height: 100%;
         }
 
         p {
@@ -48,10 +46,6 @@
 
         @media (max-width: @screen-xs-min) {
             width: 100%;
-
-            &--opened {
-                height: 100%;
-            }
         }
     }
 }

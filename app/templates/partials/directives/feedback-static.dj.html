@@ -1,6 +1,10 @@
 {% extends "partials/directives/feedback-base.dj.html" %}
 
+{% block title %}
+    <span translate>By the way, did you know...</span>
+{% endblock title %}
+
 {% block content %}
-	<img ng-src="[[feedback.picture]]" class="feedback__content__picture thumbnail" ng-if="feedback.picture">
-	<p class="feedback__content__source">Source: <a href="[[ feedback.source_url ]]">[[ feedback.source_title]]</a></p>
+    <img ng-src="[[feedback.picture]]" class="feedback__content__picture thumbnail" ng-if="feedback.picture">
+    <p class="feedback__content__source"><span translate>Source: </span><a href="[[ feedback.source_url ]]">[[ feedback.source_title]]</a></p>
 {% endblock %}

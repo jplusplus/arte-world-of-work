@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}arte_ww/vendor/nouislider/jquery.nouislider.css">
     {% endcompress %}
 {% endblock %}
-p
+
 {% block extrajs %}
     
     {% compress js %}
@@ -39,29 +39,33 @@ p
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/controllers/SurveyCtrl.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/controllers/ThematicCtrl.coffee"></script>
         <!-- services -->
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/User.coffee"></script>
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/UserPosition.coffee"></script>
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/Thematic.coffee"></script>
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/ThirdParty.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/Answer.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/Country.coffee"></script>
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/Result.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/ElementsWrapper.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/Feedback.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/HttpInterceptor.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/HttpInterceptor.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/Result.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/Thematic.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/ThirdParty.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/User.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/services/UserPosition.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/utils.coffee"></script>
         <!-- directives -->
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/draggable.coffee"></script>
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/surveyElement.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/dynamicCharts.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/feedbackStatic.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/feedbackDynamic.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/progressbar.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/questionBoolean.coffee"></script>
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/questionUserAge.coffee"></script>
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/questionUserGender.coffee"></script>
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/questionUserCountry.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/questionRadio.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/questionSelection.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/questionTypedNumber.coffee"></script>
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/dynamicCharts.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/questionUserAge.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/questionUserCountry.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/questionUserGender.coffee"></script>
+        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/surveyElement.coffee"></script>
         <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/trackThematic.coffee"></script>
-        <script type="text/coffeescript" src="{{ STATIC_URL }}arte_ww/js/directives/progressbar.coffee"></script>
     {% endcompress %}
 {% endblock %}
 

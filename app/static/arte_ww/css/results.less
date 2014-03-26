@@ -28,6 +28,11 @@
         list-style: none;
         height: 30px;
         position: relative;
+        margin-top: 5px;
+
+        @media (max-width: @screen-xs-min) {
+            margin-top: 0;
+        }
 
         ul {
             margin: 0;
@@ -104,7 +109,7 @@
         top: 0;
         left: 0;
         color: white;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
 
         &:before {
             background-color: #777;
@@ -126,7 +131,7 @@
 
         .chart {
             width: 50%;
-            height: 160px;
+            height: 230px;
 
             &--fullwidth {
                 width: 100%;
@@ -152,15 +157,23 @@
                 padding: 10px 15px 10px 15px;
             }
 
-            a {
+            p {
+                margin-bottom: 5px;
+            }
+
+            a, &__source {
                 font-size: 11px;
+            }
+
+            &__catchphrase {
+                font-weight: bold;
             }
         }
     }
 }
 
 .answer-thematics {
-    @media (max-width: @screen-xs-min) {
+    @media (max-width: @screen-sm-min) {
         display: none;
     }
 
@@ -171,7 +184,7 @@
     top: 110px;
 
     ul {
-        padding: 10px 0 10px 20px;
+        padding: 10px 0 10px 5px;
     }
 
     &__thematic {
@@ -186,10 +199,11 @@
         }
 
         text-transform: uppercase;
-        font-weight: 600;
+        font-weight: 500;
         height: 25px;
         text-indent: 30px;
         margin-top: 5px;
+        font-size: 13px;
 
         &.argent       { background: url("../img/ui/pic_argent.png")       no-repeat; }
         &.avenir       { background: url("../img/ui/pic_avenir.png")       no-repeat; }
@@ -234,14 +248,37 @@
         }
 
         button {
+            padding: 0;
+            @color: #903157;
             width: 52px;
             height: 52px;
-            border-radius: 2em;
-            border: 5px solid #a6a6a6;
-            background-color: #a6a6a6;
+            border-radius: 52px;
+            border: 5px solid @color;
+            background-color: @color;
+            font-weight: 600;
+            color: #fff;
+            font-size: 12px;
+            .transition(0.8s);
 
             &.active {
                 background-color: white;
+                color: @color;
+            }
+
+            &:last-child {
+                background-color: darken(@color, 15%);
+                border-color: darken(@color, 15%);
+
+                &.active {
+                    background-color: white;
+                    color: darken(@color, 15%);
+                }
+            }
+
+            @media (max-width: @screen-xs-min) {
+                width: 40px;
+                height: 40px;
+                font-size: 8px;
             }
         }
     }
@@ -259,13 +296,18 @@
 
     }
 
+    #no-ui > .horizontal();
+
     @media (max-width: @screen-xs-min) {
         width: auto;
+        height: auto;
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: 10px;
         left: 0;
         margin: 0 0;
         top: auto;
         bottom: 50px;
-        height: 110px;
 
         &:before {
             box-shadow: none;
@@ -275,7 +317,8 @@
         &__gender {
             float: left;
             width: 40%;
-            padding-top: 10px;
+            padding-top: 15px;
+            margin-bottom: 2px;
 
             &:after {
                 width: 0;
@@ -285,13 +328,24 @@
         &__age {
             float: right;
             width: 60%;
-            padding-right: 20px;
+            padding-right: 10px;
 
             p {
                 margin: 0;
             }
         }
-    }
 
-    #no-ui > .horizontal();
+        &__title {
+            display: none;
+        }
+
+        .noUi-horizontal .noUi-handle {
+            @size: 25px;
+
+            width: @size;
+            height: @size;
+            left: @size / -2px;
+            top: @size / -2px;
+        }
+    }
 }

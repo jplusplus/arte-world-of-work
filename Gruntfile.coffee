@@ -15,7 +15,7 @@ module.exports = (grunt)->
         i18nextract:
             dev:
                 defaultLang: 'en'
-                lang: [ 'en', 'fr', 'de' ]
+                lang: [ 'en', ]
                 src: angular_files
                 suffix: ".json"
                 dest: "app/static/arte_ww/locale"

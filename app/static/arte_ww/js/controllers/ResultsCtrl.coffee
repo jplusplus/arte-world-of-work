@@ -3,45 +3,52 @@ _steps =
     outro : -2
 
 class ResultsCtrl
-    @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce']
+    @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce', '$rootScope']
 
     changeQuestion: (id) =>
-        if (do @Thematic.current)?
-            @$scope.hasNext = @$scope.hasPrev = yes
-            @$scope.nochart = true
-            if id.id >= 0
-                request =
-                    url : "/api/questions/#{id.id}"
-                    method : 'GET'
-                @$http(request).success (data) =>
-                    if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
-                        @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
-                    @$scope.currentAnswer = data
-            else
-                @$scope.currentAnswer = id
-                if id.id is _steps.intro and not @elements[@$scope.current.thematic - 1]?
-                    @$scope.hasPrev = no
-                else if id.id is _steps.outro and not @elements[@$scope.current.thematic + 1]?
-                    @$scope.hasNext = no
+        @$rootScope.isThematicLoading = yes
+        if not (do @Thematic.current)?
+            @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
+        @$scope.hasNext = @$scope.hasPrev = yes
+        @$scope.nochart = true
+        if id.id >= 0
+            request =
+                url : "/api/questions/#{id.id}"
+                method : 'GET'
+            @$http(request).success (data) =>
+                if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
+                    @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
+                @$scope.currentAnswer = data
+        else
+            @$rootScope.isThematicLoading = no
+            @$scope.currentAnswer = id
+            if id.id is _steps.intro and not @elements[@$scope.current.thematic - 1]?
+                @$scope.hasPrev = no
+            else if id.id is _steps.outro and not @elements[@$scope.current.thematic + 1]?
+                @$scope.hasNext = no
 
 
-    constructor: (@$scope, $location, @Thematic, @$http, $sce) ->
+    constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope) ->
         # Update URL when the user changes filters
         @$scope.$watch 'filters', (=>
-            f = angular.copy $scope.filters
-            params = _.extend $location.search(), 
+            f = angular.copy @$scope.filters
+            params = _.extend $location.search(),
                 gender:  null
                 age_min: f.age_min
                 age_max: f.age_max
 
-            $location.search params
-
             if (f.male isnt f.female)
-
-                params['gender'] = 'male' if f.male 
+                params['gender'] = 'male' if f.male
                 params['gender'] = 'female' if f.female
-                $location.search params
+
+            $location.search params
         ), yes
+
+        @$scope.filtered = =>
+            if ((parseInt @$scope.filters.age_min) is 16) and ((parseInt @$scope.filters.age_max) is 35) and @$scope.filters.male and @$scope.filters.female
+                no
+            else
+                yes
 
         @$scope.hasNext = no
         @$scope.hasPrev = no
@@ -57,7 +64,10 @@ class ResultsCtrl
 
         @$scope.start = =>
             @$scope.intro = no
-            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            if @elements[@$scope.current.thematic]?
+                @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            else
+                setTimeout (((o) => return => do o.$scope.start) @), 1000
 
         # List all thematics
         @$scope.thematics = []
@@ -82,12 +92,12 @@ class ResultsCtrl
                 (@$http request).success (data) =>
                     @elements = _.filter (_.map data, (thematic) =>
                         if thematic.slug isnt 'toi'
-                            elements = _.filter thematic.elements, (t) -> t.type is 'question'
+                            elems = _.filter thematic.elements, (t) -> t.type is 'question'
                             return ([{
                                 content : thematic.intro_description
                                 id : _steps.intro
                                 label : thematic.title
-                            }].concat elements).concat [{
+                            }].concat elems).concat [{
                                     content : thematic.outro_description
                                     id : _steps.outro
                                     label : thematic.title
@@ -95,6 +105,8 @@ class ResultsCtrl
                         else
                             return
                     ), (e) -> e?
+                    if not @$scope.intro
+                        @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         # Initialize filters (fron URL or default values)
         urlFilters = do $location.search

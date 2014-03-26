@@ -11,4 +11,7 @@ angular.module('arte-ww').directive 'questionUserAge', [
                 scope.$watch "question.answer", (answer)->                  
                     if answer?
                         scope.answer = answer 
+
+                scope.$watch '$parent.element', -> scope.question = scope.$parent.element               
+                
 ]

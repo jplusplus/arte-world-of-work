@@ -1,15 +1,18 @@
 <div class="feedback">
 
-	<h4 class="feedback__title" ng-translate>By the way, did you know...</h4>
+	<h4 class="feedback__title">
+		{% block title %}
+		{% endblock title %}
+	</h4>
 	<div class="feedback__content">
-		<p ng-bind-html='html_sentence'></p>
+		<p ng-bind-html='feedback.html_sentence'></p>
 		{% block content %}
 		{% endblock %}
 	</div>
 	<nav class="survey-element__nav">
 	    <ul>
-	        <li class="survey-element__nav__previous"><a ng-href="" ng-click="previous()" ng-translate>Previous</a></li>
-	        <li class="survey-element__nav__next"><a ng-href="" ng-click="next()" ng-translate>next</a></li>
+	        <li class="survey-element__nav__previous"><a ng-href="" ng-click="previous()" translate>Previous</a></li>
+	        <li class="survey-element__nav__next"><a ng-href="" ng-click="next()" translate>next</a></li>
 	    </ul>
 	</nav>
 

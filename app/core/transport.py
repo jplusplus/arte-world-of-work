@@ -31,6 +31,7 @@ API -> front-end (HTTP):
 from django.utils.translation import ungettext, ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
+from django.db.models import fields
 from django.template import loader, Context, Template
 from django.template.loader import render_to_string
 from django_countries import countries
@@ -144,19 +145,17 @@ class DynamicFeedback(object):
                        question=None, 
                        use_percentage=None):
 
+        self.AnswerType      = None
         self.html_sentence   = None
         self.profile         = user.userprofile
         self.question        = question
         self._use_percentage = use_percentage
-
-        # simple wrapper around the answer_type to use 
-        class AnswerType(question.answer_type): 
-            class Meta: 
-                proxy=True
-            pass
-        # make him accessible for this instance    
-        self.AnswerType = AnswerType
+        self.AnswerType      = self.question.answer_type
         self.create_html_sentence()
+
+
+    def get_base_answer_model(self):
+        return self.base_answer_model(self.AnswerType)
 
     def base_answer_model(self, AnswerType=None):
         if AnswerType.__name__ != 'BaseAnswer':
@@ -165,12 +164,10 @@ class DynamicFeedback(object):
             return AnswerType
 
     def create_html_sentence(self):
-        AnswerType = self.AnswerType
-        BaseAnswer = self.base_answer_model(AnswerType)
         myanswer   = None
-
+        BaseAnswer = self.get_base_answer_model()
         try:
-            myanswer = AnswerType.objects.get(question=self.question, 
+            myanswer = BaseAnswer.objects.get(question=self.question, 
                 user=self.profile.user)
             myanswer = myanswer.as_final()
         except BaseAnswer.DoesNotExist: 
@@ -186,15 +183,17 @@ class DynamicFeedback(object):
         if answers_set == None:
             answers_set = all_answers
 
+        self.total_answers = answers_set.count()
+
         context_dict = {
-            'total_number':        answers_set.count(),
+            'total_number':        self.total_answers,
             'profile_attr':        profile_attr,
             'profile_attr_value':  self.get_profile_value(profile_attr),
             'use_profile_attr':    profile_attr != None,
         }
 
-        if myanswer:
-            similar_answers = answers_set.filter(value=myanswer.value)
+        if myanswer and context_dict['total_number'] > 0:
+            similar_answers = self.get_similar(answers_set, myanswer)
             answer_count    = similar_answers.count()
             if use_percentage:
                 percentage = float(answer_count) / context_dict['total_number']
@@ -205,7 +204,7 @@ class DynamicFeedback(object):
                 rendered = render_to_string('dynamic_feedback_count.dj.html', context_dict)
         else: 
             rendered = render_to_string('dynamic_feedback_generic.dj.html', context_dict)
-        self.html_sentence = self.clean_rendered_html(rendered)
+        self.html_sentence = rendered
         return self.html_sentence
 
     def get_profile_value(self, profile_attr):
@@ -216,15 +215,16 @@ class DynamicFeedback(object):
             value = countries.name(value)
         return value
 
-
-    def clean_rendered_html(self, rendered):
-        rendered = rendered.replace('<span>',  '')
-        rendered = rendered.replace('</span>', '')
-        rendered = rendered.replace('\n',  '')
-        rendered = rendered.replace('&nbsp;',  ' ')
-        return rendered
+    def get_similar(self, answers_set, myanswer):
+        value = myanswer.value
+        if hasattr(value, 'all'):
+            similar_answers = answers_set.filter(value__pk=value.values('pk'))
+        else:
+            similar_answers = answers_set.filter(value=value)
+        return similar_answers
 
     def lookup_for_answers(self):
+        BaseAnswer = self.get_base_answer_model()
         # will contain multiple answers set. It will help us to know what 
         answers_pool = {}
         # challenger represents the answer set to use for this dynamic feedback
@@ -279,5 +279,14 @@ class DynamicFeedback(object):
         else:
             choices = (True, False)
             return choices[ random.randint(0, len(choices) - 1) ]
+
+    def as_dict(self):
+        return {
+            'question_id'  : self.question.pk,
+            'total_answers': self.total_answers,
+            'html_sentence': self.html_sentence,
+            'type': 'feedback',
+            'sub_type': 'dynamic' 
+        }
 
 # EOF

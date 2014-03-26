@@ -1,0 +1,9 @@
+{% extends "partials/directives/feedback-base.dj.html" %}
+
+{% block title %}
+    [[ feedback.question.label ]]
+{% endblock title %}
+
+{% block content %}
+    <dynamic-chart class="feedback__chart" ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-id="[[feedback.question_id]]" filters="filters"></dynamic-chart>
+{% endblock %}

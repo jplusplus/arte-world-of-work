@@ -77,7 +77,7 @@
             }
         }
 
-        .survey-navigator--start__start {
+        .survey-navigator--start__start, .survey-navigator--end__start {
             &:after {
                 background: @brand;
             }
@@ -171,13 +171,27 @@
         }
 
         svg {
+            path {
+                &.pie0 {
+                    fill: lighten(@brand, 5%);
+                }
+
+                &.pie1 {
+                    fill: lighten(@brand, 15%);
+                }
+            }
+
             .bar rect {
-                fill: @brand;
+                fill: lighten(@brand, 5%);
             }
 
             text.zero {
-                fill: @brand;
+                fill: lighten(@brand, 5%);
             }
+        }
+
+        .answer-description__catchphrase {
+            color: @brand;
         }
 
         .answer-thematics__thematic.@{slug} {
@@ -200,7 +214,7 @@
 
 }
 
-.white-panel(@width:435px) {
+.white-panel(@width:485px) {
     position:relative;
     margin:auto;    
     margin-top:15px;
@@ -223,9 +237,9 @@
 }
 
 
-.white-panel(responsive; @width:435px) {
+.white-panel(responsive; @width:485px) {
 
-    .white-panel(@width:435px);   
+    .white-panel(@width:485px);   
 
     @media (max-width: @screen-xs-min) {    
         overflow: auto;            
