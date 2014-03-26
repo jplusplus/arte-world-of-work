@@ -141,7 +141,7 @@ class ResultsCtrl
                 else if @elements[@$scope.current.thematic - 1]?
                     --@$scope.current.thematic
                     @$scope.current.answer = @elements[@$scope.current.thematic].length - 1
-                @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         @$scope.changeThematic = (id) =>
             for index of @$scope.thematics
@@ -149,6 +149,7 @@ class ResultsCtrl
                     @$scope.current.thematic = parseInt index
                     @$scope.current.answer = 0
                     @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+                    @$scope.intro = 0
                     return
 
         @$scope.$watch 'current.thematic', (newValue, oldValue) =>
