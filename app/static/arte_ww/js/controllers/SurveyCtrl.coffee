@@ -1,6 +1,9 @@
 class SurveyCtrl
-    @$inject: ['$scope', '$sce', 'Thematic', 'ElementsWrapper', 'UserPosition', 'utils']
-    constructor: (@scope, @sce, @thematicService, @elementsWrapper, @userPosition, utils)->
+    @$inject: ['$scope', '$sce', 'Thematic', 'ElementsWrapper', 'UserPosition', 'utils', 'Xiti']
+    constructor: (@scope, @sce, @thematicService, @elementsWrapper, @userPosition, utils, Xiti)->
+        
+        Xiti.loadPage("survey")
+
         @scope.$watch (=>
             @userPosition.positions
         ), (newdata, olddata) =>

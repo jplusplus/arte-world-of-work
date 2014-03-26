@@ -3,7 +3,7 @@ _steps =
     outro : -2
 
 class ResultsCtrl
-    @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce', '$rootScope']
+    @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce', '$rootScope', "Xiti"]
 
     changeQuestion: (id) =>
         @$rootScope.isThematicLoading = yes
@@ -24,11 +24,11 @@ class ResultsCtrl
         else
             @$rootScope.isThematicLoading = no
             @$scope.currentAnswer = id
-            if id.id is _steps.outro and not @elements[@$scope.current.thematic + 1]?
-                @$scope.hasNext = no
 
+    constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope, Xiti) ->       
+    
+        Xiti.loadPage("results")
 
-    constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope) ->
         # Update URL when the user changes filters
         @$scope.$watch 'filters', (=>
             f = angular.copy @$scope.filters
@@ -52,7 +52,7 @@ class ResultsCtrl
 
         @$scope.hasNext = no
         @$scope.hasPrev = no
-        @$scope.intro = yes
+        @$scope.intro = 1
 
         @$scope.current =
             thematic : 0
@@ -63,7 +63,7 @@ class ResultsCtrl
                 $sce.trustAsHtml @$scope.currentAnswer.feedback.html_sentence
 
         @$scope.start = =>
-            @$scope.intro = no
+            @$scope.intro = 0
             if @elements[@$scope.current.thematic]?
                 @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
             else
@@ -101,7 +101,7 @@ class ResultsCtrl
                         else
                             return
                     ), (e) -> e?
-                    if not @$scope.intro
+                    if @$scope.intro == 0
                         @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         # Initialize filters (fron URL or default values)
@@ -122,18 +122,26 @@ class ResultsCtrl
         @$scope.next = =>
             if @elements[@$scope.current.thematic][@$scope.current.answer + 1]?
                 ++@$scope.current.answer
+                @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
             else if @elements[@$scope.current.thematic + 1]?
                 ++@$scope.current.thematic
                 @$scope.current.answer = 0
-            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+                @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            else
+                @$scope.intro = 2
+                @$scope.hasNext = no
+                @$scope.hasPrev = yes
 
         @$scope.previous = =>
-            if @elements[@$scope.current.thematic][@$scope.current.answer - 1]?
-                --@$scope.current.answer
-            else if @elements[@$scope.current.thematic - 1]?
-                --@$scope.current.thematic
-                @$scope.current.answer = @elements[@$scope.current.thematic].length - 1
-            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            if @$scope.intro is 2
+                @$scope.intro = 0
+            else
+                if @elements[@$scope.current.thematic][@$scope.current.answer - 1]?
+                    --@$scope.current.answer
+                else if @elements[@$scope.current.thematic - 1]?
+                    --@$scope.current.thematic
+                    @$scope.current.answer = @elements[@$scope.current.thematic].length - 1
+                @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         @$scope.changeThematic = (id) =>
             for index of @$scope.thematics

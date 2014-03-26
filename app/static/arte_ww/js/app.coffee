@@ -21,15 +21,16 @@ arteww = angular
             '$location'
             '$route'
             '$translate'
+            '$cookies'
             'UserPosition'
             'ThirdParty'
-            ($rootScope, $location, $route, $translate, UserPosition, ThirdParty)->
+            ($rootScope, $location, $route, $translate, $cookies, UserPosition, ThirdParty)->
 
                 # Activate arte mode
                 $rootScope.shouldDisplayArte = $location.search().arte                     
-
-                $rootScope.setLang = (lang)->
-                    $translate.use lang
+                # Update the current language
+                $cookies.django_language = $location.search().lang or $cookies.django_language
+                $translate.use $cookies.django_language
 
                 $rootScope.location = $location
                 $rootScope.currentCategory = ->

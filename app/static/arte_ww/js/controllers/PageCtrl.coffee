@@ -3,15 +3,7 @@ class PageCtrl
 
     constructor: (@scope, @location, @$translate, @cookies)->
         @title = ''
-        @scope.Page = this
-
-        params = @location.search()
-        if params.lang
-            @langChanged params.lang
-
-        @scope.$watch ->
-            @location.search().lang if @location
-        , @langChanged
+        @scope.Page = this        
 
         if @cookies.django_language
             @langChanged(@cookies.django_language)
@@ -21,15 +13,14 @@ class PageCtrl
         @$translate.use(lang)
         @cookies.django_language = lang
 
+    currentLang: (lang)=>
+        if lang?
+            @langChanged(lang)
+        @$translate.use()
 
     title: (title) =>
         if title?
             @title = title
         @title 
-
-    currentLang: (lang)=>
-        if lang?
-            @langChanged(lang)
-        @$translate.use()
 
 angular.module('arte-ww').controller 'PageCtrl', PageCtrl
