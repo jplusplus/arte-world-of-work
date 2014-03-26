@@ -1,7 +1,9 @@
 <div class="about">
     <div class='container'>
-        <div class="about__button" ng-init="opened=false" ng-mouseleave="opened=false" ng-mouseover="opened=true" ng-click="opened=!opened">
-            <span translate>About</span>
+        <div class="about__button" ng-init="opened=false"  ng-mouseover="xiti.trackClick($event, 'about')">
+            <div ng-mouseleave="opened=false" ng-mouseover="opened=true" ng-click="opened=!opened">
+                <span translate>About</span>
+            </div>
         </div>
         <div class="about__content" ng-class="{'about__content--opened':opened}" ng-mouseleave="opened=false" ng-mouseover="opened=true">
             <p>

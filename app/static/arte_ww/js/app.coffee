@@ -17,36 +17,44 @@ arteww = angular
         'ngSanitize'
     ])
     .run([
-            '$rootScope'
-            '$location'
-            '$route'
-            '$translate'
-            '$cookies'
-            'UserPosition'
-            'ThirdParty'
-            ($rootScope, $location, $route, $translate, $cookies, UserPosition, ThirdParty)->
+        '$rootScope'
+        '$location'
+        '$route'
+        '$translate'
+        '$cookies'
+        'UserPosition'
+        'ThirdParty'
+        ($rootScope, $location, $route, $translate, $cookies, UserPosition, ThirdParty)->
 
-                # Activate arte mode
-                $rootScope.shouldDisplayArte = $location.search().arte                     
-                # Update the current language
-                $cookies.django_language = $location.search().lang or $cookies.django_language
-                $translate.use $cookies.django_language
+            # Activate arte mode
+            $rootScope.shouldDisplayArte = $location.search().arte                     
+            # Update the current language
+            $cookies.django_language = $location.search().lang or $cookies.django_language
+            $translate.use $cookies.django_language
 
-                $rootScope.location = $location
-                $rootScope.currentCategory = ->
-                    # get the current category thanks to current root
-                    category = null
-                    if $route.current
-                        category = $route.current.category or null
-                    return category
+            $rootScope.location = $location
+            $rootScope.currentCategory = ->
+                # get the current category thanks to current root
+                category = null
+                if $route.current
+                    category = $route.current.category or null
+                return category
 
-                $rootScope.backToBeginning = ->
-                    UserPosition.thematicPosition 0
-                    UserPosition.elementPosition 0
-                    $location.url "/"
+            $rootScope.backToBeginning = ->
+                UserPosition.thematicPosition 0
+                UserPosition.elementPosition 0
+                $location.url "/"
 
-                # Get thirdParty helpers
-                $rootScope.thirdParty = ThirdParty                
+            # Get thirdParty helpers
+            $rootScope.thirdParty = ThirdParty                
+    ])
+    # Second run where dependancies need the previous call to be ended
+    .run([
+        "$rootScope",
+        "Xiti",
+        ($rootScope, Xiti)->
+            # Xiti service must be available everywhere             
+            $rootScope.xiti = Xiti
     ])
     .config([
             '$interpolateProvider'

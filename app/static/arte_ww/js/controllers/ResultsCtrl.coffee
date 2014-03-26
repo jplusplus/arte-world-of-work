@@ -141,7 +141,7 @@ class ResultsCtrl
                 else if @elements[@$scope.current.thematic - 1]?
                     --@$scope.current.thematic
                     @$scope.current.answer = @elements[@$scope.current.thematic].length - 1
-                @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
         @$scope.changeThematic = (id) =>
             for index of @$scope.thematics

@@ -6,7 +6,7 @@
 			<option value="" ng-translate>Choose a country</option>
 		</select>
 
-    	<button ng-disabled="!answer" class="question-choices--user-country__validate" ng-click="submitAnswer(answer, false)">
+    	<button ng-disabled="!answer" class="question-choices--user-country__validate" ng-click="submitAnswer(answer, false) && xiti.trackClick($event, 'submit_country')">
     		[[ question.validate_button_label ]]
     	</button>
 	</div>

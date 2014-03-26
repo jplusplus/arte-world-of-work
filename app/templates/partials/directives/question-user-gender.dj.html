@@ -1,1 +1,16 @@
-{% extends "partials/directives/question-boolean.dj.html" %}
+{% extends "partials/directives/question-base.dj.html" %}
+
+{% block form %}
+<div class='question-choices question-choices--boolean'>
+
+    <span ng-repeat='choice in question.choices'>
+        <span ng-click="submitAnswer(choice.value || choice.id) && xiti.trackClick($event, 'submit_gender')"
+              ng-class='{"question-choices--boolean__choice--selected": (choice.value || choice.id) == answer}'
+            class="question-choices--boolean__choice">
+            [[ choice.title ]]
+        </span>
+        <span ng-if="!$last" class="question-choices--boolean__separator" translate>or</span>
+    </span>
+
+</div>
+{% endblock %}
