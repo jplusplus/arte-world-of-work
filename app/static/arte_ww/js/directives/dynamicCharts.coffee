@@ -296,7 +296,6 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$root
                         scope.$parent.fullwidth = yes
                     scope.data = data.results
                     $rootScope.isThematicLoading = no
-                    do $rootScope.apply
                 undefined
 
             window.onresize = =>
