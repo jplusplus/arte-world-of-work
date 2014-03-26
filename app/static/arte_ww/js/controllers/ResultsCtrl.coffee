@@ -23,6 +23,7 @@ class ResultsCtrl
                 @$scope.hasPrev = @elements[@$scope.current.thematic - 1]?
         else
             @$rootScope.isThematicLoading = no
+            do @$rootScope.apply
             @$scope.currentAnswer = id
 
     constructor: (@$scope, $location, @Thematic, @$http, $sce, @$rootScope, Xiti) ->       
@@ -66,8 +67,6 @@ class ResultsCtrl
             @$scope.intro = 0
             if @elements[@$scope.current.thematic]?
                 @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
-            else
-                setTimeout (((o) => return => do o.$scope.start) @), 1000
 
         # List all thematics
         @$scope.thematics = []
