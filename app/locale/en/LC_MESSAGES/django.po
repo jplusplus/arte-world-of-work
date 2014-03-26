@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#: i18n_strings.py:102
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-20 17:23+0100\n"
+"POT-Creation-Date: 2014-03-26 18:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,587 +19,60 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: i18n_strings.py:3
-msgid "You could also be a sandwich man or a mascot."
-msgstr ""
-
-#: i18n_strings.py:4
-msgid "€ per day"
-msgstr ""
-
-#: i18n_strings.py:5
-msgid ""
-"Walk around as a human billboard for a day to make some money. Ok, but I "
-"would need to get paid at least…"
-msgstr ""
-
-#: i18n_strings.py:6
-msgid "Slide to the right amount"
-msgstr ""
-
-#: i18n_strings.py:7
-msgid "€"
-msgstr ""
-
-#: i18n_strings.py:8
-msgid ""
-"What’s the minimum amount per month that people should get for their work?"
-msgstr ""
-
-#: i18n_strings.py:9
-msgid ""
-"Donate sperm or an egg to make some money? Ok, but I would need to get paid "
-"at least…"
-msgstr ""
-
-#: i18n_strings.py:10
-msgid ""
-"Sleep with a stranger to make some money? Ok, but I would need to get paid "
-"at least…"
-msgstr ""
-
-#: i18n_strings.py:11
-msgid ""
-"Stand in line for a full night for someone else? Ok, but I would need to get "
-"paid at least…"
-msgstr ""
-
-#: i18n_strings.py:12
-msgid "Yes"
-msgstr ""
-
-#: i18n_strings.py:13
-msgid "No"
-msgstr ""
-
-#: i18n_strings.py:14 core/models.py:41 core/types.py:11
-msgid "Female"
-msgstr ""
-
-#: i18n_strings.py:15 core/models.py:40 core/types.py:10
-msgid "Male"
-msgstr ""
-
-#: i18n_strings.py:16
-msgid "Your parents"
-msgstr ""
-
-#: i18n_strings.py:17
-msgid "Other family members"
-msgstr ""
-
-#: i18n_strings.py:18
-msgid "Your partner"
-msgstr ""
-
-#: i18n_strings.py:19
-msgid "Your friends"
-msgstr ""
-
-#: i18n_strings.py:20
-msgid "The bank"
-msgstr ""
-
-#: i18n_strings.py:21
-msgid "A DVD         (around 30 €)       "
-msgstr ""
-
-#: i18n_strings.py:22
-msgid "An iPad                               (around 490 €)       "
-msgstr ""
-
-#: i18n_strings.py:23
-msgid "Your boss' fixie bike (900 €)"
-msgstr ""
-
-#: i18n_strings.py:24
-msgid "My parents’ opinion"
-msgstr ""
-
-#: i18n_strings.py:25
-msgid "The job market"
-msgstr ""
-
-#: i18n_strings.py:26
-msgid "My professors’ advice"
-msgstr ""
-
-#: i18n_strings.py:27
-msgid "My personal ambition"
-msgstr ""
-
-#: i18n_strings.py:28
-msgid "The cost of studies"
-msgstr ""
-
-#: i18n_strings.py:29
-msgid "Sure, I love my job."
-msgstr ""
-
-#: i18n_strings.py:30
-msgid "Yes, but only to keep myself busy."
-msgstr ""
-
-#: i18n_strings.py:31
-msgid "No way, I’m only in it for the money."
-msgstr ""
-
-#: i18n_strings.py:32
-msgid "Yes, I’m more or less living the dream."
-msgstr ""
-
-#: i18n_strings.py:33
-msgid "No, I had to face reality."
-msgstr ""
-
-#: i18n_strings.py:34
-msgid "No, that job does not even exist anymore."
-msgstr ""
-
-#: i18n_strings.py:35
-msgid ""
-"Lazy: It’s not ok to choose your university according to the weather "
-"forecast."
-msgstr ""
-
-#: i18n_strings.py:36
-msgid "within 2 years"
-msgstr ""
-
-#: i18n_strings.py:37
-msgid "fake my CV"
-msgstr ""
-
-#: i18n_strings.py:38
-msgid "Yes, my parents can count on it, and so can I."
-msgstr ""
-
-#: i18n_strings.py:39
-msgid "Yes, in any case"
-msgstr ""
-
-#: i18n_strings.py:40
-msgid "Start a business"
-msgstr ""
-
-#: i18n_strings.py:41
-msgid ""
-"Yes. As an intern you’re here to learn. That's even better than a salary."
-msgstr ""
-
-#: i18n_strings.py:42
-msgid "Yes, I fear losing my job"
-msgstr ""
-
-#: i18n_strings.py:43
-msgid "Yes! Everything else is feminist propaganda"
-msgstr ""
-
-#: i18n_strings.py:44
-msgid "My last work email"
-msgstr ""
-
-#: i18n_strings.py:45
-msgid "Yes, it helped a lot"
-msgstr ""
-
-#: i18n_strings.py:46
-msgid "Yes, I should have priority"
-msgstr ""
-
-#: i18n_strings.py:47
-msgid "my union"
-msgstr ""
-
-#: i18n_strings.py:48
-msgid "My family"
-msgstr ""
-
-#: i18n_strings.py:49
-msgid "Online auctions"
-msgstr ""
-
-#: i18n_strings.py:50
-msgid "Yes, somebody should pay these people"
-msgstr ""
-
-#: i18n_strings.py:51
-msgid "Civil servant, so my future is safe  "
-msgstr ""
-
-#: i18n_strings.py:52
-msgid "My boss is a douchebag   "
-msgstr ""
-
-#: i18n_strings.py:53
-msgid "Coffee"
-msgstr ""
-
-#: i18n_strings.py:54
-msgid "Yes!"
-msgstr ""
-
-#: i18n_strings.py:55
-msgid "drink a cup of coffee (10 min)"
-msgstr ""
-
-#: i18n_strings.py:56
-msgid "7 am or before"
-msgstr ""
-
-#: i18n_strings.py:57
-msgid "It’s expensive to move!"
-msgstr ""
-
-#: i18n_strings.py:58
-msgid "I accept! It’s nice to be friends with your employer"
-msgstr ""
-
-#: i18n_strings.py:59
-msgid "just a couple of days"
-msgstr ""
-
-#: i18n_strings.py:60
-msgid ""
-"Clever: Everybody wants to study where it’s nice. They’ll make a lot of "
-"great contacts."
-msgstr ""
-
-#: i18n_strings.py:61
-msgid "within 5 years"
-msgstr ""
-
-#: i18n_strings.py:62
-msgid "break up with my partner"
-msgstr ""
-
-#: i18n_strings.py:63
-msgid ""
-"Yes, but considering my late start, I will have to work way longer than my "
-"parents."
-msgstr ""
-
-#: i18n_strings.py:64
-msgid "Yes, if it’s doing well"
-msgstr ""
-
-#: i18n_strings.py:65
-msgid "Organize a big party"
-msgstr ""
-
-#: i18n_strings.py:66
-msgid ""
-"Slavery has been abolished, right? Of course interns should get a salary!"
-msgstr ""
-
-#: i18n_strings.py:67
-msgid "No, I feel no difference"
-msgstr ""
-
-#: i18n_strings.py:68
-msgid "No! But never seen it myself"
-msgstr ""
-
-#: i18n_strings.py:69
-msgid "My address"
-msgstr ""
-
-#: i18n_strings.py:70
-msgid "I received a little help"
-msgstr ""
-
-#: i18n_strings.py:71
-msgid "No, we need skilled immigrants"
-msgstr ""
-
-#: i18n_strings.py:72
-msgid "my boss"
-msgstr ""
-
-#: i18n_strings.py:73
-msgid "My partner"
-msgstr ""
-
-#: i18n_strings.py:74
-msgid "Flat rental "
-msgstr ""
-
-#: i18n_strings.py:75
-msgid "No, it’s a hobby not more"
-msgstr ""
-
-#: i18n_strings.py:76
-msgid "Fixed-term contracts, to be able to change from time to time"
-msgstr ""
-
-#: i18n_strings.py:77
-msgid "My co-workers are unbearable"
-msgstr ""
-
-#: i18n_strings.py:78
-msgid "Cocaine"
-msgstr ""
-
-#: i18n_strings.py:79
-msgid "I prefer to use my contacts"
-msgstr ""
-
-#: i18n_strings.py:80
-msgid "read a long newspaper article (20 min)"
-msgstr ""
-
-#: i18n_strings.py:81
-msgid "around 8 am"
-msgstr ""
-
-#: i18n_strings.py:82
-msgid "I have more friends here"
-msgstr ""
-
-#: i18n_strings.py:83
-msgid "Never! I post all sorts of awkward things"
-msgstr ""
-
-#: i18n_strings.py:84
-msgid "several months"
-msgstr ""
-
-#: i18n_strings.py:85
-msgid "within 10 years"
-msgstr ""
-
-#: i18n_strings.py:86
-msgid "sleep my way up"
-msgstr ""
-
-#: i18n_strings.py:87
-msgid ""
-"No, I’ve figured it out: there’s no Santa Claus and there’s no retirement."
-msgstr ""
-
-#: i18n_strings.py:88
-msgid "Yes, but only to avoid upsetting them"
-msgstr ""
-
-#: i18n_strings.py:89
-msgid "Buy an apartment"
-msgstr ""
-
-#: i18n_strings.py:90
-msgid "Well, I’ve lost my job"
-msgstr ""
-
-#: i18n_strings.py:91
-msgid "No! And I speak from personal experience"
-msgstr ""
-
-#: i18n_strings.py:92
-msgid "My work pace"
-msgstr ""
-
-#: i18n_strings.py:93
-msgid "Not at all"
-msgstr ""
-
-#: i18n_strings.py:94
-msgid "my friends"
-msgstr ""
-
-#: i18n_strings.py:95
-msgid "I don’t have a dream school"
-msgstr ""
-
-#: i18n_strings.py:96
-msgid "My friends"
-msgstr ""
-
-#: i18n_strings.py:97
-msgid "Microwork"
-msgstr ""
-
-#: i18n_strings.py:98
-msgid "Now I don’t even know what work is anymore"
-msgstr ""
-
-#: i18n_strings.py:99
-msgid "A Permanent contract, to have maximum security"
-msgstr ""
-
-#: i18n_strings.py:100
-msgid "I don't get any (professional) satisfaction "
-msgstr ""
-
-#: i18n_strings.py:101
-msgid "Alcohol"
-msgstr ""
-
-#: i18n_strings.py:102
-msgid "I always do unsolicited applications"
-msgstr ""
-
-#: i18n_strings.py:103
-msgid "listen to the entire album Cheese, by Stromae (40 min)"
-msgstr ""
-
-#: i18n_strings.py:104
-msgid "around 9 am"
-msgstr ""
-
-#: i18n_strings.py:105
-msgid "My family: Sometimes they get on my nerves, but I’m attached to them"
-msgstr ""
-
-#: i18n_strings.py:106
-msgid "over a year"
-msgstr ""
-
-#: i18n_strings.py:107
-msgid "do cash-in-hand jobs"
-msgstr ""
-
-#: i18n_strings.py:108
-msgid "No, never ever"
-msgstr ""
-
-#: i18n_strings.py:109
-msgid "My drug consumption"
-msgstr ""
-
-#: i18n_strings.py:110
-msgid "my parents"
-msgstr ""
-
-#: i18n_strings.py:111
-msgid "The state"
-msgstr ""
-
-#: i18n_strings.py:112
-msgid "Carsharing"
-msgstr ""
-
-#: i18n_strings.py:113
-msgid "Self-employed, to be my own boss"
-msgstr ""
-
-#: i18n_strings.py:114
-msgid "My salary is a joke"
-msgstr ""
-
-#: i18n_strings.py:115
-msgid "Cannabis"
-msgstr ""
-
-#: i18n_strings.py:116
-msgid "watch Gravity in full (1h30)"
-msgstr ""
-
-#: i18n_strings.py:117
-msgid "10 am or after"
-msgstr ""
-
-#: i18n_strings.py:118
-msgid "They don’t even speak English there"
-msgstr ""
-
-#: i18n_strings.py:119
-msgid "a couple of years"
-msgstr ""
-
-#: i18n_strings.py:120
-msgid "My health record"
-msgstr ""
-
-#: i18n_strings.py:121
-msgid "Loans"
-msgstr ""
-
-#: i18n_strings.py:122
-msgid "DIY Marketplace "
-msgstr ""
-
-#: i18n_strings.py:123
-msgid "I don’t have a private life any more"
-msgstr ""
-
-#: i18n_strings.py:124
-msgid "LSD"
-msgstr ""
-
-#: i18n_strings.py:125
-msgid "Not concerned, I stay at home"
-msgstr ""
-
-#: i18n_strings.py:126
-msgid "C’mon I’m just a bit slower"
-msgstr ""
-
-#: i18n_strings.py:127
-msgid "My DNA"
-msgstr ""
-
-#: i18n_strings.py:128
-msgid "None"
-msgstr ""
-
-#: i18n_strings.py:129
-msgid ""
-"Nothing, I’m filling this out from my room in Berlin and it feels great!"
-msgstr ""
-
-#: i18n_strings.py:130
 msgid ""
 "In France begging was considered a <strong>normal activity</strong> until "
 "the <strong>end of the 19th century</strong>. In the 20th century it went "
 "out of fashion and some beggars would even wear masks while doing their job."
 msgstr ""
 
-#: i18n_strings.py:131
+#: i18n_strings.py:4
 msgid "Eugen Weber, 1976"
 msgstr ""
 
-#: i18n_strings.py:132
+#: i18n_strings.py:5
 msgid ""
 "As a young European chances are <strong>almost 50%&nbsp;that you owe money</"
 "strong> to your bank, family or friends. The median debt of young people in "
 "Europe is <strong>5000 €</strong>."
 msgstr ""
 
-#: i18n_strings.py:133
+#: i18n_strings.py:6
 msgid "ECB, p. 60"
 msgstr ""
 
-#: i18n_strings.py:134
+#: i18n_strings.py:7
 msgid ""
 "Often theft in the workplace doesn't have anything to do with \"real world\" "
 "crime. Those <strong>who steal most</strong> are also those who <strong>work "
 "most</strong>. They think they're not paid enough."
 msgstr ""
 
-#: i18n_strings.py:135
+#: i18n_strings.py:8
 msgid "Greenberg, 2002"
 msgstr ""
 
-#: i18n_strings.py:136
+#: i18n_strings.py:9
 msgid ""
 "Academics agree on this matter: <strong>social background and parents' "
 "opinions</strong> matter most when young people decide what to do with their "
 "lives."
 msgstr ""
 
-#: i18n_strings.py:137
+#: i18n_strings.py:10
 msgid "Hachmeister et al., 2007"
 msgstr ""
 
-#: i18n_strings.py:138
+#: i18n_strings.py:11
 msgid ""
 "The average McDonald's worker has to work <strong>7 months</strong> to get "
 "what the company's CEO takes home in <strong>just 1 hour</strong>."
 msgstr ""
 
-#: i18n_strings.py:139
+#: i18n_strings.py:12
 msgid "QZ"
 msgstr ""
 
-#: i18n_strings.py:140
+#: i18n_strings.py:13
 msgid ""
 "<p>In Germany people seem to love their jobs. After a 10 million &euro; win "
 "only <strong>every third man would quit his job</strong>. <strong>Women</"
@@ -606,19 +80,19 @@ msgid ""
 "strong> would pack it &#39; all in.</p>"
 msgstr ""
 
-#: i18n_strings.py:141
+#: i18n_strings.py:14
 msgid "Forsa for Westlotto (PDF)"
 msgstr ""
 
-#: i18n_strings.py:142
+#: i18n_strings.py:15
 msgid "Spain is Erasmus destination <strong>#1</strong>."
 msgstr ""
 
-#: i18n_strings.py:143
+#: i18n_strings.py:16
 msgid "Erasmus.ahoi.in"
 msgstr ""
 
-#: i18n_strings.py:144
+#: i18n_strings.py:17
 msgid ""
 "In Germany people seem to love their jobs. After a <strong>10 million €</"
 "strong> win only <strong>every third man</strong> would <strong>quit</"
@@ -626,75 +100,75 @@ msgid ""
 "work: <strong>only every fourth</strong> would pack it all in."
 msgstr ""
 
-#: i18n_strings.py:145
+#: i18n_strings.py:18
 msgid " Forsa for Westlotto"
 msgstr ""
 
-#: i18n_strings.py:146
+#: i18n_strings.py:19
 msgid ""
 "Distorted perception: The French are amongst those who are the <strong>most "
 "insecure about their jobs</strong> in Europe. At the same time their jobs "
 "are also the most stable."
 msgstr ""
 
-#: i18n_strings.py:147
+#: i18n_strings.py:20
 msgid "Institut Arbeit und Qualifikation (p. 190)"
 msgstr ""
 
-#: i18n_strings.py:148
+#: i18n_strings.py:21
 msgid ""
 "If a government wants to increase birth rates, it’s <strong>more effective "
 "to build day nurseries and kindergartens</strong>, than to pay people for "
 "staying at home with their children. Seems to work even in Germany!"
 msgstr ""
 
-#: i18n_strings.py:149
+#: i18n_strings.py:22
 msgid " Institut National d’Etudes Démographiques (p. 2)"
 msgstr ""
 
-#: i18n_strings.py:150
+#: i18n_strings.py:23
 msgid ""
 "9 out of 10 French find it normal to <strong>“arrange” their CV</strong> and "
 "only 1 employer out of 5 actually check what people send them."
 msgstr ""
 
-#: i18n_strings.py:151
+#: i18n_strings.py:24
 msgid "Institut Florian Mantione"
 msgstr ""
 
-#: i18n_strings.py:152
+#: i18n_strings.py:25
 msgid ""
 "Granny and grandad at the office? <strong>Half of the German population</"
 "strong> thinks that they will be able to work <strong>beyond the age of 69</"
 "strong>."
 msgstr ""
 
-#: i18n_strings.py:153
+#: i18n_strings.py:26
 msgid "Bertelsmann Stiftung"
 msgstr ""
 
-#: i18n_strings.py:154
+#: i18n_strings.py:27
 msgid ""
 "Family disputes in sight: <strong>9 out of 10</strong> family business "
 "<strong>owners</strong> could <strong>not</strong> imagine <strong>selling</"
 "strong> their company."
 msgstr ""
 
-#: i18n_strings.py:155
+#: i18n_strings.py:28
 msgid "Economist Intelligence Unit for Barclays"
 msgstr ""
 
-#: i18n_strings.py:156
+#: i18n_strings.py:29
 msgid ""
 "Only <strong>1 in 6&nbsp;</strong>in Europe would <strong>start a business</"
 "strong> if they inherited money. Every third would buy a house."
 msgstr ""
 
-#: i18n_strings.py:157
+#: i18n_strings.py:30
 msgid "Eurobarometer (p. 90)"
 msgstr ""
 
-#: i18n_strings.py:158
+#: i18n_strings.py:31
 msgid ""
 "70%&nbsp;of EU citizens think that \"robots steal people's jobs\". According "
 "to an Oxford study <strong>models</strong>, <strong>waiters</strong>, "
@@ -702,30 +176,30 @@ msgid ""
 "the jobs most likely to disappear."
 msgstr ""
 
-#: i18n_strings.py:159
+#: i18n_strings.py:32
 msgid "Oxford Martin School"
 msgstr ""
 
-#: i18n_strings.py:160
+#: i18n_strings.py:33
 msgid "<p> professionally useful there.</p>"
 msgstr ""
 
-#: i18n_strings.py:161
+#: i18n_strings.py:34
 msgid "Eurobarometer"
 msgstr ""
 
-#: i18n_strings.py:162
+#: i18n_strings.py:35
 msgid ""
 "Economists say that crises make people increase their efforts at work. But "
 "that does not seem to be the case for everybody. Three-quarters of Dutch "
 "workers do not see the financial crisis as a reason to work harder."
 msgstr ""
 
-#: i18n_strings.py:163
+#: i18n_strings.py:36
 msgid "NBER"
 msgstr ""
 
-#: i18n_strings.py:164
+#: i18n_strings.py:37
 msgid ""
 "The gender pay gap - everybody talks about it but <strong>nobody actually "
 "sees it</strong>. That’s also what Finnish study shows: Female employees "
@@ -733,91 +207,91 @@ msgid ""
 "they aren’t."
 msgstr ""
 
-#: i18n_strings.py:165
+#: i18n_strings.py:38
 msgid "Khoreva, 2012"
 msgstr ""
 
-#: i18n_strings.py:166
+#: i18n_strings.py:39
 msgid ""
 "1 out of 2 Europeans would be <strong>angry to learn that their boss "
 "monitors their professional emails</strong>. They don’t seem to realise that "
 "this can actually be legal."
 msgstr ""
 
-#: i18n_strings.py:167
+#: i18n_strings.py:40
 msgid "Aruba Network"
 msgstr ""
 
-#: i18n_strings.py:168
+#: i18n_strings.py:41
 msgid ""
 "Disappointed by your paycheck? In Portugal the minimum salary is only 566 €."
 msgstr ""
 
-#: i18n_strings.py:169
+#: i18n_strings.py:42
 msgid "Eurostat"
 msgstr ""
 
-#: i18n_strings.py:170
+#: i18n_strings.py:43
 msgid ""
 "Taking care of your grand-parents can be a full time job. And therefore half "
 "of the European population thinks you <strong>should be paid for it</strong> "
 "by your government!"
 msgstr ""
 
-#: i18n_strings.py:171
+#: i18n_strings.py:44
 msgid "Eurobarometer (p. 103)"
 msgstr ""
 
-#: i18n_strings.py:172
+#: i18n_strings.py:45
 msgid ""
 "Nobody actually evaluates if career advice services are effective. We only "
 "know for sure that <strong>many counselors doubt that they’re doing a good "
 "job</strong>."
 msgstr ""
 
-#: i18n_strings.py:173
+#: i18n_strings.py:46
 msgid "OECD"
 msgstr ""
 
-#: i18n_strings.py:174
+#: i18n_strings.py:47
 msgid ""
 "Every third immigrant has a university degree. That's much more than the "
 "general population."
 msgstr ""
 
-#: i18n_strings.py:175
+#: i18n_strings.py:48
 msgid "Institut der deutschen Wirtschaft (p. 4)"
 msgstr ""
 
-#: i18n_strings.py:176
+#: i18n_strings.py:49
 msgid ""
 "Sheltered employment is a trap. Many policies see it as a springboard into "
 "the “regular” labor market. But <strong>only very few people manage to make "
 "the transition</strong>. In Austria it’s less then every 30th. "
 msgstr ""
 
-#: i18n_strings.py:177
+#: i18n_strings.py:50
 msgid "ANED (p. 15)"
 msgstr ""
 
-#: i18n_strings.py:178
+#: i18n_strings.py:51
 msgid ""
 "Young people are not interested in trade unions. Less than every 10th has a "
 "membership card."
 msgstr ""
 
-#: i18n_strings.py:179
+#: i18n_strings.py:52
 msgid ""
 "You can tweak your CV as much as you want. If you have the <strong>wrong "
 "name</strong> or live in the <strong>wrong place</strong> you still get "
 "discriminated against. That’s why some governments try out anonymous CVs."
 msgstr ""
 
-#: i18n_strings.py:180
+#: i18n_strings.py:53
 msgid "J-Pal"
 msgstr ""
 
-#: i18n_strings.py:181
+#: i18n_strings.py:54
 msgid ""
 "Older people are generally against a <strong>universal basic income</"
 "strong>. For young people it’s less of a problem to receive money without "
@@ -826,58 +300,58 @@ msgid ""
 "of a basic income on the labor market would be."
 msgstr ""
 
-#: i18n_strings.py:182
+#: i18n_strings.py:55
 msgid "World Values Survey"
 msgstr ""
 
-#: i18n_strings.py:183
+#: i18n_strings.py:56
 msgid ""
 "In France <strong>one out of ten students</strong> enrolls preparation "
 "classes for university, so called <em>prépas</em>, after they finish school. "
 "Some of them are 2 years long and extremely demanding."
 msgstr ""
 
-#: i18n_strings.py:184
+#: i18n_strings.py:57
 msgid "data.gouv.fr"
 msgstr ""
 
-#: i18n_strings.py:185
+#: i18n_strings.py:58
 msgid ""
 "Young people have the highest risk to be working but poor in Scandinavia. By "
 "the way, in most countries working women are less likely to need assistance "
 "from their relatives or the government."
 msgstr ""
 
-#: i18n_strings.py:186
+#: i18n_strings.py:59
 msgid "Eurofound (p. 7)"
 msgstr ""
 
-#: i18n_strings.py:187
+#: i18n_strings.py:60
 msgid "In some countries, like Denmark, sperm donations are tax free."
 msgstr ""
 
-#: i18n_strings.py:188
+#: i18n_strings.py:61
 msgid "Spiegel Online"
 msgstr ""
 
-#: i18n_strings.py:189
+#: i18n_strings.py:62
 msgid ""
 "If you’ve managed to leave your parents’ house consider yourself lucky. For "
 "young Europeans between 18 and 34 chances are almost 50 %&nbsp;that they "
 "still live with their parents. Half of them say it’s for financial reasons."
 msgstr ""
 
-#: i18n_strings.py:190
+#: i18n_strings.py:63
 msgid ""
 "In Berlin, <strong>one third of the student population</strong> could "
 "imagine financing their studies with prostitution."
 msgstr ""
 
-#: i18n_strings.py:191
+#: i18n_strings.py:64
 msgid "Studienkolleg zu Berlin"
 msgstr ""
 
-#: i18n_strings.py:192
+#: i18n_strings.py:65
 msgid ""
 "In Dresden, Germany, you can make <strong>100 € by queuing for a night</"
 "strong>. Couples, who want to fix a wedding date at the local register "
@@ -885,32 +359,32 @@ msgid ""
 "twice a year and at 8 in the morning."
 msgstr ""
 
-#: i18n_strings.py:193
+#: i18n_strings.py:66
 msgid "Kölner Stadt-Anzeiger"
 msgstr ""
 
-#: i18n_strings.py:194
+#: i18n_strings.py:67
 msgid ""
 "Sharing is caring? Yes, but sharing is also just a means to squeeze more "
 "value out your budget. According to Airbnb, many users <strong>couldn’t "
 "afford their home without renting it out</strong> on the platform."
 msgstr ""
 
-#: i18n_strings.py:195
+#: i18n_strings.py:68
 msgid "AirBnb"
 msgstr ""
 
-#: i18n_strings.py:196
+#: i18n_strings.py:69
 msgid ""
 "Reading all articles on Wikipedia would take <strong>7 years</strong>. And "
 "all this has been created by volunteers."
 msgstr ""
 
-#: i18n_strings.py:197
+#: i18n_strings.py:70
 msgid "Wikipedia:Statistics"
 msgstr ""
 
-#: i18n_strings.py:198
+#: i18n_strings.py:71
 msgid ""
 "87%&nbsp;of Italians believe that young people now are less likely than "
 "their parents to find <strong>a job they actually like</strong>. But they "
@@ -918,11 +392,11 @@ msgid ""
 "spend more time with their \"famiglia\"!"
 msgstr ""
 
-#: i18n_strings.py:199
+#: i18n_strings.py:72
 msgid "Gallup"
 msgstr ""
 
-#: i18n_strings.py:200
+#: i18n_strings.py:73
 msgid ""
 "Neurosurgeons, soldiers, and art teachers are amongst those who consider "
 "their jobs as <strong>important for society</strong>. Securities traders, "
@@ -930,33 +404,33 @@ msgid ""
 "meaningful."
 msgstr ""
 
-#: i18n_strings.py:201
+#: i18n_strings.py:74
 msgid "Payscale"
 msgstr ""
 
-#: i18n_strings.py:202
+#: i18n_strings.py:75
 msgid ""
 "Workers between 16 to 34 tend to be <strong>more satisfied with their jobs</"
 "strong> than their older colleagues. But they're also the first to leave "
 "when something annoys them."
 msgstr ""
 
-#: i18n_strings.py:203
+#: i18n_strings.py:76
 msgid "Mercer LLC survey "
 msgstr ""
 
-#: i18n_strings.py:204
+#: i18n_strings.py:77
 msgid ""
 "Every sector has its drug taste! People working in construction consume "
 "cocaine and mushrooms, the gastronomic sector likes all sorts of substances. "
 "Amongst civil servants though there's not much interest in drugs."
 msgstr ""
 
-#: i18n_strings.py:205
+#: i18n_strings.py:78
 msgid "INPES"
 msgstr ""
 
-#: i18n_strings.py:206
+#: i18n_strings.py:79
 msgid ""
 "34%&nbsp;of European workers have found their jobs through unsolicited "
 "applications. Fewer used their personal network and even less actually "
@@ -964,11 +438,11 @@ msgid ""
 "market is, the more useful your own address book becomes."
 msgstr ""
 
-#: i18n_strings.py:207
+#: i18n_strings.py:80
 msgid "Pellizzari, 2003"
 msgstr ""
 
-#: i18n_strings.py:208
+#: i18n_strings.py:81
 msgid ""
 "Early bird or late riser? Scientists have found out that that's <strong>part "
 "of your DNA</strong>. The difference between your natural rhythm and your "
@@ -977,21 +451,21 @@ msgid ""
 "higher risk of being obese."
 msgstr ""
 
-#: i18n_strings.py:209
+#: i18n_strings.py:82
 msgid "NBCI"
 msgstr ""
 
-#: i18n_strings.py:210
+#: i18n_strings.py:83
 msgid ""
 "Leaving it all behind? Not really! Since the economic crisis <strong>less "
 "people are willing to move to another European country for work</strong>."
 msgstr ""
 
-#: i18n_strings.py:211
+#: i18n_strings.py:84
 msgid "European Commission"
 msgstr ""
 
-#: i18n_strings.py:212
+#: i18n_strings.py:85
 msgid ""
 "The French don’t “friend” their bosses. Only 8 %&nbsp;are connected with "
 "their boss on Facebook. In Italy 33%&nbsp;are friends with their superiours. "
@@ -999,54 +473,54 @@ msgid ""
 "befriending your boss on Facebook will boost your career."
 msgstr ""
 
-#: i18n_strings.py:213
+#: i18n_strings.py:86
 msgid "AVG Digital Diaries"
 msgstr ""
 
-#: i18n_strings.py:214
+#: i18n_strings.py:87
 msgid ""
 "Jobless = unhappy? Not necessarily! In Germany there’s a group of “happily "
 "jobless” who call themselves “Glückliche Arbeitslose”, in France, they go "
 "under the name of “Bomeurs”."
 msgstr ""
 
-#: i18n_strings.py:215
+#: i18n_strings.py:88
 msgid "Eurostat, Vice, Les inrocks, Glückliche Arbeitslose"
 msgstr ""
 
-#: i18n_strings.py:216
+#: i18n_strings.py:89
 msgid ""
 "59%&nbsp; did not receive any financial compensation during their last "
 "internship. 10%&nbsp;consider that they <strong>haven’t learned anything</"
 "strong> professionally useful there."
 msgstr ""
 
-#: i18n_strings.py:217
+#: i18n_strings.py:90
 msgid "Eurobarometer, p. 14"
 msgstr ""
 
-#: i18n_strings.py:218
+#: i18n_strings.py:91
 msgid ""
 "Two English students have made over £30,000 by renting out their faces for "
 "ads. They <strong>charge £100</strong> per day."
 msgstr ""
 
-#: i18n_strings.py:219
+#: i18n_strings.py:92
 msgid "AFP"
 msgstr ""
 
-#: i18n_strings.py:220
+#: i18n_strings.py:93
 msgid ""
 "Living far from work makes people unhappy. Psychologists have shown that "
 "<strong>commutes are the unhappiest moments</strong> of the day. The only "
 "thing with a similar sadness level is household work."
 msgstr ""
 
-#: i18n_strings.py:221
+#: i18n_strings.py:94
 msgid "Kahneman & Krueger, 2004"
 msgstr ""
 
-#: i18n_strings.py:222
+#: i18n_strings.py:95
 msgid ""
 "In 2010 <strong>75000 people</strong> went wwoofing, meaning they "
 "volunteered on an organic farm. And numbers are growing! But the concept is "
@@ -1054,381 +528,862 @@ msgid ""
 "in exchange for food and shelter since the 1920s."
 msgstr ""
 
-#: i18n_strings.py:223
+#: i18n_strings.py:96
 msgid "Kotůlek, 2010"
 msgstr ""
 
-#: i18n_strings.py:224
+#: i18n_strings.py:97
 msgid ""
 "Pilot, veterinary, astronaut, writer... At least <strong>7 out of 10 people</"
 "strong> do not work in their childhood dreamjobs."
 msgstr ""
 
-#: i18n_strings.py:225
+#: i18n_strings.py:98
 msgid "Linkedin"
 msgstr ""
 
-#: i18n_strings.py:226
-msgid "Yes or no?"
+#: i18n_strings.py:99
+msgid "You could also be a sandwich man or a mascot."
 msgstr ""
 
-#: i18n_strings.py:227
-msgid "Is begging work?"
+#: i18n_strings.py:100
+msgid "€"
 msgstr ""
 
-#: i18n_strings.py:228
-msgid "What's your age again?"
-msgstr ""
-
-#: i18n_strings.py:229
-msgid "How old are you?"
-msgstr ""
-
-#: i18n_strings.py:230
-msgid "What toilet door would you choose?"
-msgstr ""
-
-#: i18n_strings.py:231
-msgid "If at all - what gender do you identify yourself with most?"
-msgstr ""
-
-#: i18n_strings.py:232
-msgid "Where do you spend most of your time?"
-msgstr ""
-
-#: i18n_strings.py:233
-msgid "Where do you live?"
-msgstr ""
-
-#: i18n_strings.py:234
-msgid "Your country of birth."
-msgstr ""
-
-#: i18n_strings.py:235
-msgid "Where were you born?"
-msgstr ""
-
-#: i18n_strings.py:236
-msgid "We won't tell them."
-msgstr ""
-
-#: i18n_strings.py:237
+#: i18n_strings.py:101
 msgid ""
-"Your bank account is empty. You have some rather big bills to pay. Who do "
-"you ask for money? "
+"Walk around as a human billboard for a day to make some money. Ok, but I "
+"would need to get paid at least…"
 msgstr ""
 
-#: i18n_strings.py:238
-msgid "We won't tell your boss."
-msgstr ""
-
-#: i18n_strings.py:239
+#: i18n_strings.py:103
 msgid ""
-"It’s late and you’re alone in the office. You can steal whatever you want. "
-"Nobody will find out. What do you take?"
+"What’s the minimum amount per month that people should get for their work?"
 msgstr ""
 
-#: i18n_strings.py:240
-msgid "When you were younger you would still listen to others, right?"
-msgstr ""
-
-#: i18n_strings.py:241
-msgid "What counted most when you picked your field of education?"
-msgstr ""
-
-#: i18n_strings.py:242
-msgid "Think you might be CEO some day as well?"
-msgstr ""
-
-#: i18n_strings.py:243
-msgid "Should CEO salaries should be capped?"
-msgstr ""
-
-#: i18n_strings.py:244
-msgid "You never know."
-msgstr ""
-
-#: i18n_strings.py:245
+#: i18n_strings.py:104
 msgid ""
-"You hit the jackpot and win 10 million in the lottery. Do you continue your "
-"current work?"
+"Donate sperm or an egg to make some money? Ok, but I would need to get paid "
+"at least…"
 msgstr ""
 
-#: i18n_strings.py:246
-msgid "Maybe just while you're still young?"
-msgstr ""
-
-#: i18n_strings.py:247
+#: i18n_strings.py:105
 msgid ""
-"Working for free on an organic farm for one year. No pay, but food and "
-"shelter provided. Would you be up for that?"
+"Sleep with a stranger to make some money? Ok, but I would need to get paid "
+"at least…"
 msgstr ""
 
-#: i18n_strings.py:248
-msgid "Click on one!"
-msgstr ""
-
-#: i18n_strings.py:249
+#: i18n_strings.py:106
 msgid ""
-"Like all children, you surely had a dream job, when you were younger. Are "
-"you working in your childhood dreamjob now?"
+"Stand in line for a full night for someone else? Ok, but I would need to get "
+"paid at least…"
 msgstr ""
 
-#: i18n_strings.py:250
-msgid "For you, a student who wants to study in the sun is..."
-msgstr ""
-
-#: i18n_strings.py:251
-msgid "Any clue where your money in 12 months will be coming from?"
-msgstr ""
-
-#: i18n_strings.py:252
-msgid "When do you see yourself having a(nother) child?"
-msgstr ""
-
-#: i18n_strings.py:253
+#: i18n_strings.py:107
 msgid ""
-"You’re running out of money. What would you be willing to do to get a job?"
+"<p>Worried about privacy? You should. We are, too. That's why we don't store "
+"any personal information about you.</p>"
 msgstr ""
 
-#: i18n_strings.py:254
-msgid "Do you believe in the retirement system?"
-msgstr ""
-
-#: i18n_strings.py:255
-msgid ""
-"Imagine your mother owns a family business producing plastic straws. Very "
-"honestly, would you consider carrying it on?"
-msgstr ""
-
-#: i18n_strings.py:256
-msgid ""
-"Someone gives you 100,000 €, no questions asked. What would you do with that "
-"kind of money?"
-msgstr ""
-
-#: i18n_strings.py:257
-msgid ""
-"If you think of the job you’re currently doing. Could you get replaced by a "
-"robot in the future?"
-msgstr ""
-
-#: i18n_strings.py:258
-msgid "Is it OK when internships are unpaid?"
-msgstr ""
-
-#: i18n_strings.py:259
-msgid "Since the economic crisis you’ve been working harder... Really?"
-msgstr ""
-
-#: i18n_strings.py:260
-msgid ""
-"Women and men should get equal pay for equal work. But, does that actually "
-"work in real life?"
-msgstr ""
-
-#: i18n_strings.py:261
-msgid "What should your boss be allowed to know about you?"
-msgstr ""
-
-#: i18n_strings.py:262
-msgid ""
-"Taking care of your grandparents - full time. Would you be ready to do that "
-"if the state guaranteed you a basic income?"
-msgstr ""
-
-#: i18n_strings.py:263
-msgid ""
-"As almost everybody you’ve probably received some professional career "
-"advice. But, did it help you?"
-msgstr ""
-
-#: i18n_strings.py:264
-msgid ""
-"An immigrant just snatched a job you applied for because she’s more "
-"qualified. Do you have a problem with that?"
-msgstr ""
-
-#: i18n_strings.py:265
-msgid ""
-"Would you pay 2 € more for a drying rack manufactured by disabled people?"
-msgstr ""
-
-#: i18n_strings.py:266
-msgid "If you were mobbed at work who would you ask for help?"
-msgstr ""
-
-#: i18n_strings.py:267
-msgid ""
-"You’re applying for a job. Do you try to hide your gender, your religion or "
-"your skin color?"
-msgstr ""
-
-#: i18n_strings.py:268
-msgid ""
-"Imagine everybody was guaranteed 800 € per month without doing anything. "
-"Would you regret to be working so much?"
-msgstr ""
-
-#: i18n_strings.py:269
-msgid ""
-"Put your life on hold for two years to prepare the entry exam of your dream "
-"school. Ready to do that?"
-msgstr ""
-
-#: i18n_strings.py:270
-msgid "Apart from work, where does the money on your bank account come from?"
-msgstr ""
-
-#: i18n_strings.py:271
-msgid ""
-"Have you ever had to leave an apartment because you were unable to pay the "
-"rent?"
-msgstr ""
-
-#: i18n_strings.py:272
-msgid ""
-"If your site is only similar to our options, no worries, we’ll accept that "
-"too."
-msgstr ""
-
-#: i18n_strings.py:273
-msgid "Have you already used one of these sites to make ends meet?"
-msgstr ""
-
-#: i18n_strings.py:274
-msgid "Writing and editing Wikipedia entries, would you call that work?"
-msgstr ""
-
-#: i18n_strings.py:275
-msgid ""
-"Wave of a magic wand and you can pick whatever working contract you like. "
-"What would you pick?"
-msgstr ""
-
-#: i18n_strings.py:276
-msgid ""
-"Would the world be worse off if you stopped working from one day to the "
-"other?"
-msgstr ""
-
-#: i18n_strings.py:277
-msgid "For what reasons would you give up your job?"
-msgstr ""
-
-#: i18n_strings.py:278
-msgid "Which drugs are acceptable at work?"
-msgstr ""
-
-#: i18n_strings.py:279
-msgid "Have you ever replied to a normal job ad?"
-msgstr ""
-
-#: i18n_strings.py:280
-msgid "I spend so much time on my way to work that I could..."
-msgstr ""
-
-#: i18n_strings.py:281
-msgid "At what time do you start working in the morning?"
-msgstr ""
-
-#: i18n_strings.py:282
-msgid ""
-"Everybody seems to be going abroad to find a job. So, what are you waiting "
-"for?"
-msgstr ""
-
-#: i18n_strings.py:283
-msgid "Click on the corresponding option"
-msgstr ""
-
-#: i18n_strings.py:284
-msgid "Look at that, your boss is asking to be your friend on Facebook…"
-msgstr ""
-
-#: i18n_strings.py:285
-msgid "Choose one option"
-msgstr ""
-
-#: i18n_strings.py:286
-msgid ""
-"Just hanging around... What's the longest period you have been without work?"
-msgstr ""
-
-#: i18n_strings.py:287
-msgid ""
-"<strong>Tell us more about you and compare yourself to others.</strong> <br> "
-"Worried about privacy? You should. We are, too. That's why we don't store "
-"any personal information."
-msgstr ""
-
-#: i18n_strings.py:288
+#: i18n_strings.py:108
 msgid "You"
 msgstr ""
 
-#: i18n_strings.py:289
+#: i18n_strings.py:109
 msgid ""
-"Temporary contracts. Permanent job-hunt. Playing online poker for a living, "
-"cooking for all your flat-mates, or days of writing and editing on "
-"Wikipedia. Economists only measure (un)employment. <br> <strong> What&rsquo;"
-"s work for you? Let us know and find out about others! </strong>"
+"<p>Temporary contracts. Permanent job-hunt. Playing online poker for a "
+"living. Editing Wikipedia. Work can be many things. But economists still "
+"measure (un)employment the same way.</p> <br/> \n"
+"<p><strong> What&rsquo;s work for you?</strong></p>"
 msgstr ""
 
-#: i18n_strings.py:290
+#: i18n_strings.py:111
 msgid "Your Work"
 msgstr ""
 
-#: i18n_strings.py:291
+#: i18n_strings.py:112
 msgid ""
 "The cash machine in your bank&rsquo;s local branch fuels your life. But what "
 "if your source of money dries up? Doing small jobs here and there, selling "
 "stuff on ebay, asking family and friends for cash. That&rsquo;s what young "
-"people do get by. <br> <strong>How do you make ends meet? Let us know and "
-"find out about others!</strong>"
+"people do get by. <br> <strong>How do you make ends meet?</strong>"
 msgstr ""
 
-#: i18n_strings.py:292
+#: i18n_strings.py:113
 msgid "Your Money"
 msgstr ""
 
-#: i18n_strings.py:293
+#: i18n_strings.py:114
 msgid ""
 "Your teachers have always told you that being good at Maths and English, "
 "learning to type with ten fingers, enrolling auto mechanic training or "
 "studying law will guarantee you a quiet life. <br> <strong>What are the "
-"skills that you really need in your working life? Let us know and find out "
-"about others!</strong>"
+"skills that you really need in your working life?</strong>"
 msgstr ""
 
-#: i18n_strings.py:294
+#: i18n_strings.py:115
 msgid "Your Education"
 msgstr ""
 
-#: i18n_strings.py:295
+#: i18n_strings.py:116
 msgid ""
 "What&rsquo;s a minimum salary that doesn&rsquo;t destroy jobs? How can we "
 "ensure that women make as much money as men? That&rsquo;s what politicians "
 "debate. Some think we should pay everybody a universal income - with no "
 "obligation to work. <br> <strong>If you were Minister of Labour for one day, "
-"what would be your plan? Let us know and find out about others!</strong>"
+"what would be your plan?</strong>"
 msgstr ""
 
-#: i18n_strings.py:296
+#: i18n_strings.py:117
 msgid "Your Government"
 msgstr ""
 
-#: i18n_strings.py:297
+#: i18n_strings.py:118
 msgid ""
 "A 38-hour week. A single-family, detached house. Retirement with 62. That "
 "might have been your parents’  work life plan. The circumstances have "
 "changed. Our generation is dreaming a different dream. But what’s still to "
 "come? Will self-driving cars bring our children to school? <br> <strong>How "
-"do you see your future World of Work? Let us know and find out about others!"
-"</strong>"
+"do you see your future World of Work?</strong>"
 msgstr ""
 
-#: i18n_strings.py:298
+#: i18n_strings.py:119
 msgid "Your Future"
+msgstr ""
+
+#: i18n_strings.py:120
+msgid "Yes"
+msgstr ""
+
+#: i18n_strings.py:121
+msgid "No"
+msgstr ""
+
+#: i18n_strings.py:122 core/models.py:41 core/types.py:11
+msgid "Female"
+msgstr ""
+
+#: i18n_strings.py:123 core/models.py:40 core/types.py:10
+msgid "Male"
+msgstr ""
+
+#: i18n_strings.py:124
+msgid "Your parents"
+msgstr ""
+
+#: i18n_strings.py:125
+msgid "Other family members"
+msgstr ""
+
+#: i18n_strings.py:126
+msgid "Your partner"
+msgstr ""
+
+#: i18n_strings.py:127
+msgid "Your friends"
+msgstr ""
+
+#: i18n_strings.py:128
+msgid "The bank"
+msgstr ""
+
+#: i18n_strings.py:129
+msgid "A DVD         (around 30 €)       "
+msgstr ""
+
+#: i18n_strings.py:130
+msgid "An iPad                               (around 490 €)       "
+msgstr ""
+
+#: i18n_strings.py:131
+msgid "Your boss' fixie bike (900 €)"
+msgstr ""
+
+#: i18n_strings.py:132
+msgid "My parents’ opinion"
+msgstr ""
+
+#: i18n_strings.py:133
+msgid "The job market"
+msgstr ""
+
+#: i18n_strings.py:134
+msgid "My professors’ advice"
+msgstr ""
+
+#: i18n_strings.py:135
+msgid "My personal ambition"
+msgstr ""
+
+#: i18n_strings.py:136
+msgid "The cost of studies"
+msgstr ""
+
+#: i18n_strings.py:137
+msgid "Sure, I love my job."
+msgstr ""
+
+#: i18n_strings.py:138
+msgid "Yes, but only to keep myself busy."
+msgstr ""
+
+#: i18n_strings.py:139
+msgid "No way, I’m only in it for the money."
+msgstr ""
+
+#: i18n_strings.py:140
+msgid "Yes, I’m more or less living the dream."
+msgstr ""
+
+#: i18n_strings.py:141
+msgid "No, I had to face reality."
+msgstr ""
+
+#: i18n_strings.py:142
+msgid "No, that job does not even exist anymore."
+msgstr ""
+
+#: i18n_strings.py:143
+msgid ""
+"Lazy: It’s not ok to choose your university according to the weather "
+"forecast."
+msgstr ""
+
+#: i18n_strings.py:144
+msgid "within 2 years"
+msgstr ""
+
+#: i18n_strings.py:145
+msgid "fake my CV"
+msgstr ""
+
+#: i18n_strings.py:146
+msgid "Yes, my parents can count on it, and so can I."
+msgstr ""
+
+#: i18n_strings.py:147
+msgid "Yes, in any case"
+msgstr ""
+
+#: i18n_strings.py:148
+msgid "Start a business"
+msgstr ""
+
+#: i18n_strings.py:149
+msgid ""
+"Yes. As an intern you’re here to learn. That's even better than a salary."
+msgstr ""
+
+#: i18n_strings.py:150
+msgid "Yes, I fear losing my job"
+msgstr ""
+
+#: i18n_strings.py:151
+msgid "Yes! Everything else is feminist propaganda"
+msgstr ""
+
+#: i18n_strings.py:152
+msgid "My last work email"
+msgstr ""
+
+#: i18n_strings.py:153
+msgid "Yes, it helped a lot"
+msgstr ""
+
+#: i18n_strings.py:154
+msgid "Yes, I should have priority"
+msgstr ""
+
+#: i18n_strings.py:155
+msgid "my union"
+msgstr ""
+
+#: i18n_strings.py:156
+msgid "My family"
+msgstr ""
+
+#: i18n_strings.py:157
+msgid "Online auctions"
+msgstr ""
+
+#: i18n_strings.py:158
+msgid "Yes, somebody should pay these people"
+msgstr ""
+
+#: i18n_strings.py:159
+msgid "Civil servant, so my future is safe  "
+msgstr ""
+
+#: i18n_strings.py:160
+msgid "My boss is a douchebag   "
+msgstr ""
+
+#: i18n_strings.py:161
+msgid "Coffee"
+msgstr ""
+
+#: i18n_strings.py:162
+msgid "Yes!"
+msgstr ""
+
+#: i18n_strings.py:163
+msgid "drink a cup of coffee (10 min)"
+msgstr ""
+
+#: i18n_strings.py:164
+msgid "7 am or before"
+msgstr ""
+
+#: i18n_strings.py:165
+msgid "It’s expensive to move!"
+msgstr ""
+
+#: i18n_strings.py:166
+msgid "I accept! It’s nice to be friends with your employer"
+msgstr ""
+
+#: i18n_strings.py:167
+msgid "just a couple of days"
+msgstr ""
+
+#: i18n_strings.py:168
+msgid ""
+"Clever: Everybody wants to study where it’s nice. They’ll make a lot of "
+"great contacts."
+msgstr ""
+
+#: i18n_strings.py:169
+msgid "within 5 years"
+msgstr ""
+
+#: i18n_strings.py:170
+msgid "break up with my partner"
+msgstr ""
+
+#: i18n_strings.py:171
+msgid ""
+"Yes, but considering my late start, I will have to work way longer than my "
+"parents."
+msgstr ""
+
+#: i18n_strings.py:172
+msgid "Yes, if it’s doing well"
+msgstr ""
+
+#: i18n_strings.py:173
+msgid "Organize a big party"
+msgstr ""
+
+#: i18n_strings.py:174
+msgid ""
+"Slavery has been abolished, right? Of course interns should get a salary!"
+msgstr ""
+
+#: i18n_strings.py:175
+msgid "No, I feel no difference"
+msgstr ""
+
+#: i18n_strings.py:176
+msgid "No! But never seen it myself"
+msgstr ""
+
+#: i18n_strings.py:177
+msgid "My address"
+msgstr ""
+
+#: i18n_strings.py:178
+msgid "I received a little help"
+msgstr ""
+
+#: i18n_strings.py:179
+msgid "No, we need skilled immigrants"
+msgstr ""
+
+#: i18n_strings.py:180
+msgid "my boss"
+msgstr ""
+
+#: i18n_strings.py:181
+msgid "My partner"
+msgstr ""
+
+#: i18n_strings.py:182
+msgid "Flat rental "
+msgstr ""
+
+#: i18n_strings.py:183
+msgid "No, it’s a hobby not more"
+msgstr ""
+
+#: i18n_strings.py:184
+msgid "Fixed-term contracts, to be able to change from time to time"
+msgstr ""
+
+#: i18n_strings.py:185
+msgid "My co-workers are unbearable"
+msgstr ""
+
+#: i18n_strings.py:186
+msgid "Cocaine"
+msgstr ""
+
+#: i18n_strings.py:187
+msgid "I prefer to use my contacts"
+msgstr ""
+
+#: i18n_strings.py:188
+msgid "read a long newspaper article (20 min)"
+msgstr ""
+
+#: i18n_strings.py:189
+msgid "around 8 am"
+msgstr ""
+
+#: i18n_strings.py:190
+msgid "I have more friends here"
+msgstr ""
+
+#: i18n_strings.py:191
+msgid "Never! I post all sorts of awkward things"
+msgstr ""
+
+#: i18n_strings.py:192
+msgid "several months"
+msgstr ""
+
+#: i18n_strings.py:193
+msgid "within 10 years"
+msgstr ""
+
+#: i18n_strings.py:194
+msgid "sleep my way up"
+msgstr ""
+
+#: i18n_strings.py:195
+msgid ""
+"No, I’ve figured it out: there’s no Santa Claus and there’s no retirement."
+msgstr ""
+
+#: i18n_strings.py:196
+msgid "Yes, but only to avoid upsetting them"
+msgstr ""
+
+#: i18n_strings.py:197
+msgid "Buy an apartment"
+msgstr ""
+
+#: i18n_strings.py:198
+msgid "Well, I’ve lost my job"
+msgstr ""
+
+#: i18n_strings.py:199
+msgid "No! And I speak from personal experience"
+msgstr ""
+
+#: i18n_strings.py:200
+msgid "My work pace"
+msgstr ""
+
+#: i18n_strings.py:201
+msgid "Not at all"
+msgstr ""
+
+#: i18n_strings.py:202
+msgid "my friends"
+msgstr ""
+
+#: i18n_strings.py:203
+msgid "I don’t have a dream school"
+msgstr ""
+
+#: i18n_strings.py:204
+msgid "My friends"
+msgstr ""
+
+#: i18n_strings.py:205
+msgid "Microwork"
+msgstr ""
+
+#: i18n_strings.py:206
+msgid "Now I don’t even know what work is anymore"
+msgstr ""
+
+#: i18n_strings.py:207
+msgid "A Permanent contract, to have maximum security"
+msgstr ""
+
+#: i18n_strings.py:208
+msgid "I don't get any (professional) satisfaction "
+msgstr ""
+
+#: i18n_strings.py:209
+msgid "Alcohol"
+msgstr ""
+
+#: i18n_strings.py:210
+msgid "I always do unsolicited applications"
+msgstr ""
+
+#: i18n_strings.py:211
+msgid "listen to the entire album Cheese, by Stromae (40 min)"
+msgstr ""
+
+#: i18n_strings.py:212
+msgid "around 9 am"
+msgstr ""
+
+#: i18n_strings.py:213
+msgid "My family: Sometimes they get on my nerves, but I’m attached to them"
+msgstr ""
+
+#: i18n_strings.py:214
+msgid "over a year"
+msgstr ""
+
+#: i18n_strings.py:215
+msgid "do cash-in-hand jobs"
+msgstr ""
+
+#: i18n_strings.py:216
+msgid "No, never ever"
+msgstr ""
+
+#: i18n_strings.py:217
+msgid "My drug consumption"
+msgstr ""
+
+#: i18n_strings.py:218
+msgid "my parents"
+msgstr ""
+
+#: i18n_strings.py:219
+msgid "The state"
+msgstr ""
+
+#: i18n_strings.py:220
+msgid "Carsharing"
+msgstr ""
+
+#: i18n_strings.py:221
+msgid "Self-employed, to be my own boss"
+msgstr ""
+
+#: i18n_strings.py:222
+msgid "My salary is a joke"
+msgstr ""
+
+#: i18n_strings.py:223
+msgid "Cannabis"
+msgstr ""
+
+#: i18n_strings.py:224
+msgid "watch Gravity in full (1h30)"
+msgstr ""
+
+#: i18n_strings.py:225
+msgid "10 am or after"
+msgstr ""
+
+#: i18n_strings.py:226
+msgid "They don’t even speak English there"
+msgstr ""
+
+#: i18n_strings.py:227
+msgid "a couple of years"
+msgstr ""
+
+#: i18n_strings.py:228
+msgid "My health record"
+msgstr ""
+
+#: i18n_strings.py:229
+msgid "Loans"
+msgstr ""
+
+#: i18n_strings.py:230
+msgid "DIY Marketplace "
+msgstr ""
+
+#: i18n_strings.py:231
+msgid "I don’t have a private life any more"
+msgstr ""
+
+#: i18n_strings.py:232
+msgid "LSD"
+msgstr ""
+
+#: i18n_strings.py:233
+msgid "Not concerned, I stay at home"
+msgstr ""
+
+#: i18n_strings.py:234
+msgid "C’mon I’m just a bit slower"
+msgstr ""
+
+#: i18n_strings.py:235
+msgid "My DNA"
+msgstr ""
+
+#: i18n_strings.py:236
+msgid "None"
+msgstr ""
+
+#: i18n_strings.py:237
+msgid ""
+"Nothing, I’m filling this out from my room in Berlin and it feels great!"
+msgstr ""
+
+#: i18n_strings.py:238
+msgid "Is begging work?"
+msgstr ""
+
+#: i18n_strings.py:239
+msgid "How old are you?"
+msgstr ""
+
+#: i18n_strings.py:240
+msgid "What toilet door would you choose?"
+msgstr ""
+
+#: i18n_strings.py:241
+msgid "If at all - what gender do you identify yourself with most?"
+msgstr ""
+
+#: i18n_strings.py:242
+msgid "Where you spend most of your time."
+msgstr ""
+
+#: i18n_strings.py:243
+msgid "Where do you live?"
+msgstr ""
+
+#: i18n_strings.py:244
+msgid "Where were you born?"
+msgstr ""
+
+#: i18n_strings.py:245
+msgid ""
+"Your bank account is empty. You have some rather big bills to pay. Who do "
+"you ask for money? "
+msgstr ""
+
+#: i18n_strings.py:246
+msgid "We won't tell your boss."
+msgstr ""
+
+#: i18n_strings.py:247
+msgid ""
+"It’s late and you’re alone in the office. You can steal whatever you want. "
+"Nobody will find out. What do you take?"
+msgstr ""
+
+#: i18n_strings.py:248
+msgid "What counted most when you picked your field of education?"
+msgstr ""
+
+#: i18n_strings.py:249
+msgid "Think you might be CEO some day as well?"
+msgstr ""
+
+#: i18n_strings.py:250
+msgid "Should CEO salaries should be capped?"
+msgstr ""
+
+#: i18n_strings.py:251
+msgid "You never know."
+msgstr ""
+
+#: i18n_strings.py:252
+msgid ""
+"You hit the jackpot and win 10 million in the lottery. Do you continue your "
+"current work?"
+msgstr ""
+
+#: i18n_strings.py:253
+msgid "Maybe just while you're still young?"
+msgstr ""
+
+#: i18n_strings.py:254
+msgid ""
+"Working for free on an organic farm for one year. No pay, but food and "
+"shelter provided. Would you be up for that?"
+msgstr ""
+
+#: i18n_strings.py:255
+msgid ""
+"Like all children, you surely had a dream job, when you were younger. Are "
+"you working in your childhood dreamjob now?"
+msgstr ""
+
+#: i18n_strings.py:256
+msgid "For you, a student who wants to study in the sun is..."
+msgstr ""
+
+#: i18n_strings.py:257
+msgid "Any clue where your money in 12 months will be coming from?"
+msgstr ""
+
+#: i18n_strings.py:258
+msgid "When do you see yourself having a(nother) child?"
+msgstr ""
+
+#: i18n_strings.py:259
+msgid ""
+"You’re running out of money. What would you be willing to do to get a job?"
+msgstr ""
+
+#: i18n_strings.py:260
+msgid "Do you believe in the retirement system?"
+msgstr ""
+
+#: i18n_strings.py:261
+msgid ""
+"Imagine your mother owns a family business producing plastic straws. Very "
+"honestly, would you consider carrying it on?"
+msgstr ""
+
+#: i18n_strings.py:262
+msgid ""
+"Someone gives you 100,000€, no questions asked. What would you do with that "
+"kind of money?"
+msgstr ""
+
+#: i18n_strings.py:263
+msgid ""
+"If you think of the job you’re currently doing. Could you get replaced by a "
+"robot in the future?"
+msgstr ""
+
+#: i18n_strings.py:264
+msgid "Is it OK when internships are unpaid?"
+msgstr ""
+
+#: i18n_strings.py:265
+msgid "Since the economic crisis you’ve been working harder... Really?"
+msgstr ""
+
+#: i18n_strings.py:266
+msgid ""
+"Women and men should get equal pay for equal work. But, does that actually "
+"work in real life?"
+msgstr ""
+
+#: i18n_strings.py:267
+msgid "What should your boss be allowed to know about you?"
+msgstr ""
+
+#: i18n_strings.py:268
+msgid ""
+"Taking care of your grandparents - full time. Would you be ready to do that "
+"if the state guaranteed you a basic income?"
+msgstr ""
+
+#: i18n_strings.py:269
+msgid ""
+"As almost everybody you’ve probably received some professional career "
+"advice. But, did it help you?"
+msgstr ""
+
+#: i18n_strings.py:270
+msgid ""
+"An immigrant just snatched a job you applied for because she’s more "
+"qualified. Do you have a problem with that?"
+msgstr ""
+
+#: i18n_strings.py:271
+msgid ""
+"Would you pay 2 € more for a drying rack manufactured by disabled people?"
+msgstr ""
+
+#: i18n_strings.py:272
+msgid "If you were mobbed at work who would you ask for help?"
+msgstr ""
+
+#: i18n_strings.py:273
+msgid ""
+"You’re applying for a job. Do you try to hide your gender, your religion or "
+"your skin color?"
+msgstr ""
+
+#: i18n_strings.py:274
+msgid ""
+"Imagine everybody was guaranteed 800 € per month without doing anything. "
+"Would you regret to be working so much?"
+msgstr ""
+
+#: i18n_strings.py:275
+msgid ""
+"Put your life on hold for two years to prepare the entry exam of your dream "
+"school. Ready to do that?"
+msgstr ""
+
+#: i18n_strings.py:276
+msgid "Apart from work, where does the money on your bank account come from?"
+msgstr ""
+
+#: i18n_strings.py:277
+msgid ""
+"Have you ever had to leave an apartment because you were unable to pay the "
+"rent?"
+msgstr ""
+
+#: i18n_strings.py:278
+msgid "Similar sites are ok, too!"
+msgstr ""
+
+#: i18n_strings.py:279
+msgid "Have you already used one of these sites to make ends meet?"
+msgstr ""
+
+#: i18n_strings.py:280
+msgid "Writing and editing Wikipedia entries, would you call that work?"
+msgstr ""
+
+#: i18n_strings.py:281
+msgid ""
+"Wave of a magic wand and you can pick whatever working contract you like. "
+"What would you pick?"
+msgstr ""
+
+#: i18n_strings.py:282
+msgid ""
+"Would the world be worse off if you stopped working from one day to the "
+"other?"
+msgstr ""
+
+#: i18n_strings.py:283
+msgid "For what reasons would you give up your job?"
+msgstr ""
+
+#: i18n_strings.py:284
+msgid "Which drugs are acceptable at work?"
+msgstr ""
+
+#: i18n_strings.py:285
+msgid "Have you ever replied to a normal job ad?"
+msgstr ""
+
+#: i18n_strings.py:286
+msgid "I spend so much time on my way to work that I could..."
+msgstr ""
+
+#: i18n_strings.py:287
+msgid "At what time do you start working in the morning?"
+msgstr ""
+
+#: i18n_strings.py:288
+msgid ""
+"Everybody seems to be going abroad to find a job. So, what are you waiting "
+"for?"
+msgstr ""
+
+#: i18n_strings.py:289
+msgid "Look at that, your boss is asking to be your friend on Facebook…"
+msgstr ""
+
+#: i18n_strings.py:290
+msgid ""
+"Just hanging around... What's the longest period you have been without work?"
 msgstr ""
 
 #: settings.py:52
@@ -1443,11 +1398,11 @@ msgstr ""
 msgid "French"
 msgstr ""
 
-#: api/serializers.py:231 api/serializers.py:254
+#: api/serializers.py:246 api/serializers.py:270
 msgid "You have to select at least one choice"
 msgstr ""
 
-#: api/serializers.py:233 api/serializers.py:252
+#: api/serializers.py:268
 msgid "This choice {c} is not related to the answered question"
 msgstr ""
 
@@ -1471,7 +1426,7 @@ msgstr ""
 msgid "Image (big)"
 msgstr ""
 
-#: core/models.py:54 core/models.py:278
+#: core/models.py:54 core/models.py:276
 msgid "User gender"
 msgstr ""
 
@@ -1491,87 +1446,87 @@ msgstr ""
 msgid "Thematic ending description"
 msgstr ""
 
-#: core/models.py:141
+#: core/models.py:140
 msgid "No position"
 msgstr ""
 
-#: core/models.py:162
+#: core/models.py:161
 msgid "Feedbacks sentence"
 msgstr ""
 
-#: core/models.py:163
+#: core/models.py:162
 msgid "Sentence (as html content): \"Hey did you knew .. ?\""
 msgstr ""
 
-#: core/models.py:294
+#: core/models.py:292
 msgid "Question label"
 msgstr ""
 
-#: core/models.py:295
+#: core/models.py:293
 msgid "Question hint text"
 msgstr ""
 
-#: core/models.py:338
+#: core/models.py:336
 msgid "Number choice question"
 msgstr ""
 
-#: core/models.py:339
+#: core/models.py:337
 msgid "Number choice questions"
 msgstr ""
 
-#: core/models.py:341
+#: core/models.py:339
 msgid "Number unit"
 msgstr ""
 
-#: core/models.py:341
+#: core/models.py:339
 msgid "Unit that will be displayed after the min and max numbers."
 msgstr ""
 
-#: core/models.py:378
+#: core/models.py:376
 msgid "Text (multiple choices) question"
 msgstr ""
 
-#: core/models.py:379
+#: core/models.py:377
 msgid "Text (multiple choices) questions"
 msgstr ""
 
-#: core/models.py:384
+#: core/models.py:382
 msgid "Text (single choice) question"
 msgstr ""
 
-#: core/models.py:385
+#: core/models.py:383
 msgid "Text (single choice) questions"
 msgstr ""
 
-#: core/models.py:399
+#: core/models.py:397
 msgid "Single choice question"
 msgstr ""
 
-#: core/models.py:409
+#: core/models.py:407
 msgid "Multiple choices question"
 msgstr ""
 
-#: core/models.py:427
+#: core/models.py:425
 msgid "Related profile attribute"
 msgstr ""
 
-#: core/models.py:429
+#: core/models.py:427
 msgid "Select user profile attribute that will be changed by user answer"
 msgstr ""
 
-#: core/models.py:449
+#: core/models.py:447
 msgid "Title of this choice"
 msgstr ""
 
-#: core/models.py:450
+#: core/models.py:448
 msgid "Position of this choice"
 msgstr ""
 
-#: core/models.py:459
+#: core/models.py:457
 msgid "Value of this field"
 msgstr ""
 
-#: core/models.py:460
+#: core/models.py:458
 msgid "It will tell user model what value should be stored in related field"
 msgstr ""
 
