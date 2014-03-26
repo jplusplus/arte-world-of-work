@@ -150,7 +150,9 @@ class ResultsCtrl
                     @$scope.current.answer = 0
                     if @elements[@$scope.current.thematic]?
                         @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
-                    @$scope.intro = 0
+                        @$scope.intro = 0
+                    else
+                        @$scope.intro = 1
                     return
 
         @$scope.$watch 'current.thematic', (newValue, oldValue) =>
