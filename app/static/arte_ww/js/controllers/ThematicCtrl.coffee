@@ -116,20 +116,20 @@ class ThematicCtrl
         # console.log '@userPosition.thematicPosition', @userPosition.thematicPosition()
         # console.log '@thematicService.count()', @thematicService.count()
         if (do @userPosition.thematicPosition) < @thematicService.count()
-            @currentState @states.INTRO
+            @currentState @states.LANDING
         else
             @scope.$parent.setState @utils.states.survey.OUTRO
 
     onThematicChanged: (thematic, old_thematic)=>
-        # console.log 'onThematicChanged(', thematic, ')'
         return unless thematic?
         if (typeof thematic.intro_description) is typeof String
             _.extend @scope.thematic.currentThematic,
                 intro_description: @sce.trustAsHtml(thematic.intro_description)
-        # console.log 'thematic changed, new element pos: ', @userPosition.elementPosition()
         
+        # special case for "You" thematic to skip the landing page. 
+        # !! DO NOT CHANGE !!
         if @userPosition.thematicPosition() is 0
-            @currentState @states.LANDING
+            @currentState @states.INTRO
 
 
     onElementChanged: (elem, old_elem)=>
