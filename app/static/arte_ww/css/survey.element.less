@@ -142,6 +142,11 @@
             width:215px;
             margin:10px 0;
             padding:0 10px;
+
+            @media (max-width: @screen-xs-min) {    
+                margin:10px auto;
+                width: auto;
+            }
         }
 
         .question-choices--typed-number {
@@ -179,7 +184,7 @@
 
         @media (max-width: @screen-xs-min) {    
             float:none;
-            margin:-30px auto 100px;
+            margin:10px auto 10px;
 
             iframe {
                 float:none;

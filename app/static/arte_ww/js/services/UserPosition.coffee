@@ -55,23 +55,32 @@ class PositionsObject
     all: => @elements
 
 class UserPositionService
-    @$inject: ['$http', 'utils']
+    @$inject: ['$rootScope', '$http', 'utils']
 
     state: undefined
     positions:
         thematicPosition: undefined
         elementPosition: undefined
 
-    constructor: (@$http, @utils) ->
+    constructor: (@rootScope, @$http, @utils) ->
+        # Notify rootScope to display a loading spinner
+        @rootScope.isUserLoading = yes 
+
         @utils.authenticate (=>
             request =
                 url : '/api/my-position'
                 method : 'GET'
             ((@$http request).success (data) =>
+                # Disabled loading spinner
+                @rootScope.isUserLoading = no
+                
                 @positions =
                     thematicPosition : data.thematic_position
                     elementPosition : data.element_position
             ).error =>
+                # Disabled loading spinner  
+                @rootScope.isUserLoading = no
+
                 @positions =
                     thematicPosition : 0
                     elementPosition : 0

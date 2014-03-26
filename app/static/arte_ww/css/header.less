@@ -51,7 +51,14 @@
 
             &__caption {
                 margin-top:5px;
-                color:inherit;                
+                color:inherit; 
+
+                &--arte {
+                    .hide-text();
+                    display: block;
+                    height:40px;
+                    background:url("../img/ui/arte.png") no-repeat top center;
+                }               
             }
 
             @media (max-width: @screen-sm-min) {
