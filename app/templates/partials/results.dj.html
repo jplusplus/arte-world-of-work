@@ -58,8 +58,12 @@
         <button ng-class="{active:filters.female}" ng-click="filter('female')" translate>Female</button>
     </div>
     <div class="answer-filters__age">
-        <p ng-if="filters.age_min !== filters.age_max"><strong>[[filters.age_min]]</strong> à <strong>[[filters.age_max]]</strong> ans</p>
-        <p ng-if="filters.age_min === filters.age_max"><strong>[[filters.age_min]]</strong> ans</p>
+        <p ng-if="filters.age_min !== filters.age_max">
+            <strong>[[filters.age_min]]</strong>&nbsp;<span tanslate>to</span>&nbsp;<strong>[[filters.age_max]]</strong>&nbsp;<span translate>years old</span>
+        </p>
+        <p ng-if="filters.age_min === filters.age_max">
+            <strong>[[filters.age_min]]</strong>&nbsp;<span translate>years old</span>
+        </p>
         <div slider ng-from='filters.age_min' ng-to='filters.age_max' start='16' end='35' ng-attr-callback='set'></div>
     </div>
 </div>
