@@ -10,7 +10,7 @@ class ResultsCtrl
         if not (do @Thematic.current)?
             @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
         @$scope.hasNext = @$scope.hasPrev = yes
-        @$scope.nochart = true
+        @$scope.nochart = false
         if id.id >= 0
             request =
                 url : "/api/questions/#{id.id}"
