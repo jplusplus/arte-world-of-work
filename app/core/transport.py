@@ -109,8 +109,8 @@ class BarChart(ResultObject):
         if int(self.total_answers) > 0:
             for choice in self.question.choices():
                 answers = self.queryset.filter(value=choice)
-                percentage = answers.count() * 100.0 / self.total_answers
-                percentage = int(percentage)
+                percentage = answers.count() / float(self.total_answers)
+                percentage = int(percentage*100+0.5)
                 self.add_set(choice, percentage)
 
     def add_set(self, choice, value): 
@@ -174,7 +174,6 @@ class DynamicFeedback(object):
             pass
 
         answers_pool    = self.lookup_for_answers()
-        use_percentage  = self.is_percentage()
         all_answers     = answers_pool['all_answers']
         profile_answers = answers_pool['profile_answers']
         answers_set     = profile_answers['set']
@@ -183,10 +182,10 @@ class DynamicFeedback(object):
         if answers_set == None:
             answers_set = all_answers
 
-        self.total_answers = answers_set.count()
+        self.total_answers = all_answers.count()
 
         context_dict = {
-            'total_number':        self.total_answers,
+            'total_number':        answers_set.count(),
             'profile_attr':        profile_attr,
             'profile_attr_value':  self.get_profile_value(profile_attr),
             'use_profile_attr':    profile_attr != None,
@@ -195,9 +194,9 @@ class DynamicFeedback(object):
         if myanswer and context_dict['total_number'] > 0:
             similar_answers = self.get_similar(answers_set, myanswer)
             answer_count    = similar_answers.count()
-            if use_percentage:
-                percentage = float(answer_count) / context_dict['total_number']
-                context_dict['value'] = int(round(percentage*100))
+            if self.is_percentage(context_dict):
+                percentage = answer_count / float(context_dict['total_number'])
+                context_dict['value'] = int(percentage*100+0.5)
                 rendered = render_to_string('dynamic_feedback_percentage.dj.html', context_dict)
             else:
                 context_dict['value'] = answer_count
@@ -271,14 +270,20 @@ class DynamicFeedback(object):
         }
         return answers_pool
 
-    def is_percentage(self):
+    def is_percentage(self, context):
         # will randomly decide if we should use percentage or count results 
         # Return boolean to tell if result type is percentage or not.
         if self._use_percentage != None:
-            return self._use_percentage
+            use_percentage = self._use_percentage
         else:
-            choices = (True, False)
-            return choices[ random.randint(0, len(choices) - 1) ]
+            if self.question.typology == 'typed_number':
+                use_percentage = False
+            elif not context['use_profile_attr']:
+                use_percentage = False
+            else: 
+                choices = (True, False)
+                use_percentage = choices[ random.randint(0, len(choices) - 1) ]
+        return use_percentage
 
     def as_dict(self):
         return {
