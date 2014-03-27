@@ -6,5 +6,5 @@
 
 {% block content %}
     <img ng-src="[[feedback.picture]]" class="feedback__content__picture thumbnail" ng-if="feedback.picture">
-    <p class="feedback__content__source"><span translate>Source: </span><a href="[[ feedback.source_url ]]">[[ feedback.source_title]]</a></p>
+    <p class="feedback__content__source"><span translate>Source:</span> <a href="[[ feedback.source_url ]]" target="_blank">[[ feedback.source_title]]</a></p>
 {% endblock %}
