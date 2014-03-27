@@ -110,7 +110,7 @@ class BarChart(ResultObject):
             for choice in self.question.choices():
                 answers = self.queryset.filter(value=choice)
                 percentage = answers.count() * 100.0 / self.total_answers
-                percentage = int(percentage)
+                percentage = int(percentage + 0.5)
                 self.add_set(choice, percentage)
 
     def add_set(self, choice, value): 
