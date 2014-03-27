@@ -26,7 +26,7 @@ class ElementsWrapper
     onThematicChanged: (thematicposition, old_thematicposition)=>
         if thematicposition?
             @Thematic.getAt thematicposition, ((o) =>
-                return (thematic) =>
+                return (thematic)=>
                     return unless thematic?
                     @elements = @userPosition.createWrapper thematic.elements
                     @onElementPositionChanged do @userPosition.elementPosition
@@ -37,43 +37,35 @@ class ElementsWrapper
         challenger = @getAt position
         # first time we arrive on the widget 
         if !@currentElement and challenger
-            console.log 'onElementPositionChanged if !@currentElement and challenger'
             @currentElement = challenger
 
         # we initialized the widget with a wrong position 
         if !challenger and !old_position 
-            console.log 'onElementPositionChanged if !challenger and !old_position'
             @fixPosition(position)
 
         # load a feedback for this element or not.
         # if position > old_position and @feedback.distanceIsGood()
         if position > old_position and @shouldDisplayFeedback()
-            console.log 'we should display feedback for current element'
+            staticFeedback = @currentElement.feedback
             # check if old element should display a feedback
             promise = @feedbackService.getForQuestion(@currentElement.id)
             promise.then (dynFeedback)=>
-                console.log dynFeedback, dynFeedback.total_answers
-                if dynFeedback.total_answers >= 10
+                if @isFeedback(dynFeedback) and dynFeedback.total_answers >= 500
                     feedback = dynFeedback
-                else if @currentElement.feedback
-                    feedback = @utils.wrapFeedback @currentElement.feedback
-                feedback.question = @currentElement
-                # if @shouldDisplayFeedback() and feedback
+                else if @isFeedback(staticFeedback)
+                    feedback = @utils.wrapFeedback staticFeedback
                 if feedback
+                    feedback.question = @currentElement
                     @elements.insertAt position, feedback
-
-                challenger = @elements.getAt position
-                @currentElement = challenger
+                @currentElement = @elements.getAt position
         else
             @currentElement = challenger
 
     fixPosition: (position)=>
-        # console.log 'fixPosition(', position, ')'
         nb_elem = @all().length
-        if position >= nb_elem
-            @userPosition.elementPosition(nb_elem - 1)
-            @onElementPositionChanged do @userPosition.elementPosition
-            # @rootScope.$apply()
+        if nb_elem > 0
+            if position >= nb_elem
+                @userPosition.elementPosition(nb_elem - 1)
 
     onElementChanged: (new_el, old_el)=>
         return unless new_el
@@ -119,5 +111,7 @@ class ElementsWrapper
     getAt: (pos)=> @elements.getAt pos
 
     isYou: => @Thematic.currentThematic.slug == 'toi'
+
+    isFeedback: (elem)=> elem and elem.type is 'feedback'
 
 angular.module('arte-ww.services').service 'ElementsWrapper', ElementsWrapper

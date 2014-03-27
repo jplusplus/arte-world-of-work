@@ -1,7 +1,7 @@
 class PositionsObject
     constructor: (elements, @utils)->
-        @elements = @wrapElements(elements)
-        do @updateElements
+        elements = @wrapElements(elements)
+        @updateElements(elements)
 
     get_pos = (el)-> 
         return el unless el
@@ -12,17 +12,21 @@ class PositionsObject
         el.position = i
         el
 
-    makeElementPositionsUnique: =>
-        @elements = _.sortBy @elements, get_pos
-        @elements = _.map    @elements, set_index_as_pos 
+    makeElementPositionsUnique:(elements)=>
+        elements  = _.sortBy elements, get_pos
+        elements  = _.map    elements, set_index_as_pos
+        elements
+
+    updateElements: (elements)=>
+        elements  = elements or @elements
+        elements  = @makeElementPositionsUnique(elements)
+        elements  = @updatePositions(elements)
+        @elements = elements
 
 
-    updateElements: =>
-        do @makeElementPositionsUnique
-        do @updatePositions
-
-    updatePositions: =>
-        @positions =  _.map(@elements, get_pos)
+    updatePositions:(elements)=>
+        @positions =  _.map(elements, get_pos)
+        elements
 
     positionAt: (i)=> @positions[i]
 
@@ -36,8 +40,8 @@ class PositionsObject
         else
             el.position = _.first( right_part ).position
         _.each right_part, (el)-> el.position += 1
-        @elements  = _.union left_part, [el], right_part
-        do @updateElements
+        elements  = _.union left_part, [el], right_part
+        @updateElements(elements)
 
     count: => @elements.length
 
