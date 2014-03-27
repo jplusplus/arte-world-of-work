@@ -42,7 +42,7 @@ class ThematicCtrl
             thematic: @thematicService
             # function binding
             elements: => @elements()
-            currentElement: => @currentElement()
+            currentElement: => @currentElement
 
         # ---------------------------------------------------------------------
         # Scope function bindings
@@ -56,9 +56,9 @@ class ThematicCtrl
             letsgo: @letsgo
 
         # watches
-        @scope.$watch 'thematic.currentThematic', @onThematicChanged 
+        @scope.$watch 'thematic.currentThematic', @onThematicChanged
         @scope.$watch => 
-                @currentElement()
+                @elementsWrapper.currentElement
             , @onElementChanged
 
     letsgo: (skipIntro=false) =>
@@ -68,8 +68,6 @@ class ThematicCtrl
             @currentState @states.ELEMENTS
 
     elements: => @elementsWrapper.all()
-
-    currentElement: => @elementsWrapper.currentElement
 
     currentState: (state)=>
         if state?
@@ -82,17 +80,13 @@ class ThematicCtrl
 
     skipElement: (skipped=false) =>
         if skipped
-            # console.log 'skipElement - if skipped'
-            @Answer.deleteAnswerForQuestion @scope.currentElement().id
+            @Answer.deleteAnswerForQuestion @currentElement.id
         
         if @elementsWrapper.hasNextElement()
-            console.log 'skipElement - if @elementsWrapper.hasNextElement()'
             @userPosition.nextElement()
         else if @isDone()
-            console.log 'skipElement - else if @isDone()'
             @setNextThematic()
         else
-            console.log 'skipElement - else'
             @currentState(@states.OUTRO)
 
     previousElement: =>
@@ -110,11 +104,8 @@ class ThematicCtrl
     isDone    : => @isElements() and @userPosition.elementPosition() >= @elements().length - 1
 
     setNextThematic: =>
-        # console.log 'setNextThematic'
         @userPosition.nextThematic()
         (do @userPosition.thematicPosition)
-        # console.log '@userPosition.thematicPosition', @userPosition.thematicPosition()
-        # console.log '@thematicService.count()', @thematicService.count()
         if (do @userPosition.thematicPosition) < @thematicService.count()
             @currentState @states.LANDING
         else
@@ -133,8 +124,6 @@ class ThematicCtrl
 
 
     onElementChanged: (elem, old_elem)=>
-
-        # console.log 'onElementChanged(',elem, old_elem, ')'
         elem_pos = @userPosition.elementPosition()
         out_of_range = elem_pos >= @elements().length 
         # # security check, to pass to next thematic if last element is undefined
@@ -142,6 +131,9 @@ class ThematicCtrl
         # # last element of the current thematic
         if old_elem and !elem and @isDone()
             @setNextThematic()
+
+        if elem?
+            @currentElement = elem
         # if elem and !@isElements() and !@isIntro()
         #     @currentState @states.ELEMENTS
 
