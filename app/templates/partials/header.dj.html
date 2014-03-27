@@ -2,7 +2,7 @@
     <div class="container">
         <nav class="header__nav">
 
-            <a class="header__nav__brand-logo" draggable restore ng-href="{% url 'home' %}?lang=[[Page.currentLang()]]">
+            <a class="header__nav__brand-logo" draggable restore ng-href="{% url 'home' %}">
                 <h2>World <small>of</small> Work</h2>
                 
                 <p class="header__nav__brand-logo__caption" ng-class="{ 'header__nav__brand-logo__caption--arte': shouldDisplayArte }">
@@ -13,11 +13,11 @@
             <ul class="header__nav__links list-inline">
                 <li class="header__nav__links__element" 
                     ng-class="{ 'header__nav__links__element--active': currentCategory() == 'survey' }">
-                    <a ng-href="{% url 'survey' %}?lang=[[Page.currentLang()]]" translate>Survey</a>
+                    <a ng-href="{% url 'survey' %}" translate>Survey</a>
                 </li>
                 <li class="header__nav__links__element" 
                     ng-class="{ 'header__nav__links__element--active': currentCategory() == 'results' }">
-                    <a ng-href="{% url 'results' %}?lang=[[Page.currentLang()]]" translate>Results</a>
+                    <a ng-href="{% url 'results' %}" translate>Results</a>
                 </li>
             </ul>
             <div class="header__nav__back-to-beginning" ng-if="currentCategory() == 'survey' ">   
