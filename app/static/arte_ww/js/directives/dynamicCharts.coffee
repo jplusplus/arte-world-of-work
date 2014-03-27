@@ -174,16 +174,20 @@ class HBarChart extends BarChart
         @y.domain _.map @results, (d) -> d[0]
 
     getRectAttrs: =>
-        x : 0
-        y : (d) => @y(d[0])
-        width : (d) => @x(d[1])
-        height : do @y.rangeBand / 2
+        ratio = if @results.length <= 4 then 1.5 else 2
+        return {
+            x : 0
+            y : (d) => @y(d[0])
+            width : (d) => @x(d[1])
+            height : do @y.rangeBand / ratio }
 
     getTextAttrs: =>
-        x : 5
-        y : (d) => @y(d[0]) + (do @y.rangeBand) / 4
-        'dominant-baseline' : 'central'
-        class : (d) -> if (parseInt d[1]) is 0 then 'zero' else ' '
+        ratio = if @results.length <= 4 then 3 else 4
+        return {
+            x : 5
+            y : (d) => @y(d[0]) + (do @y.rangeBand) / ratio
+            'dominant-baseline' : 'central'
+            class : (d) -> if (parseInt d[1]) is 0 then 'zero' else ' ' }
 
     appendLegend: =>
         do (@svg.selectAll '.legend').remove
@@ -193,12 +197,14 @@ class HBarChart extends BarChart
 
         cssclass = if entered[0].length >= 6 then 'legend small' else 'legend'
 
+        ratio = if @results.length <= 4 then 1.5 else 2
+
         fObject = (entered.append 'foreignObject').attr
             class : cssclass
             width : @_size.width
             height: do @y.rangeBand
             x : 0
-            y : (d) => @y(d[0]) - 2 + do @y.rangeBand / 2
+            y : (d) => @y(d[0]) - 2 + do @y.rangeBand / ratio
         (fObject.append 'xhtml:body').html (d) => "<p>#{d[0]}</p>"
 
 class Histogram extends BarChart

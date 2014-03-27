@@ -8,27 +8,15 @@ body {
 #content {
 	z-index:@content-zindex;
 
-    background: url("../img/bg/argent.png"), 
-                url("../img/bg/avenir.png"),
-                url("../img/bg/education.png"),
-                url("../img/bg/gouvernement.png"),
-                url("../img/bg/toi.png"),
-                url("../img/bg/travail.png");
-    background-repeat: no-repeat;
-    background-position: -999999999px -999999999px ;
-
-    @media (max-width: @screen-xs-min) {
-    	background:fade(white, 80);
-    	padding:0;    	
-    	height:100%;
-    	width:100%;
-
-    	position:absolute;
-    	top:0;
-    	bottom:0;
-    	left:0;
-    	right:0;
-   	}    
+    @media (max-width: @screen-xs-min) {        
+        padding:0; 
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        z-index:100;
+   	}
 
     button[disabled] {
         opacity:0.4;

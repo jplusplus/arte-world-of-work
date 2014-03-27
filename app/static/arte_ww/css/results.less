@@ -10,11 +10,13 @@
     }
 
     .white-panel();
+    max-height: none;
 
     @media (max-width: @screen-xs-min) {
         width: 100%;
-        position: absolute;
-        top: 35px;
+        position: relative;
+        padding-bottom:20px;
+        top: 40px;
 
         &:before {
             background: transparent;
@@ -22,12 +24,13 @@
         }
     }
 
-    max-height: none;
-    .answer {
+
+    .answer {        
         .survey-navigator--start__start {
             margin-bottom: 50px;
         }
     }
+
     &__intro {
         padding-bottom: 5px;
         padding-top:20px;
@@ -49,9 +52,11 @@
         height: 30px;
         position: relative;
         margin-top: 5px;
+        z-index:100;
 
         @media (max-width: @screen-xs-min) {
             margin-top: 0;
+            height: 0px;
         }
 
         ul {
@@ -150,6 +155,7 @@
         left: 0;
 
         .chart {
+            margin-top:15px;
             width: 50%;
             height: 230px;
 
@@ -175,7 +181,7 @@
             &--nochart {
                 position: relative;
                 left: 0;
-                padding: 10px 15px 10px 15px;
+                padding: 0 15px 10px 15px;
             }
 
             p {
@@ -238,6 +244,7 @@
 }
 
 .answer-filters {
+
     .white-panel(@width:150px);
 
     padding: 10px 20px 20px 20px;
@@ -328,7 +335,8 @@
 
         &__gender {
             float: left;
-            width: 40%;
+            width:120px;
+            padding-right:10px;            
             padding-top: 15px;
             margin-bottom: 2px;
 
@@ -338,9 +346,9 @@
         }
 
         &__age {
-            float: right;
-            width: 60%;
-            padding-right: 10px;
+            width:auto;
+            padding:0 10px;
+            margin-left:130px;
 
             p {
                 margin: 0;
@@ -349,16 +357,14 @@
     }
 
     @media (max-width: @screen-xs-min) {
-        position: absolute;
+        position: relative;
         width: auto;
         height: auto;
-        padding-top: 0;
-        padding-bottom: 0;
+        padding-top: 0px;
+        padding-bottom: 90px;
         padding-left: 10px;
         left: 0;
-        margin: 0 0;
-        top: auto;
-        bottom: 50px;
+        margin:0 auto;
 
         &:before {
             box-shadow: none;
@@ -376,6 +382,15 @@
             height: @size;
             left: @size / -2px;
             top: @size / -2px;
+        }
+
+
+        &__gender {
+            width:93px;
+        }
+
+        &__age {
+            margin-left:100px;
         }
     }
 }
