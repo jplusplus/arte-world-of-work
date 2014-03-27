@@ -68,7 +68,6 @@ angular.module('arte-ww.services').service 'Xiti', ['$cookies', ($cookies)->
                 angular.element("body").append @img
 
         trackClick: (ev, name, level=window.xtn2)->      
-            console.log ev.target
             window.xt_click(ev.target, 'C', level, name,'N')        
             yes        
 
