@@ -54,8 +54,8 @@
 <div class="answer-filters" ng-hide='intro||(nochart&&!filtered())'>
     <span class="answer-filters__title">Filtres :</span>
     <div class="answer-filters__gender">
-        <button ng-class="{active:filters.male}" ng-click="filter('male')">Male</button>
-        <button ng-class="{active:filters.female}" ng-click="filter('female')">Female</button>
+        <button ng-class="{active:filters.male}" ng-click="filter('male')" translate>Male</button>
+        <button ng-class="{active:filters.female}" ng-click="filter('female')" translate>Female</button>
     </div>
     <div class="answer-filters__age">
         <p ng-if="filters.age_min !== filters.age_max"><strong>[[filters.age_min]]</strong> à <strong>[[filters.age_max]]</strong> ans</p>
