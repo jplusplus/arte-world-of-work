@@ -35,12 +35,7 @@ angular.module('arte-ww').directive 'surveyElement', [
             link: (scope, elem, attrs)->
                 # let the template use choices typologies for sub-directive selection
                 scope.TYPOLOGIES = TYPOLOGIES
-                scope.$watch -> 
-                        scope.$eval(attrs.surveyElement)
-                    , (element)->
-                        scope.element = element
-                    , yes
-                
+                scope.element = scope.$eval(attrs.surveyElement)
 
                 scope.$watch ->
                         return unless scope.element
