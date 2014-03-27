@@ -248,7 +248,7 @@ class DynamicFeedback(object):
                 }
                 set = all_answers.filter(**filters)
                 is_new_challenger = (
-                    (set.count() > 100) \
+                    (set.count() >= 50) \
                     and \
                     (
                         (challenger == None) \
