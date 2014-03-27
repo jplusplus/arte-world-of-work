@@ -5,5 +5,5 @@
 {% endblock title %}
 
 {% block content %}
-    <dynamic-chart class="feedback__chart" ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-id="[[feedback.question_id]]" filters="filters"></dynamic-chart>
+    <dynamic-chart class="feedback__chart" ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-id="[[feedback.question.id]]" filters="filters"></dynamic-chart>
 {% endblock %}

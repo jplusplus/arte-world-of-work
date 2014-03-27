@@ -86,13 +86,13 @@ class ThematicCtrl
             @Answer.deleteAnswerForQuestion @scope.currentElement().id
         
         if @elementsWrapper.hasNextElement()
-            # console.log 'skipElement - else if @elementsWrapper.hasNextElement()'
+            console.log 'skipElement - if @elementsWrapper.hasNextElement()'
             @userPosition.nextElement()
         else if @isDone()
-            # console.log 'skipElement - else if @isDone()'
+            console.log 'skipElement - else if @isDone()'
             @setNextThematic()
         else
-            # console.log 'skipElement - else'
+            console.log 'skipElement - else'
             @currentState(@states.OUTRO)
 
     previousElement: =>

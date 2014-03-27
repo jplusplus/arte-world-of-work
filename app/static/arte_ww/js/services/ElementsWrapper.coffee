@@ -35,25 +35,29 @@ class ElementsWrapper
     onElementPositionChanged: (position, old_position)=>
         return unless @elements? and position?
         challenger = @getAt position
-
         # first time we arrive on the widget 
         if !@currentElement and challenger
+            console.log 'onElementPositionChanged if !@currentElement and challenger'
             @currentElement = challenger
 
-        # we initialized the widget with a wrong
+        # we initialized the widget with a wrong position 
         if !challenger and !old_position 
+            console.log 'onElementPositionChanged if !challenger and !old_position'
             @fixPosition(position)
 
         # load a feedback for this element or not.
         # if position > old_position and @feedback.distanceIsGood()
         if position > old_position and @shouldDisplayFeedback()
+            console.log 'we should display feedback for current element'
             # check if old element should display a feedback
             promise = @feedbackService.getForQuestion(@currentElement.id)
             promise.then (dynFeedback)=>
-                if dynFeedback.total_answers >= 15
+                console.log dynFeedback, dynFeedback.total_answers
+                if dynFeedback.total_answers >= 10
                     feedback = dynFeedback
                 else if @currentElement.feedback
                     feedback = @utils.wrapFeedback @currentElement.feedback
+                feedback.question = @currentElement
                 # if @shouldDisplayFeedback() and feedback
                 if feedback
                     @elements.insertAt position, feedback
@@ -86,6 +90,7 @@ class ElementsWrapper
     shouldDisplayFeedback: =>
         # return false unless @feedbackService.distanceIsGood()
         return false if @isYou()
+        return false if @currentElement.type is 'feedback'
         # return Math.floor(Math.random()*5)+1 == 1
         return true
 
