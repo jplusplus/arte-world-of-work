@@ -41,5 +41,9 @@
     "previous": "previous",
     "skip": "skip",
     "or": "or",
+    "min": "min",
+    "max": "max",
+    "- than 16 years old": "- than 16 years old",
+    "+ than 35 years old": "+ than 35 years old",
     "Choose a country": "Choose a country"
 }

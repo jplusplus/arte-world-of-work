@@ -7,13 +7,13 @@
 			 end='36' 
 			 ng-model="question.answer"></div>	
 		
-		<span class="question-choices--typed-number__min" ng-tranlsate>- de 16 ans</span>
-		<span class="question-choices--typed-number__max" ng-tranlsate>+ de 35 ans</span>
+		<span class="question-choices--typed-number__min" translate>- than 16 years old</span>
+		<span class="question-choices--typed-number__max" translate>+ than 35 years old</span>
 
 		<p class="question-choices--typed-number__output" ng-switch="question.answer">
-			<span ng-switch-when="15">- de 16 ans</span>
-			<span ng-switch-when="36">+ de 35 ans</span>
-			<span ng-switch-default>[[question.answer]] ans</span>
+			<span ng-switch-when="15" translate>- than 16 years old</span>
+			<span ng-switch-when="36" translate>+ than 35 years old</span>
+			<span ng-switch-default>[[question.answer]] <span translate>years old</span></span>
 		</p>
     	<button class="question-choices--typed-number__validate" ng-click="submitAnswer(question.answer, false); xiti.trackClick($event, 'submit_age')">
     		[[ question.validate_button_label ]]
