@@ -25,10 +25,12 @@ angular.module('arte-ww.services').service 'ThirdParty', ['$http', '$window', '$
             yes # https://github.com/angular/angular.js/issues/4853#issuecomment-28491586
 
         shareOnTwitter: (url=@url)=>
-            tweet    = $translate.instant('Super app !') 
+            tweet = $translate.instant("Eat, work and sleep? Not quite! Learn about your generation's world of work at {URL} #artewow") 
+            tweet = tweet.replace "{URL}", @url   
+            tweet = encodeURIComponent tweet
             # Duplicate string for auto-collection:
             # $translate('Super app !')
-            shareUrl = "https://twitter.com/share?url=#{url}&text=#{tweet}&"
+            shareUrl = "https://twitter.com/share?&text=#{tweet}&"
             $window.open shareUrl, "shareOnTwitter","menubar=no, status=no, scrollbars=no, menubar=no, width=550, height=380"
             yes # https://github.com/angular/angular.js/issues/4853#issuecomment-28491586
 
