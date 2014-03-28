@@ -1,17 +1,21 @@
-from rest_framework import generics
-from rest_framework import viewsets
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication, SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.decorators import link, permission_classes, authentication_classes
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django_countries import countries as django_countries
+from rest_framework import generics
+from rest_framework import status
+from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.decorators import link, permission_classes, authentication_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.settings import api_settings
+from rest_framework.views import APIView
+from rest_framework_csv import renderers
+
 from app.core.models import Thematic, UserPosition, BaseAnswer, BaseQuestion
 from app.api import serializers, mixins
 from app.api.permissions import IsOwner
+from app.api.renderers import CSVResultsRenderer
 
 # bind this `User` to current used User model (see `settings.AUTH_USER_MODEL`)
 User = get_user_model()
@@ -20,6 +24,7 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BaseQuestion.objects.all()
     serializer_class = serializers.QuestionSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication,)
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (CSVResultsRenderer, )
 
     @link()
     def results(self, request, pk):

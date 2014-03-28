@@ -235,3 +235,9 @@ TINYMCE_DEFAULT_CONFIG = {
 TINYMCE_JS_URL  = STATIC_URL + 'arte_ww/vendor/tinymce/tinymce.min.js'
 
 TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, 'arte_ww/vendor/tinymce')
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASS': (
+        'rest_framework_csv.renderers.CSVRenderer',
+    ),
+}
