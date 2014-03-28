@@ -1,4 +1,4 @@
-<div class="about">
+<div class="about" ng-controller="AboutCtrl">
     <div class='container'>
         <div class="about__button" ng-init="opened=false"  ng-mouseover="xiti.trackClick($event, 'about')">
             <div ng-mouseleave="opened=false" ng-mouseover="opened=true" ng-click="opened=!opened">
@@ -15,9 +15,9 @@
                     for Arte with advice from Prof. Dr. Albrecht Söllner, European University Viadrina. The code is open source and available on</span>&nbsp;<a href="https://github.com/jplusplus/arte-world-of-work/">Github</a>.
             </p>
             <p>
-                <a href="http://www.arte.tv/sites/fr/services/declaration-de-protection-des-donnees-personnelles/"  translate>Privacy Policy</a><br/>    
-                <a href="http://www.arte.tv/sites/fr/services/credits/" translate>About us</a><br/>
-                <a href="http://www.arte.tv/sites/fr/services/conditions-generales-dutilisation/" translate>Terms of Use</a>
+                <a ng-href="[[ getLink('privacy') ]]" translate>Privacy Policy</a><br/>    
+                <a ng-href="[[ getLink('credits') ]]" translate>About us</a><br/>
+                <a ng-href="[[ getLink('terms')   ]]" translate>Terms of Use</a>
             </p>
         </div>
     </div>
