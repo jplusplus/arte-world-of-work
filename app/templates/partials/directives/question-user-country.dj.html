@@ -3,7 +3,7 @@
 {% block form %}
 	<div class="question-choices question-choices--user-country">
 		<select ng-model='answer' ng-options='c.iso_code as c.name for c in countries.list'>
-			<option value="">[[ "Choose a country" | translate ]]</option>
+			<option value="" translate>Choose a country</option>
 		</select>
 
     	<button ng-disabled="!answer" class="question-choices--user-country__validate" ng-click="submitAnswer(answer, false); xiti.trackClick($event, 'submit_country')">
