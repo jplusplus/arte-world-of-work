@@ -3,7 +3,7 @@ msgid ""
 msgstr "Project-Id-Version: arte-world-of-work\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-27 15:13+0100\n"
-"PO-Revision-Date: 2014-03-28 10:40-0400\n"
+"PO-Revision-Date: 2014-03-28 13:13-0400\n"
 "Last-Translator: Toutenrab <bellon.pierre+crowdin@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -215,7 +215,7 @@ msgstr "Vous est-il déjà arrivé d’utiliser ces sites pour arrondir vos fins
 
 #: i18n_strings.py:54
 msgid "Writing and editing Wikipedia entries, would you call that work?"
-msgstr "Écrire et éditer des articles sur Wikipedia, c’est un travail ?"
+msgstr "Écrire et éditer des articles sur Wikipédia, c’est un travail ?"
 
 #: i18n_strings.py:55
 msgid "Wave of a magic wand and you can pick whatever working contract you like. What would you pick?"
@@ -312,7 +312,7 @@ msgstr "Forsa for Westlotto (PDF)"
 
 #: i18n_strings.py:78
 msgid "<p><strong>Studies in the sun</strong></p>\n<p>Spain is Erasmus destination #1. Granada in Andalusia is the capital of the study abroad programme. More than 2000 students come here every year. Erasmus is run by the EU but students also rely on their government’s willingness to co-sponsor their trip.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/education-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Études au soleil</strong></p> \n <p>Espagne est Erasmus destination #1. Grenade en Andalousie est la capitale du programme d'études à l'étranger. Plus de 2000 étudiants viennent ici chaque année. Erasmus est géré par l'Union européenne, mais les étudiants s'appuient également sur la volonté de leur gouvernement d'être coauteur de leur voyage.</p>\n <img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/education-feedback-fr.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Études au soleil</strong></p> \n <p>Espagne est Erasmus destination #1. Grenade en Andalousie est la capitale du programme d'études à l'étranger. Plus de 2000 étudiants viennent ici chaque année. Erasmus est géré par l'Union européenne, mais les étudiants s'appuient également sur la volonté de leur gouvernement de subventionner leur séjour.</p>\n <img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/education-feedback-fr.png\" alt=\"\" width=\"450\">"
 
 #: i18n_strings.py:81
 msgid "Erasmus.ahoi.in"
@@ -352,7 +352,7 @@ msgstr "Institut Florian Mantione"
 
 #: i18n_strings.py:90
 msgid "<p><strong>A continent of old people?</strong></p>\n<p>The old-age dependency ratio measures the number of elderly people as a share of those of working age. Places where old people rely on a small number of working young people are dark red.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/government-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Un continent de personnes âgées?</strong></p>ratio de dépendance des personnes âgées \n<p>The mesure le nombre de personnes âgées en proportion des personnes en âge de travailler. Endroits où les personnes âgées s'appuient sur un petit nombre de jeunes gens de travail sont rouge foncé</p>\n <img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/government-feedback-fr.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Un continent de personnes âgées&nbsp;?</strong></p><p>Le ratio de dépendance mesure le nombre de personnes âgées en proportion des personnes en âge de travailler. Les régions les plus foncées sont celles où l'on trouve le plus de personnes dépendantes.</p> <img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/government-feedback-fr.png\" alt=\"\" width=\"450\">"
 
 #: i18n_strings.py:93
 msgid "Eurostat"
@@ -392,7 +392,7 @@ msgstr "Eurobaromètre"
 
 #: i18n_strings.py:104
 msgid "Economists say that crises make people increase their efforts at work. But that does not seem to be the case for everybody. Three-quarters of Dutch workers do not see the financial crisis as a reason to work harder."
-msgstr "Selon les économistes, les crises font que les gens fournissent plus d’efforts au travail. Mais cela ne semble pas être le cas pour tout le monde. Trois-quarts des Hollandais ne considère pas que la crise est une raison pour travailler plus dur."
+msgstr "Selon les économistes, les crises font que les gens fournissent plus d’efforts au travail. Mais cela ne semble pas être le cas pour tout le monde. Trois-quarts des Néerlandais ne considèrent pas que la crise soit une raison pour travailler plus dur."
 
 #: i18n_strings.py:105
 msgid "NBER"
@@ -416,11 +416,11 @@ msgstr "Aruba Network"
 
 #: i18n_strings.py:110
 msgid "Disappointed by your paycheck? In Portugal the minimum salary is only 566 €."
-msgstr "Vous vous plaignez de votre salaire minimum ? <strong>Au Portugal, il est seulement à 566 €</strong>."
+msgstr "Vous vous plaignez de votre salaire minimum ? <strong>Au Portugal, il est seulement de 566 €</strong>."
 
 #: i18n_strings.py:111
 msgid "Taking care of your grand-parents can be a full time job. And therefore half of the European population thinks you <strong>should be paid for it</strong> by your government!"
-msgstr "S’occuper de ses proches peut être un travail à plein temps. C’est pour cela que presque <strong>la moitié des Européens </strong>pensent qu’il faut rémunérer les gens qui s’occupent de leur grand-parents."
+msgstr "S’occuper de ses proches peut être un travail à plein temps. C’est pour cela que presque <strong>la moitié des Européens </strong>pensent qu’il faut rémunérer les gens qui s’occupent de leurs grands-parents."
 
 #: i18n_strings.py:112
 msgid "Eurobarometer (p. 103)"
@@ -524,7 +524,7 @@ msgstr "AirBnb"
 
 #: i18n_strings.py:137
 msgid "Reading all articles on Wikipedia would take <strong>7 years</strong>. And all this has been created by volunteers."
-msgstr "Lire tous les articles sur Wikipedia prendrait <strong>7 ans</strong>. Et tout ça a été créé par des bénévoles."
+msgstr "Lire tous les articles sur Wikipédia prendrait <strong>7 ans</strong>. Et tout ça a été créé par des bénévoles."
 
 #: i18n_strings.py:138
 msgid "Wikipedia:Statistics"
@@ -541,7 +541,7 @@ msgstr "Gallup"
 #: i18n_strings.py:141
 msgid "Neurosurgeons, soldiers, and art teachers are amongst those who consider their jobs as <strong>important for society</strong>. Securities traders, fashion designers, and gas station attendants think their jobs are not very meaningful."
 msgstr "Les <strong>neurochirurgiens, les soldats, et les profs d’art </strong>estiment leur travail <strong>important pour la société</strong>.\n"
-"<strong>Les traders, les designers de mode et les opérateurs de station service</strong> ne trouvent <strong>pas beaucoup de valeur ajoutée à leur boulot</strong>."
+"<strong>Les traders, les designers de mode et les opérateurs de station-service</strong> ne trouvent <strong>pas beaucoup de valeur ajoutée à leur boulot</strong>."
 
 #: i18n_strings.py:142
 msgid "Payscale"
@@ -613,7 +613,7 @@ msgstr "Eurobaromètre, p. 14"
 
 #: i18n_strings.py:161
 msgid "Two English students have made over £30,000 by renting out their faces for ads. They <strong>charge £100</strong> per day."
-msgstr "Deux étudiants anglais ont gagné <strong>plus de £30 000</strong>en louant leurs visages à des publicitaires pour £100 la journée."
+msgstr "Deux étudiants anglais ont gagné <strong>plus de 30&nbsp;000 livres</strong>en louant leurs visages à des publicitaires pour 100 livres la journée."
 
 #: i18n_strings.py:162
 msgid "AFP"
@@ -693,7 +693,7 @@ msgstr "Vos études"
 
 #: i18n_strings.py:184
 msgid "What&rsquo;s a minimum salary that doesn&rsquo;t destroy jobs? How can we ensure that women make as much money as men? That&rsquo;s what politicians debate. Some think we should pay everybody a universal income - with no obligation to work. <br> <strong>If you were Minister of Labour for one day, what would be your plan?</strong>"
-msgstr "Est-ce que le salaire minimum détruit les emplois ? Comment faire pour que les femmes gagnent autant que les hommes ? Ce sont des questions politiques récurrentes.<br><strong>Si vous étiez ministre du travail pour une journée, quel serait votre plan ?</strong>"
+msgstr "Est-ce que le salaire minimum détruit les emplois ? Comment faire pour que les femmes gagnent autant que les hommes ? Ce sont des questions politiques récurrentes.<br><strong>Si vous étiez ministre du Travail pour une journée, quel serait votre plan ?</strong>"
 
 #: i18n_strings.py:185
 msgid "Your Government"
@@ -701,7 +701,7 @@ msgstr "Votre gouvernement"
 
 #: i18n_strings.py:186
 msgid "A 38-hour week. A single-family, detached house. Retirement with 62. That might have been your parents’  work life plan. The circumstances have changed. Our generation is dreaming a different dream. But what’s still to come? Will self-driving cars bring our children to school? <br> <strong>How do you see your future World of Work?</strong>"
-msgstr "Une semaine de 35 heures, une maison familiale à la campagne et la retraite à 62 ans.C'était peut-être le rêve de vos parents.Mais les choses ont changé et notre génération a des aspirations différentes.Qu'est ce qui est encore à venir ? Est-ce que des voitures sans chauffeur conduiront nos enfants à l'école ?<br><strong>Comment imaginez-vous le futur ?</strong>"
+msgstr "Une semaine de 35 heures, une maison familiale à la campagne et la retraite à 62 ans. C'était peut-être le rêve de vos parents. Mais les choses ont changé et notre génération a des aspirations différentes. Qu'est ce qui est encore à venir ? Est-ce que des voitures sans chauffeur conduiront nos enfants à l'école ?<br><strong>Comment imaginez-vous le futur ?</strong>"
 
 #: i18n_strings.py:187
 msgid "Your Future"
@@ -877,7 +877,7 @@ msgstr "Boire un café (10 min)"
 
 #: i18n_strings.py:230
 msgid "7 am or before"
-msgstr "7 heures ou moins"
+msgstr "7h ou moins"
 
 #: i18n_strings.py:231
 msgid "It’s expensive to move!"
@@ -985,7 +985,7 @@ msgstr "Lire un long article de presse (20 min)"
 
 #: i18n_strings.py:257
 msgid "around 8 am"
-msgstr "8 heures"
+msgstr "8h"
 
 #: i18n_strings.py:258
 msgid "I have more friends here"
@@ -1085,7 +1085,7 @@ msgstr "Écouter un album de musique en entier (40 min)"
 
 #: i18n_strings.py:282
 msgid "around 9 am"
-msgstr "9 heures"
+msgstr "9h"
 
 #: i18n_strings.py:283
 msgid "My family: Sometimes they get on my nerves, but I’m attached to them"
@@ -1141,7 +1141,7 @@ msgstr "Regarder un film en entier (1h 30)"
 
 #: i18n_strings.py:296
 msgid "10 am or after"
-msgstr "10 h ou plus"
+msgstr "10h ou plus"
 
 #: i18n_strings.py:297
 msgid "They don’t even speak English there"
