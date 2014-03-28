@@ -174,7 +174,6 @@ class DynamicFeedback(object):
             pass
 
         answers_pool    = self.lookup_for_answers()
-        use_percentage  = self.is_percentage()
         all_answers     = answers_pool['all_answers']
         profile_answers = answers_pool['profile_answers']
         answers_set     = profile_answers['set']
