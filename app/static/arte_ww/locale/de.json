@@ -29,11 +29,11 @@
   "Male":"Männlich",
   "Female":"Weiblich",
   "to":"bis",
-  "years old":"Jahre alt",
+  "years old":"Jahre",
   "Internships. Volunteering. Flatsharing. Online courses. Temporary contracts.":"Praktika. Volunteering. WG-Leben. Online-Kurse. Zeitverträge.",
   "That's how young people in Europe make a living today.":"So arbeiten junge Menschen in Europa heute.",
   "What's your World of Work? Let us know and find out about others.":"Wie sieht Deine Arbeitswelt aus? Beschreibe sie uns und finde heraus, was andere antworten.",
-  "Start the survey":"Umfrage-Start",
+  "Start the survey":"Umfrage Start",
   "Start":"Start",
   "Go to next topic":"Zum nächsten Thema",
   "Great job! Want to put in extra hours? Check out the Results!":"Gute Arbeit! Lust auf Überstunden? Schau Dir die Resultate an!",
@@ -43,7 +43,7 @@
   "or":"oder",
   "min":"mindestens",
   "max":"maximal",
-  "- than 16 years old":"jünger als 16 Jahre",
-  "+ than 35 years old":"älter als 35 Jahre",
+  "- than 16 years old":"jünger als 16",
+  "+ than 35 years old":"älter als 35",
   "Choose a country":"Wähle ein Land aus"
 }
