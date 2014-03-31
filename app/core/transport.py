@@ -167,11 +167,8 @@ class DynamicFeedback(object):
         myanswer   = None
         BaseAnswer = self.get_base_answer_model()
         try:
-            myanswers = BaseAnswer.objects.filter(question=self.question, 
-                user=self.profile.user).order_by('-pk')
-            if myanswers.count() > 0:
-                myanswer  = myanswers[0]
-                myanswer  = myanswer.as_final()
+            myanswer = BaseAnswer.objects.get(question=self.question, user=self.profile.user)
+            myanswer = myanswer.as_final()
         except BaseAnswer.DoesNotExist: 
             pass
 
@@ -244,7 +241,6 @@ class DynamicFeedback(object):
 
         all_answers = self.AnswerType.objects.filter(question=self.question)
         all_answers = all_answers.exclude(user=self.profile.user)
-
         answers_pool['all_answers'] = all_answers
 
         for profile_attr in ('age', 'gender', 'living_country', 'native_country'):
