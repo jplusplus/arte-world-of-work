@@ -1,7 +1,7 @@
 angular.module('arte-ww.services').service 'ThirdParty', ['$http', '$window', '$translate', ($http, $window, $translate) -> 
     new class ThirdPartyService    
         constructor: ($http, $window, $translate) -> # YOLO
-            @url   = "http://jplusplus.org" # $window.location.hostname                
+            @url   = "http://www.arte.tv/worldofwork/" # $window.location.hostname                
             # Get shares count from facebook
             @getFacebookCount(@url)
             @getTwitterCount(@url)
