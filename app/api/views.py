@@ -123,7 +123,16 @@ class AnswerViewSet(viewsets.ModelViewSet,
 
     def create(self, request, *args, **kwargs):
         self.update_request(request)
-        return super(AnswerViewSet, self).create(request, *args, **kwargs)
+        question     = request.DATA['question']
+        user         = request.user.pk 
+        user_answers = self.queryset.filter(user=user, question=question)
+        if user_answers.count() > 0:
+            last_answer = sorted(user_answers, key=lambda el: (-1)*el.pk )[0]
+            request.path = request.path + unicode(last_answer.pk)
+            self.kwargs['pk'] = last_answer.pk
+            return self.update(request, *args, **kwargs)
+        else:
+            return super(AnswerViewSet, self).create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
         self.update_request(request)

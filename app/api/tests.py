@@ -259,9 +259,46 @@ class AnswerTestCase(APITestCase, TestCaseMixin, TestUtils):
             'question': self.question1.pk,
         }
         response = self.authed_client.post(url, data, format='json')
-        self.assertEqual(response.status_code, 201)
+        self.assertIn(response.status_code, (200, 201))
         answer = response.data
-        self.assertEqual(answer['user'], self.user.pk)
+        self.assertAttrEqual(answer, 'user',     self.user.pk)
+        self.assertAttrEqual(answer, 'question', self.question1.pk)
+        self.assertAttrEqual(answer, 'value',    20)
+
+    def test_create_typed_number_multiple_success(self):
+        # special case for user trying to create an answer for an already
+        # answered question. We want to be sure that the answer have been
+        # updated and not created 
+        url = reverse('answer-list')
+        data1 = {
+            'value': 20,
+            'question': self.question1.pk,
+        }
+        data2 = {
+            'value': 60,
+            'question': self.question1.pk,
+        }
+        response1 = self.authed_client.post(url, data1, format='json')
+        response2 = self.authed_client.post(url, data2, format='json')
+
+        self.assertIn(response1.status_code, (200, 201))
+        self.assertIn(response2.status_code, (200, 201))
+
+        answer1 = response1.data
+        self.assertAttrEqual(answer1, 'user',     self.user.pk)
+        self.assertAttrEqual(answer1, 'question', self.question1.pk)
+        self.assertAttrEqual(answer1, 'value',    20)
+
+        answer2 = response2.data
+        self.assertAttrEqual(answer2, 'user',     self.user.pk)
+        self.assertAttrEqual(answer2, 'question', self.question1.pk)
+        self.assertAttrEqual(answer2, 'value',    60)
+
+        user_answers = BaseAnswer.objects.filter(user=self.user.pk, question=self.question1.pk)
+        self.assertEqual(user_answers.count(), 1)
+
+
+    
 
 
     def test_create_typed_number_out_of_range(self):

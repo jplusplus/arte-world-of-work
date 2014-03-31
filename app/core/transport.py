@@ -109,8 +109,8 @@ class BarChart(ResultObject):
         if int(self.total_answers) > 0:
             for choice in self.question.choices():
                 answers = self.queryset.filter(value=choice)
-                percentage = answers.count() / float(self.total_answers)
-                percentage = int(percentage*100+0.5)
+                percentage = answers.count()*100 / float(self.total_answers)
+                percentage = int(percentage+0.5)
                 self.add_set(choice, percentage)
 
     def add_set(self, choice, value): 
@@ -167,9 +167,11 @@ class DynamicFeedback(object):
         myanswer   = None
         BaseAnswer = self.get_base_answer_model()
         try:
-            myanswer = BaseAnswer.objects.get(question=self.question, 
+            myanswers = BaseAnswer.objects.filter(question=self.question, 
                 user=self.profile.user)
-            myanswer = myanswer.as_final()
+            if len(myanswers) > 0:
+                myanswer = sorted(myanswers, key=lambda el: (-1)*el.pk )[0]
+                myanswer = myanswer.as_final()
         except BaseAnswer.DoesNotExist: 
             pass
 
@@ -194,16 +196,24 @@ class DynamicFeedback(object):
         if myanswer and context_dict['total_number'] > 0:
             similar_answers = self.get_similar(answers_set, myanswer)
             answer_count    = similar_answers.count()
+            percentage      = answer_count / float(context_dict['total_number'])
+
             if self.is_percentage(context_dict):
-                percentage = answer_count / float(context_dict['total_number'])
-                context_dict['value'] = int(percentage*100+0.5)
-                rendered = render_to_string('dynamic_feedback_percentage.dj.html', context_dict)
+                self.raw_value_type = template_suffix = 'percentage'
+                self.raw_value      = int(percentage*100+0.5)
             else:
-                context_dict['value'] = answer_count
-                rendered = render_to_string('dynamic_feedback_count.dj.html', context_dict)
+                self.raw_value_type   = template_suffix = 'count'
+                self.raw_value        = answer_count
+            context_dict['value'] = self.raw_value 
         else: 
-            rendered = render_to_string('dynamic_feedback_generic.dj.html', context_dict)
-        self.html_sentence = rendered
+            self.raw_value_type = 'count'
+            self.raw_value  = self.total_answers
+            template_suffix = 'generic'
+
+        template_name = 'dynamic_feedback_{suffix}.dj.html'.format(
+            suffix=template_suffix)
+
+        self.html_sentence = render_to_string(template_name, context_dict)
         return self.html_sentence
 
     def get_profile_value(self, profile_attr):
@@ -287,11 +297,13 @@ class DynamicFeedback(object):
 
     def as_dict(self):
         return {
-            'question_id'  : self.question.pk,
-            'total_answers': self.total_answers,
-            'html_sentence': self.html_sentence,
-            'type': 'feedback',
-            'sub_type': 'dynamic' 
+            'raw_value_type' : self.raw_value_type,
+            'raw_value'      : self.raw_value,
+            'question_id'    : self.question.pk,
+            'total_answers'  : self.total_answers,
+            'html_sentence'  : self.html_sentence,
+            'type'           : 'feedback',
+            'sub_type'       : 'dynamic' 
         }
 
 # EOF
