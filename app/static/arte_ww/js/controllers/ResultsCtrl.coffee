@@ -92,12 +92,13 @@ class ResultsCtrl
                 (@$http request).success (data) =>
                     @elements = _.filter (_.map data, (thematic) =>
                         if thematic.slug isnt 'toi'
-                            elems = _.filter thematic.elements, (t) -> t.type is 'question'
-                            return elems.concat [{
-                                content : thematic.outro_description
-                                id : _steps.outro
-                                label : thematic.title
-                            }]
+                            return _.filter thematic.elements, (t) -> t.type is 'question'
+                            # elems = _.filter thematic.elements, (t) -> t.type is 'question'
+                            # return elems.concat [{
+                            #     content : thematic.outro_description
+                            #     id : _steps.outro
+                            #     label : thematic.title
+                            # }]
                         else
                             return
                     ), (e) -> e?
