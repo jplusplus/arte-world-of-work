@@ -3,7 +3,7 @@ msgid ""
 msgstr "Project-Id-Version: arte-world-of-work\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-27 15:13+0100\n"
-"PO-Revision-Date: 2014-03-28 13:13-0400\n"
+"PO-Revision-Date: 2014-03-31 13:46-0400\n"
 "Last-Translator: Toutenrab <bellon.pierre+crowdin@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -328,7 +328,7 @@ msgstr "Forsa for Westlotto"
 
 #: i18n_strings.py:84
 msgid "Distorted perception: The French are amongst those who are the <strong>most insecure about their jobs</strong> in Europe. At the same time their jobs are also the most stable."
-msgstr "En Europe, les français sont ceux qui sont <strong>le plus incertains de leur avenir professionnel</strong>. Pourtant, ce sont aussi eux qui ont les boulots les plus stables."
+msgstr "En Europe, les Français sont ceux qui sont <strong>le plus incertains de leur avenir professionnel</strong>. Pourtant, ce sont aussi eux qui ont les boulots les plus stables."
 
 #: i18n_strings.py:85
 msgid "Institut Arbeit und Qualifikation (p. 190)"
@@ -392,7 +392,7 @@ msgstr "Eurobaromètre"
 
 #: i18n_strings.py:104
 msgid "Economists say that crises make people increase their efforts at work. But that does not seem to be the case for everybody. Three-quarters of Dutch workers do not see the financial crisis as a reason to work harder."
-msgstr "Selon les économistes, les crises font que les gens fournissent plus d’efforts au travail. Mais cela ne semble pas être le cas pour tout le monde. Trois-quarts des Néerlandais ne considèrent pas que la crise soit une raison pour travailler plus dur."
+msgstr "Selon les économistes, les crises font que les gens fournissent plus d’efforts au travail. Mais cela ne semble pas être le cas pour tout le monde. Trois-quarts des Néerlandais considèrent que la crise n’est pas une raison pour travailler plus dur."
 
 #: i18n_strings.py:105
 msgid "NBER"
@@ -408,7 +408,7 @@ msgstr "Khoreva, 2012"
 
 #: i18n_strings.py:108
 msgid "1 out of 2 Europeans would be <strong>angry to learn that their boss monitors their professional emails</strong>. They don’t seem to realise that this can actually be legal."
-msgstr "La moitié des Européens seraient <strong>fâchés d’apprendre que leur boss regarde leurs boîte e-mail pro</strong>. Pourtant, cette pratique est bien souvent légale."
+msgstr "La moitié des Européens seraient <strong>fâchés d’apprendre que leur boss regarde leur boîte e-mail pro</strong>. Pourtant, cette pratique est bien souvent légale."
 
 #: i18n_strings.py:109
 msgid "Aruba Network"
@@ -444,7 +444,7 @@ msgstr "Institut der deutschen Wirtschaft (p. 4)"
 
 #: i18n_strings.py:117
 msgid "Sheltered employment is a trap. Many policies see it as a springboard into the “regular” labor market. But <strong>only very few people manage to make the transition</strong>. In Austria it’s less than every 30th."
-msgstr "Les politiques d’insertion présentent les ateliers pour personnes handicapées comme un tremplin vers le marché de l’emploi “regulier”. Mais pourtant, en Autriche par exemple, <strong>moins d’une personne sur trente </strong>arrive à faire la transition."
+msgstr "Les politiques d’insertion présentent les ateliers pour personnes handicapées comme un tremplin vers le marché de l’emploi “régulier”. Mais pourtant, en Autriche par exemple, <strong>moins d’une personne sur trente </strong>arrive à faire la transition."
 
 #: i18n_strings.py:118
 msgid "ANED (p. 15)"
@@ -573,7 +573,7 @@ msgstr "Pellizzari, 2003"
 
 #: i18n_strings.py:151
 msgid "Early bird or late riser? Scientists have found out that that's <strong>part of your DNA</strong>. The difference between your natural rhythm and your social obligations is called \"social jetlag\". People who get up one hour too early, consume more cigarettes, alcohol, and coffee and have a one third higher risk of being obese."
-msgstr "Lève-tôt ou grand dormeur ? Des scientifiques ont montré que cela<strong> fait partie de votre ADN</strong>. Le décalage horaires entre votre rythme naturel et vos obligations sociales s’appelle le “social jetlag”. Les effets ? Les gens qui se lèvent une heure trop tôt, consomment davantage de cigarettes, d’alcool et de café."
+msgstr "Lève-tôt ou grand dormeur ? Des scientifiques ont montré que cela<strong> fait partie de votre ADN</strong>. Le décalage horaire entre votre rythme naturel et vos obligations sociales s’appelle le “social jetlag”. Les effets ? Les gens qui se lèvent une heure trop tôt, consomment davantage de cigarettes, d’alcool et de café."
 
 #: i18n_strings.py:152
 msgid "NBCI"
@@ -613,7 +613,7 @@ msgstr "Eurobaromètre, p. 14"
 
 #: i18n_strings.py:161
 msgid "Two English students have made over £30,000 by renting out their faces for ads. They <strong>charge £100</strong> per day."
-msgstr "Deux étudiants anglais ont gagné <strong>plus de 30&nbsp;000 livres</strong>en louant leurs visages à des publicitaires pour 100 livres la journée."
+msgstr "Deux étudiants anglais ont gagné <strong>plus de 30&nbsp;000 livres</strong> en louant leurs visages à des publicitaires pour 100 livres la journée."
 
 #: i18n_strings.py:162
 msgid "AFP"
