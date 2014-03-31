@@ -1,8 +1,12 @@
 {
   "About":"Über das Projekt",
-  "World of Work is an interactive survey created by journalists and coders. It lets users explore and answer questions about the work environment of young people in Europe today. What is work for them? How do they make ends meet? What's their education? How do they see their future? And what should politicians do about all this? World of Work paints the picture of a young generation of Europeans between 16 and 35 whose work is different from their parents' jobs. The results will be featured in a series of articles and video features on Arte.":"World of Work ist ein interaktiver Fragebogen, gemeinsam realisiert von Journalisten und Programmierern. Durch Beantworten der Fragen und Lesen der Feedbacks erkunden Nutzer das heutige Arbeitsumfeld von jungen Menschen in Europa. Was bedeutet das Wort \"Arbeit\" heute? Geht's nur ums Geld? Wie wichtig ist eine Ausbildung überhaupt? Was bringt die Zukunft? Und welche politischen Reformen bräuchten wir?\nWorld of Work zeichnet das Bild einer Generation von jungen Europäern zwischen 16 und 35, die völlig anders arbeiten als ihre Eltern. Die Ergebnisse werden in einer Reihe von Artikeln und Videobeiträgen auf Arte präsentiert.",
-  "World of Work is built by":"World of Work wurde von",
-  "for Arte with advice from Prof. Dr. Albrecht Söllner, European University Viadrina. The code is open source and available on":"für Arte mit der Unterstützung von Prof. Dr. Albrecht Söllner, Europa-Universität Viadrina, realisiert. Der Code ist Open Source und verfügbar auf",
+  "“What do you do in life?” Many young Europeans have a hard time answering this question. Some don't have a job, others are at pains when explaining what they do to their parents.":"„Und was machst Du so?“ Viele junge Europäer wissen nicht, was sie auf diese Frage antworten sollen. Manche haben keinen Job, anderen fällt es schwer, ihren Eltern zu erklären, was sie genau arbeiten.",
+  "Who works, who doesn't and why? Where's the ‘labour market’ going to? What alternatives to unemployment are young Europeans inventing? Should we panic? That's what ARTE Info set out to show in an online investigation on our “World of Work”, a journey through the working realities of young Europeans in an interactive questionnaire. Each participant can compare his or her answers to the others'. For the generation of their parents, it's a great opportunity to learn what the European youth think of work, money and the future.":"Wer arbeitet, wer nicht und warum? Wie verändert sich die Arbeitswelt? Welche Alternativen zur Arbeitslosigkeit finden junge Menschen? (K)ein Grund zur Panik? Das will ARTE Info mit diesem Online-Projekt zur \"World of Work\" erforschen. World of Work ist ein interaktiver Fragebogen zur Arbeitswirklichkeit von jungen Menschen in Europa. Jeder Teilnehmer kann seine Antworten mit denen der anderen vergleichen. Und für die Elterngeneration ist World of Work eine einmalige Chance herauszufinden, was junge Europäer über Arbeit, Geld und Zukunft denken.",
+  "As soon as we collect enough answers, you will be able to access the results directly. But that's not all: For the investigation to spread out to all of Europe, we need your help. As of now, the user interface is only available in French, German and English. We would like to make it accessible to all 24 languages of the EU and are looking for volunteers to translate the 60 questions. Interested? Get in touch via email at":"Sobald wir genug Antworten gesammelt haben, werden die Ergebnisse für alle Teilnehmer direkt zugänglich gemacht. Aber das ist noch nicht alles: Wir brauchen Deine Hilfe, um das Projekt in ganz Europa bekannt zu machen. Bisher ist World of Work nur auf Französisch, Deutsch und Englisch verfügbar. Wir würden die 60 Fragen gerne in alle 24 Sprachen der EU übersetzen und bräuchten dafür freiwillige Helfer. Interessiert? Schreib' uns eine Email an",
+  "All partners of the project will receive credit and will have unlimited access to the results of the survey. They will have the right to reuse the fully anonymized data in future publications.":"Alle Projekt-Partner werden namentlich erwähnt und haben uneingeschränkten Zugang zu den Ergebnissen des Fragebogen. Sie haben auch das Recht, die vollständig anonymisierten Daten in ihren eigenen Veröffentlichungen zu benutzen.",
+  "World of Work was developed by":"World of Work wurde entwickelt von",
+  "for Arte, with support from Prof. Dr. Albrecht Söllner, European University Viadrina.":"für Arte mit der Unterstützung von Prof. Dr. Albrecht Söllner, Europa-Universität Viadrina.",
+  "The source code is open and available on":"Der Code ist Open Source und verfügbar auf",
   "Privacy Policy":"Datenschutz",
   "About us":"Impressum",
   "Terms of Use":"Nutzungsbedingungen",
@@ -37,5 +41,9 @@
   "previous":"Zurück",
   "skip":"Überspringen",
   "or":"oder",
+  "min":"mindestens",
+  "max":"maximal",
+  "- than 16 years old":"jünger als 16 Jahre",
+  "+ than 35 years old":"älter als 35 Jahre",
   "Choose a country":"Wähle ein Land aus"
 }
