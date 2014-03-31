@@ -146,6 +146,7 @@ class DynamicFeedback(object):
                        use_percentage=None):
 
         self.AnswerType      = None
+        self.myanswer        = None
         self.html_sentence   = None
         self.profile         = user.userprofile
         self.question        = question
@@ -169,6 +170,7 @@ class DynamicFeedback(object):
         try:
             myanswer = BaseAnswer.objects.get(question=self.question, user=self.profile.user)
             myanswer = myanswer.as_final()
+            self.myanswer = myanswer
         except BaseAnswer.DoesNotExist: 
             pass
 
@@ -191,16 +193,15 @@ class DynamicFeedback(object):
         }
 
         if myanswer and context_dict['total_number'] > 0:
-            similar_answers = self.get_similar(answers_set, myanswer)
-            answer_count    = similar_answers.count()
-            percentage      = answer_count / float(context_dict['total_number'])
+            similar_answers = self.get_similar_answers(answers_set, myanswer)
+            percentage      = similar_answers / float(context_dict['total_number'])
 
             if self.is_percentage(context_dict):
                 self.raw_value_type = template_suffix = 'percentage'
                 self.raw_value      = int(percentage*100+0.5)
             else:
                 self.raw_value_type   = template_suffix = 'count'
-                self.raw_value        = answer_count
+                self.raw_value        = similar_answers
             context_dict['value'] = self.raw_value 
         else: 
             self.raw_value_type = 'count'
@@ -221,12 +222,25 @@ class DynamicFeedback(object):
             value = countries.name(value)
         return value
 
-    def get_similar(self, answers_set, myanswer):
+    def get_similar_answers(self, answers_set, myanswer):
+        get_pks = lambda value: map(lambda el: el['pk'], value.values('pk'))
         value = myanswer.value
         if hasattr(value, 'all'):
-            similar_answers = answers_set.filter(value__pk=value.values('pk'))
+            similar = []
+            answers_id = get_pks(myanswer.value)
+            for ans in answers_set.all():
+                if ans.value.count() == myanswer.value.count():
+                    is_similar = True
+                    for pk in get_pks(ans.value):
+                        if not (pk in answers_id):
+                            is_similar = False 
+                    if is_similar:
+                        similar.append(ans)
+
+            similar_answers = len(similar)
         else:
-            similar_answers = answers_set.filter(value=value)
+            similar_answers = answers_set.filter(value=value).count()
+
         return similar_answers
 
     def lookup_for_answers(self):
@@ -240,7 +254,9 @@ class DynamicFeedback(object):
         challenger_attr = None
 
         all_answers = self.AnswerType.objects.filter(question=self.question)
-        all_answers = all_answers.exclude(user=self.profile.user)
+        if self.myanswer:
+            all_answers = all_answers.exclude(pk=self.myanswer.pk)
+
         answers_pool['all_answers'] = all_answers
 
         for profile_attr in ('age', 'gender', 'living_country', 'native_country'):
