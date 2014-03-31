@@ -1,7 +1,7 @@
 angular.module('arte-ww.services').service 'ThirdParty', ['$http', '$window', '$translate', ($http, $window, $translate) -> 
     new class ThirdPartyService    
         constructor: ($http, $window, $translate) -> # YOLO
-            @url   = "http://jplusplus.org" # $window.location.hostname                
+            @url   = "http://www.arte.tv/worldofwork/" # $window.location.hostname                
             # Get shares count from facebook
             @getFacebookCount(@url)
             @getTwitterCount(@url)
@@ -25,12 +25,12 @@ angular.module('arte-ww.services').service 'ThirdParty', ['$http', '$window', '$
             yes # https://github.com/angular/angular.js/issues/4853#issuecomment-28491586
 
         shareOnTwitter: (url=@url)=>
+            # Duplicate string for auto-collection:
+            # $translate('Eat, work and sleep? Not quite! Learn about your generation's world of work at {URL} #artewow')
             tweet = $translate.instant("Eat, work and sleep? Not quite! Learn about your generation's world of work at {URL} #artewow") 
             tweet = tweet.replace "{URL}", @url   
             tweet = encodeURIComponent tweet
-            # Duplicate string for auto-collection:
-            # $translate('Super app !')
-            shareUrl = "https://twitter.com/share?&text=#{tweet}&"
+            shareUrl = "https://twitter.com/share?&text=#{tweet}&url=&"
             $window.open shareUrl, "shareOnTwitter","menubar=no, status=no, scrollbars=no, menubar=no, width=550, height=380"
             yes # https://github.com/angular/angular.js/issues/4853#issuecomment-28491586
 
