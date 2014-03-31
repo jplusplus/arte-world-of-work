@@ -168,10 +168,10 @@ class DynamicFeedback(object):
         BaseAnswer = self.get_base_answer_model()
         try:
             myanswers = BaseAnswer.objects.filter(question=self.question, 
-                user=self.profile.user)
-            if len(myanswers) > 0:
-                myanswer = sorted(myanswers, key=lambda el: (-1)*el.pk )[0]
-                myanswer = myanswer.as_final()
+                user=self.profile.user).order_by('-pk')
+            if myanswers.count() > 0:
+                myanswer  = myanswers[0]
+                myanswer  = myanswer.as_final()
         except BaseAnswer.DoesNotExist: 
             pass
 
