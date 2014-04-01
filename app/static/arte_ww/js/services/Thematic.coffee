@@ -16,19 +16,16 @@ class ThematicService
         'Xiti'
     ]
     
-    constructor: (@rootScope, @routeParams, @http, $resource, $translate, @userPosition, @utils, @Xiti)-> 
+    constructor: (@rootScope, @routeParams, @http, $resource, @translate, @userPosition, @utils, @Xiti)-> 
         # every loaded thematic will be contained inside this object 
         @loadedThematics = {}
-        
-        @getPositions =>
+
+        @http(@listConfig).success (data)=>
+            @positionList = @userPosition.createWrapper(data)
             @rootScope.$watch (=> do @userPosition.thematicPosition), @onThematicPositionChanged
 
         @nestedThematics = $resource @resourceConfig.url, {id: 1}, 
             @resourceConfig.actions
-
-        @rootScope.$watch -> 
-                $translate.use()
-            , @getPositions
 
     count: ()=> @positions().length
 
@@ -36,12 +33,6 @@ class ThematicService
 
     # API method / internal functions 
     all: (cb)=> @nestedThematics.all cb
-
-    getPositions: (cb)=>
-        @http(@listConfig).success (data)=>
-            @positionList = @userPosition.createWrapper(data)
-            if cb and typeof cb is Function
-                cb(data)
 
     get: (params, cb)=>
         # Notify rootScope to display a loading spinner
