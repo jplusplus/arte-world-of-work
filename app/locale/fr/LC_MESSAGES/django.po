@@ -3,7 +3,7 @@ msgid ""
 msgstr "Project-Id-Version: arte-world-of-work\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-31 19:58+0200\n"
-"PO-Revision-Date: 2014-04-01 09:36-0400\n"
+"PO-Revision-Date: 2014-04-01 11:44-0400\n"
 "Last-Translator: Toutenrab <bellon.pierre+crowdin@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -381,7 +381,7 @@ msgstr "Kahneman & Krueger, 2004"
 
 #: i18n_strings.py:102
 msgid "In 2010 <strong>75000 people</strong> went wwoofing, meaning they volunteered on an organic farm. And numbers are growing! But the concept is not entirely new. In so called Kibbutzim in Israel people have been working in exchange for food and shelter since the 1920s."
-msgstr "En 2010, <strong>80 000 personnes </strong>ont pratiqué le wwoofing (volontariat en ferme bio).Mais le concept n’est pas vraiment nouveau : dans des Kibboutzim en Israël, des gens travaillent pour gîte et couvert depuis les années 1920."
+msgstr "En 2010, <strong>75 000 personnes </strong>ont pratiqué le wwoofing (volontariat en ferme bio). Mais le concept n’est pas vraiment nouveau : dans des Kibboutzim en Israël, des gens travaillent pour gîte et couvert depuis les années 1920."
 
 #: i18n_strings.py:103
 msgid "Kotůlek, 2010"

@@ -3,7 +3,7 @@ msgid ""
 msgstr "Project-Id-Version: arte-world-of-work\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-31 19:58+0200\n"
-"PO-Revision-Date: 2014-04-01 09:36-0400\n"
+"PO-Revision-Date: 2014-04-01 11:44-0400\n"
 "Last-Translator: Toutenrab <bellon.pierre+crowdin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -315,7 +315,7 @@ msgstr "INPES"
 
 #: i18n_strings.py:84
 msgid "<p><strong>How Europeans search for jobs.</strong></p>\n<p>Europeans search for jobs in unconventional ways. Only 6%&nbsp;use classified ads in Spain. In Austria 52%&nbsp;try their luck with unsolicited applications. Generally, the more opaque a job market, the more people rely on their personal networks in order to find work.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/work-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Wie Europäer Jobs suchen.</strong></p>\n<p>Europäer suchen auf ungewöhnliche Art und Weisen Jobs. In Spanien verlassen sich nur 6 %&nbsp; auf Kleinanzeigen. In Österreich versuchen 52 %&nbsp;ihr Glück mit \"Spontan-Bewerbungen\". Im Allgemeinen gilt: Je undurchsichtiger ein Arbeitsmarkt, desto mehr verlassen sich Menschen in ihrer Jobsuche auf persönliche Netzwerke.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/work-feedback-de.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Wie Europäer nach Jobs suchen.</strong></p>\n<p> Wenn es um ihre Jobsuche geht, sind Europäer eher unkonventionell. Nur 6 %&nbsp;der Spanier bewerben sich auf Jobanzeigen. 52 %&nbsp;der Österreicher suchen ihr Glück mit Initiativbewerbungen. Im Allgemeinen, umso undurchsichtiger ein Arbeitsmarkt, umso mehr verlassen sich Jobsuchende auf ihre Kontakte.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/work-feedback-de.png\" alt=\"\" width=\"450\">"
 
 #: i18n_strings.py:87
 msgid "Pellizzari, 2003"
@@ -379,7 +379,7 @@ msgstr "Kahneman & Krüger, 2004"
 
 #: i18n_strings.py:102
 msgid "In 2010 <strong>75000 people</strong> went wwoofing, meaning they volunteered on an organic farm. And numbers are growing! But the concept is not entirely new. In so called Kibbutzim in Israel people have been working in exchange for food and shelter since the 1920s."
-msgstr "Im Jahr 2010 haben <strong>75000 Menschen</strong> Wwoofing gemacht, das bedeutet, dass sie freiwillig auf einem Bio-Bauernhof gearbeitet haben.Und es werden immer mehr! Aber das Konzept ist nicht ganz neu. In so genannten Kibbuzim in Israel arbeiten die Leute seit den 20er Jahren für Kost und Logis."
+msgstr "Im Jahr 2010 haben <strong>75000 Menschen</strong> Wwoofing gemacht, das bedeutet, dass sie freiwillig auf einem Bio-Bauernhof gearbeitet haben. Und es werden immer mehr! Aber das Konzept ist nicht ganz neu. In so genannten Kibbuzim in Israel arbeiten die Leute seit den 20er Jahren für Kost und Logis."
 
 #: i18n_strings.py:103
 msgid "Kotůlek, 2010"
@@ -1095,7 +1095,7 @@ msgstr "10 Uhr oder später"
 
 #: i18n_strings.py:284
 msgid "They don’t even speak English there"
-msgstr "Dort sprechen die Leute noch nicht mal Deutsch"
+msgstr "Dort sprechen die Leute noch nicht mal Deutsch."
 
 #: i18n_strings.py:285
 msgid "a couple of years"
@@ -1159,7 +1159,7 @@ msgstr "Du"
 
 #: i18n_strings.py:300
 msgid "<p>Temporary contracts. Permanent job-hunt. Playing online poker for a living. Editing Wikipedia. Work can be many things. But economists still measure (un)employment the same way.</p> <br/> \n<p><strong> What&rsquo;s work for you?</strong></p>"
-msgstr "<p>Zeitverträge, permanente Jobsuche, Geldverdienen mit Online-Poker Wikipedia bearbeiten. Arbeit kann vieles bedeuten, aber Ökonomen berechnen Arbeit und Arbeitslosigkeit immer noch auf die selbe Art und Weise.</p><br/>\n<p><strong>  Was bedeutet Arbeit für Dich?</strong></p>"
+msgstr "<p>Zeitverträge, permanente Jobsuche, Geldverdienen mit Online-Poker, Wikipedia bearbeiten. Arbeit kann vieles bedeuten, aber Ökonomen berechnen Arbeit und Arbeitslosigkeit immer noch auf die selbe Art und Weise.</p><br/>\n<p><strong>  Was bedeutet Arbeit für Dich?</strong></p>"
 
 #: i18n_strings.py:302
 msgid "Your Work"
