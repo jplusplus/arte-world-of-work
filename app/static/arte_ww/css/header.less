@@ -1,6 +1,18 @@
 
 .header {
-
+    @media (max-width: @screen-xs-min) {
+        top: @logo-mobile-height;
+        &:before {
+            z-index: @header-zindex + 10;
+            position: absolute;
+            top: -@logo-mobile-height; 
+            right: 0px;
+            content: " ";
+            height:  @logo-mobile-height;
+            width: 100%;
+            background:url("../img/ui/logo-mobile.jpg") center center white no-repeat;
+        }
+    }
     background:@navbar-default-bg;
     height:@header-height;  
     color:#bebebe;   
@@ -16,7 +28,6 @@
     &__nav {
 
         position:relative;   
-
         &__brand-logo, &__brand-wow {    
 
             z-index: @header-zindex;
@@ -47,6 +58,7 @@
                 margin-top:10px;
                 display:block;
                 background:url("../img/ui/logo.png") no-repeat 0 0;
+
             }
 
             &__caption {
