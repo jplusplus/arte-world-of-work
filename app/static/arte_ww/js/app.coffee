@@ -25,11 +25,11 @@ arteww = angular
         'UserPosition'
         'ThirdParty'
         ($rootScope, $location, $route, $translate, $cookies, UserPosition, ThirdParty)->
-
+            search_params = $location.search()
             # Activate arte mode
-            $rootScope.shouldDisplayArte = $location.search().arte                     
+            $rootScope.shouldDisplayArte = search_params.arte                     
             # Update the current language
-            $cookies.django_language = $location.search().lang or $cookies.django_language
+            $cookies.django_language = search_params.lang or $cookies.django_language
             $translate.use $cookies.django_language
 
             $rootScope.location = $location
@@ -84,7 +84,6 @@ arteww = angular
                 $routeProvider
                     .when('/', redirectTo: '/survey')
                     .when '/survey',
-                            reloadOnSearch: no
                             controller: 'SurveyCtrl'
                             templateUrl: '/partial/survey.html'
                             category: 'survey'
@@ -92,11 +91,9 @@ arteww = angular
                             category: 'results'
                             controller: 'ResultsCtrl'
                             templateUrl: '/partial/results.html'
-                            reloadOnSearch: no
                     .when '/results/:id/embedded',
                             controller: 'ResultsCtrl'
                             templateUrl: '/partial/results.embedded.html'
                     .when '/about',
                         templateUrl: '/partial/about.html'
-                        reloadOnSearch: no
     ])

@@ -30,19 +30,20 @@ class ResultsCtrl
         Xiti.loadPage("results")
 
         # Update URL when the user changes filters
-        @$scope.$watch 'filters', (=>
-            f = angular.copy @$scope.filters
-            params = _.extend $location.search(),
-                gender:  null
-                age_min: f.age_min
-                age_max: f.age_max
+        # Uncomment this block when you will want to enable deep linking
+        # @$scope.$watch 'filters', (=>
+        #     f = angular.copy @$scope.filters
+        #     params = _.extend $location.search(),
+        #         gender:  null
+        #         age_min: f.age_min
+        #         age_max: f.age_max
 
-            if (f.male isnt f.female)
-                params['gender'] = 'male' if f.male
-                params['gender'] = 'female' if f.female
+        #     if (f.male isnt f.female)
+        #         params['gender'] = 'male' if f.male
+        #         params['gender'] = 'female' if f.female
 
-            $location.search params
-        ), yes
+        #     $location.search params
+        # ), yes
 
         @$scope.filtered = =>
             if ((parseInt @$scope.filters.age_min) is 16) and ((parseInt @$scope.filters.age_max) is 35) and @$scope.filters.male and @$scope.filters.female
