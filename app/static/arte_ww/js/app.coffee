@@ -24,7 +24,7 @@ arteww = angular
         '$cookies'
         'UserPosition'
         ($rootScope, $location, $route, $translate, $cookies, UserPosition)->
-
+            search_params = $location.search()
             # Activate arte mode
             $rootScope.shouldDisplayArte = search_params.arte                     
             # Update the current language
