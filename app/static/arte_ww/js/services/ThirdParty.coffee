@@ -1,11 +1,21 @@
-angular.module('arte-ww.services').service 'ThirdParty', ['$http', '$window', '$translate', ($http, $window, $translate) -> 
-    new class ThirdPartyService    
-        constructor: ($http, $window, $translate) -> # YOLO
-            @url   = "http://www.arte.tv/worldofwork/" # $window.location.hostname                
+angular.module('arte-ww.services').service 'ThirdParty', ['$http', '$window', '$translate', '$cookies', ($http, $window, $translate, $cookies) -> 
+    new class ThirdPartyService
+        defaultShareLang: 'fr'
+        shareUrl: 
+            fr: "http://europe.arte.tv/fr/evenements/world-of-work/"
+            de: "http://europe.arte.tv/de/veranstaltungen/world-of-work/"
+
+        constructor: ($http, $window, $translate, $cookies) -> # YOLO
+            @url   = @getURL() # $window.location.hostname         
             # Get shares count from facebook
             @getFacebookCount(@url)
             @getTwitterCount(@url)
             @getGplusCount(@url)
+
+        getURL: =>
+            lang = $cookies.django_language or $translate.use() 
+            console.log "lang=", lang
+            return @shareUrl[lang] or @shareUrl[@defaultShareLang]
 
         getFacebookCount: (url=@url)=>
             $http.jsonp("http://graph.facebook.com/#{url}?callback=JSON_CALLBACK").then (body)=>             

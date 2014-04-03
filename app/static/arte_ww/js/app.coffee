@@ -23,9 +23,8 @@ arteww = angular
         '$translate'
         '$cookies'
         'UserPosition'
-        'ThirdParty'
-        ($rootScope, $location, $route, $translate, $cookies, UserPosition, ThirdParty)->
-            search_params = $location.search()
+        ($rootScope, $location, $route, $translate, $cookies, UserPosition)->
+
             # Activate arte mode
             $rootScope.shouldDisplayArte = search_params.arte                     
             # Update the current language
@@ -45,16 +44,19 @@ arteww = angular
                 UserPosition.elementPosition 0
                 $location.url "/"
 
-            # Get thirdParty helpers
-            $rootScope.thirdParty = ThirdParty                
+                       
     ])
     # Second run where dependancies need the previous call to be ended
     .run([
         "$rootScope",
         "Xiti",
-        ($rootScope, Xiti)->
+        "ThirdParty"
+        ($rootScope, Xiti, ThirdParty)->
             # Xiti service must be available everywhere             
             $rootScope.xiti = Xiti
+
+            # Get thirdParty helpers
+            $rootScope.thirdParty = ThirdParty
     ])
     .config([
             '$interpolateProvider'
@@ -84,6 +86,7 @@ arteww = angular
                 $routeProvider
                     .when('/', redirectTo: '/survey')
                     .when '/survey',
+                            reloadOnSearch: no
                             controller: 'SurveyCtrl'
                             templateUrl: '/partial/survey.html'
                             category: 'survey'
@@ -91,9 +94,11 @@ arteww = angular
                             category: 'results'
                             controller: 'ResultsCtrl'
                             templateUrl: '/partial/results.html'
+                            reloadOnSearch: no
                     .when '/results/:id/embedded',
                             controller: 'ResultsCtrl'
                             templateUrl: '/partial/results.embedded.html'
                     .when '/about',
                         templateUrl: '/partial/about.html'
+                        reloadOnSearch: no
     ])
