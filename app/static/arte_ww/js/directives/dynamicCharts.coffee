@@ -272,6 +272,8 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$root
                 gender:  null
                 age_min: 16
                 age_max: 35
+                male: yes
+                female: yes
         ]
         link: (scope, elem, attr) ->
             newChart = =>
@@ -287,12 +289,11 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$root
                 return if not scope.id? or scope.id is "" or scope.id < 0
 
                 filters = angular.copy scope.filters
+
                 if filters.male isnt filters.female
                     filters.gender = 'male' if filters.male
                     filters.gender = 'female' if filters.female
-                delete filters.male
-                delete filters.female
-
+                
                 request =
                     id : scope.id
                     filters : filters
