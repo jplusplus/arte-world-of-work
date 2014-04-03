@@ -29,6 +29,7 @@ class ElementsWrapper
                 return (thematic)=>
                     return unless thematic?
                     @elements = @userPosition.createWrapper thematic.elements
+                    @intitialElements = @elements.all()
                     @onElementPositionChanged do @userPosition.elementPosition
             ) @
 
@@ -60,6 +61,11 @@ class ElementsWrapper
                 @currentElement = @elements.getAt position
         else
             @currentElement = challenger
+
+        [ found, index ] = @isInInitialList(@currentElement)
+        if found
+            @userPosition.lastElementPosition(index)
+        
 
     fixPosition: (position)=>
         nb_elem = @all().length
@@ -113,5 +119,22 @@ class ElementsWrapper
     isYou: => @Thematic.currentThematic.slug == 'toi'
 
     isFeedback: (elem)=> elem and elem.type is 'feedback'
+
+    isInInitialList: (elem)=>
+        index       = -1 
+        return [ false , index ] unless elem 
+        
+        found_elem  = _.find @intitialElements, (el, i)->
+                found = no 
+                if el.type is elem.type
+                    if el.type is 'question'
+                        found = el.label == elem.label
+                    else
+                        found = el.html_sentence == elem.html_sentence 
+                    if found
+                        index = i
+                return found
+
+        [ found_elem != undefined, index ]
 
 angular.module('arte-ww.services').service 'ElementsWrapper', ElementsWrapper

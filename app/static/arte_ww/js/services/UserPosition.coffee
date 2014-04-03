@@ -62,6 +62,7 @@ class UserPositionService
 
     state: undefined
     positions:
+        lastElementPosition: undefined
         thematicPosition: undefined
         elementPosition: undefined
 
@@ -94,13 +95,13 @@ class UserPositionService
             @state = state
         @state
 
-    sendPosition: =>
+    sendPosition: () =>
         request =
             url : '/api/my-position/'
             method : 'PATCH'
             data :
                 thematic_position : @positions.thematicPosition
-                element_position : @positions.elementPosition
+                element_position : @positions.lastElementPosition
         @$http request
 
     thematicPosition: (position) =>
@@ -108,6 +109,12 @@ class UserPositionService
             @positions.thematicPosition = position
             do @sendPosition
         @positions.thematicPosition
+
+    lastElementPosition: (position)=>
+        if position?
+            @positions.lastElementPosition = position
+            do @sendPosition
+        @positions.lastElementPosition
 
     elementPosition:  (position, save=true) =>
         if position?
@@ -126,10 +133,10 @@ class UserPositionService
         @thematicPosition @positions.thematicPosition - 1
 
     nextElement: (save = true) =>
-        @elementPosition @positions.elementPosition + 1, save
+        @elementPosition @positions.elementPosition + 1, false
 
     previousElement: (save = true) =>
-        @elementPosition @positions.elementPosition - 1, save
+        @elementPosition @positions.elementPosition - 1, false
 
     createWrapper: (elements)-> return new PositionsObject(elements, @utils)
 
