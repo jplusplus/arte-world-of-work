@@ -3,7 +3,7 @@ msgid ""
 msgstr "Project-Id-Version: arte-world-of-work\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-31 19:58+0200\n"
-"PO-Revision-Date: 2014-04-01 11:44-0400\n"
+"PO-Revision-Date: 2014-04-03 06:50-0400\n"
 "Last-Translator: Toutenrab <bellon.pierre+crowdin@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -64,7 +64,7 @@ msgstr "Forsa for Westlotto (PDF)"
 
 #: i18n_strings.py:15
 msgid "<p><strong>Studies in the sun</strong></p>\n<p>Spain is Erasmus destination #1. Granada in Andalusia is the capital of the study abroad programme. More than 2000 students come here every year. Erasmus is run by the EU but students also rely on their government’s willingness to co-sponsor their trip.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/education-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Études au soleil</strong></p> \n <p>Espagne est Erasmus destination #1. Grenade en Andalousie est la capitale du programme d'études à l'étranger. Plus de 2000 étudiants viennent ici chaque année. Erasmus est géré par l'Union européenne, mais les étudiants s'appuient également sur la volonté de leur gouvernement de subventionner leur séjour.</p>\n <img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/education-feedback-fr.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Études au soleil</strong></p> \n <p>Espagne est Erasmus destination #1. Grenade en Andalousie est la capitale du programme d'études à l'étranger. Plus de 2000 étudiants viennent ici chaque année. Erasmus est géré par l'Union européenne, mais les étudiants s'appuient également sur la volonté de leur gouvernement de subventionner leur séjour.</p>"
 
 #: i18n_strings.py:18
 msgid "Erasmus.ahoi.in"
@@ -104,7 +104,7 @@ msgstr "Institut Florian Mantione"
 
 #: i18n_strings.py:27
 msgid "<p><strong>A continent of old people?</strong></p>\n<p>The old-age dependency ratio measures the number of elderly people as a share of those of working age. Places where old people rely on a small number of working young people are dark red.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/government-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Un continent de personnes âgées&nbsp;?</strong></p><p>Le ratio de dépendance mesure le nombre de personnes âgées en proportion des personnes en âge de travailler. Les régions les plus foncées sont celles où l'on trouve le plus de personnes dépendantes.</p> <img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/government-feedback-fr.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Un continent de personnes âgées&nbsp;?</strong></p><p>Le ratio de dépendance mesure le nombre de personnes âgées en proportion des personnes en âge de travailler. Les régions les plus foncées sont celles où l'on trouve le plus de personnes dépendantes.</p>"
 
 #: i18n_strings.py:30
 msgid "Eurostat"
@@ -128,7 +128,7 @@ msgstr "Eurobaromètre (p. 90)"
 
 #: i18n_strings.py:35
 msgid "<p><strong>The invasion of the robots?</strong></p>\n<p>Scientists at the University of Oxford have created a model to estimate which jobs will have been replaced by machines or robots 20 years from now. The bigger the bubbles in this chart the more a job is future-proof. Seems that clergy have made a good job choice. Bad luck for referees though.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/future-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>L'invasion des robots ?</strong></p>\n<p>Des scientifiques d'Oxford ont estimé la probabilité que des métiers soient effectués par des robots à la place d'humains d'ici 20 ans. Le clergé s'en sort bien. Les arbitres, moins.</p>\n <img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/future-feedback-fr.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>L'invasion des robots ?</strong></p>\n<p>Des scientifiques d'Oxford ont estimé la probabilité que des métiers soient effectués par des robots à la place d'humains d'ici 20 ans. Le clergé s'en sort bien. Les arbitres, moins.</p>"
 
 #: i18n_strings.py:38
 msgid "Oxford Martin School"
@@ -317,7 +317,7 @@ msgstr "INPES"
 
 #: i18n_strings.py:84
 msgid "<p><strong>How Europeans search for jobs.</strong></p>\n<p>Europeans search for jobs in unconventional ways. Only 6%&nbsp;use classified ads in Spain. In Austria 52%&nbsp;try their luck with unsolicited applications. Generally, the more opaque a job market, the more people rely on their personal networks in order to find work.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/work-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Comment les européens trouvent leurs jobs</strong></p> \n <p>Seuls 6% des Espagnols cherchent du travail via les petites annonces. En général, plus le marché du travail est opaque, plus on utilise ses réseaux pour trouver un job.</p>\n <img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/work-feedback-fr.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Comment les européens trouvent leurs jobs</strong></p> \n <p>Seuls 6% des Espagnols cherchent du travail via les petites annonces. En général, plus le marché du travail est opaque, plus on utilise ses réseaux pour trouver un job.</p>"
 
 #: i18n_strings.py:87
 msgid "Pellizzari, 2003"
@@ -397,7 +397,7 @@ msgstr "LinkedIn"
 
 #: i18n_strings.py:106
 msgid "<p><strong>A good idea to start saving now?</strong></p>\n<p>Today the interest rate of normal savings accounts gets eaten up by inflation. If you start saving 400 € a month now, you might be able to afford a house in 30 years. Not enough to motivate the majority of young people in Europe to save up.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/money-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Quand commencer à épargner ?</strong></p>\n<p>Si vous commencez à épargner 400 € par mois dès maintenant, vous pourrez peut-être vous payer une maison dans 30 ans... Ce n'est pas une motivation suffisante pour inciter les jeunes à économiser.</p>\n <img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/money-feedback-fr.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Quand commencer à épargner ?</strong></p>\n<p>Si vous commencez à épargner 400 € par mois dès maintenant, vous pourrez peut-être vous payer une maison dans 30 ans... Ce n'est pas une motivation suffisante pour inciter les jeunes à économiser.</p>"
 
 #: i18n_strings.py:109
 msgid "Tagesspiegel"

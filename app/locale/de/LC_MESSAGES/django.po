@@ -3,7 +3,7 @@ msgid ""
 msgstr "Project-Id-Version: arte-world-of-work\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-31 19:58+0200\n"
-"PO-Revision-Date: 2014-04-01 11:44-0400\n"
+"PO-Revision-Date: 2014-04-03 06:50-0400\n"
 "Last-Translator: Toutenrab <bellon.pierre+crowdin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -23,7 +23,7 @@ msgstr "Eugen Weber, 1976"
 
 #: i18n_strings.py:5
 msgid "As a young European chances are <strong>almost 50%&nbsp;that you owe money</strong> to your bank, family or friends. The median debt of young people in Europe is <strong>5000 €</strong>."
-msgstr "Bei jungen Europäern stehen die Chancen <strong>fast bei 50 %&nbsp;, dass Sie jemandem Geld Schulden</strong>, sei es ihrer Bank, Familie oder Freunden. Die durchschnittlichen Schulden junger Menschen in Europa betragen <strong>5000</strong> €."
+msgstr "Bei jungen Europäern stehen die Chancen <strong>fast bei 50&nbsp;%, dass sie jemandem Geld schulden</strong>, sei es ihrer Bank, Familie oder Freunden. Die durchschnittlichen Schulden junger Menschen in Europa betragen <strong>5000&nbsp;€</strong>."
 
 #: i18n_strings.py:6
 msgid "ECB, p. 60"
@@ -39,7 +39,7 @@ msgstr "Greenberg, 2002"
 
 #: i18n_strings.py:9
 msgid "Academics agree on this matter: <strong>social background and parents' opinions</strong> matter most when young people decide what to do with their lives."
-msgstr "Wissenschaftler sind sich einig: <strong>Der soziale Hintergrund und die Meinung der Eltern <strong>zählen am meisten, wenn Jugendliche entscheiden, was sie aus ihrem Leben machen wollen."
+msgstr "Die Wissenschaftler sind sich in Einem einig: Man wählt das Studium danach, was einem sein <strong>soziales Umfeld und die Eltern</strong> raten."
 
 #: i18n_strings.py:10
 msgid "Hachmeister et al., 2007"
@@ -63,7 +63,7 @@ msgstr "Forsa für Westlotto (PDF)"
 
 #: i18n_strings.py:15
 msgid "<p><strong>Studies in the sun</strong></p>\n<p>Spain is Erasmus destination #1. Granada in Andalusia is the capital of the study abroad programme. More than 2000 students come here every year. Erasmus is run by the EU but students also rely on their government’s willingness to co-sponsor their trip.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/education-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Studieren in der Sonne.</strong></p>\n<p>Spanien ist Erasmus-Zielland Nummer 1. Granada in Andalusien ist so etwas wie die Hauptstadt des Studienaustausch-Programms. Mehr als 2000 Studenten kommen jedes Jahr hier her. Erasmus wird von der EU organisiert. Regierungen tragen jedoch auch einen Teil zu den Studienaufenthalten bei.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/education-feedback-de.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Studieren in der Sonne.</strong></p>\n<p>Spanien ist Erasmus-Zielland Nummer 1. Granada in Andalusien ist so etwas wie die Hauptstadt des Studienaustausch-Programms. Mehr als 2000 Studenten kommen jedes Jahr hier her. Erasmus wird von der EU organisiert. Regierungen tragen jedoch auch einen Teil zu den Studienaufenthalten bei.</p>"
 
 #: i18n_strings.py:18
 msgid "Erasmus.ahoi.in"
@@ -103,7 +103,7 @@ msgstr "Institut Florian Mantione"
 
 #: i18n_strings.py:27
 msgid "<p><strong>A continent of old people?</strong></p>\n<p>The old-age dependency ratio measures the number of elderly people as a share of those of working age. Places where old people rely on a small number of working young people are dark red.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/government-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Ein Kontinent voller alter Menschen?</strong></p>\n<p>Der Altenquotient misst das Verhältnis zwischen alten Menschen und denen im Arbeitsalter. Orte, an denen alte Menschen sich auf eine kleine Zahl an jungen Menschen verlassen müssen, sind dunkelrot.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/government-feedback-de.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Ein Kontinent voller alter Menschen?</strong></p>\n<p>Der Altenquotient misst das Verhältnis zwischen alten Menschen und denen im Arbeitsalter. Orte, an denen alte Menschen sich auf eine kleine Zahl an jungen Menschen verlassen müssen, sind dunkelrot.</p>"
 
 #: i18n_strings.py:30
 msgid "Eurostat"
@@ -127,7 +127,7 @@ msgstr "Eurobarometer (S. 90)"
 
 #: i18n_strings.py:35
 msgid "<p><strong>The invasion of the robots?</strong></p>\n<p>Scientists at the University of Oxford have created a model to estimate which jobs will have been replaced by machines or robots 20 years from now. The bigger the bubbles in this chart the more a job is future-proof. Seems that clergy have made a good job choice. Bad luck for referees though.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/future-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Die Invasion der Roboter?</strong></p>\n<p>Wissenschaftler an der University of Oxford haben ein Modell entwickelt um einzuschätzen, welche heutigen Berufe in 20 Jahren von Maschinen und Robotern ausgeführt werden. Je größer die Blase in dieser Grafik, desto zukunftssicherer ist ein Job. Sieht so aus als hätten Pfarrer den richtigen Job gewählt. Schiedsrichter haben wohl weniger Glück.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/future-feedback-de.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Die Invasion der Roboter?</strong></p>\n<p>Wissenschaftler an der University of Oxford haben ein Modell entwickelt um einzuschätzen, welche heutigen Berufe in 20 Jahren von Maschinen und Robotern ausgeführt werden. Je größer die Blase in dieser Grafik, desto zukunftssicherer ist ein Job. Sieht so aus als hätten Pfarrer den richtigen Job gewählt. Schiedsrichter haben wohl weniger Glück.</p>"
 
 #: i18n_strings.py:38
 msgid "Oxford Martin School"
@@ -151,7 +151,7 @@ msgstr "NBER"
 
 #: i18n_strings.py:43
 msgid "The gender pay gap - everybody talks about it but <strong>nobody actually sees it</strong>. That’s also what Finnish study shows: Female employees often consider themselves as well-paid as their male counterparts even if they aren’t."
-msgstr "Das geschlechtsspezifische Lohngefälle: Alle reden darüber, aber <strong>keiner sieht es tatsächlich</strong>. Das zeigt auch eine finnische Studie: Weibliche Mitarbeiter denken oft, sie wären genau so gut bezahlt wie ihre männlichen Kollegen, auch wenn das gar nicht der Fall ist."
+msgstr "Das geschlechtsspezifische Lohngefälle: Alle reden darüber, aber <strong>keiner sieht es tatsächlich</strong>. Das zeigt auch eine finnische Studie: Weibliche Mitarbeiter denken oft, sie wären genauso gut bezahlt wie ihre männlichen Kollegen, auch wenn das gar nicht der Fall ist."
 
 #: i18n_strings.py:44
 msgid "Khoreva, 2012"
@@ -159,7 +159,7 @@ msgstr "Khoreva, 2012"
 
 #: i18n_strings.py:45
 msgid "1 out of 2 Europeans would be <strong>angry to learn that their boss monitors their professional emails</strong>. They don’t seem to realise that this can actually be legal."
-msgstr "Die Hälfte alle Europäer <strong>wären wütend, wenn sie erfahren würden, dass ihr Chef ihre beruflichen E-Mails überwacht</strong>. Sie scheinen nicht zu wissen, dass das legal sein kann."
+msgstr "Die Hälfte aller Europäer <strong>wären wütend, wenn sie erfahren würden, dass ihr Chef ihre beruflichen E-Mails überwacht</strong>. Sie scheinen nicht zu wissen, dass das legal sein kann."
 
 #: i18n_strings.py:46
 msgid "Aruba Network"
@@ -195,7 +195,7 @@ msgstr "Institut der Deutschen Wirtschaft (S. 4)"
 
 #: i18n_strings.py:54
 msgid "Sheltered employment is a trap. Many policies see it as a springboard into the “regular” labor market. But <strong>only very few people manage to make the transition</strong>. In Austria it’s less than every 30th."
-msgstr "Die Politik sieht Werkstätten für behinderte Menschen gerne als Sprungbrett auf den \"regulären\" Arbeitsmarkt. In Wirklichkeit sind sie eher eine Falle. <strong>Nur sehr wenige Menschen schaffen den Übergang</strong>. In Österreich weniger als jeder Dreißigste."
+msgstr "Die Politik sieht Werkstätten für Menschen mit Behinderung gerne als Sprungbrett auf den \"regulären\" Arbeitsmarkt. In Wirklichkeit sind sie eher eine Falle. <strong>Nur sehr wenige Menschen schaffen den Übergang</strong>. In Österreich weniger als jeder Dreißigste."
 
 #: i18n_strings.py:55
 msgid "ANED (p. 15)"
@@ -215,7 +215,7 @@ msgstr "J-Pal"
 
 #: i18n_strings.py:59
 msgid "Older people are generally against a <strong>universal basic income</strong>. For young people it’s less of a problem to receive money without having to work for it. Economists say that financial incentives make us work harder but not necessarily smarter. It’s hard to say what the actual effects of a basic income on the labor market would be."
-msgstr "Ältere Menschen sind in der Regel gegen ein <strong>bedingungsloses Grundeinkommen</strong>. Jugendlichen fällt es leichter, Geld einfach so anzunehmen. Ökonomen sagen, dass finanzielle Anreize uns härter aber nicht notwendigerweise intelligenter arbeiten lassen. Es ist also schwer zu sagen, wie sich ein bedingungsloses Grundeinkommen tatsächlich auf den Arbeitsmarkt auswirken würde."
+msgstr "Ältere Menschen sind in der Regel gegen ein <strong>bedingungsloses Grundeinkommen</strong>. Jugendlichen fällt es leichter, Geld einfach so anzunehmen. Ökonomen sagen, dass finanzielle Anreize uns härter, aber nicht notwendigerweise intelligenter arbeiten lassen. Es ist also schwer zu sagen, wie sich ein bedingungsloses Grundeinkommen tatsächlich auf den Arbeitsmarkt auswirken würde."
 
 #: i18n_strings.py:60
 msgid "World Values Survey"
@@ -247,11 +247,11 @@ msgstr "Spiegel Online"
 
 #: i18n_strings.py:67
 msgid "If you’ve managed to leave your parents’ house consider yourself lucky. For young Europeans between 18 and 34 chances are almost 50 %&nbsp;that they still live with their parents. Half of them say it’s for financial reasons."
-msgstr "Wenn Du es geschafft hast, bei Deinen Eltern auszuziehen, kannst Du Dich glücklich schätzen. Bei Jugendlichen zwischen 18 und 34 stehen die Chancen bei fast 50 %&nbsp;, dass sie noch bei ihren Eltern leben. Die Hälfte davon gibt finanzielle Gründe dafür an."
+msgstr "Wenn Du es geschafft hast, bei Deinen Eltern auszuziehen, kannst Du Dich glücklich schätzen. Bei Jugendlichen zwischen 18 und 34 stehen die Chancen bei fast 50&nbsp;%, dass sie noch bei ihren Eltern leben. Die Hälfte davon gibt finanzielle Gründe dafür an."
 
 #: i18n_strings.py:68
 msgid "In Berlin, <strong>one third of the student population</strong> could imagine financing their studies with prostitution."
-msgstr "Ein Drittel der Berliner Studenten<strong>kann sich vorstellen,</strong> sein/ihr Studium durch Prostitution zu finanzieren."
+msgstr "Ein Drittel der Berliner Studenten <strong>kann sich vorstellen,</strong> sein/ihr Studium durch Prostitution zu finanzieren."
 
 #: i18n_strings.py:69
 msgid "Studienkolleg zu Berlin"
@@ -259,7 +259,7 @@ msgstr "Studienkolleg zu Berlin"
 
 #: i18n_strings.py:70
 msgid "In Dresden, Germany, you can make <strong>100 € by queuing for a night</strong>. Couples, who want to fix a wedding date at the local register office, are willing to pay that price. The office opens it’s schedule only twice a year and at 8 in the morning."
-msgstr "In Dresden kann man <strong>100 € mit einer Nacht Schlange stehen verlienen</strong>. Das zahlen Paare dort gerne, wenn sie ihr Aufgebot bestellen wollen. Denn das örtliche Standesamt hat nur zweimal im Jahr ab 8 Uhr morgens geöffnet."
+msgstr "In Dresden kann man <strong>100&nbsp€ mit einer Nacht Schlange stehen verdienen</strong>. Das zahlen Paare dort gerne, wenn sie sich einen bestimmten Termin zum Heiraten sichern wollen. Denn das örtliche Standesamt hat nur zweimal im Jahr ab 8 Uhr morgens geöffnet."
 
 #: i18n_strings.py:71
 msgid "Kölner Stadt-Anzeiger"
@@ -271,7 +271,7 @@ msgstr "Ist Teilen selbstlos? Klar, aber auch ein gutes Mittel, um sein Budget a
 
 #: i18n_strings.py:73
 msgid "AirBnb"
-msgstr "AirBnb"
+msgstr "Seine Wohnung vermieten"
 
 #: i18n_strings.py:74
 msgid "Reading all articles on Wikipedia would take <strong>7 years</strong>. And all this has been created by volunteers."
@@ -315,7 +315,7 @@ msgstr "INPES"
 
 #: i18n_strings.py:84
 msgid "<p><strong>How Europeans search for jobs.</strong></p>\n<p>Europeans search for jobs in unconventional ways. Only 6%&nbsp;use classified ads in Spain. In Austria 52%&nbsp;try their luck with unsolicited applications. Generally, the more opaque a job market, the more people rely on their personal networks in order to find work.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/work-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Wie Europäer nach Jobs suchen.</strong></p>\n<p> Wenn es um ihre Jobsuche geht, sind Europäer eher unkonventionell. Nur 6 %&nbsp;der Spanier bewerben sich auf Jobanzeigen. 52 %&nbsp;der Österreicher suchen ihr Glück mit Initiativbewerbungen. Im Allgemeinen, umso undurchsichtiger ein Arbeitsmarkt, umso mehr verlassen sich Jobsuchende auf ihre Kontakte.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/work-feedback-de.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Wie Europäer nach Jobs suchen.</strong></p>\n<p> Wenn es um ihre Jobsuche geht, sind Europäer eher unkonventionell. Nur 6 %&nbsp;der Spanier bewerben sich auf Jobanzeigen. 52 %&nbsp;der Österreicher suchen ihr Glück mit Initiativbewerbungen. Im Allgemeinen, umso undurchsichtiger ein Arbeitsmarkt, umso mehr verlassen sich Jobsuchende auf ihre Kontakte.</p>"
 
 #: i18n_strings.py:87
 msgid "Pellizzari, 2003"
@@ -363,7 +363,7 @@ msgstr "Eurobarometer, S. 14"
 
 #: i18n_strings.py:98
 msgid "Two English students have made over £30,000 by renting out their faces for ads. They <strong>charge £100</strong> per day."
-msgstr "Zwei englische Studenten haben mehr als £30.000 damit verdient, dass sie ihre Gesichter als Werbetafel vermieteten. Pro Tag <strong>verlangen sie £100</strong>."
+msgstr "Zwei englische Studenten haben mehr als 36260&nbsp€ damit verdient, dass sie ihre Gesichter als Werbetafel vermieteten. Pro Tag <strong>verlangen sie 120&nbsp€</strong>."
 
 #: i18n_strings.py:99
 msgid "AFP"
@@ -395,7 +395,7 @@ msgstr "LinkedIn"
 
 #: i18n_strings.py:106
 msgid "<p><strong>A good idea to start saving now?</strong></p>\n<p>Today the interest rate of normal savings accounts gets eaten up by inflation. If you start saving 400 € a month now, you might be able to afford a house in 30 years. Not enough to motivate the majority of young people in Europe to save up.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/money-feedback-en.png\" alt=\"\"  width=\"450\">"
-msgstr "<p><strong>Eine gute Idee, jetzt mit dem Sparen anzufangen?</strong></p>\n<p>Zu den aktuellen Bedingungen wird der Zinssatz eines Sparbuchs von der Inflation aufgefressen. Wenn Du heute anfängst, jeden Monat 400 € zu sparen, kannst Du Dir wahrscheinlich in 30 Jahren ein Haus leisten. Nicht genug, um die Mehrheit der jungen Europäer zum Sparen zu bewegen.</p>\n<img src=\"https://s3-eu-west-1.amazonaws.com/arte-wow-production/arte_ww/img/ui/money-feedback-de.png\" alt=\"\" width=\"450\">"
+msgstr "<p><strong>Eine gute Idee, jetzt mit dem Sparen anzufangen?</strong></p>\n<p>Zu den aktuellen Bedingungen wird der Zinssatz eines Sparbuchs von der Inflation aufgefressen. Wenn Du heute anfängst, jeden Monat 400 € zu sparen, kannst Du Dir wahrscheinlich in 30 Jahren ein Haus leisten. Nicht genug, um die Mehrheit der jungen Europäer zum Sparen zu bewegen.</p>"
 
 #: i18n_strings.py:109
 msgid "Tagesspiegel"
@@ -403,7 +403,7 @@ msgstr "Tagesspiegel"
 
 #: i18n_strings.py:110
 msgid "In a recent case of \"bossnapping\" French media managers have been \"detained\" by their employees for more than 18 hours."
-msgstr "In einem französischen \"Bossnapping\"-Fall haben französische Angestellte im Januar 2014 ihre Chefs mehr als 18 Stunden in Gefangenschaft gehalten."
+msgstr "„Bossnapping“: Im französischen Mediensektor wurden Manager vor Kurzem für über 18 Stunden von ihren Angestellten festgehalten."
 
 #: i18n_strings.py:111
 msgid "FT"
@@ -435,7 +435,7 @@ msgstr "Mit einem/r Fremden schlafen, um etwas Geld zu verdienen? OK. Aber dafü
 
 #: i18n_strings.py:119
 msgid "Stand in line for a full night for someone else? Ok, but I would need to get paid at least…"
-msgstr "Eine Nacht lang Schlange stehen für jemand anderen? OK, aber dafür will ich mindestens…"
+msgstr "Eine Nacht lang in einer Schlange stehen für jemand anderen? OK, aber dafür will ich mindestens…"
 
 #: i18n_strings.py:120
 msgid "How much money have you saved for long term projects?"
@@ -483,7 +483,7 @@ msgstr "Es ist spät und Du bist allein im Büro. Du kannst stehlen, was Du will
 
 #: i18n_strings.py:131
 msgid "What counted most when you picked your field of education?"
-msgstr "Was zählte bei Deiner Berufswahl am meisten?"
+msgstr "Als Du Dich für Deine Ausbildung entschieden hast, was war Dir da das Wichtigste?"
 
 #: i18n_strings.py:132
 msgid "Think you might be CEO some day as well?"
@@ -715,7 +715,7 @@ msgstr "Der Arbeitsmarkt"
 
 #: i18n_strings.py:189
 msgid "My professors’ advice"
-msgstr "Der Rat meiner Lehrer/Professoren"
+msgstr "Die Ratschläge meiner Lehrer"
 
 #: i18n_strings.py:190
 msgid "My personal ambition"
@@ -723,7 +723,7 @@ msgstr "Mein persönlicher Ehrgeiz"
 
 #: i18n_strings.py:191
 msgid "The cost of studies"
-msgstr "Die Studiengebühren"
+msgstr "Die Kosten des Studiums"
 
 #: i18n_strings.py:192
 msgid "Sure, I love my job."
@@ -799,7 +799,7 @@ msgstr "Meine Familie"
 
 #: i18n_strings.py:210
 msgid "Online auctions"
-msgstr "Online-Auktionen"
+msgstr "Seine Sachen verkaufen"
 
 #: i18n_strings.py:211
 msgid "Yes, somebody should pay these people"
@@ -1007,7 +1007,7 @@ msgstr "Meine Freunde"
 
 #: i18n_strings.py:262
 msgid "Microwork"
-msgstr "Mikroarbeit"
+msgstr "Anderer Leutes To-do-Liste abarbeiten"
 
 #: i18n_strings.py:263
 msgid "Now I don’t even know what work is anymore"
@@ -1047,7 +1047,7 @@ msgstr "über ein Jahr"
 
 #: i18n_strings.py:272
 msgid "Start a shitstorm on social media"
-msgstr "Einen \"Shitstorm\" in sozialen Medien starten"
+msgstr "Einen \"Shitstorm\" in den sozialen Medien starten"
 
 #: i18n_strings.py:273
 msgid "do cash-in-hand jobs"
@@ -1119,7 +1119,7 @@ msgstr "Darlehen"
 
 #: i18n_strings.py:290
 msgid "DIY Marketplace "
-msgstr "Baumarkt"
+msgstr "Die von dir kreierte Kunst, Deko oder Kleider verkaufen"
 
 #: i18n_strings.py:291
 msgid "I don’t have a private life any more"
@@ -1176,7 +1176,7 @@ msgstr "Dein Geld"
 
 #: i18n_strings.py:305
 msgid "Your teachers have always told you that being good at Maths and English, learning to type with ten fingers, enrolling auto mechanic training or studying law will guarantee you a quiet life. <br> <strong>What are the skills that you really need in your working life?</strong>"
-msgstr "Deine Lehrer haben Dir immer erzählt, Mathe und Englisch zu beherrschen, mit zehn Fingern tippen zu können, sich mit Automechanik auszukennen oder  Jura zu studieren würde Dir ein ruhiges Leben garantieren.\n"
+msgstr "Deine Lehrer haben Dir immer erzählt, Mathe und Englisch zu beherrschen, mit zehn Fingern tippen zu können, sich mit Automechanik auszukennen oder Jura zu studieren würde Dir ein ruhiges Leben garantieren.\n"
 "<br><strong>Aber welche Fähigkeiten brauchst Du wirklich im Arbeitsleben? </strong>"
 
 #: i18n_strings.py:306
@@ -1194,7 +1194,7 @@ msgstr "Deine Regierung"
 
 #: i18n_strings.py:309
 msgid "A 38-hour week. A single-family, detached house. Retirement with 62. That might have been your parents’  work life plan. The circumstances have changed. Our generation is dreaming a different dream. But what’s still to come? Will self-driving cars bring our children to school? <br> <strong>How do you see your future World of Work?</strong>"
-msgstr "38 Stunden-Woche, Familie, eigenes Haus, Rente mit 62. So hat vielleicht der Lebensplan Deiner Eltern ausgesehen, aber die Umstände sind nicht mehr dieselben, unsere Generation hat andere Träume.  Aber was kommt noch? Werden selbstfahrende Autos unsere Kinder zur Schule bringen?\n"
+msgstr "38 Stunden-Woche, Familie, eigenes Haus, Rente mit 62. So hat vielleicht der Lebensplan Deiner Eltern ausgesehen, aber die Umstände sind nicht mehr dieselben, unsere Generation hat andere Träume.\n"
 "<br><strong>Wie siehst Du die Zukunft der Arbeit? </strong>"
 
 #: i18n_strings.py:310
