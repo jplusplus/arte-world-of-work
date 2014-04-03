@@ -1,8 +1,8 @@
 module.exports = (grunt)->
     angular_files = [
         # our scripts 
-        'app/arte_ww/static/js/*.coffee'
-        'app/arte_ww/static/js/**/*.coffee'
+        'app/static/arte_ww/js/*.coffee'
+        'app/static/arte_ww/js/**/*.coffee'
         # our templates      
         'app/templates/*.html'
         'app/templates/partials/*.html'
