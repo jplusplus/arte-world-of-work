@@ -14,7 +14,6 @@ angular.module('arte-ww.services').service 'ThirdParty', ['$http', '$window', '$
 
         getURL: =>
             lang = $cookies.django_language or $translate.use() 
-            console.log "lang=", lang
             return @shareUrl[lang] or @shareUrl[@defaultShareLang]
 
         getFacebookCount: (url=@url)=>
