@@ -115,7 +115,17 @@ class ResultsCtrl
 
         # Make sure we can't deselect both genders
         @$scope.filter = (gender) =>
+            filters = @$scope.filters
+            if gender is 'female'
+                if not filters.male and filters.female
+                    filters.male = yes 
+
+            if gender is 'male'
+                if not filters.female and filters.male
+                    filters.female = yes 
+
             @$scope.filters[gender] = not @$scope.filters[gender]
+
             if @$scope.filters.male is @$scope.filters.female is false
                 @$scope.filters.male = @$scope.filters.female = true
 
