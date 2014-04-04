@@ -7,6 +7,12 @@ class ElementsWrapper
     @$inject: [
         '$rootScope', 'utils' , 'UserPosition', 'Thematic', 'Answer', 'Feedback'
     ]
+
+    config:
+        # set to false to enable dynamic feedbacks too
+        onlyStaticFeedback: true
+        alwaysShowFeedbacks: true
+
     constructor: (@rootScope, @utils , @userPosition, @Thematic, @Answer, @feedbackService)->
         # ---------------------------------------------------------------------
         # watches 
@@ -36,29 +42,43 @@ class ElementsWrapper
     onElementPositionChanged: (position, old_position)=>
         return unless @elements? and position?
         challenger = @getAt position
+        current    = @currentElement
+        next       = @getAt position + 1
+
         # first time we arrive on the widget 
-        if !@currentElement and challenger
-            @currentElement = challenger
+        if !current and challenger
+            console.log '@currentElement wasnt def and challenger is good'
+            current = challenger
 
         # we initialized the widget with a wrong position 
         if !challenger and !old_position 
             @fixPosition(position)
 
         # load a feedback for this element or not.
-        # if position > old_position and @feedback.distanceIsGood()
-        if position > old_position and @shouldDisplayFeedback()
-            staticFeedback = @currentElement.feedback
-            # check if old element should display a feedback
-            promise = @feedbackService.getForQuestion(@currentElement.id)
-            promise.then (dynFeedback)=>
-                if @isFeedback(dynFeedback) and dynFeedback.total_answers >= 500
-                    feedback = dynFeedback
-                else if @isFeedback(staticFeedback)
-                    feedback = @utils.wrapFeedback staticFeedback
-                if feedback
-                    feedback.question = @currentElement
-                    @elements.insertAt position, feedback
-                @currentElement = @elements.getAt position
+        if position > old_position and @shouldDisplayFeedback() and not @isFeedback(next)
+            staticFeedback = current.feedback
+            unless @config.onlyStaticFeedback
+                # check if old element should display a feedback
+                promise = @feedbackService.getForQuestion(current.id)
+                promise.then (dynFeedback)=>
+
+                    if @isFeedback(dynFeedback) and dynFeedback.total_answers >= 20
+                        feedback = dynFeedback
+                        console.log current.type, 'has html_sentence ?', current.html_sentence?
+                        feedback.question = current
+                    else if @isFeedback(staticFeedback)
+                        feedback = @utils.wrapFeedback staticFeedback
+                        feedback.question = current
+                    if feedback
+                        feedback.question = current
+                        @elements.insertAt position, feedback
+
+                    @currentElement = feedback
+
+            else if @isFeedback(staticFeedback)
+                staticFeedback.question = @currentElement
+                @elements.insertAt position, staticFeedback
+            @currentElement = staticFeedback
         else
             @currentElement = challenger
 
@@ -89,8 +109,8 @@ class ElementsWrapper
         # return false unless @feedbackService.distanceIsGood()
         return false if @isYou()
         return false if @currentElement.type is 'feedback'
-        # return Math.floor(Math.random()*5)+1 == 1
-        return true
+        return true  if @config.alwaysShowFeedbacks
+        return Math.floor(Math.random()*3)+1 == 1
 
     hasNextElement: =>
         return false unless @elements
