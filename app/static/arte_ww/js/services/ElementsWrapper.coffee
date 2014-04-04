@@ -47,7 +47,6 @@ class ElementsWrapper
 
         # first time we arrive on the widget 
         if !current and challenger
-            console.log '@currentElement wasnt def and challenger is good'
             current = challenger
 
         # we initialized the widget with a wrong position 
