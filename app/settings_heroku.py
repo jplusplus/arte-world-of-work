@@ -45,12 +45,6 @@ INSTALLED_APPS            += ('storages',)
 DEFAULT_FILE_STORAGE       = 'storages.backends.s3boto.S3BotoStorage'
 STATICFILES_STORAGE        = DEFAULT_FILE_STORAGE
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/django_cache',
-    }
-}
 
 COMPRESS_CSS_FILTERS = (
     "app.utils.CustomCssAbsoluteFilter",
@@ -77,4 +71,34 @@ COMPRESS_OFFLINE     = True
 AWS_QUERYSTRING_AUTH = False
 TINYMCE_JS_URL       = STATIC_URL + 'arte_ww/vendor/tinymce/tinymce.min.js'
 LOCAL_SETTINGS       = False
+
+# Configure cache
+os.environ['MEMCACHE_SERVERS']  = os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';')
+os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
+os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')
+
+CACHES = {
+  'default': {
+    'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+    'TIMEOUT': 60*60*1, # One hour
+    'BINARY': True,
+    'OPTIONS': {
+        'tcp_nodelay': True,
+        'remove_failed': 4
+    }
+  }
+}
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    # Cache middlewares
+    'django.contrib.messages.middleware.MessageMiddleware',    
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware'
+)
+
 # EOF
