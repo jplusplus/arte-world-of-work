@@ -98,6 +98,8 @@ class ResultsCtrl
             female: yes
 
     changeThematic: (id) =>
+        @$rootScope.safeApply =>
+            @$scope.isThematicLoading = yes
         for index of @$scope.thematics
             if @$scope.thematics[index].id is id
                 @$scope.current.thematic = parseInt index
@@ -110,10 +112,6 @@ class ResultsCtrl
                 return
 
     changeQuestion: (id) =>
-        @$rootScope.safeApply =>
-            @$scope.isThematicLoading = yes
-            @$scope.currentAnswer = null
-
         if not (do @Thematic.current)?
             @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
         @$scope.hasNext = @$scope.hasPrev = yes
@@ -125,19 +123,18 @@ class ResultsCtrl
             @$http(request).success (data) =>
                 if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
                     @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
-                @$rootScope.safeApply =>
+                @setLoaded =>
                     @$scope.currentAnswer = data
-                    @$scope.isThematicLoading = no
 
             if @$scope.current.answer is 0
                 @$scope.hasPrev = @elements[@$scope.current.thematic - 1]?
         else
-            @$rootScope.safeApply =>
+            @setLoaded =>
                 @$scope.currentAnswer = id
-                @$scope.isThematicLoading = no
         @resetFilters()
 
     start: =>
+        do @setLoading
         @$scope.intro = 0
         if @elements[@$scope.current.thematic]?
             @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
@@ -146,6 +143,7 @@ class ResultsCtrl
 
     # Define Previous and Next behavior
     next: =>
+        do @setLoading
         if @elements[@$scope.current.thematic][@$scope.current.answer + 1]?
             ++@$scope.current.answer
             @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
@@ -200,6 +198,21 @@ class ResultsCtrl
                 ), (e) -> e?
                 if @$scope.intro == 0
                     @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+
+    setLoading: (fn) =>
+        if not @$scope.isThematicLoading
+            @$rootScope.safeApply =>
+                @$scope.isThematicLoading = yes
+            
+        @$rootScope.safeApply fn
+
+    setLoaded: (fn) =>
+        if @$scope.isThematicLoading
+            @$rootScope.safeApply =>
+                @$scope.isThematicLoading = no
+
+        @$rootScope.safeApply fn
+
 
 angular.module('arte-ww')
 .controller('ResultsCtrl', ResultsCtrl)
