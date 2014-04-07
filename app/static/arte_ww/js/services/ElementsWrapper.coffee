@@ -10,7 +10,7 @@ class ElementsWrapper
 
     config:
         # set to false to enable dynamic feedbacks too
-        onlyStaticFeedback: true
+        onlyStaticFeedback: false
         alwaysShowFeedbacks: true
 
     constructor: (@rootScope, @utils , @userPosition, @Thematic, @Answer, @feedbackService)->
