@@ -44,7 +44,12 @@ arteww = angular
                 UserPosition.elementPosition 0
                 $location.url "/"
 
-                       
+            $rootScope.safeApply = (fn)->
+                phase = @$root.$$phase
+                if phase is "$apply" or phase is "$digest"
+                    do fn if fn and (typeof (fn) is "function")
+                else
+                    @$apply fn
     ])
     # Second run where dependancies need the previous call to be ended
     .run([
