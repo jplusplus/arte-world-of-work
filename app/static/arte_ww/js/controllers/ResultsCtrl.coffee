@@ -110,7 +110,10 @@ class ResultsCtrl
                 return
 
     changeQuestion: (id) =>
-        @$rootScope.isThematicLoading = yes
+        @$rootScope.safeApply =>
+            @$scope.isThematicLoading = yes
+            @$scope.currentAnswer = null
+
         if not (do @Thematic.current)?
             @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
         @$scope.hasNext = @$scope.hasPrev = yes
@@ -122,13 +125,16 @@ class ResultsCtrl
             @$http(request).success (data) =>
                 if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
                     @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
-                @$scope.currentAnswer = data
+                @$rootScope.safeApply =>
+                    @$scope.currentAnswer = data
+                    @$scope.isThematicLoading = no
+
             if @$scope.current.answer is 0
                 @$scope.hasPrev = @elements[@$scope.current.thematic - 1]?
         else
-            @$rootScope.isThematicLoading = no
-            @$scope.currentAnswer = id
-
+            @$rootScope.safeApply =>
+                @$scope.currentAnswer = id
+                @$scope.isThematicLoading = no
         @resetFilters()
 
     start: =>
