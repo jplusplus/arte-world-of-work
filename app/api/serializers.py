@@ -119,7 +119,7 @@ class QuestionSerializer(mixins.InheritedModelMixin):
         depth = 1
         exclude = ('content_type',)
 
-class QuestionResultsSerializer(mixins.InheritedModelMixin):
+class QuestionResultsSerializer(QuestionSerializer):
     model_mapping = question_mapping
     results       = serializers.SerializerMethodField('get_results')
 
