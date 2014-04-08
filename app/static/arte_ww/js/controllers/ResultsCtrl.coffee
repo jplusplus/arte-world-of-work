@@ -95,7 +95,7 @@ class ResultsCtrl
             @$scope.filters.male = @$scope.filters.female = true
 
     resetFilters: =>
-        _.extend @$scope.filters,
+        @$scope.filters = 
             age_min: 16
             age_max: 35
             male:   yes
@@ -136,6 +136,7 @@ class ResultsCtrl
             @setThematicLoaded @setChartLoaded
 
     changeQuestion: (answer) =>
+        @resetFilters()
         current_thematic = @$scope.thematics[@$scope.current.thematic]
         if not (do @Thematic.current)?
             @Thematic.onThematicPositionChanged current_thematic.position, no
@@ -151,8 +152,6 @@ class ResultsCtrl
         else
             @setThematicLoaded =>
                 @$scope.currentAnswer = answer
-        
-        @resetFilters()
 
     start: =>
         do @setThematicLoading
