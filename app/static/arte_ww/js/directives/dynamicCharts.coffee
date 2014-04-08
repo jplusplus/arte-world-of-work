@@ -264,8 +264,7 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$root
         replace : yes
         restrict : 'E'
         scope :
-            id : '@'
-            filters : '='
+            results : '='
             nochart : '@'
         controller: ['$scope', (scope)->
             scope.filters =
@@ -293,22 +292,22 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$root
                 if filters.male isnt filters.female
                     filters.gender = 'male' if filters.male
                     filters.gender = 'female' if filters.female
-                
+
                 request =
                     id : scope.id
                     filters : filters
 
-                $Result.get request, (data) =>
-                    scope.$parent.fullwidth = no
-                    scope.$parent.nochart = no
+                # $Result.get request, (data) =>
+                scope.$parent.fullwidth = no
+                scope.$parent.nochart = no
 
 
-                    if data.results.total_answers < 5
-                        scope.$parent.nochart = yes
-                    else if data.results.chart_type is 'horizontal_bar'
-                        scope.$parent.fullwidth = yes
-                    scope.data = data.results
-                    $rootScope.isThematicLoading = no
+                if scope.data.results.total_answers < 5
+                    scope.$parent.nochart = yes
+                else if scope.data.results.chart_type is 'horizontal_bar'
+                    scope.$parent.fullwidth = yes
+                # scope.data = data.results
+                $rootScope.isThematicLoading = no
                 undefined
 
             window.onresize = =>
@@ -325,24 +324,17 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$root
                     do scope.chart.update
 
             # Watch changes in the data
-            scope.$watch 'data', (newValues, oldValues) =>
-                if scope.data?
-                    if scope.chart? and scope.chart.type isnt (do scope.data.chart_type.toLowerCase)
-                        do scope.chart.delete
-                        scope.chart = undefined
-                        do newChart
-                    else if not scope.chart?
-                        do newChart
-                    do scope.chart.update
-            , yes
-
-            # Watch changes in the filters
-            scope.$watch 'filters', (newValues, oldValues) =>
-                do update
-            , yes
-
-            scope.$watch 'id', =>
-                do update
+            scope.$watch 'results', (newValues, oldValues) =>
+                if scope.results?
+                    scope.data = scope.results[0][0]
+                    if scope.data?
+                        if scope.chart? and scope.chart.type isnt (do scope.data.chart_type.toLowerCase)
+                            do scope.chart.delete
+                            scope.chart = undefined
+                            do newChart
+                        else if not scope.chart?
+                            do newChart
+                        do scope.chart.update
             , yes
 
 ]

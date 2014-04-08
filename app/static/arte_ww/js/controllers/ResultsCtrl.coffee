@@ -50,6 +50,10 @@ class ResultsCtrl
                 @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
         , yes
 
+        @$scope.$watch =>
+            @$scope.filters
+        , @onFilterChanged, yes
+
         # Uncomment this block when you will want to enable deep linking
         # Update URL when the user changes filters
         # @$scope.$watch 'filters', (=>
@@ -110,26 +114,36 @@ class ResultsCtrl
                     @$scope.intro = 1
                 return
 
-    changeQuestion: (id) =>
+    retrieveCurrentResultsWithFilters: (id, callback=(=>)) =>
+        request =
+            url : "/api/questions/#{id}/results"
+            method : 'GET'
+            params :
+                age_min : @$scope.filters.age_min
+                age_max : @$scope.filters.age_max
+        if @$scope.filters.male isnt @$scope.filters.female
+            request.params.gender = 'male' if @$scope.filters.male
+            request.params.gender = 'female' if @$scope.filters.female
+        @$http(request).success (data) =>
+            @setLoaded =>
+                do callback
+                @$scope.currentAnswer = data
+
+    changeQuestion: (answer) =>
         if not (do @Thematic.current)?
             @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
         @$scope.hasNext = @$scope.hasPrev = yes
         @$scope.nochart = false
-        if id.id >= 0
-            request =
-                url : "/api/questions/#{id.id}"
-                method : 'GET'
-            @$http(request).success (data) =>
+        if answer.id >= 0
+            @retrieveCurrentResultsWithFilters answer.id, =>
                 if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
                     @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
-                @setLoaded =>
-                    @$scope.currentAnswer = data
 
             if @$scope.current.answer is 0
                 @$scope.hasPrev = @elements[@$scope.current.thematic - 1]?
         else
             @setLoaded =>
-                @$scope.currentAnswer = id
+                @$scope.currentAnswer = answer
         @resetFilters()
 
     start: =>
@@ -203,7 +217,7 @@ class ResultsCtrl
         if not @$scope.isThematicLoading
             @$rootScope.safeApply =>
                 @$scope.isThematicLoading = yes
-            
+
         @$rootScope.safeApply fn
 
     setLoaded: (fn) =>
@@ -212,6 +226,10 @@ class ResultsCtrl
                 @$scope.isThematicLoading = no
 
         @$rootScope.safeApply fn
+
+    onFilterChanged: =>
+        if @$scope.currentAnswer? and @$scope.currentAnswer.id?
+            @retrieveCurrentResultsWithFilters @$scope.currentAnswer.id
 
 
 angular.module('arte-ww')

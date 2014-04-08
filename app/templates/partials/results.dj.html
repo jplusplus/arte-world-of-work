@@ -9,7 +9,7 @@
     <div ng-show='!intro&&!isThematicLoading' class="answer">
         <h4 class="answer-title">[[currentAnswer.label]]</h4>
         <div class="answer-content" ng-show="currentAnswer.id >= 0">
-            <dynamic-chart ng-class="{'chart--fullwidth':fullwidth}" ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-id="[[currentAnswer.id]]" filters="filters"></dynamic-chart>
+            <dynamic-chart ng-class="{'chart--fullwidth':fullwidth}" ng-attr-nochart='[[nochart]]' ng-hide="nochart" ng-attr-results="[[currentAnswer.results]]"></dynamic-chart>
             <p class='chart--nochart' ng-show='nochart&&filtered()' translate>There is not enough data for the selected filters.</p>
             <div ng-class="{'answer-description--nochart':nochart||fullwidth}" class="answer-description">
                 <h5 class="answer-description__catchphrase" translate>Did you know that?</h4>
