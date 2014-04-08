@@ -179,7 +179,8 @@ class ResultsCtrl
             @$scope.hasPrev = no
 
     previous: =>
-        do @setThematicLoading
+        @setThematicLoading =>
+            @$scope.currentAnswer = null
         if @$scope.intro is 2
             @$scope.intro = 0
         else
