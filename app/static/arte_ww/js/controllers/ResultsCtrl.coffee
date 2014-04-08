@@ -98,8 +98,7 @@ class ResultsCtrl
             female: yes
 
     changeThematic: (id) =>
-        @$rootScope.safeApply =>
-            @$scope.isThematicLoading = yes
+        do @setLoading
         for index of @$scope.thematics
             if @$scope.thematics[index].id is id
                 @$scope.current.thematic = parseInt index
@@ -157,6 +156,7 @@ class ResultsCtrl
             @$scope.hasPrev = no
 
     previous: =>
+        do @setLoading
         if @$scope.intro is 2
             @$scope.intro = 0
         else
