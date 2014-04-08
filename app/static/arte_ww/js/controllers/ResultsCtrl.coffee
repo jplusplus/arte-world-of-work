@@ -126,6 +126,11 @@ class ResultsCtrl
             request.params.gender = 'female' if @$scope.filters.female
         @$http(request).success (data) =>
             @setLoaded =>
+                @$scope.fullwidth = @$scope.nochart = no
+                if data.results.total_answers < 5
+                    @$scope.nochart = yes
+                else if data.results.chart_type is 'horizontal_bar'
+                    @$scope.fullwidth = yes
                 do callback
                 @$scope.currentAnswer = data
 
