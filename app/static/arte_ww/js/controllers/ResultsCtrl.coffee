@@ -29,7 +29,7 @@ class ResultsCtrl
             hasPrev: no
             # handle current state (intro -> results -> (opt) outro)
             intro: 1
-
+            isThematicLoading: true
             current:
                 thematic: 0
                 answer:   0
@@ -124,16 +124,17 @@ class ResultsCtrl
         if @$scope.filters.male isnt @$scope.filters.female
             request.params.gender = 'male' if @$scope.filters.male
             request.params.gender = 'female' if @$scope.filters.female
+        
         @$http(request).success (data) =>
             @setThematicLoaded =>
-				@$scope.fullwidth = @$scope.nochart = no
+                @$scope.fullwidth = @$scope.nochart = no
                 if data.results.total_answers < 5
                     @$scope.nochart = yes
                 else if data.results.chart_type is 'horizontal_bar'
                     @$scope.fullwidth = yes
                 do callback
                 @$scope.currentAnswer = data
-				do @setChartLoaded
+                do @setChartLoaded
 
     changeQuestion: (answer) =>
         current_thematic = @$scope.thematics[@$scope.current.thematic]
@@ -154,23 +155,24 @@ class ResultsCtrl
         @resetFilters()
 
     start: =>
-        do @setLoading
+        do @setThematicLoading
         @$scope.intro = 0
         if @elements[@$scope.current.thematic]?
             @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
         else
-            setTimeout (((o) => return => do o.$scope.start) @), 1000
+            setTimeout (((o) => return => do o.$scope.start) @), 250
 
     # Define Previous and Next behavior
     next: =>
         do @setThematicLoading
-        if @elements[@$scope.current.thematic][@$scope.current.answer + 1]?
+        current_thematic = @elements[@$scope.current.thematic]
+        if current_thematic[@$scope.current.answer + 1]?
             ++@$scope.current.answer
-            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            @changeQuestion current_thematic[@$scope.current.answer]
         else if @elements[@$scope.current.thematic + 1]?
             ++@$scope.current.thematic
             @$scope.current.answer = 0
-            @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+            @changeQuestion current_thematic[@$scope.current.answer]
         else
             @$scope.intro = 2
             @$scope.hasNext = no
@@ -202,7 +204,7 @@ class ResultsCtrl
             ), (e) -> e?
 
             request =
-                url : '/api/thematics-result'
+                url : '/api/thematics-nested'
                 method : 'GET'
             (@$http request).success (data) =>
                 @elements = _.filter (_.map data, (thematic) =>
@@ -219,8 +221,8 @@ class ResultsCtrl
                 ), (e) -> e?
                 if @$scope.intro == 0
                     @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
+                do @setThematicLoaded
 
-    
 
     setLoading: (state_name, loading=yes, fn) =>
         if @$scope[state_name] != loading
