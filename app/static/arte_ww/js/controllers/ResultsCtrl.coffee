@@ -102,7 +102,7 @@ class ResultsCtrl
             female: yes
 
     changeThematic: (id) =>
-        do @setLoading
+        do @setThematicLoading
         for index of @$scope.thematics
             if @$scope.thematics[index].id is id
                 @$scope.current.thematic = parseInt index
@@ -125,29 +125,32 @@ class ResultsCtrl
             request.params.gender = 'male' if @$scope.filters.male
             request.params.gender = 'female' if @$scope.filters.female
         @$http(request).success (data) =>
-            @setLoaded =>
+            @setThematicLoaded =>
                 do callback
                 @$scope.currentAnswer = data
+                do @setChartLoaded
+
 
     changeQuestion: (answer) =>
+        current_thematic = @$scope.thematics[@$scope.current.thematic]
         if not (do @Thematic.current)?
-            @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
+            @Thematic.onThematicPositionChanged current_thematic.position, no
         @$scope.hasNext = @$scope.hasPrev = yes
         @$scope.nochart = false
         if answer.id >= 0
             @retrieveCurrentResultsWithFilters answer.id, =>
-                if (do @Thematic.current).id isnt @$scope.thematics[@$scope.current.thematic].id
-                    @Thematic.onThematicPositionChanged @$scope.thematics[@$scope.current.thematic].position
+                if (do @Thematic.current).id isnt current_thematic.id
+                    @Thematic.onThematicPositionChanged current_thematic.position, no 
 
             if @$scope.current.answer is 0
                 @$scope.hasPrev = @elements[@$scope.current.thematic - 1]?
         else
-            @setLoaded =>
+            @setThematicLoaded =>
                 @$scope.currentAnswer = answer
         @resetFilters()
 
     start: =>
-        do @setLoading
+        do @setThematicLoading
         @$scope.intro = 0
         if @elements[@$scope.current.thematic]?
             @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
@@ -156,7 +159,7 @@ class ResultsCtrl
 
     # Define Previous and Next behavior
     next: =>
-        do @setLoading
+        do @setThematicLoading
         if @elements[@$scope.current.thematic][@$scope.current.answer + 1]?
             ++@$scope.current.answer
             @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
@@ -170,7 +173,7 @@ class ResultsCtrl
             @$scope.hasPrev = no
 
     previous: =>
-        do @setLoading
+        do @setThematicLoading
         if @$scope.intro is 2
             @$scope.intro = 0
         else
@@ -213,22 +216,30 @@ class ResultsCtrl
                 if @$scope.intro == 0
                     @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]
 
-    setLoading: (fn) =>
-        if not @$scope.isThematicLoading
+    
+
+    setLoading: (state_name, loading=yes, fn) =>
+        if @$scope[state_name] != loading
             @$rootScope.safeApply =>
-                @$scope.isThematicLoading = yes
+                @$scope[state_name] = loading
 
-        @$rootScope.safeApply fn
+        @$rootScope.safeApply fn 
 
-    setLoaded: (fn) =>
-        if @$scope.isThematicLoading
-            @$rootScope.safeApply =>
-                @$scope.isThematicLoading = no
+    setThematicLoading: (fn) =>
+        @setLoading 'isThematicLoading', yes, fn 
 
-        @$rootScope.safeApply fn
+    setThematicLoaded: (fn) =>
+        @setLoading 'isThematicLoading', no, fn 
+
+    setChartLoading: (fn) =>
+        @setLoading 'isChartLoading', yes, fn
+
+    setChartLoaded: (fn) =>
+        @setLoading 'isChartLoading', no, fn 
 
     onFilterChanged: =>
         if @$scope.currentAnswer? and @$scope.currentAnswer.id?
+            do @setChartLoading
             @retrieveCurrentResultsWithFilters @$scope.currentAnswer.id
 
 
