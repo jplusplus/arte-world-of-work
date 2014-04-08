@@ -126,10 +126,14 @@ class ResultsCtrl
             request.params.gender = 'female' if @$scope.filters.female
         @$http(request).success (data) =>
             @setThematicLoaded =>
+				@$scope.fullwidth = @$scope.nochart = no
+                if data.results.total_answers < 5
+                    @$scope.nochart = yes
+                else if data.results.chart_type is 'horizontal_bar'
+                    @$scope.fullwidth = yes
                 do callback
                 @$scope.currentAnswer = data
-                do @setChartLoaded
-
+				do @setChartLoaded
 
     changeQuestion: (answer) =>
         current_thematic = @$scope.thematics[@$scope.current.thematic]
@@ -150,7 +154,7 @@ class ResultsCtrl
         @resetFilters()
 
     start: =>
-        do @setThematicLoading
+        do @setLoading
         @$scope.intro = 0
         if @elements[@$scope.current.thematic]?
             @changeQuestion @elements[@$scope.current.thematic][@$scope.current.answer]

@@ -284,32 +284,6 @@ angular.module('arte-ww').directive 'dynamicChart', ['$window', 'Result', '$root
                     when 'histogramme' then new Histogram scope, elem
                     else throw "Chart type '#{scope.data.chart_type}' does not exist."
 
-            update = =>
-                return if not scope.id? or scope.id is "" or scope.id < 0
-
-                filters = angular.copy scope.filters
-
-                if filters.male isnt filters.female
-                    filters.gender = 'male' if filters.male
-                    filters.gender = 'female' if filters.female
-
-                request =
-                    id : scope.id
-                    filters : filters
-
-                # $Result.get request, (data) =>
-                scope.$parent.fullwidth = no
-                scope.$parent.nochart = no
-
-
-                if scope.data.results.total_answers < 5
-                    scope.$parent.nochart = yes
-                else if scope.data.results.chart_type is 'horizontal_bar'
-                    scope.$parent.fullwidth = yes
-                # scope.data = data.results
-                $rootScope.isThematicLoading = no
-                undefined
-
             window.onresize = =>
                 do scope.$apply
 

@@ -44,3 +44,25 @@ svg {
 
     }
 }
+
+.chart {
+
+    &--loading {
+        &:after {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 50%;
+            content: " ";
+            position: absolute;
+            opacity: 0.8;
+            background:white url("../img/ui/loading.gif") center center no-repeat;
+        }
+    }
+    &--loading.chart--fullscreen {
+        &:after {
+            right: 0;
+            
+        }
+    }
+}
