@@ -52,12 +52,16 @@ class ThematicService
             else
                 @get(id: positionAt.id, cb)
 
-    onThematicPositionChanged: (position)=>        
+    onThematicPositionChanged: (position, triggerXiti=yes)=>        
         @getAt position, (thematic)=> 
-            # Monitor user activity
-            @Xiti.loadPage @rootScope.currentCategory(), thematic.slug
-            # Update current thematic
-            @currentThematic = thematic
+            if triggerXiti
+                # Monitor user activity
+                @Xiti.loadPage @rootScope.currentCategory(), thematic.slug
+                # Update current thematic
+                @currentThematic = thematic
+            else
+                @rootScope.safeApply =>
+                    @currentThematic = thematic
 
     current: => @currentThematic
 
