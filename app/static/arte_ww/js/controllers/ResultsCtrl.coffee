@@ -102,7 +102,8 @@ class ResultsCtrl
             female: yes
 
     changeThematic: (id) =>
-        do @setThematicLoading
+        @setThematicLoading =>
+            @$scope.currentAnswer = null
         for index of @$scope.thematics
             if @$scope.thematics[index].id is id
                 @$scope.current.thematic = parseInt index
