@@ -1,5 +1,5 @@
-angular.module('arte-ww').directive 'progressbar', ['UserPosition', 'Thematic', 'utils',
-    (UserPosition, Thematic, utils) ->
+angular.module('arte-ww').directive 'progressbar', ['UserPosition', 'Thematic', 'ElementsWrapper', 'utils',
+    (UserPosition, Thematic, ElementsWrapper, utils) ->
         directive =
             restrict: "A"
             link: (scope, elem) ->
@@ -29,7 +29,6 @@ angular.module('arte-ww').directive 'progressbar', ['UserPosition', 'Thematic', 
 
                     thematicElements = _.map Thematic.positionList.elements, (e) -> e.elements.length
                     elements = _.reduce thematicElements, ((it, elem) => it + elem), 0
-
                     updateBarWidth positions.global
                 ), yes
 
@@ -41,9 +40,12 @@ angular.module('arte-ww').directive 'progressbar', ['UserPosition', 'Thematic', 
                     positions.global += positions.element
                     updateBarWidth positions.global
 
-                scope.$watch (=> do UserPosition.elementPosition), (newPosition) ->
-                    positions.element = newPosition
-                    do updatePosition
+                scope.$watch (=> do ElementsWrapper.current), (newElement) ->
+                    return unless newElement
+                    if newElement and newElement.type is 'question'
+                        index = ElementsWrapper.allQuestions().indexOf newElement
+                        positions.element = index
+                        do updatePosition
 
                 scope.$watch (=> do UserPosition.thematicPosition), (newPosition, oldPosition) ->
                     positions.thematic = newPosition

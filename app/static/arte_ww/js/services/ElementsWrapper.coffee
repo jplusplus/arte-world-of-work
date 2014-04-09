@@ -131,7 +131,9 @@ class ElementsWrapper
 
     allQuestions: => _.filter(@all(), question_only )
 
-    getAt: (pos)=> @elements.getAt pos
+    current: => @currentElement
+
+    getAt: (pos)=> if @elements then @elements.getAt pos else undefined
 
     isYou: => @Thematic.currentThematic.slug == 'toi'
 
