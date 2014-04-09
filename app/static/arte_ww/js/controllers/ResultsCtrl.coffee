@@ -166,14 +166,16 @@ class ResultsCtrl
     next: =>
         @setThematicLoading =>
             @$scope.currentAnswer = null
-        current_thematic = @elements[@$scope.current.thematic]
-        if current_thematic[@$scope.current.answer + 1]?
+
+        curr_thematic = @elements[@$scope.current.thematic]
+        next_thematic = @elements[@$scope.current.thematic + 1]
+        if curr_thematic[@$scope.current.answer + 1]?
             ++@$scope.current.answer
-            @changeQuestion current_thematic[@$scope.current.answer]
-        else if @elements[@$scope.current.thematic + 1]?
+            @changeQuestion curr_thematic[@$scope.current.answer]
+        else if next_thematic?
             ++@$scope.current.thematic
             @$scope.current.answer = 0
-            @changeQuestion current_thematic[@$scope.current.answer]
+            @changeQuestion next_thematic[@$scope.current.answer]
         else
             @$scope.intro = 2
             @$scope.hasNext = no
