@@ -1,4 +1,3 @@
-# -----------------------------------------------------------------------------
 # Encoding: utf-8
 # Project: World of Work
 # -----------------------------------------------------------------------------
@@ -6,12 +5,12 @@
 # -----------------------------------------------------------------------------
 # Licence: GNU General Public Licence
 # -----------------------------------------------------------------------------
-# @Last Modified by:   toutenrab
-# @Last Modified time: 2014-04-10 11:29:07
+# Creation time:      2014-04-03 13:30:07
+# Last Modified time: 2014-04-10 11:59:29
 # -----------------------------------------------------------------------------
 # This file is part of World of Work
-#
-#   World of Work, a study of the european youth and its perception of the world of work
+# 
+#   World of Work is a study about european youth's perception of work
 #   Copyright (C) 2014 Journalism++
 #   
 #   This program is free software: you can redistribute it and/or modify
@@ -26,6 +25,7 @@
 #   
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 
 class ResultsCtrl
     @$inject: ['$scope', '$location', 'Thematic', '$http', '$sce', '$rootScope', "Xiti"]
