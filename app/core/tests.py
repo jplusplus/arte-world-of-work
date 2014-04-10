@@ -1,17 +1,33 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# Encoding: utf-8
 # -----------------------------------------------------------------------------
-# Project : Arte World of Work
+# Project: World of Work
 # -----------------------------------------------------------------------------
-# Author : Pierre Bellon
+# Author: Pierre Bellon                               <bellon.pierre@gmail.com>
 # -----------------------------------------------------------------------------
-# License : proprietary journalism++
+# License: GNU General Public License
 # -----------------------------------------------------------------------------
-# Creation : 2014-01-10 15:58:02
-# Last mod :  2014-01-24 16:59:37
+# Creation time:      2014-04-03 12:37:25
+# Last Modified time: 2014-04-10 12:32:53
 # -----------------------------------------------------------------------------
+# This file is part of World of Work
+# 
+#   World of Work is a study about european youth's perception of work
+#   Copyright (C) 2014 Journalism++
+#   
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-# all core related tests should go here
 from app                         import utils
 from app.core                    import transport   
 from app.core.models             import * 
@@ -41,6 +57,7 @@ def _create_thematic_element(sender, **kwargs):
     create_thematic_element(sender, **kwargs)
 
 class CoreTestCase(TestCase):
+    # all core related tests should go here
     def setUp(self):
         post_save.connect(create_boolean_choices, sender=BooleanQuestion)
         post_save.connect(create_user_choice_fields, sender=UserGenderQuestion)
