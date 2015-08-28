@@ -6,11 +6,14 @@
     "url": "https://github.com/jplusplus/arte-world-of-work.git"
   },
   "dependencies": {
-    "less":"1.6.1",
-    "coffee-script":"1.7.1",
-    "karma":"0.10.9",
-    "karma-jasmine":"0.1.5",
-    "grunt-angular-translate":"0.2.6"
+    "coffee-script":"~1.7.1",
+    "less":"~1.4.1",
+    "karma": "0.10.9",
+    "karma-jasmine": "0.1.5",
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch":"0.5.3",
+    "grunt-available-tasks":"~0.1.1",
+    "grunt-angular-translate": "0.2.6"
   },
   "bugs": {
     "url": "https://github.com/jplusplus/arte-world-of-work/issues"
