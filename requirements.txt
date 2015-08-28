@@ -2,7 +2,7 @@ argparse==1.2.1
 boto==2.9.6
 dj-database-url==0.2.1
 django-compressor==1.3
-django-countries==2.0b4
+django-countries==2.0
 django-filter==0.6
 django-model-utils==2.0.1
 django-pylibmc-sasl==0.2.4

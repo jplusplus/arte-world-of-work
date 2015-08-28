@@ -5,16 +5,16 @@ VIRTUALENV = venv/
 run:
 	. $(VIRTUALENV)bin/activate ; export PYTHONPATH=`pwd`/app/:$(PYTHONPATH) ; python -W ignore::DeprecationWarning manage.py runserver 0.0.0.0:8000
 
-install: create_virtualenv pip_install setup_db setup_statics setup_selenium	
+install: create_virtualenv pip_install setup_db setup_statics setup_selenium
 
 create_virtualenv:
 	# if venv folder is not created yet we do it
 	if [ ! -d venv ]; then virtualenv venv --no-site-packages --distribute --prompt=Arte-WoW; fi
 
 sync_db_translations:
-	# synchronize all translatable string contained in database to a python file 
+	# synchronize all translatable string contained in database to a python file
 	# check settings.TRANSLATION_STRINGS_FILE to change this file.
-	. $(VIRTUALENV)bin/activate; django-admin.py sync_db_translations 
+	. $(VIRTUALENV)bin/activate; django-admin.py sync_db_translations
 
 messages:
 	# will produce all locale file we need (.po files for django and .json files
@@ -46,7 +46,7 @@ setup_db:
 
 npm_install:
 	# Install npm packages
-	if [ -s npm_requirements.txt ]; then xargs -a npm_requirements.txt npm install -g; else echo '\nNo NPM dependencies found in npm_requirements.txt'; fi
+	npm install
 
 pip_install:
 	# Install pip packages
